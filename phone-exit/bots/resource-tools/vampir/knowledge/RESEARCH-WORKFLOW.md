@@ -36,6 +36,9 @@ Finish сохраняет прежние fact objects и проверяет ат
 evidence — поля вывода question, их можно обновить между операциями.
 
 Tooling checks остаются инфраструктурным gate, не доказательством клиента.
+`automatic-update-tooling` использует [групповой кэш](TOOLING-GROUPS.md):
+неизменные группы проверяются по квитанциям, изменённые запускаются отдельно.
+Новые tests требуют регистрации каталога, группы и зависимостей.
 Для method=bounded_native нужен source-bound client check. SHA-pinned --context
 файл должен оставаться неизменным; scoped CLI пока не переносит selected-fact
 projection через собственную запись этого registry. Использовать отдельные

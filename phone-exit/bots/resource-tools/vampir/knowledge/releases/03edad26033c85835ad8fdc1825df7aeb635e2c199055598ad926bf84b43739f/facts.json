@@ -2158,6 +2158,40 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Разделение общего automatic-update-tooling ключа на группы и стабильная регистрация native семейств остаются открыты; wall time неизменного запуска отдельно не обещается.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1455f4a70",
+        "0x1455fd340"
+      ],
+      "checks": [],
+      "conclusion": "automatic-update-tooling подключён к 27 группам с отдельными immutable квитанциями и новым dispatcher штатного update/scoped workflow. Сохранены прежние 1989 case IDs; всего 2036 cases. Неизменный повтор использовал все группы без запуска workers.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-TOOLING-GROUPS-V1.md",
+          "sha256": "cb80d126d558a4483f36e8adf0e3bb5dd10bfc099378379119aa50c80760a23a"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-TOOLING-GROUPS-V1.json",
+          "sha256": "458460a4a31d872728fd79bbc3388d093391b02973360e352fbf54205910c28c"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c2b7cec62855c98dcfd3a5d5e8c5e3b52326e21fbb558a5bdce6d6a698db8f09",
+      "limits": [
+        "Conservative source closure retains shared dispatcher and unresolved dependencies.",
+        "Legacy v1 research keeps its frozen workflow; current update/scoped routes use the new dispatcher.",
+        "Full SHA endpoint comparisons do not provide an atomic filesystem snapshot.",
+        "Worker cases and cached cases are reported separately; cached cases are not newly executed tests.",
+        "Python/native library bytes are pinned; this is not a proof of game/client behavior.",
+        "Адреса и source SHA являются research anchors; семантика QuestSync этим пакетом не расширена."
+      ],
+      "method": "static",
+      "next_check": "При следующем изменении семейства использовать групповой кэш; сужать только конкретные доказанные shared dependencies и не повторять неизменные native suites.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Консервативный fan-out общих native helpers и dispatcher сохраняется; дальнейшее сужение требует отдельного доказательства потребителей.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

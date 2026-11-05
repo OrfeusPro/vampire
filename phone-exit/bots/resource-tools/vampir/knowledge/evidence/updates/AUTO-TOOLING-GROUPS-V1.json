@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "recipe": "tooling-groups-v1",
+  "validation_scope": "fixture_only_tooling",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source_is_research_anchor_only": true,
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/tooling-groups-v1.py": "fec54794fac6ef0e995397fc374bb13f15235cd58c2e728185e29e7814c2dc5c",
+    "phone-exit/bots/resource-tools/vampir/tooling-group-worker-v1.py": "5779633895d7e7b692fdea4aaa40a7303b5c10fc5b854f949e902fc45fe451a0",
+    "phone-exit/bots/resource-tools/vampir/tooling-runtime-v1.py": "8c7c27f747fdb76268262d556c18ac3a1d74876e4461ee62fa7b1b23dcb0321a",
+    "phone-exit/bots/resource-tools/vampir/tooling-check-dispatch-v1.py": "cb73a89d226777c6bbd6bede6c8cef4bbc1c253e5036a886b883ba5e8a663917",
+    "phone-exit/bots/resource-tools/vampir/research-scoped-v2.py": "a607d3201b57641187f6a9b45b368f499a56f3bcef6dbc6d9de43c6dda7a7a7c",
+    "phone-exit/bots/resource-tools/vampir/research-update.py": "cdc4c5ec7f5baabac1099baffb475c7430e156084cdb02de0eb6f8770f5e04a0",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "d5739153736e40400436b81fbdc3e7b9cd794a58dbaa735bd997255e38a6a06b",
+    "phone-exit/bots/test_vampir_update_automation.py": "3324353364916a27ed783e3e35d3122da70cde47fe780f127863f3f0e1e60673",
+    "phone-exit/bots/test_vampir_tooling_groups_v1.py": "d462809388a02e6b98674167e0b22abb97d7629e8cac970107eaaa27b447f750",
+    "phone-exit/bots/test_vampir_tooling_check_dispatch_v1.py": "5ba1437043b68f2be3c2f8e427b54978443cd1f512b81c49d306137f801c32e2",
+    "phone-exit/bots/resource-tools/vampir/knowledge/tooling-groups-v1.json": "ebf5f401020e9be6035b2c037ac8eb2a567ad91aed10cce5047099e5340ff9c4",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "aa28fd8debacced71efd3dee1537521ed55ddccd60378a6afc10f6c939fd33e7"
+  },
+  "acceptance": {
+    "schema": 1,
+    "cold": {
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\e6e4bb285d9559fee1795453dec1830d2ef00270a11d2d2c068ef60ba237a2f9\\manifest.json",
+      "sha256": "e6e4bb285d9559fee1795453dec1830d2ef00270a11d2d2c068ef60ba237a2f9",
+      "cache_key": "9ee635e28fa8b67df339cd1b1533d4729f6e30d02199a5e421eab405a7bb7dc8",
+      "metrics": {
+        "executed_groups": 27,
+        "cached_groups": 0,
+        "executed_cases": 2036,
+        "cached_cases": 0,
+        "executed_discovered_cases": 2036,
+        "cached_discovered_cases": 0,
+        "executed_skips": 4,
+        "cached_skips": 0,
+        "incomplete_groups": 0,
+        "duration_seconds": 248.82347379997373
+      }
+    },
+    "warm": {
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\e6e4bb285d9559fee1795453dec1830d2ef00270a11d2d2c068ef60ba237a2f9\\manifest.json",
+      "sha256": "e6e4bb285d9559fee1795453dec1830d2ef00270a11d2d2c068ef60ba237a2f9",
+      "cache_key": "9ee635e28fa8b67df339cd1b1533d4729f6e30d02199a5e421eab405a7bb7dc8",
+      "metrics": {
+        "executed_groups": 0,
+        "cached_groups": 27,
+        "executed_cases": 0,
+        "cached_cases": 2036,
+        "executed_discovered_cases": 0,
+        "cached_discovered_cases": 2036,
+        "executed_skips": 0,
+        "cached_skips": 4,
+        "incomplete_groups": 0,
+        "duration_seconds": 10.101881500100717
+      }
+    },
+    "dispatch": {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\92d3e1cd569d737fdaf90aa039b284ef913f709a22803227b9ee39d05a7d4f38\\manifest.json",
+      "sha256": "92d3e1cd569d737fdaf90aa039b284ef913f709a22803227b9ee39d05a7d4f38",
+      "cache_key": "5df583c90678df3db447e0a7de3e992b0014a6fa58f94b3c4f4cdfdb798f5e51",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    "previous_cases_preserved": 1989,
+    "old_case_id_multiplicity_preserved": true,
+    "groups": 27,
+    "modules": 144,
+    "new_jvm": 0,
+    "game_native_replays": 0,
+    "runtime_admitted": false,
+    "watcher_started": false
+  },
+  "checks": [
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\92d3e1cd569d737fdaf90aa039b284ef913f709a22803227b9ee39d05a7d4f38\\manifest.json",
+      "sha256": "92d3e1cd569d737fdaf90aa039b284ef913f709a22803227b9ee39d05a7d4f38",
+      "cache_key": "5df583c90678df3db447e0a7de3e992b0014a6fa58f94b3c4f4cdfdb798f5e51",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    {
+      "cache_key": "1856ad1945e9e65921861829939e1bf5f54a36213b93b57832561909b214d6ae",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2fdca9e3bb5416ec13a033c45825ba5cfda43f7f9d06b17cd381015abed5951e\\manifest.json",
+      "sha256": "2fdca9e3bb5416ec13a033c45825ba5cfda43f7f9d06b17cd381015abed5951e",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "e3754eb8a6ddcfd68b3d205a32b0410559bd8adba316efea61c7082276709135",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c17d62a94dfa121b7323591d07c461445de8cf57ef838a2e9b997977f8b88be0\\manifest.json",
+      "sha256": "c17d62a94dfa121b7323591d07c461445de8cf57ef838a2e9b997977f8b88be0",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "65a8af814ca3bcbe32c833f84cd455fb44705545446f3b60d407c4b33d1ab413",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a8aa0bfa0acc7fec7053e8a5c13f9401535e16b8455e64fd5eb53b6e0a1c06a3\\manifest.json",
+      "sha256": "a8aa0bfa0acc7fec7053e8a5c13f9401535e16b8455e64fd5eb53b6e0a1c06a3",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "dependency_audit": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1-dependency-audit.json",
+    "sha256": "90db201c8dd5e28a6e1a4ce21eed2cc61082c59dfa57ea05770f62f1f8d01b60"
+  },
+  "tests": {
+    "total": 2036,
+    "added": 47,
+    "skipped": 4
+  },
+  "groups": 27,
+  "modules": 144,
+  "dependencies": 480,
+  "default_workers": 2,
+  "source_scope": "tooling",
+  "proves_client_compatibility": false,
+  "new_jvm": 0,
+  "game_native_replays": 0,
+  "watcher_started": false,
+  "runtime_admitted": false,
+  "limits": [
+    "Conservative source closure retains shared dispatcher and unresolved dependencies.",
+    "Legacy v1 research keeps its frozen workflow; current update/scoped routes use the new dispatcher.",
+    "Full SHA endpoint comparisons do not provide an atomic filesystem snapshot.",
+    "Worker cases and cached cases are reported separately; cached cases are not newly executed tests.",
+    "Python/native library bytes are pinned; this is not a proof of game/client behavior."
+  ],
+  "receipt": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1-acceptance\\368a2fe5cf6f416ba3b198e83287c652ad6172831664416f435765b9873c8c2b\\manifest.json",
+    "sha256": "368a2fe5cf6f416ba3b198e83287c652ad6172831664416f435765b9873c8c2b"
+  }
+}

@@ -131,7 +131,10 @@ def run_update_checks(index, workflow, args, sha):
             results.append(dict(id=check['id'], state='requires_review', reason='Update check is not reviewed for offline execution'))
             continue
         try:
-            results.extend(workflow.run_checks(index, args, sha, None, check_ids=[check['id']]))
+            results.extend(index.extension('tooling-check-dispatch-v1').run_checks(
+                index, args, sha, None, check_ids=[check['id']], workflow=workflow)
+                if (Path(args.knowledge) / 'tooling-groups-v1.json').is_file()
+                else workflow.run_checks(index, args, sha, None, check_ids=[check['id']]))
         except (ValueError, OSError) as error:
             results.append(dict(id=check['id'], state='requires_review',
                 reason='Offline check inputs or execution rejected: ' + str(error)))

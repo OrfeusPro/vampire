@@ -11333,7 +11333,7 @@
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_update_automation.py",
-      "timeout_seconds": 1200,
+      "timeout_seconds": 1800,
       "dependencies": [
         "phone-exit/bots/test_vampir_update_auto_watch.py",
         "phone-exit/bots/test_vampir_prepared_bundle.py",
@@ -11807,7 +11807,14 @@
         "phone-exit/bots/test_vampir_knowledge_refresh_v2.py",
         "phone-exit/bots/test_vampir_knowledge_index.py",
         "phone-exit/bots/resource-tools/vampir/build-headless-sdk-config.py",
-        "phone-exit/bots/resource-tools/vampir/check-knowledge.py"
+        "phone-exit/bots/resource-tools/vampir/check-knowledge.py",
+        "phone-exit/bots/resource-tools/vampir/tooling-groups-v1.py",
+        "phone-exit/bots/resource-tools/vampir/tooling-group-worker-v1.py",
+        "phone-exit/bots/resource-tools/vampir/tooling-runtime-v1.py",
+        "phone-exit/bots/resource-tools/vampir/tooling-check-dispatch-v1.py",
+        "phone-exit/bots/test_vampir_tooling_groups_v1.py",
+        "phone-exit/bots/test_vampir_tooling_check_dispatch_v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/tooling-groups-v1.json"
       ],
       "artifact_dependencies": []
     }

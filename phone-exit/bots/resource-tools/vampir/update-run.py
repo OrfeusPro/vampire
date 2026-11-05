@@ -1044,7 +1044,11 @@ def run_locked(index, args, database, *, audited=None):
             if check_id in checked_this_run:return checked_this_run[check_id]
             definition=next(x for x in check_registry if x['id']==check_id)
             started=time.perf_counter()
-            try:checked=workflow.run_checks(index,args,sha,None,check_ids=[check_id])
+            try:
+                checked=(index.extension('tooling-check-dispatch-v1').run_checks(
+                    index,args,sha,None,check_ids=[check_id],workflow=workflow)
+                    if (Path(args.knowledge)/'tooling-groups-v1.json').is_file()
+                    else workflow.run_checks(index,args,sha,None,check_ids=[check_id]))
             except (ValueError,OSError) as error:checked=[dict(id=check_id,state='requires_review',reason=str(error))]
             record['stages']['check-'+check_id]=dict(state='completed',inputs=dict(source=sha,definition=definition),
                 key=fingerprint(workflow,checked),result=checked,outputs=outputs(index,checked,args.root),

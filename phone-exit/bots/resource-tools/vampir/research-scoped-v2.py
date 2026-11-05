@@ -131,9 +131,19 @@ def pin_checks(index, scope, checks):
         definition = report.get('definition')
         if not isinstance(definition, dict):
             raise ValueError('Проверка не содержит входы')
+        runtime_inputs = {}
+        if (outcome.get('id') == 'automatic-update-tooling'
+                and outcome.get('source_scope') == 'tooling'
+                and report.get('grouped_tooling') is True):
+            runtime_inputs = definition.get('runtime_inputs', {})
+            if (not isinstance(runtime_inputs, dict)
+                    or any(definition.get('artifacts', {}).get(name) != expected
+                           for name, expected in runtime_inputs.items())):
+                raise ValueError('Runtime групповой проверки не соответствует artifacts')
         for field in ('inputs', 'artifacts'):
             for path, expected in definition.get(field, {}).items():
-                kind = 'runtime' if Path(path).parent == Path(os.environ.get('SystemRoot', 'C:/Windows')) / 'System32' else 'check_input'
+                kind = ('runtime' if path in runtime_inputs or Path(path).parent ==
+                        Path(os.environ.get('SystemRoot', 'C:/Windows')) / 'System32' else 'check_input')
                 pin_input(scope, path, expected, kind=kind)
     return checks
 
@@ -142,7 +152,10 @@ def run_checks(index, args, scope, sha, identifier):
     workflow = index.extension('research-workflow')
     registry_path = Path(args.knowledge) / 'research-checks.json'
     before = index.digest(registry_path)
-    checks = workflow.run_checks(index, args, sha, identifier)
+    checks = (index.extension('tooling-check-dispatch-v1').run_checks(
+        index, args, sha, identifier, workflow=workflow)
+        if (Path(args.knowledge) / 'tooling-groups-v1.json').is_file()
+        else workflow.run_checks(index, args, sha, identifier))
     if index.digest(registry_path) != before:
         raise ValueError('Реестр проверок изменился во время исполнения')
     scope.pin(registry_path, before, kind='check_registry')
