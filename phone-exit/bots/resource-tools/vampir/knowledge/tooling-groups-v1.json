@@ -4561,6 +4561,9 @@
       "test_modules": [
         "test_vampir_account_console",
         "test_vampir_account_table",
+        "test_vampir_device_templates",
+        "test_vampir_bot_device_settings",
+        "test_vampir_character_connections",
         "test_vampir_nid_mail_code"
       ],
       "timeout_seconds": 120,
@@ -4635,7 +4638,12 @@
         "phone-exit/bots/vampir-headless/windows/nid-http-diagnostics.cs",
         "phone-exit/bots/vampir-headless/windows/verification-browser.cs",
         "phone-exit/bots/vampir-headless/windows/verification-browser.ps1",
-        "phone-exit/bots/resource-tools/vampir/webview2.lock.json"
+        "phone-exit/bots/resource-tools/vampir/webview2.lock.json",
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py",
+        "phone-exit/bots/test_vampir_device_templates.py",
+        "phone-exit/bots/test_vampir_bot_device_settings.py",
+        "phone-exit/bots/test_vampir_character_connections.py",
+        "phone-exit/bots/vampir-headless/start-account-console.ps1"
       ]
     }
   ],

@@ -22,6 +22,12 @@ def load(file):
     return tool
 
 
+def fixture_device():
+    return dict(cpu=dict(vendor='GenuineIntel', brand='Fixture CPU'),
+        windows=dict(major=10, minor=0, build=22631, product_type=1, suite_mask=256),
+        metadata={'I_DeviceModel': 'Fixture Desktop', 'I_NMRAM': '16GB', 'I_NMVGA': 'Fixture GPU'})
+
+
 class BotDeviceSettingsTests(unittest.TestCase):
     def test_presets_are_combined_and_default_does_not_change_device_or_route(self):
         presets = connection_presets()
@@ -31,7 +37,8 @@ class BotDeviceSettingsTests(unittest.TestCase):
             settings = AccountStore.assignment(dict(device_profile=preset['device_profile'],
                 device_settings=preset['device_settings'], socks_port=preset['socks_port']))
             validate(settings['device_settings'])
-        self.assertEqual({p['socks_port'] for p in presets}, {None, 1080, 1081})
+        self.assertEqual(len(presets), 1)
+        self.assertEqual({p['socks_port'] for p in presets}, {None})
 
     def test_distinct_persistent_identities_can_share_network_and_survive_restart(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -54,7 +61,7 @@ class BotDeviceSettingsTests(unittest.TestCase):
     def test_saved_template_survives_restart_without_copying_private_keys(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / 'fixture.sqlite3'; store = AccountStore(path, FixtureVault())
-            preset = connection_presets()[2]
+            preset = dict(device_settings=fixture_device())
             settings = dict(device_profile='custom', device_settings=dict(preset['device_settings'], identity=new_identity()), socks_port=1080)
             identifier = store.save_connection_preset('Рабочий пресет', settings)
             saved = AccountStore(path, FixtureVault()).connection_presets()
@@ -74,7 +81,7 @@ class BotDeviceSettingsTests(unittest.TestCase):
         with self.assertRaises(PermissionError): apply_binding(replace(binding, confirmation='required'), dict(identity=identity))
 
     def test_system_values_and_metadata_are_consistent_but_cannot_override_network_or_tokens(self):
-        settings = connection_presets()[1]['device_settings']
+        settings = fixture_device()
         cpu, windows = apply_system(None, None, settings)
         metadata = metadata_values(settings)
         self.assertEqual(metadata['I_NMCPU'], cpu.text())
@@ -89,7 +96,7 @@ class BotDeviceSettingsTests(unittest.TestCase):
 
     def test_worker_propagates_same_device_and_route_to_config_and_lobby(self):
         tool = load('account-worker')
-        device = dict(identity=new_identity(), **connection_presets()[1]['device_settings'])
+        device = dict(identity=new_identity(), **fixture_device())
         store, registry, cdn, lobby = MagicMock(), MagicMock(), MagicMock(), MagicMock()
         store.credential.return_value = ('fixture@unit.invalid', 'fixture-password', dict(
             enabled=True, region='JP', server_id=None, auth_flow='launcher', device_settings=device, socks_port=1081))

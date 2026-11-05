@@ -111,7 +111,7 @@ try {
         spec.loader.exec_module(tool)
         with tempfile.TemporaryDirectory() as folder:
             store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
-            identifier = store.save('fixture@gmail.com', assignment={'login_provider': 'google'})
+            identifier = store.save('fixture@gmail.com', assignment={'login_provider': 'google', 'device_name': 'DESKTOP-ABC1234'})
             runner, nid = MagicMock(), MagicMock()
             runner.load_inputs.return_value = SimpleNamespace(source_sha256='fixture-source',
                 binding=SimpleNamespace(device_key='fixture-sdk', nm_device_key='fixture-nm'))
@@ -119,7 +119,7 @@ try {
             modules = {'run-nid-sdk-sign-in': runner, 'nid-browser': nid}
             with patch.object(tool, 'load', side_effect=lambda name: modules[name]), \
                     patch.object(tool, 'scope', return_value=nullcontext()), patch.object(tool, 'check_source'), \
-                    patch.object(tool, 'check_google_web'), patch.object(tool, 'web_url', return_value='https://fixture.invalid'), \
+                    patch.object(tool, 'check_google_web'), patch.object(tool, 'web_url', return_value='https://fixture.invalid') as url, \
                     patch.object(tool, 'browser', return_value='verified') as browser, \
                     patch.object(store, 'credential', side_effect=AssertionError('No password for Google')), \
                     patch.object(store, 'reveal_password', side_effect=AssertionError('No IMAP for Google')):
@@ -128,6 +128,7 @@ try {
             self.assertEqual(runner.run.call_args.kwargs['password'], '')
             self.assertTrue(runner.run.call_args.kwargs['_capture'].keywords['manual_google'])
             self.assertEqual(browser.call_count, 2)
+            self.assertTrue(all(call.args[3] == 'DESKTOP-ABC1234' for call in url.call_args_list))
             self.assertTrue(all(call.kwargs['mailbox'] is None for call in browser.call_args_list))
 
     def test_current_pc_observation_copies_hardware_without_private_identity(self):
@@ -633,6 +634,36 @@ try {
                 store.registration_status(identifier, 'registered')
                 with self.assertRaises(ValueError): jobs.start(identifier, 'register', accept_required_terms=True)
                 popen.assert_not_called()
+
+    def test_excluded_account_refuses_jobs_and_verification_while_reserve_allows_manual_work(self):
+        spec = importlib.util.spec_from_file_location('console_device_use_modes', HERE / 'vampir-headless/account-manager.py')
+        tool = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tool)
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            identifier = store.save('fixture@vampir.top', password='fixture', mail_password='fixture',
+                assignment={'device_type': 'Не использовать', 'enabled': True})
+            jobs = tool.Jobs(store)
+            with patch.object(tool.subprocess, 'Popen') as popen:
+                for operation in ('servers', 'characters', 'start', 'create', 'prepare-sdk', 'register'):
+                    with self.assertRaisesRegex(ValueError, 'Не использовать'):
+                        jobs.start(identifier, operation)
+                with self.assertRaises(ValueError):
+                    jobs.verify_batch([identifier])
+                popen.assert_not_called()
+            store.save('fixture@vampir.top', assignment={'device_type': 'Не задействован', 'enabled': True})
+            verifier = MagicMock()
+            verifier.selected_profile.return_value = 'sdk-launcher:fixture'
+            with patch.object(tool.subprocess, 'Popen') as popen, patch.object(tool.threading, 'Thread'):
+                jobs.start(identifier, 'servers')
+                self.assertIn('--operation', popen.call_args.args[0])
+                self.assertIn('servers', popen.call_args.args[0])
+                jobs.jobs[identifier]['running'] = False
+                with patch.object(tool.importlib.util, 'spec_from_file_location'), \
+                        patch.object(tool.importlib.util, 'module_from_spec', return_value=verifier):
+                    jobs.verify_batch([identifier])
+                self.assertIn('verify', popen.call_args.args[0])
+                self.assertEqual(jobs.verification_snapshot()['active'], identifier)
 
     def test_registration_direct_release_requires_completion_and_closes_mailbox(self):
         spec = importlib.util.spec_from_file_location('registration_adapter_test', HERE / 'vampir-headless/register-nid-account.py')

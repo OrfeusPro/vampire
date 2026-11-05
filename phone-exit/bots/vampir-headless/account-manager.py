@@ -16,6 +16,7 @@ from vampir_core.character_creation_plan import CLASS_CHOICES, random_nickname
 from vampir_core.account_sdk_preparation import validate_sdk_preparation
 from vampir_core.account_readiness import account_readiness
 from vampir_core.bot_device_settings import connection_presets, new_identity
+from vampir_core.device_templates import new_windows_device_name
 
 
 class Jobs:
@@ -44,7 +45,7 @@ class Jobs:
         for identifier in identifiers:
             row = accounts.get(identifier)
             google = row and row.get('login_provider') == 'google'
-            if (not row or not row['enabled'] or self.jobs.get(identifier, {}).get('running')
+            if (not row or not row['enabled'] or row.get('device_type') == 'Не использовать' or self.jobs.get(identifier, {}).get('running')
                     or (google and row['socks_port'] is not None)
                     or (not google and (not row['mail_password_saved'] or not row['email'].endswith('@vampir.top')))):
                 raise ValueError('Выберите свободные включённые аккаунты: Google с прямым выходом либо Netmarble с паролем почты @vampir.top.')
@@ -133,28 +134,30 @@ class Jobs:
             raise ValueError('Unknown operation')
         if (operation == 'verify') != (_verification_profile is not None):
             raise ValueError('Verification requires an explicit queue')
-        account = next((a for a in self.store.accounts() if a['id'] == identifier), None)
-        if account is None:
-            raise ValueError('Unknown account')
-        if account.get('login_provider', 'email') == 'google':
-            if operation != 'verify':
-                raise ValueError('Для Google пока доступна верификация с ручным входом и кодом.')
-            if account['socks_port'] is not None:
-                raise ValueError('Ручной вход Google поддерживает прямой выход ПК.')
-            manual_sign_in = True
-        if not account.get('enabled', True):
-            raise ValueError('This account is disabled')
-        if operation == 'prepare-sdk':
-            validate_sdk_preparation(account, country=terms_country, locale=terms_locale, mode=basic_terms_mode)
-        elif any(value is not None for value in (terms_country, terms_locale, basic_terms_mode)):
-            raise ValueError('Terms query is only available for SDK preparation')
-        if operation == 'create' and (account['create_class'] != 'Gunner' or account['server_id'] is None
-                or account['character_index'] is not None or account['character_key'] is not None):
-            raise ValueError('Сначала сохраните сервер и класс Carnage без назначенного персонажа.')
-        if operation == 'register' and (accept_required_terms is not True or (not manual_mail_code and not account['mail_password_saved'])
-                or account['registration_status'] in ('registered', 'in_progress', 'email_in_use', 'nid_verified', 'sdk_created')):
-            raise ValueError('Registration requires a mailbox password and explicit terms acceptance')
         with self.lock:
+            account = next((a for a in self.store.accounts() if a['id'] == identifier), None)
+            if account is None:
+                raise ValueError('Unknown account')
+            if account.get('device_type') == 'Не использовать':
+                raise ValueError('Аккаунт отмечен «Не использовать». Сначала измените его режим в настройках.')
+            if account.get('login_provider', 'email') == 'google':
+                if operation != 'verify':
+                    raise ValueError('Для Google пока доступна верификация с ручным входом и кодом.')
+                if account['socks_port'] is not None:
+                    raise ValueError('Ручной вход Google поддерживает прямой выход ПК.')
+                manual_sign_in = True
+            if not account.get('enabled', True):
+                raise ValueError('This account is disabled')
+            if operation == 'prepare-sdk':
+                validate_sdk_preparation(account, country=terms_country, locale=terms_locale, mode=basic_terms_mode)
+            elif any(value is not None for value in (terms_country, terms_locale, basic_terms_mode)):
+                raise ValueError('Terms query is only available for SDK preparation')
+            if operation == 'create' and (account['create_class'] != 'Gunner' or account['server_id'] is None
+                    or account['character_index'] is not None or account['character_key'] is not None):
+                raise ValueError('Сначала сохраните сервер и класс Carnage без назначенного персонажа.')
+            if operation == 'register' and (accept_required_terms is not True or (not manual_mail_code and not account['mail_password_saved'])
+                    or account['registration_status'] in ('registered', 'in_progress', 'email_in_use', 'nid_verified', 'sdk_created')):
+                raise ValueError('Registration requires a mailbox password and explicit terms acceptance')
             if operation != 'verify' and self.is_reserved(identifier):
                 raise ValueError('Account is in the verification queue')
             if self.jobs.get(identifier, {}).get('running'):
@@ -180,6 +183,8 @@ class Jobs:
             job = dict(process=process, running=True, active=False, status='connecting',
                 stage='starting', message='Подготовка подключения.', characters=[],
                 region=account['region'], server_id=account['server_id'], account_id=identifier, operation=operation,
+                device_fingerprint=self.store._fingerprint(account),
+                device_template_id=account.get('device_template_id'), device_template_revision=account.get('device_template_revision'),
                 manual_mail_code=manual_mail_code, manual_sign_in=manual_sign_in, code_sent=False)
             self.jobs[identifier] = job
             threading.Thread(target=self._watch, args=(job,), daemon=True).start()
@@ -247,6 +252,7 @@ class Jobs:
                          manual_retry=job.get('manual_sign_in_available', False))
             self._save_verification()
             return
+        self.store.record_device_verification(identifier, job['device_fingerprint'])
         queue['completed'].append(identifier)
         try:
             self._next_verification()
@@ -304,6 +310,8 @@ class Jobs:
 
 def server(store, *, port=17949):
     jobs, token = Jobs(store), secrets.token_urlsafe(32)
+    # One server generation owns matching UI/API versions until its next launch.
+    assets = {name: (HERE / 'console' / name).read_bytes() for name in ('index.html', 'console.js', 'console.css')}
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args):
             pass
@@ -333,7 +341,7 @@ def server(store, *, port=17949):
                 return self.response(403, dict(error='Forbidden'))
             if self.path in ('/', '/console.js', '/console.css'):
                 filename = {'/': 'index.html', '/console.js': 'console.js', '/console.css': 'console.css'}[self.path]
-                data = (HERE / 'console' / filename).read_bytes()
+                data = assets[filename]
                 if filename == 'index.html':
                     data = data.replace(b'__CONSOLE_TOKEN__', token.encode('ascii'))
                 return self.response(200, data, {'/': 'text/html; charset=utf-8', '/console.js': 'text/javascript; charset=utf-8', '/console.css': 'text/css; charset=utf-8'}[self.path])
@@ -344,7 +352,8 @@ def server(store, *, port=17949):
                 verification=jobs.verification_snapshot(),
                 character_lists=lists,
                 readiness={a['id']: account_readiness(a, catalogs, lists) for a in accounts},
-                connection_presets=connection_presets() + store.connection_presets(),
+                connection_presets=connection_presets()[:1] + store.connection_presets(),
+                device_templates=store.device_templates(),
                 character_connections=store.character_connections(),
                 creation_attempts=store.creation_attempts(),
                 creation_classes=[dict(key=key, label=label) for key, label in CLASS_CHOICES],
@@ -372,7 +381,8 @@ def server(store, *, port=17949):
                 if self.path == '/api/nickname':
                     return self.response(200, dict(nickname=random_nickname(a.get('create_nickname', '') for a in store.accounts())))
                 if self.path == '/api/device-identity':
-                    return self.response(200, dict(identity=new_identity()))
+                    return self.response(200, dict(identity=new_identity(),
+                        device_name=new_windows_device_name({t['device_name'] for t in store.device_templates()})))
                 if self.path == '/api/current-pc':
                     if body:
                         raise ValueError('Current PC observation does not accept settings')
@@ -380,6 +390,30 @@ def server(store, *, port=17949):
                     module = importlib.util.module_from_spec(spec)
                     spec.loader.exec_module(module)
                     return self.response(200, module.observation())
+                if self.path == '/api/device-template':
+                    with jobs.lock:
+                        identifier = body.get('id')
+                        members = next((t['members'] for t in store.device_templates() if t['id'] == identifier), [])
+                        if any(jobs.jobs.get(a['id'], {}).get('running') or jobs.is_reserved(a['id']) for a in members):
+                            raise ValueError('Сначала завершите работу аккаунтов этого устройства.')
+                        identifier = store.save_device_template(identifier=identifier, name=body['name'],
+                            device_name=body['device_name'], settings=body['settings'], expected_revision=body.get('revision'))
+                    return self.response(200, dict(id=identifier))
+                if self.path == '/api/assign-device':
+                    with jobs.lock:
+                        if jobs.jobs.get(body['account_id'], {}).get('running') or jobs.is_reserved(body['account_id']):
+                            raise ValueError('Сначала завершите работу этого аккаунта.')
+                        store.assign_device_template(body['account_id'], body.get('template_id'))
+                    return self.response(200, dict(ok=True))
+                if self.path == '/api/generate-devices':
+                    with jobs.lock:
+                        if any(job.get('running') for job in jobs.jobs.values()) or jobs.verification_snapshot().get('state') in ('running', 'cancelling'):
+                            raise ValueError('Генерация доступна после завершения работающих сессий.')
+                        spec = importlib.util.spec_from_file_location('console_device_baseline', HERE / 'current-pc.py')
+                        module = importlib.util.module_from_spec(spec)
+                        spec.loader.exec_module(module)
+                        result = store.generate_device_templates(module.observation()['device_settings'])
+                    return self.response(200, result)
                 if self.path == '/api/connection-preset':
                     return self.response(200, dict(id=store.save_connection_preset(body['name'], body['settings'])))
                 if self.path == '/api/reveal':

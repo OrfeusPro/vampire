@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "checked_local_date": "2026-11-06",
+  "timezone": "Europe/Kiev",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "scope": "Local device templates, account table and existing SDK/web adapter; no new online authentication",
+  "tooling": {
+    "report": "F:/PhoneExit Resources/Vampir/knowledge/tooling-groups-v1/aggregate-results/77ff7057d12b4a92dc217f46bd517ce22562a31c5705d81ad01eaba0c0ec8369/manifest.json",
+    "sha256": "77ff7057d12b4a92dc217f46bd517ce22562a31c5705d81ad01eaba0c0ec8369",
+    "state": "passed",
+    "first": {
+      "executed_groups": 1,
+      "cached_groups": 27,
+      "executed_cases": 61,
+      "cached_cases": 2059,
+      "cached_skips": 4,
+      "duration_seconds": 28.413251499994658
+    },
+    "warm": {
+      "executed_groups": 0,
+      "cached_groups": 28,
+      "executed_cases": 0,
+      "cached_cases": 2120,
+      "cached_skips": 4,
+      "duration_seconds": 13.69751919992268
+    }
+  },
+  "source_check": {
+    "id": "sdk-runtime-launcher-11316",
+    "report": "F:/PhoneExit Resources/Vampir/knowledge/check-results/8a11af877ffddbcf64d76b29ca9dff05148c2355dc5d75bacab9c6f343d49f07/manifest.json",
+    "sha256": "8a11af877ffddbcf64d76b29ca9dff05148c2355dc5d75bacab9c6f343d49f07",
+    "state": "passed"
+  },
+  "collection": {
+    "report": "F:/PhoneExit Resources/Vampir/knowledge/research-scoped-v2-collections/78024d8a9a003af49f49b4f0da1def7939b6e4eb735515f4fde4696bc29f45dd/manifest.json",
+    "state": "reused",
+    "new_jvm": 0
+  },
+  "local_data": {
+    "accounts": 30,
+    "templates": 15,
+    "max_accounts_per_template": 2,
+    "planned_viper": 8,
+    "excluded_test_accounts": 4,
+    "game_commands_sent": 0
+  },
+  "browser": {
+    "column_filters": "Viper + EU Canon 1 = 4, Viper = 8",
+    "excluded_checkboxes_disabled": 4,
+    "settings_saved_during_ui_check": false
+  },
+  "custom_device_online_verified": false,
+  "runtime_admitted": false
+}

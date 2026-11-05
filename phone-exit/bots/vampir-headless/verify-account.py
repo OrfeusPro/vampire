@@ -7,7 +7,6 @@ import importlib.util
 import json
 from pathlib import Path
 import re
-import socket
 import subprocess
 import sys
 import threading
@@ -222,7 +221,7 @@ def verify(store, account, *, selector=None, manual_sign_in=False, progress=lamb
     private_key = '|'.join((email, prepared.binding.device_key, prepared.binding.nm_device_key, str(port)))
     directory = HERE / '.local/verification-browser' / hashlib.sha256(private_key.encode()).hexdigest()[:32]
     for purpose in data.verification_steps:
-        url = web_url(purpose, prepared, data, socket.gethostname()[:20])
+        url = web_url(purpose, prepared, data, settings.get('device_name') or 'Vampir PC')
         progress('verify_' + purpose)
         mailbox = None if google else mail.RegistrationMailbox(email, mail_password,
             purpose=purpose if purpose == 'device-registration' else 'account-protection')

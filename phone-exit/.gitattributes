@@ -650,3 +650,10 @@ bots/resource-tools/vampir/knowledge/google-verification-web-current.json text e
 bots/vampir-headless/current-pc.py text eol=lf
 bots/vampir-headless/windows/nid-google-bridge.cs text eol=lf
 bots/vampir-shared/vampir_core/nid_google.py text eol=lf
+
+# Shared device-template inputs retain byte-identical cache evidence.
+bots/vampir-shared/vampir_core/device_templates.py text eol=lf
+bots/test_vampir_device_templates.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SHARED-DEVICE-TEMPLATES.md text eol=lf
+bots/vampir-headless/BOT-ENTRY-FLOW.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/SHARED-DEVICE-TEMPLATES-VALIDATION.json text eol=lf

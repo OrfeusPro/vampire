@@ -3918,7 +3918,8 @@
         "phone-exit/bots/vampir-headless/account-manager.py",
         "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
         "phone-exit/bots/vampir-headless/console/index.html",
-        "phone-exit/bots/vampir-headless/console/console.js"
+        "phone-exit/bots/vampir-headless/console/console.js",
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py"
       ]
     },
     {
@@ -4002,7 +4003,8 @@
         "phone-exit/bots/vampir-headless/account-manager.py",
         "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
         "phone-exit/bots/vampir-headless/console/index.html",
-        "phone-exit/bots/vampir-headless/console/console.js"
+        "phone-exit/bots/vampir-headless/console/console.js",
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py"
       ]
     },
     {
@@ -4484,7 +4486,8 @@
         "phone-exit/bots/vampir-headless/console/console.js",
         "phone-exit/bots/test_vampir_account_console.py",
         "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py",
-        "phone-exit/bots/vampir-shared/vampir_core/nid_google.py"
+        "phone-exit/bots/vampir-shared/vampir_core/nid_google.py",
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py"
       ]
     },
     {
@@ -5590,7 +5593,8 @@
             "phone-exit/bots/resource-tools/vampir/knowledge/verification-web-current.json",
             "phone-exit/bots/vampir-shared/vampir_core/nid_google.py",
             "phone-exit/bots/resource-tools/vampir/knowledge/google-verification-web-current.json",
-            "phone-exit/bots/vampir-headless/windows/nid-google-bridge.cs"
+            "phone-exit/bots/vampir-headless/windows/nid-google-bridge.cs",
+            "phone-exit/bots/vampir-shared/vampir_core/device_templates.py"
           ],
           "artifact_dependencies": [
             "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-82316fcdff9b/details.json"
@@ -12402,7 +12406,12 @@
         "phone-exit/bots/vampir-headless/windows/system-inputs.vcxproj",
         "phone-exit/bots/vampir-headless/windows/verification-browser.cs",
         "phone-exit/bots/vampir-headless/windows/verification-browser.ps1",
-        "phone-exit/bots/vampir-shared/vampir_core/windows_cpu.py"
+        "phone-exit/bots/vampir-shared/vampir_core/windows_cpu.py",
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py",
+        "phone-exit/bots/test_vampir_bot_device_settings.py",
+        "phone-exit/bots/test_vampir_character_connections.py",
+        "phone-exit/bots/test_vampir_device_templates.py",
+        "phone-exit/bots/vampir-headless/start-account-console.ps1"
       ],
       "artifact_dependencies": []
     },

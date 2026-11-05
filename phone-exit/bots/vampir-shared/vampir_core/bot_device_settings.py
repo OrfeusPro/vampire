@@ -9,34 +9,9 @@ KEYS = ('device_key', 'nm_device_key', 'nid_device_key')
 METADATA_FIELDS = ('I_DeviceModel', 'I_DeviceOSVersion', 'I_TimeZone', 'I_LanguageCD',
                    'I_NMCPU', 'I_NMRAM', 'I_NMVGA')
 
-DEVICE_PRESETS = (
-    dict(id='current-pc', name='Текущий ПК · наблюдаемые данные', settings={}),
-    dict(id='desktop-intel', name='Пример · Windows desktop / Intel', settings=dict(
-        cpu=dict(vendor='GenuineIntel', brand='Intel Core i5-12400'),
-        windows=dict(major=10, minor=0, build=22631, product_type=1, suite_mask=256),
-        metadata={'I_DeviceModel': 'Desktop', 'I_NMRAM': '16GB', 'I_NMVGA': 'NVIDIA GeForce RTX 3060'})),
-    dict(id='desktop-amd', name='Пример · Windows desktop / AMD', settings=dict(
-        cpu=dict(vendor='AuthenticAMD', brand='AMD Ryzen 5 5600'),
-        windows=dict(major=10, minor=0, build=19045, product_type=1, suite_mask=256),
-        metadata={'I_DeviceModel': 'Desktop', 'I_NMRAM': '32GB', 'I_NMVGA': 'AMD Radeon RX 6600'})),
-    dict(id='laptop', name='Пример · Windows laptop', settings=dict(
-        cpu=dict(vendor='GenuineIntel', brand='Intel Core i7-1165G7'),
-        windows=dict(major=10, minor=0, build=22631, product_type=1, suite_mask=256),
-        metadata={'I_DeviceModel': 'Laptop', 'I_NMRAM': '16GB', 'I_NMVGA': 'Intel Iris Xe Graphics'})),
-)
-NETWORK_PRESETS = (
-    dict(id='direct', name='Прямой выход ПК · общий IP допустим', socks_port=None),
-    dict(id='phone-exit', name='Phone Exit · SOCKS 127.0.0.1:1080', socks_port=1080),
-    dict(id='local-1081', name='Локальный SOCKS 127.0.0.1:1081', socks_port=1081),
-)
-
-
 def connection_presets():
     return [dict(id='default', name='По умолчанию · текущий ПК / прямой выход',
-                 device_profile='current-pc', device_settings={}, socks_port=None)] + [
-        dict(id=profile['id'] + '-' + network['id'], name=profile['name'] + ' / ' + network['name'],
-             device_profile='custom', device_settings=profile['settings'], socks_port=network['socks_port'])
-        for profile in DEVICE_PRESETS[1:] for network in NETWORK_PRESETS]
+                 device_profile='current-pc', device_settings={}, socks_port=None)]
 
 
 def new_identity():

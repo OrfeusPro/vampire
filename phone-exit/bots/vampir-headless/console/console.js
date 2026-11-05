@@ -1,15 +1,15 @@
 'use strict';
 const token=document.querySelector('meta[name="console-token"]').content;
 const el=id=>document.getElementById(id);
-let snapshot={accounts:[],jobs:{},catalogs:{}}, selected=null, initial=true, currentPc=null;
+let snapshot={accounts:[],jobs:{},catalogs:{}}, selected=null, initial=true, currentPc=null, accountDevice={device_profile:'current-pc',device_settings:{}};
 const labels={active:'В мире',connecting:'Подключение',stopped:'Остановлен',error:'Ошибка',needs_character:'Нужен персонаж',disabled:'Отключён'};
 const stages={sdk_fetch_player:'Проверка игрового профиля',sdk_basic_terms:'Чтение основных условий',sdk_individual_terms:'Чтение индивидуальных условий',sdk_first_profile:'Первое создание профиля SDK',registration_form:'Регистрация · отдельное окно Netmarble',registration_code:'Ожидание нового письма с кодом',configuration:'Загрузка конфигурации',source_validation:'Проверка версии',lobby_preparation:'Подготовка лобби',nid_browser:'Вход Netmarble · отдельное окно',sdk_sign_in:'Авторизация SDK',sdk_launcher_token:'Получение SDK token',sdk_launcher_sign_in:'Вход SDK',lobby_connect:'Подключение к лобби',lobby_exchange:'Обмен с лобби',game_target_selection:'Проверка сервера',selected_lobby_login:'Вход в выбранное лобби',game_system_inputs:'Подготовка клиента',game_connect:'Подключение к игре',game_login_preparation:'Подготовка входа',game_login_exchange:'Вход и получение персонажей',character_creation:'Создание персонажа'};
 async function api(path,body){const response=await fetch(path,{method:body?'POST':'GET',headers:{'X-Console-Token':token,...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})});const data=await response.json();if(!response.ok)throw Error(data.error||'Операция не выполнена');return data;}
-function notice(text){el('notice').textContent=text;}
+function notice(text){el('notice').textContent=text;el('toast').textContent=text;}
 function option(value,text){const node=document.createElement('option');node.value=value;node.textContent=text;return node;}
 function current(){return snapshot.accounts.find(a=>a.id===selected);}
 function isGoogle(account){return account?.login_provider==='google';}
-function runnableAccounts(){return snapshot.accounts.filter(a=>a.enabled!==false&&!isGoogle(a));}
+function runnableAccounts(){return snapshot.accounts.filter(a=>a.enabled!==false&&!isGoogle(a)&&!['Не задействован','Не использовать'].includes(deviceType(a)));}
 function renderProvider(){
  const google=el('login-provider').value==='google',running=!!snapshot.jobs[selected]?.running;
  el('login-provider').disabled=running||!!selected;
@@ -18,15 +18,31 @@ function renderProvider(){
  if(google)for(const id of ['start','servers','characters','create','register','prepare-sdk','manual-sign-in','auth-flow'])el(id).disabled=true;
 }
 el('login-provider').onchange=()=>{el('password').value='';el('mail-password').value='';render();};
+function deviceType(account){return account.device_type||(account.reported_device==='UgPhone'?'UgPhone':'Бот');}
+const typeClass={'Телефон':'phone','ПК':'pc','UgPhone':'ugphone','LdCloud':'ldcloud','Бот':'bot','Не задействован':'reserve','Не использовать':'excluded'};
+function accountNumber(account){return snapshot.accounts.findIndex(a=>a.id===account.id)+1;}
+function onDevice(account){return ['Телефон','ПК','UgPhone','LdCloud'].includes(deviceType(account));}
+function characterLabel(account){
+ const list=snapshot.character_lists?.[account.id+'|'+account.region+'|'+account.server_id]?.characters||[];
+ const character=account.character_key?list.find(c=>c.key===account.character_key):(list.length===1?list[0]:null);
+ return character?.name||account.reported_character_name||(account.create_nickname?account.create_nickname+' · план':'—');
+}
+function renderAvailability(){
+ const excluded=el('account-device-type').value==='Не использовать';
+ if(excluded)el('enabled').checked=false;
+ el('enabled').disabled=excluded||!!snapshot.jobs[selected]?.running;
+ el('device-use-hint').textContent=excluded?'Не запускается и не верифицируется. Чтобы вернуть аккаунт в работу, выберите другой тип и включите его.':'Не задействован'===el('account-device-type').value?'Резерв: исключён из общего запуска. Ручной запуск и верификация доступны.':'Тип не меняет Windows-параметры шаблона и сетевой маршрут.';
+}
+el('account-device-type').onchange=renderAvailability;
 function rosterAccounts(){
  return [
-  ...snapshot.accounts.filter(account=>!account.active_game_account),
-  ...snapshot.accounts.filter(account=>account.active_game_account),
+  ...snapshot.accounts.filter(account=>!onDevice(account)),
+  ...snapshot.accounts.filter(account=>onDevice(account)),
  ];
 }
 function servers(value){const catalog=snapshot.catalogs[el('region').value];el('server').replaceChildren(option('','Выберите сервер'));for(const server of catalog?.servers||[]){const node=option(server.id,server.name+(server.excluded?' · вход ограничен':''));node.disabled=server.excluded;el('server').append(node);}if(value&&!Array.from(el('server').options).some(o=>o.value===String(value)))el('server').append(option(value,'Сервер '+value+(catalog?' · отсутствует в каталоге':' · обновите каталог')));el('server').value=value??'';el('catalog-age').textContent=catalog?'Каталог: '+new Date(catalog.observed_utc).toLocaleString('ru-RU'): 'Каталог ещё не загружен';}
 function characters(value){const cached=snapshot.character_lists?.[selected+'|'+el('region').value+'|'+el('server').value];const job=snapshot.jobs[selected];const sameTarget=job?.region===el('region').value&&String(job?.server_id)===el('server').value;const rows=cached?.characters||(sameTarget?(job?.characters||[]):[]);el('characters-age').textContent=cached?'Подтверждённый список: '+new Date(cached.observed_utc).toLocaleString('ru-RU'):'Подтверждённый список пока не сохранён';el('character').replaceChildren(option('','Не назначен'));for(const row of rows){const node=option(row.index,row.name||'Персонаж '+(row.index+1));node.dataset.key=row.key;el('character').append(node);}if(value!==null&&value!==undefined&&!rows.some(r=>r.index===value)){const node=option(value,'Слот '+(value+1)+' · прочитайте персонажей');node.dataset.key=current()?.character_key||'';el('character').append(node);}el('character').value=value??'';}
-function edit(account){selected=account?.id||null;el('heading').textContent=account?.email||'Новый аккаунт';el('email').value=account?.email||'';el('email').readOnly=!!account;el('password').value='';el('mail-password').value='';el('terms').checked=false;el('manual-mail-code').checked=false;el('manual-sign-in').checked=false;el('registration-code').value='';el('sdk-country').value='';el('sdk-locale').value='';el('sdk-terms-mode').value='';el('login-provider').value=account?.login_provider||'email';el('enabled').checked=account?.enabled!==false;el('label').value=account?.label||'';el('device').value=account?.device_profile||'current-pc';editConnection(account);el('auth-flow').value=account?.auth_flow||'launcher';el('region').value=account?.region||'EU';el('nickname').value=account?.create_nickname||'';el('random-nickname').checked=account?.create_random_nickname!==false;el('create-class').replaceChildren(...(snapshot.creation_classes||[]).map(c=>option(c.key,c.label)));el('create-class').value=account?.create_class||'Gunner';servers(account?.server_id);characters(account?.character_index);render();}
+function edit(account){selected=account?.id||null;el('heading').textContent=account?.email||'Новый аккаунт';el('email').value=account?.email||'';el('email').readOnly=!!account;el('password').value='';el('mail-password').value='';el('password-details').open=!account;el('terms').checked=false;el('manual-mail-code').checked=false;el('manual-sign-in').checked=false;el('registration-code').value='';el('sdk-country').value='';el('sdk-locale').value='';el('sdk-terms-mode').value='';el('login-provider').value=account?.login_provider||'email';el('enabled').checked=account?.enabled!==false;el('label').value=account?.label||'';editConnection(account);el('auth-flow').value=account?.auth_flow||'launcher';el('region').value=account?.region||'EU';el('nickname').value=account?.create_nickname||'';el('random-nickname').checked=account?.create_random_nickname!==false;el('create-class').replaceChildren(...(snapshot.creation_classes||[]).map(c=>option(c.key,c.label)));el('create-class').value=account?.create_class||'Gunner';servers(account?.server_id);characters(account?.character_index);render();renderTemplateSelection(account?.device_template_id||'');}
 
 const shownPasswords=new Map();
 const verificationSelection=new Set();
@@ -78,74 +94,125 @@ el('resume-verification').onclick=async()=>{
 };
 const registrationLabels={unknown:'Netmarble не проверен',in_progress:'Регистрация идёт',unconfirmed:'Регистрация не подтверждена',registered:'Netmarble зарегистрирован',email_in_use:'Почта занята в Netmarble',nid_verified:'Вход Netmarble подтверждён',sdk_created:'Профиль SDK подтверждён'};
 function passwordCell(account,kind){
- const cell=document.createElement('td'),wrap=document.createElement('div'),text=document.createElement('span'),button=document.createElement('button');
+ const cell=document.createElement('div'),wrap=document.createElement('div'),text=document.createElement('span'),button=document.createElement('button');cell.className='password-card';const label=document.createElement('label');label.textContent=kind==='mail'?'Пароль почты':'Пароль Netmarble';cell.append(label);
  const key=account.id+':'+kind,visible=shownPasswords.has(key),saved=kind==='mail'?account.mail_password_saved:account.password_saved;
  wrap.className='password-cell';text.textContent=visible?shownPasswords.get(key):(saved?'••••••••':'—');
  button.type='button';button.textContent=visible?'◉':'👁';button.disabled=!saved;
  button.setAttribute('aria-label',(visible?'Скрыть':'Показать')+' пароль '+(kind==='mail'?'почты':'Netmarble')+' '+account.email);
- button.onclick=async()=>{if(shownPasswords.has(key)){shownPasswords.delete(key);renderRoster();return;}button.disabled=true;try{const result=await api('/api/reveal',{id:account.id,kind});if(document.hasFocus()){shownPasswords.set(key,result.password);renderRoster();}}catch(error){notice(error.message);}finally{button.disabled=false;}};
+ button.onclick=async()=>{if(shownPasswords.has(key)){shownPasswords.delete(key);renderRoster();return;}button.disabled=true;try{const result=await api('/api/reveal',{id:account.id,kind});if(document.hasFocus()){shownPasswords.set(key,result.password);renderRoster();}}catch(error){notice(error.message);}finally{button.disabled=!saved;}};
  wrap.append(text,button);cell.append(wrap);return cell;
 }
-function renderRoster(){
- const body=el('roster-body');body.replaceChildren();
+function canVerify(account){
  const queue=snapshot.verification;
- const active=queue?.state==='running'||queue?.state==='cancelling';
- for(const account of rosterAccounts()){
-  const row=document.createElement('tr'),email=document.createElement('td'),link=document.createElement('button');
-  if(account.active_game_account) row.className='active-game-account';
-  const checkbox=document.createElement('input');
-  checkbox.type='checkbox';checkbox.className='verify-checkbox';
-  checkbox.setAttribute('aria-label','Выбрать для верификации '+account.email);
-  checkbox.checked=verificationSelection.has(account.id);
-  checkbox.disabled=active||account.enabled===false||!!snapshot.jobs[account.id]?.running||
-   (isGoogle(account)?account.socks_port!=null:(!account.email.endsWith('@vampir.top')||!account.mail_password_saved));
-  checkbox.title=isGoogle(account)?'Ручной вход Google и код Gmail; требуется прямой выход ПК.':'Верификация с кодом из почты @vampir.top';
-  checkbox.onchange=()=>{
-   if(checkbox.checked) verificationSelection.add(account.id);
-   else verificationSelection.delete(account.id);
-   renderVerification();
-  };
-  link.className='email-link';link.type='button';link.textContent=account.email;link.onclick=()=>edit(account);email.append(checkbox,link);row.append(email,passwordCell(account,'mail'),passwordCell(account,'netmarble'));
-  const list=snapshot.character_lists?.[account.id+'|'+account.region+'|'+account.server_id]?.characters||[];
-  const character=account.character_key?list.find(c=>c.key===account.character_key):(list.length===1?list[0]:null);
-  const server=snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id);
-  const job=snapshot.jobs[account.id],registrationStatus=registrationLabels[account.registration_status]||'Не проверен';
-  let sessionStatus=queue?.completed.includes(account.id)?labels.verified:registrationStatus;
-  if(job) sessionStatus=job.operation==='register'?(job.running?(job.stage==='registration_code'?'Регистрация · ожидание кода':'Регистрация Netmarble'):registrationStatus+' · '+(labels[job.status]||job.status)):(labels[job.status]||job.status);
-  if(active&&queue.pending.includes(account.id)) sessionStatus='В очереди на верификацию';
-  if(active&&job?.stage==='manual_nid_browser'&&job.running) sessionStatus='Ожидает ручного входа';
-  const mailStatus=({created:'Почта создана',verified:'Почта проверена',unconfirmed:'Создание почты не подтверждено',error:'Ошибка почты'})[account.mail_status];
-  const status=isGoogle(account)?'Google · '+(job||queue?.completed.includes(account.id)?sessionStatus:'Ручной вход и код'):(account.mail_status==='planned'?'Ящик ещё не создан':(mailStatus?mailStatus+' · ':'')+sessionStatus);
-  const attempt=(snapshot.creation_attempts||[]).filter(a=>a.account_id===account.id&&a.region===account.region&&a.server_id===account.server_id).at(-1);
-  const name=document.createElement('td');
-  name.textContent=character?.name||account.reported_character_name||
-   (attempt?.character_name?attempt.character_name+' · не подтверждён списком':'—');
-  if(!character?.name&&account.reported_character_name) name.title='Ник из списка владельца аккаунтов';
-  row.append(name);
-  for(const value of [snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,account.region+' · '+(server?.name||account.server_id||'Не выбран'),account.reported_device||'—',status]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}
-  body.append(row);
- }
- renderVerification();
+ return queue?.state!=='running'&&queue?.state!=='cancelling'&&account.enabled!==false&&deviceType(account)!=='Не использовать'&&!snapshot.jobs[account.id]?.running&&
+  (isGoogle(account)?account.socks_port==null:(account.email.endsWith('@vampir.top')&&account.mail_password_saved));
 }
-window.addEventListener('blur',()=>{shownPasswords.clear();renderRoster();});
+function accountStatus(account){
+ const job=snapshot.jobs[account.id],queue=snapshot.verification;
+ const same=!account.device_template_id||(job?.device_template_id===account.device_template_id&&job?.device_template_revision===account.device_template_revision);
+ if(job?.running)return {text:stages[job.stage]||labels[job.status]||job.status,kind:'connecting'};
+ if(deviceType(account)==='Не использовать')return {text:'Не использовать',kind:'excluded'};
+ if(account.enabled===false)return {text:'Отключён',kind:'disabled'};
+ if(deviceType(account)==='Не задействован')return {text:'Резерв · ручной запуск',kind:'reserve'};
+ if(queue?.state==='running'&&queue.pending.includes(account.id))return {text:'В очереди',kind:'connecting'};
+ if(account.device_verified||(!account.device_template_id&&queue?.completed.includes(account.id)))return {text:'Верифицирован',kind:'verified'};
+ if(same&&job?.status==='error')return {text:job.message||'Ошибка входа',kind:'error'};
+ if(account.device_template_id)return {text:'Новое устройство · вход не проверен',kind:'stopped'};
+ if(account.mail_status==='planned')return {text:'Заготовка',kind:'stopped'};
+ return {text:isGoogle(account)?'Google · ручной вход':(registrationLabels[account.registration_status]||'Не проверен'),kind:'stopped'};
+}
+function cellLink(text,handler,title=''){
+ const node=document.createElement('button');node.type='button';node.className='cell-link';node.textContent=text;node.onclick=handler;node.title=title;return node;
+}
+let rosterSort={key:null,direction:1};
+const collator=new Intl.Collator('ru',{numeric:true,sensitivity:'base'});
+function sortValue(account,key){
+ return ({number:accountNumber(account),account:account.email,character:characterLabel(account),class:snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,server:account.region+' · '+(snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id)?.name||account.server_id||''),device:deviceType(account),template:account.device_template_name||'',
+  'device-name':account.device_name||'',status:accountStatus(account).text})[key]||'';
+}
+for(const key of ['number','account','character','class','server','device','template','device-name','status'])el('sort-'+key).onclick=()=>{rosterSort={key,direction:rosterSort.key===key?-rosterSort.direction:1};renderRoster();};
+const columnKeys=['number','account','character','class','server','device','template','device-name','status'];
+const selectColumnKeys=['class','server','device','template','status'];
+function columnValue(account,key){return String(sortValue(account,key)||'—');}
+function renderColumnFilters(){
+ for(const key of selectColumnKeys){
+  const select=el('filter-'+key),chosen=select.value;
+  const values=[...new Set(snapshot.accounts.map(a=>columnValue(a,key)))].sort(collator.compare);
+  const signature=JSON.stringify([values,chosen&&!values.includes(chosen)?chosen:null]);
+  if(select.dataset.optionsSignature===signature)continue;
+  select.replaceChildren(option('','Все'),...values.map(value=>option(value,value)));
+  if(chosen&&!values.includes(chosen))select.append(option(chosen,chosen+' · нет в снимке'));
+  select.value=chosen;select.dataset.optionsSignature=signature;
+ }
+}
+for(const key of columnKeys)el('filter-'+key)[selectColumnKeys.includes(key)?'onchange':'oninput']=()=>renderRoster();
+el('reset-column-filters').onclick=()=>{for(const key of columnKeys)el('filter-'+key).value='';renderRoster();};
+function visibleAccounts(){
+ const query=el('search').value.trim().toLowerCase(),filter=el('roster-filter').value||'all';
+ const rows=rosterAccounts().filter(a=>{
+  if(filter==='active'&&!onDevice(a)||filter==='planned'&&deviceType(a)!=='Бот'||filter==='reserve'&&deviceType(a)!=='Не задействован'||filter==='excluded'&&deviceType(a)!=='Не использовать'||filter==='unassigned'&&a.device_template_id)return false;
+  if(!columnKeys.every(key=>{const value=el('filter-'+key).value;if(!value)return true;const actual=columnValue(a,key);return selectColumnKeys.includes(key)?actual===value:actual.toLocaleLowerCase('ru').includes(value.toLocaleLowerCase('ru'));}))return false;
+  const server=snapshot.catalogs[a.region]?.servers.find(s=>s.id===a.server_id)?.name||'';
+  return !query||[accountNumber(a),deviceType(a),a.email,a.label,characterLabel(a),a.device_template_name,a.device_name,server].join(' ').toLowerCase().includes(query);
+ });
+ if(rosterSort.key)rows.sort((a,b)=>collator.compare(sortValue(a,rosterSort.key),sortValue(b,rosterSort.key))*rosterSort.direction);
+ return rows;
+}
+function renderRoster(){
+ renderColumnFilters();
+ for(const identifier of verificationSelection){const account=snapshot.accounts.find(a=>a.id===identifier);if(!account||!canVerify(account))verificationSelection.delete(identifier);}
+ const body=el('roster-body');body.replaceChildren();
+ for(const key of ['number','account','character','class','server','device','template','device-name','status']){
+  const button=el('sort-'+key),active=rosterSort.key===key;
+  button.parentElement.setAttribute('aria-sort',active?(rosterSort.direction===1?'ascending':'descending'):'none');
+  button.querySelector('span').textContent=active?(rosterSort.direction===1?'↑':'↓'):'↕';
+ }
+ for(const account of visibleAccounts()){
+  const row=document.createElement('tr');row.className=(onDevice(account)?'active-game-account ':'')+'device-type-'+typeClass[deviceType(account)];
+  const number=document.createElement('td');number.className='row-number';number.textContent=accountNumber(account);row.append(number);
+  const email=document.createElement('td'),wrap=document.createElement('div'),checkbox=document.createElement('input');wrap.className='account-cell';
+  checkbox.type='checkbox';checkbox.className='verify-checkbox';checkbox.checked=verificationSelection.has(account.id);checkbox.disabled=!canVerify(account);
+  checkbox.setAttribute('aria-label','Выбрать для верификации '+account.email);
+  checkbox.onchange=()=>{if(checkbox.checked)verificationSelection.add(account.id);else verificationSelection.delete(account.id);renderVerification();};
+  const identity=document.createElement('div'),link=cellLink(account.email,()=>openAccount(account));link.className='email-link';
+  const provider=document.createElement('small');provider.textContent=isGoogle(account)?'Google':'Netmarble';identity.append(link,provider);wrap.append(checkbox,identity);email.append(wrap);row.append(email);
+  const server=snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id);
+  for(const value of [characterLabel(account),snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,account.region+' · '+(server?.name||account.server_id||'Не выбран')]){
+   const cell=document.createElement('td');cell.append(cellLink(value,()=>openAccount(account,'character')));row.append(cell);
+  }
+  const reported=document.createElement('td');reported.append(cellLink(deviceType(account),()=>openAccount(account,'device')));row.append(reported);
+  const templateCell=document.createElement('td'),template=(snapshot.device_templates||[]).find(t=>t.id===account.device_template_id);
+  if(template){const box=document.createElement('div');box.className='template-cell';const badge=document.createElement('span');badge.className='slot-badge';badge.textContent=template.members.length+'/2';box.append(cellLink(template.name,()=>openTemplate(template.id)),badge);templateCell.append(box);}
+  else templateCell.append(cellLink('Назначить',()=>openAccount(account,'device')));
+  row.append(templateCell);
+  const name=document.createElement('td');name.append(cellLink(account.device_name||'Не задано',()=>template?openTemplate(template.id):openAccount(account,'device'),'Имя для следующей регистрации устройства'));row.append(name);
+  const state=document.createElement('td'),status=accountStatus(account),pill=cellLink(status.text,()=>openAccount(account,'session'));pill.className='status-pill '+status.kind;state.append(pill);row.append(state);
+  const actions=document.createElement('td'),settings=cellLink('···',()=>openAccount(account),'Настройки аккаунта');settings.className='row-settings';actions.append(settings);row.append(actions);body.append(row);
+ }
+ el('account-count').textContent=snapshot.accounts.length;
+ el('device-count').textContent=(snapshot.device_templates||[]).length;
+ el('online-count').textContent=Object.values(snapshot.jobs).filter(j=>j.running).length;
+ renderVerification();renderAccountSecrets();renderDeviceList();
+}
+function renderAccountSecrets(){
+ const box=el('account-secrets');box.replaceChildren();const account=current();if(!account)return;
+ box.append(passwordCell(account,'mail'),passwordCell(account,'netmarble'));
+}
+window.addEventListener('blur',()=>{shownPasswords.clear();renderAccountSecrets();el('template-show-keys').checked=false;maskTemplateKeys();});
 
 el('copy-roster').onclick=async()=>{
- const button=el('copy-roster'),status=el('copy-roster-status');
- const accounts=rosterAccounts();
- const rows=Array.from(el('roster').rows,row=>Array.from(row.cells,cell=>
-  (cell.querySelector('.password-cell span')||cell).textContent.replace(/[\t\r\n]+/g,' ')
- ));
- button.disabled=true;status.textContent='Подготовка таблицы с паролями…';
+ const button=el('copy-roster'),status=el('copy-roster-status');button.disabled=true;status.textContent='Подготовка экспорта…';
  try{
-  for(const [index,account] of accounts.entries()){
-   for(const [column,kind,saved] of [[1,'mail',account.mail_password_saved],[2,'netmarble',account.password_saved]]){
-    if(saved){const result=await api('/api/reveal',{id:account.id,kind});rows[index+1][column]=result.password;}
-   }
+  const rows=[['№','Почта','Пароль почты','Пароль Netmarble','Ник персонажа','Класс','Сервер','Устройство','Шаблон устройства','Имя при регистрации','Статус']];
+  for(const account of rosterAccounts()){
+   const passwords=[];
+   for(const [kind,saved] of [['mail',account.mail_password_saved],['netmarble',account.password_saved]])passwords.push(saved?(await api('/api/reveal',{id:account.id,kind})).password:'—');
+   const server=snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id)?.name||account.server_id||'Не выбран';
+   rows.push([accountNumber(account),account.email,...passwords,characterLabel(account),snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,account.region+' · '+server,deviceType(account),account.device_template_name||'—',account.device_name||'—',accountStatus(account).text]);
   }
-  const text=rows.map(row=>row.map(value=>/[\t\r\n"]/.test(value)?'"'+value.replace(/"/g,'""')+'"':value).join('\t')).join('\r\n');
-  await navigator.clipboard.writeText(text);
-  status.textContent='Таблица с паролями скопирована. Можно вставить в Excel или текстовый редактор.';
- }catch(error){status.textContent='Не удалось скопировать таблицу с паролями. Проверьте связь с панелью и разрешение буфера обмена, затем повторите.';}
+  await navigator.clipboard.writeText(rows.map(row=>row.map(value=>{value=String(value);return /[\t\r\n"]/.test(value)?'"'+value.replace(/"/g,'""')+'"':value;}).join('\t')).join('\r\n'));
+  status.textContent='Вся таблица с сохранёнными паролями скопирована.';
+ }catch(error){status.textContent='Не удалось скопировать таблицу. Частичный экспорт не выполнен.';}
  finally{button.disabled=false;}
 };
 
@@ -161,18 +228,18 @@ function renderReadiness(){
  const limits=document.createElement('small');limits.textContent='Показаны сохранённые наблюдения. Доступность серверов и совместимость текущей сборки проверяются отдельно. Изменения формы учитываются после сохранения.';
  box.append(list,route,next,limits);
 }
-function render(){renderReadiness();renderRoster();el('accounts').replaceChildren();for(const account of snapshot.accounts){const job=snapshot.jobs[account.id],status=account.enabled===false?'disabled':(job?.status||'stopped');const button=document.createElement('button');button.className='account'+(selected===account.id?' selected':'');const name=document.createElement('strong');name.textContent=account.label||account.email;const badge=document.createElement('span');badge.className='badge '+status;badge.textContent=labels[status]||status;const detail=document.createElement('small');detail.textContent=account.region+' · '+(snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id)?.name||(account.server_id?'Сервер '+account.server_id:'Сервер не выбран'));button.append(name,badge,detail);button.onclick=()=>edit(account);el('accounts').append(button);}const job=snapshot.jobs[selected],status=job?.status||'stopped';el('badge').className='badge '+status;el('badge').textContent=labels[status]||status;el('message').textContent=job?.message||'Сохраните настройки и выберите действие';el('stage').textContent=job?.running?(job.manual_sign_in&&job.stage==='nid_browser'?'Введите логин и пароль в отдельном окне Netmarble':(stages[job.stage]||job.stage)):'';el('stop').disabled=!job?.running;el('start-all').disabled=runnableAccounts().length<2||Object.values(snapshot.jobs).some(j=>j.running);for(const node of el('settings').elements)node.disabled=!!job?.running;el('password').disabled=!!job?.running;for(const id of ['start','servers','characters'])el(id).disabled=!selected||current()?.enabled===false||!!job?.running;el('prepare-sdk').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.registration_status==='sdk_created'||current()?.character_index!==null||current()?.character_key!==null;el('create').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.create_class!=='Gunner'||!current()?.server_id||current()?.character_index!==null;const registration=current()?.registration_status||'unknown';el('registration-state').textContent=({unknown:'Регистрация не проверялась',in_progress:'Регистрация выполняется',unconfirmed:'Предыдущая попытка не подтверждена. Проверьте окно или попробуйте обычный вход; автоматического повтора нет.',registered:'Регистрация Netmarble подтверждена',sdk_created:'Игровой профиль SDK создан. Можно перейти к выбору сервера и персонажа.',nid_verified:'Ранее вход Netmarble был подтверждён. Результат текущей попытки показан ниже, в состоянии сессии.',email_in_use:'Netmarble: почта уже используется. Повторная регистрация не нужна; вход ещё не проверен.'})[registration];el('register').disabled=!selected||current()?.enabled===false||!!job?.running||(!current()?.mail_password_saved&&!el('manual-mail-code').checked)||!el('terms').checked||registration==='registered'||registration==='in_progress'||registration==='email_in_use'||registration==='nid_verified'||registration==='sdk_created';el('code-entry').hidden=!(job?.running&&job.manual_mail_code&&job.stage==='registration_code'&&!job.code_sent);renderProvider();el('copy-current-pc').disabled=!currentPc||!!job?.running;}
+function render(){renderReadiness();renderRoster();const job=snapshot.jobs[selected],status=job?.status||'stopped';el('badge').className='badge '+status;el('badge').textContent=labels[status]||status;el('message').textContent=job?.message||'Сохраните настройки и выберите действие';el('stage').textContent=job?.running?(job.manual_sign_in&&job.stage==='nid_browser'?'Введите логин и пароль в отдельном окне Netmarble':(stages[job.stage]||job.stage)):'';el('stop').disabled=!job?.running;el('start-all').disabled=runnableAccounts().length<2||Object.values(snapshot.jobs).some(j=>j.running);for(const node of el('settings').elements)node.disabled=!!job?.running;el('password').disabled=!!job?.running;for(const id of ['start','servers','characters'])el(id).disabled=!selected||current()?.enabled===false||!!job?.running;el('prepare-sdk').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.registration_status==='sdk_created'||current()?.character_index!==null||current()?.character_key!==null;el('create').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.create_class!=='Gunner'||!current()?.server_id||current()?.character_index!==null;const registration=current()?.registration_status||'unknown';el('registration-state').textContent=({unknown:'Регистрация не проверялась',in_progress:'Регистрация выполняется',unconfirmed:'Предыдущая попытка не подтверждена. Проверьте окно или попробуйте обычный вход; автоматического повтора нет.',registered:'Регистрация Netmarble подтверждена',sdk_created:'Игровой профиль SDK создан. Можно перейти к выбору сервера и персонажа.',nid_verified:'Ранее вход Netmarble был подтверждён. Результат текущей попытки показан ниже, в состоянии сессии.',email_in_use:'Netmarble: почта уже используется. Повторная регистрация не нужна; вход ещё не проверен.'})[registration];el('register').disabled=!selected||current()?.enabled===false||!!job?.running||(!current()?.mail_password_saved&&!el('manual-mail-code').checked)||!el('terms').checked||registration==='registered'||registration==='in_progress'||registration==='email_in_use'||registration==='nid_verified'||registration==='sdk_created';el('code-entry').hidden=!(job?.running&&job.manual_mail_code&&job.stage==='registration_code'&&!job.code_sent);renderAvailability();renderProvider();renderTemplateSelection();renderAccountSecrets();}
 async function refresh(){const wasRunning=snapshot.jobs[selected]?.running;const catalogStamp=snapshot.catalogs[el('region').value]?.observed_utc;snapshot=await api('/api/state');if(initial){initial=false;edit(snapshot.accounts[0]);}else{if(catalogStamp!==snapshot.catalogs[el('region').value]?.observed_utc)servers(el('server').value);if(wasRunning&&!snapshot.jobs[selected]?.running){el('nickname').value=current()?.create_nickname||'';servers(el('server').value);characters(el('character').value===''?null:Number(el('character').value));}render();}}
 el('generate-nickname').onclick=async()=>{try{const data=await api('/api/nickname',{});el('nickname').value=data.nickname;notice('Новый ник в форме. Нажмите «Сохранить настройки», чтобы использовать его.');}catch(error){notice(error.message);}};
 el('terms').onchange=()=>render();
 el('manual-mail-code').onchange=()=>render();
 el('send-code').onclick=async()=>{try{const value=el('registration-code').value;el('registration-code').value='';await api('/api/registration-code',{id:selected,code:value});notice('Код передан в форму регистрации.');await refresh();}catch(error){notice(error.message);}};
-el('new').onclick=()=>edit(null);
+el('new').onclick=()=>openAccount(null);
 el('region').onchange=()=>{servers(null);characters(null);restoreCharacterConnection();};
 el('server').onchange=()=>{characters(null);restoreCharacterConnection();};
 el('character').onchange=()=>restoreCharacterConnection();
-el('settings').onsubmit=async event=>{event.preventDefault();try{const assignment={enabled:el('enabled').checked,label:el('label').value,device_profile:el('device').value,device_settings:readDevice(),socks_port:el('socks-port').value?Number(el('socks-port').value):null,region:el('region').value,server_id:el('server').value?Number(el('server').value):null,character_index:el('character').value===''?null:Number(el('character').value),character_key:el('character').selectedOptions[0]?.dataset.key||null,create_nickname:el('nickname').value,create_class:el('create-class').value,create_random_nickname:el('random-nickname').checked,auth_flow:el('auth-flow').value,login_provider:el('login-provider').value};const result=await api('/api/save',{email:el('email').value,password:el('password').value,mail_password:el('mail-password').value,assignment});await refresh();edit(snapshot.accounts.find(a=>a.id===result.id));notice('Настройки сохранены. Пароль скрыт.');}catch(error){notice(error.message);}};
-async function job(operation){try{if(!selected)return;await api('/api/job',{id:selected,operation,...(operation==='register'?{accept_required_terms:el('terms').checked,manual_mail_code:el('manual-mail-code').checked}:operation==='stop'?{}:{manual_sign_in:el('manual-sign-in').checked,...(operation==='prepare-sdk'?{terms_country:el('sdk-country').value,terms_locale:el('sdk-locale').value,basic_terms_mode:el('sdk-terms-mode').value}:{})})});if(operation==='register')el('terms').checked=false;else if(operation!=='stop')el('manual-sign-in').checked=false;await refresh();notice(operation==='stop'?'Бот остановлен.':'Операция запущена. Для входа может открыться отдельное окно Netmarble.');}catch(error){notice(error.message);}}
+el('settings').onsubmit=async event=>{event.preventDefault();try{const assignment={enabled:el('enabled').checked,label:el('label').value,device_profile:accountDevice.device_profile,device_settings:accountDevice.device_settings,socks_port:el('socks-port').value?Number(el('socks-port').value):null,region:el('region').value,server_id:el('server').value?Number(el('server').value):null,character_index:el('character').value===''?null:Number(el('character').value),character_key:el('character').selectedOptions[0]?.dataset.key||null,create_nickname:el('nickname').value,create_class:el('create-class').value,create_random_nickname:el('random-nickname').checked,auth_flow:el('auth-flow').value,login_provider:el('login-provider').value,device_template_id:el('account-template').value||null,device_name:accountDevice.device_name||'',device_type:el('account-device-type').value};const result=await api('/api/save',{email:el('email').value,password:el('password').value,mail_password:el('mail-password').value,assignment});await refresh();edit(snapshot.accounts.find(a=>a.id===result.id));notice('Настройки сохранены. Пароль скрыт.');}catch(error){notice(error.message);}};
+async function job(operation){try{if(!selected)return;activateTab('session');await api('/api/job',{id:selected,operation,...(operation==='register'?{accept_required_terms:el('terms').checked,manual_mail_code:el('manual-mail-code').checked}:operation==='stop'?{}:{manual_sign_in:el('manual-sign-in').checked,...(operation==='prepare-sdk'?{terms_country:el('sdk-country').value,terms_locale:el('sdk-locale').value,basic_terms_mode:el('sdk-terms-mode').value}:{})})});if(operation==='register')el('terms').checked=false;else if(operation!=='stop')el('manual-sign-in').checked=false;await refresh();notice(operation==='stop'?'Бот остановлен.':'Операция запущена. Для входа может открыться отдельное окно Netmarble.');}catch(error){notice(error.message);}}
 for(const operation of ['start','stop','servers','characters','register','create','prepare-sdk'])el(operation).onclick=()=>job(operation);
 el('start-all').onclick=async()=>{try{for(const account of runnableAccounts().slice(0,2))await api('/api/job',{id:account.id,operation:'start'});await refresh();notice('Два независимых запуска начаты.');}catch(error){notice(error.message);}};
 
@@ -181,67 +248,158 @@ const deviceFields=[
  ['vendor','CPU vendor · до 12 ASCII','cpu'],['brand','CPU brand · до 48 ASCII','cpu'],
  ['major','Windows major','windows'],['minor','Windows minor','windows'],['build','Windows build','windows'],['product_type','Windows product type','windows'],['suite_mask','Windows suite mask','windows'],
  ['I_DeviceModel','Модель устройства','metadata'],['I_DeviceOSVersion','Версия ОС · metadata, автоматически из Windows при заполнении','metadata'],['I_NMCPU','CPU · metadata, автоматически из CPU при заполнении','metadata'],['I_NMRAM','Оперативная память · metadata','metadata'],['I_NMVGA','Видеокарта · metadata','metadata'],['I_TimeZone','Часовой пояс · metadata','metadata'],['I_LanguageCD','Язык · metadata','metadata']];
-for(const [key,label,group] of deviceFields){const wrap=document.createElement('label'),input=document.createElement('input');wrap.textContent=label;input.id='device-'+key;input.maxLength=group==='identity'?128:256;if(group==='identity')input.type='password';if(group==='windows'){input.type='number';input.min='0';}wrap.append(input);el('device-fields').append(wrap);}
-function fillDevice(settings={}){
- for(const [key,,group] of deviceFields){const node=el('device-'+key);node.value=settings[group]?.[key]??'';node.readOnly=el('device').value==='current-pc';}
-}
-function showCurrentPc(){
- if(!currentPc)return;
- const data=currentPc.device_settings;
- el('current-pc-info').textContent=[currentPc.os_display,currentPc.source,currentPc.limits,...currentPc.unknown].filter(Boolean).join(' ');
- if(el('device').value==='current-pc')fillDevice({...data,metadata:currentPc.display_metadata});
- el('copy-current-pc').disabled=!!snapshot.jobs[selected]?.running||!Object.keys(data).length;
-}
-el('refresh-current-pc').onclick=async()=>{
- const button=el('refresh-current-pc');button.disabled=true;
- try{const value=await api('/api/current-pc',{});if(!value.device_settings||!Array.isArray(value.unknown))throw Error('Нет данных этого ПК.');currentPc=value;showCurrentPc();}
- catch(error){el('current-pc-info').textContent=error.message;}
- finally{button.disabled=false;}
-};
-el('copy-current-pc').onclick=()=>{
- if(!currentPc||snapshot.jobs[selected]?.running)return;
- const identity=readDevice().identity;
- el('device').value='custom';el('connection-preset').value='';
- fillDevice({...currentPc.device_settings,...(identity?{identity}:{})});
- notice('Данные этого ПК перенесены в форму отдельного профиля. Проверьте их и сохраните настройки. Личные ключи не скопированы.');
-};
-el('device').onchange=()=>{
- for(const [key] of deviceFields)el('device-'+key).readOnly=el('device').value==='current-pc';
- showCurrentPc();
-};
 function editConnection(account){
- el('connection-preset').replaceChildren(option('','Ручные настройки'),...(snapshot.connection_presets||[]).map(p=>option(p.id,p.name)));
- const stable=value=>JSON.stringify(value,(_,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);
- const device={...(account?.device_settings||{})};delete device.identity;
- const matched=(snapshot.connection_presets||[]).find(p=>p.device_profile===(account?.device_profile||'current-pc')&&(p.socks_port??null)===(account?.socks_port??null)&&stable(p.device_settings)===stable(device));
- el('connection-preset').value=matched?.id||'';
- el('socks-port').value=account?.socks_port??'';fillDevice(account?.device_settings||{});showCurrentPc();
+ accountDevice={device_profile:account?.device_profile||'current-pc',device_settings:account?.device_settings||{},device_name:account?.device_name||''};
+ el('account-device-type').value=account?deviceType(account):'Бот';
+ el('socks-port').value=account?.socks_port??'';
+ el('account-template').value=account?.device_template_id||'';
 }
 function restoreCharacterConnection(){
+ if(current()?.device_template_id)return;
  const key=el('character').selectedOptions[0]?.dataset.key;
  const target=[selected,el('region').value,el('server').value,key].join('|');
  const saved=key?snapshot.character_connections?.[target]:null;
- if(saved){el('device').value=saved.device_profile;editConnection(saved);notice('Загружен сохранённый профиль выбранного персонажа. Назначение применяется после сохранения настроек.');}
- else{el('device').value=current()?.device_profile||'current-pc';editConnection(current());notice('Для этой цели отдельный профиль не сохранён. Используются настройки выбранного бота; сохранение привяжет их к подтверждённому персонажу.');}
+ if(saved){accountDevice={...accountDevice,...saved};el('socks-port').value=saved.socks_port??'';}
 }
-function readDevice(){
- if(el('device').value==='current-pc')return {};
- const settings={};for(const [key,,group] of deviceFields){const value=el('device-'+key).value;if(value!==''){settings[group]??={};settings[group][key]=group==='windows'?Number(value):value;}}
+function activateTab(name){
+ for(const key of ['account','character','device','session']){el('panel-'+key).hidden=key!==name;el('tab-'+key).className=key===name?'selected':'';}
+}
+function openDialog(id){if(!el(id).open)el(id).showModal();}
+function closeDialog(id){el(id).close();shownPasswords.clear();renderAccountSecrets();maskTemplateKeys();}
+function openAccount(account,tab='account'){
+ edit(account);activateTab(tab);el('notice').textContent='';openDialog('account-dialog');
+}
+for(const key of ['account','character','device','session'])el('tab-'+key).onclick=()=>activateTab(key);
+for(const button of document.querySelectorAll('[data-close]'))button.onclick=()=>closeDialog(button.dataset.close);
+el('account-dialog').addEventListener('close',()=>{shownPasswords.clear();renderAccountSecrets();el('password').value='';el('mail-password').value='';});
+el('template-dialog').addEventListener('close',()=>{templateRequest++;el('template-show-keys').checked=false;maskTemplateKeys();});
+el('search').oninput=()=>renderRoster();el('roster-filter').onchange=()=>renderRoster();
+function renderTemplateSelection(value){
+ const select=el('account-template'),chosen=value??select.value;
+ select.replaceChildren(option('','Не назначен · прежняя привязка'));
+ for(const template of snapshot.device_templates||[]){
+  const item=option(template.id,template.name+' · '+template.members.length+'/2');
+  item.disabled=template.members.length>=2&&!template.members.some(a=>a.id===selected);select.append(item);
+ }
+ select.value=chosen||'';
+ const template=(snapshot.device_templates||[]).find(t=>t.id===select.value);
+ const info=el('assigned-template-info');info.replaceChildren();
+ if(template){
+  const title=document.createElement('strong');title.textContent=template.name;
+  const details=document.createElement('div');details.textContent='Имя регистрации: '+template.device_name+' · занято '+template.members.length+' из 2 мест';
+  const hardware=document.createElement('div');hardware.textContent=[template.settings.cpu?.brand?.trim(),template.settings.metadata?.I_NMRAM,template.settings.metadata?.I_NMVGA].filter(Boolean).join(' · ');
+  info.append(title,details,hardware);
+ }else info.textContent='Сохраните назначение шаблона. Прежние индивидуальные настройки остаются до назначения.';
+ el('inspect-assigned-template').disabled=!template;
+}
+el('account-template').onchange=()=>renderTemplateSelection();
+el('inspect-assigned-template').onclick=()=>openTemplate(el('account-template').value);
+el('new-account-template').onclick=()=>newTemplate();
+let templateId=null,templateEditing=false,templateRevision=null,templateRequest=0;
+const templateDisplayOrder=['I_DeviceModel','vendor','brand','I_NMRAM','I_NMVGA','I_DeviceOSVersion','I_NMCPU','I_TimeZone','I_LanguageCD','major','minor','build','product_type','suite_mask','device_key','nm_device_key','nid_device_key'];
+for(const [key,label,group] of [...deviceFields].sort((a,b)=>templateDisplayOrder.indexOf(a[0])-templateDisplayOrder.indexOf(b[0]))){
+ const wrap=document.createElement('label'),input=document.createElement('input');wrap.textContent=label;input.id='template-'+key;
+ input.maxLength=group==='identity'?128:group==='cpu'?(key==='vendor'?12:48):256;
+ if(group==='identity')input.type='password';
+ if(group==='windows'){input.type='number';input.min='0';}
+ if(group==='identity'||key==='brand'||key==='I_DeviceModel'||key==='I_NMVGA')wrap.className='wide';
+ wrap.append(input);el('template-fields').append(wrap);
+}
+function maskTemplateKeys(){for(const [key,,group] of deviceFields)if(group==='identity')el('template-'+key).type=el('template-show-keys').checked?'text':'password';}
+el('template-show-keys').onchange=maskTemplateKeys;
+function templateBusy(){
+ const template=(snapshot.device_templates||[]).find(t=>t.id===templateId);
+ return !!template?.members.some(a=>snapshot.jobs[a.id]?.running);
+}
+function templateMode(editing){
+ templateEditing=editing;
+ el('template-name').readOnly=!editing;el('template-device-name').readOnly=!editing;
+ for(const [key] of deviceFields)el('template-'+key).readOnly=!editing;
+ el('template-edit').hidden=editing;el('template-edit').disabled=templateBusy();
+ el('template-save').hidden=!editing;el('template-save').disabled=templateBusy();el('template-regenerate').hidden=!editing;
+}
+function fillTemplate(settings,display={}){
+ for(const [key,,group] of deviceFields){el('template-'+key).value=settings[group]?.[key]??'';el('template-'+key).placeholder=display[key]||'';}
+ el('template-show-keys').checked=false;maskTemplateKeys();
+}
+function openTemplate(identifier){
+ const template=(snapshot.device_templates||[]).find(t=>t.id===identifier);if(!template)return;
+ templateRequest++;templateId=identifier;templateRevision=template.revision;
+ el('template-heading').textContent=template.name;el('template-name').value=template.name;el('template-device-name').value=template.device_name;
+ el('template-source').textContent=template.source+' Общие параметры для двух мест; изменение имени действует при следующей регистрации.';el('template-error').textContent='';fillTemplate(template.settings,template.display_metadata);
+ const members=el('template-members');members.replaceChildren();
+ for(const member of template.members){const text=document.createElement('span');text.textContent=member.email+(member.character_name?' · '+member.character_name:'');members.append(text);}
+ if(!template.members.length)members.textContent='Свободно · 0 из 2';
+ templateMode(false);openDialog('template-dialog');
+}
+async function loadPc(){
+ const value=await api('/api/current-pc',{});if(!value.device_settings||!Array.isArray(value.unknown))throw Error('Нет данных этого ПК.');
+ currentPc=value;renderPcValues();return value;
+}
+async function newTemplate(){
+ const request=++templateRequest;templateId=null;templateRevision=null;
+ el('template-heading').textContent='Новый шаблон';el('template-name').value='';el('template-device-name').value='';
+ el('template-error').textContent='Чтение основы и создание ключей…';el('template-members').replaceChildren();templateMode(true);openDialog('template-dialog');
+ try{
+  if(!currentPc)await loadPc();
+  const generated=await api('/api/device-identity',{});if(request!==templateRequest||!el('template-dialog').open)return;
+  const settings=structuredClone(currentPc.device_settings);settings.identity=generated.identity;
+  settings.metadata??={};settings.metadata.I_DeviceModel||='Desktop PC';
+  let number=1;while((snapshot.device_templates||[]).some(t=>t.name==='VAMPIR-PC-'+String(number).padStart(2,'0')))number++;
+  const name='VAMPIR-PC-'+String(number).padStart(2,'0');el('template-name').value=name;el('template-device-name').value=generated.device_name;
+  fillTemplate(settings);el('template-source').textContent='На основе характеристик этого ПК. Desktop PC — общее описание; модель производителя может быть неизвестна.';el('template-error').textContent='';
+ }catch(error){el('template-error').textContent=error.message;}
+}
+function readTemplate(){
+ const settings={};for(const [key,,group] of deviceFields){const value=el('template-'+key).value;if(value!==''){settings[group]??={};settings[group][key]=group==='windows'?Number(value):value;}}
  return settings;
 }
-el('connection-preset').onchange=async()=>{
- const preset=snapshot.connection_presets?.find(p=>p.id===el('connection-preset').value);if(!preset)return;
- const owner=selected,characterTarget=el('character').selectedOptions[0]?.dataset.key;
- try{let identity=readDevice().identity;
- if(preset.device_profile==='custom'&&!identity)identity=(await api('/api/device-identity',{})).identity;
- if(selected!==owner||el('character').selectedOptions[0]?.dataset.key!==characterTarget||el('connection-preset').value!==preset.id)return;
- el('device').value=preset.device_profile;el('socks-port').value=preset.socks_port??'';
- fillDevice({...preset.device_settings,...(identity&&preset.device_profile==='custom'?{identity}:{})});showCurrentPc();
- notice('Пресет заполнен в форме. Применяется после сохранения настроек.');
- }catch(error){notice(error.message);}
+el('template-edit').onclick=()=>templateMode(true);
+el('template-regenerate').onclick=async()=>{
+ try{const result=await api('/api/device-identity',{});for(const [key,value] of Object.entries(result.identity))el('template-'+key).value=value;}
+ catch(error){el('template-error').textContent=error.message;}
 };
-el('save-preset').onclick=async()=>{try{const settings={device_profile:el('device').value,device_settings:readDevice(),socks_port:el('socks-port').value?Number(el('socks-port').value):null};await api('/api/connection-preset',{name:el('preset-name').value,settings});const currentSettings=readDevice(),port=el('socks-port').value,mode=el('device').value;snapshot=await api('/api/state');const presets=el('connection-preset');presets.replaceChildren(option('','Ручные настройки'),...(snapshot.connection_presets||[]).map(p=>option(p.id,p.name)));el('device').value=mode;el('socks-port').value=port;fillDevice(currentSettings);notice('Пресет сохранён без личных ключей. Настройки аккаунта сохраняются отдельно.');}catch(error){notice(error.message);}};
-el('generate-device').onclick=async()=>{try{const data=await api('/api/device-identity',{});el('device').value='custom';for(const [key] of deviceFields)el('device-'+key).readOnly=false;for(const [key,value] of Object.entries(data.identity))el('device-'+key).value=value;el('connection-preset').value='';notice('Новые ключи в форме. Сохраните настройки, чтобы закрепить их за ботом.');}catch(error){notice(error.message);}};
+el('template-form').onsubmit=async event=>{
+ event.preventDefault();if(!templateEditing)return;
+ el('template-save').disabled=true;
+ try{
+  const result=await api('/api/device-template',{id:templateId,name:el('template-name').value,device_name:el('template-device-name').value,settings:readTemplate(),revision:templateRevision});
+  await refresh();if(!templateId&&el('account-dialog').open)renderTemplateSelection(result.id);openTemplate(result.id);
+  notice('Шаблон сохранён. Его параметры общие для назначенных аккаунтов. Изменение ключей потребует новой верификации.');
+ }catch(error){el('template-error').textContent=error.message;}
+ finally{el('template-save').disabled=templateBusy();}
+};
+function renderDeviceList(){
+ const box=el('device-list');box.replaceChildren();
+ for(const template of snapshot.device_templates||[]){
+  const card=document.createElement('div');card.className='device-card';const content=document.createElement('div'),name=document.createElement('strong');name.textContent=template.name;
+  const detail=document.createElement('p');detail.textContent=template.device_name+' · '+template.members.length+'/2 · '+(template.settings.cpu?.brand?.trim()||'CPU не задан');
+  const members=document.createElement('p');members.textContent=template.members.map(a=>a.character_name||a.email).join(' · ')||'Нет назначений';
+  content.append(name,detail,members);const button=document.createElement('button');button.textContent='Просмотр';button.onclick=()=>openTemplate(template.id);card.append(content,button);box.append(card);
+ }
+ if(!box.children.length)box.textContent='Шаблоны пока не созданы.';
+}
+el('show-devices').onclick=()=>{renderDeviceList();openDialog('devices-dialog');};
+el('new-template').onclick=newTemplate;el('new-template-from-pc').onclick=newTemplate;
+el('generate-unassigned').onclick=async()=>{
+ const button=el('generate-unassigned');button.disabled=true;
+ try{const result=await api('/api/generate-devices',{});await refresh();notice('Создано шаблонов: '+result.created+'. Назначено аккаунтов: '+result.assigned+'.');}
+ catch(error){notice(error.message);}
+ finally{button.disabled=false;}
+};
+function renderPcValues(){
+ if(!currentPc)return;
+ el('current-pc-info').textContent=[currentPc.os_display,currentPc.source,currentPc.limits,...currentPc.unknown].filter(Boolean).join(' ');
+ const box=el('pc-values');box.replaceChildren();
+ for(const [label,value] of [['CPU',currentPc.device_settings.cpu?.brand?.trim()],['Модель устройства',currentPc.display_metadata.I_DeviceModel||'Не заполнена в прошивке'],['Оперативная память',currentPc.display_metadata.I_NMRAM],['Видеокарта',currentPc.display_metadata.I_NMVGA],['Версия для SDK',currentPc.display_metadata.I_DeviceOSVersion],['Часовой пояс',currentPc.display_metadata.I_TimeZone]]){
+  const node=document.createElement('div');node.className='pc-value';const title=document.createElement('small'),text=document.createElement('span');title.textContent=label;text.textContent=value||'Не удалось прочитать';node.append(title,text);box.append(node);
+ }
+}
+el('show-current-pc').onclick=async()=>{openDialog('pc-dialog');if(!currentPc)await el('refresh-current-pc').onclick();};
+el('refresh-current-pc').onclick=async()=>{
+ const button=el('refresh-current-pc');button.disabled=true;
+ try{await loadPc();}catch(error){el('current-pc-info').textContent=error.message;}finally{button.disabled=false;}
+};
 
 setInterval(()=>refresh().catch(()=>notice('Панель потеряла связь с локальным процессом.')),2000);
 refresh().then(()=>el('refresh-current-pc').onclick()).catch(error=>notice(error.message));

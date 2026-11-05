@@ -15,6 +15,9 @@ import uuid
 from .device_registry import _email
 from .bot_device_settings import validate as device_settings, route_port
 from .character_creation_plan import CLASS_CHOICES, DEFAULT_CLASS, MAX_NAME_ATTEMPTS, random_nickname
+from .device_templates import DeviceTemplates
+
+DEVICE_TYPES = ('Телефон', 'ПК', 'UgPhone', 'LdCloud', 'Бот', 'Не задействован', 'Не использовать')
 
 ACCOUNT_NICKNAMES = (
     'NightRaven', 'AshHunter', 'DuskWarden', 'MoonFang', 'BloodCrow', 'StormWolf',
@@ -64,7 +67,7 @@ class WindowsVault:
         return self._call(protected, True).decode('utf-8')
 
 
-class AccountStore:
+class AccountStore(DeviceTemplates):
     def __init__(self, path, vault=None):
         self.path, self.vault = Path(path), vault or WindowsVault()
         self.path.parent.mkdir(parents=True, exist_ok=True)
@@ -93,6 +96,13 @@ class AccountStore:
             if 'device_name' not in roster_columns:
                 db.execute("ALTER TABLE active_game_roster ADD COLUMN device_name TEXT NOT NULL DEFAULT ''")
             db.execute('CREATE TABLE IF NOT EXISTS verification_checkpoint(id INTEGER PRIMARY KEY CHECK(id=1), data TEXT NOT NULL)')
+            self._init_device_templates(db)
+            for identifier, raw, reported in db.execute('''SELECT a.id,a.assignment,r.device_name FROM accounts a
+                    LEFT JOIN active_game_roster r ON r.account_id=a.id''').fetchall():
+                assignment = json.loads(raw)
+                if 'device_type' not in assignment:
+                    assignment['device_type'] = reported if reported in DEVICE_TYPES else 'Бот'
+                    db.execute('UPDATE accounts SET assignment=? WHERE id=?', (json.dumps(assignment), identifier))
 
     def load_verification_checkpoint(self):
         with self._db() as db:
@@ -143,7 +153,7 @@ class AccountStore:
 
     @staticmethod
     def assignment(value):
-        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'device_settings', 'socks_port', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname', 'create_class', 'create_random_nickname', 'auth_flow', 'login_provider'}:
+        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'device_settings', 'socks_port', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname', 'create_class', 'create_random_nickname', 'auth_flow', 'login_provider', 'device_template_id', 'device_name', 'device_type'}:
             raise ValueError('Unknown account setting')
         enabled = value.get('enabled', True)
         if type(enabled) is not bool:
@@ -159,6 +169,17 @@ class AccountStore:
         login_provider = value.get('login_provider', 'email')
         if login_provider not in ('email', 'google'):
             raise ValueError('Unknown login provider')
+        device_type = value.get('device_type', 'Бот')
+        if device_type not in DEVICE_TYPES:
+            raise ValueError('Выберите допустимый тип устройства или режим использования аккаунта.')
+        if device_type == 'Не использовать':
+            enabled = False
+        template = value.get('device_template_id')
+        if template is not None and (type(template) is not str or not 1 <= len(template) <= 64):
+            raise ValueError('Invalid device template')
+        device_name = value.get('device_name', '')
+        if type(device_name) is not str or len(device_name) > 20 or any(ord(c) < 32 for c in device_name):
+            raise ValueError('Имя устройства: до 20 символов.')
         create_class = value.get('create_class', DEFAULT_CLASS)
         random_name = value.get('create_random_nickname', True)
         if type(create_class) is not str or create_class not in {key for key, _ in CLASS_CHOICES} or type(random_name) is not bool:
@@ -188,7 +209,7 @@ class AccountStore:
             socks_port=route_port(value.get('socks_port')), region=region, server_id=server,
             character_index=character, character_key=key, create_nickname=nickname,
             create_class=create_class, create_random_nickname=random_name, auth_flow=auth_flow,
-            login_provider=login_provider)
+            login_provider=login_provider, device_template_id=template, device_name=device_name, device_type=device_type)
 
     def save(self, email, *, password=None, mail_password=None, assignment):
         email, assignment = _email(email), self.assignment(assignment)
@@ -198,19 +219,28 @@ class AccountStore:
         protected = self.vault.encrypt(password) if password is not None else None
         protected_mail = self.vault.encrypt(mail_password) if mail_password is not None else None
         with self._db() as db:
+            db.execute('BEGIN IMMEDIATE')
             old = db.execute('SELECT id,password,assignment FROM accounts WHERE email=?', (email,)).fetchone()
             if old and self.assignment(json.loads(old[2]))['login_provider'] != assignment['login_provider']:
                 raise ValueError('Способ входа существующего аккаунта менять нельзя.')
             if old is None and protected is None and not google:
                 raise ValueError('A new account requires a password')
             identifier = old[0] if old else str(uuid.uuid4())
+            self._check_template_capacity(db, assignment['device_template_id'], identifier)
+            templates = self._template_map(db)
+            previous = self.assignment(json.loads(old[2])) if old else self.assignment({})
+            if assignment['device_template_id'] or previous['device_template_id']:
+                # The console sends resolved hardware. Keep the legacy fallback even when
+                # removing the template, so shared keys never become individual settings.
+                for field in ('device_profile', 'device_settings', 'device_name'):
+                    assignment[field] = previous[field]
+            effective = self._resolve_template(assignment, templates)
             # Empty BLOB means no password for federated accounts; it is never decrypted.
             credential = protected if protected is not None else (old[1] if old else b'')
             db.execute('INSERT INTO accounts(id,email,password,assignment) VALUES(?,?,?,?) ON CONFLICT(email) DO UPDATE SET password=excluded.password,assignment=excluded.assignment',
                 (identifier, email, credential, json.dumps(assignment)))
             if old:
-                previous = self.assignment(json.loads(old[2]))
-                if any(previous[key] != assignment[key] for key in ('device_profile', 'device_settings', 'socks_port')):
+                if self._fingerprint(self._resolve_template(previous, templates)) != self._fingerprint(effective):
                     db.execute("UPDATE accounts SET registration_status='nid_verified' WHERE id=? AND registration_status='sdk_created'", (identifier,))
             if protected_mail is not None:
                 db.execute('UPDATE accounts SET mail_password=? WHERE id=?', (protected_mail, identifier))
@@ -220,7 +250,9 @@ class AccountStore:
                 # A stale slot number must never acquire another character's device profile.
                 if row and any(c['key'] == assignment['character_key'] and c['index'] == assignment['character_index']
                                for c in json.loads(row[0])['characters']):
-                    connection = {key: assignment[key] for key in ('device_profile', 'device_settings', 'socks_port')}
+                    connection = {key: effective[key] for key in ('device_profile', 'device_settings', 'socks_port')}
+                    if assignment['device_template_id']:
+                        connection.update(device_template_id=assignment['device_template_id'], device_name=effective['device_name'])
                     db.execute('INSERT INTO character_connections VALUES(?,?,?,?,?) '
                         'ON CONFLICT(account_id,region,server_id,character_key) DO UPDATE SET data=excluded.data',
                         (identifier, assignment['region'], assignment['server_id'], assignment['character_key'],
@@ -255,6 +287,10 @@ class AccountStore:
                     assignment = self.assignment(assignment)
                     db.execute('UPDATE accounts SET assignment=? WHERE id=?', (json.dumps(assignment), identifier))
                     changed += 1
+                if device in DEVICE_TYPES and assignment['device_type'] != device:
+                    assignment['device_type'] = device
+                    assignment = self.assignment(assignment)
+                    db.execute('UPDATE accounts SET assignment=? WHERE id=?', (json.dumps(assignment), identifier))
                 db.execute('''INSERT INTO active_game_roster(account_id,region,server_id,character_name,device_name)
                     VALUES(?,?,?,?,COALESCE(?,(SELECT device_name FROM active_game_roster WHERE account_id=?),''))
                     ON CONFLICT(account_id) DO UPDATE SET region=excluded.region,
@@ -267,13 +303,19 @@ class AccountStore:
             rows = db.execute('''SELECT a.id,a.email,a.assignment,a.mail_password IS NOT NULL,
                     a.registration_status,a.mail_status,r.region,r.server_id,r.character_name,length(a.password)>0,r.device_name
                 FROM accounts a LEFT JOIN active_game_roster r ON r.account_id=a.id ORDER BY a.rowid''').fetchall()
+            templates = self._template_map(db)
+            verified = dict(db.execute('SELECT account_id,fingerprint FROM device_verifications'))
         result = []
         for identifier, email, raw, mail_saved, registration, mail_status, region, server, name, password_saved, device in rows:
-            assignment = self.assignment(json.loads(raw))
+            assignment = self._resolve_template(self.assignment(json.loads(raw)), templates)
+            template = templates.get(assignment['device_template_id'])
             same_server = (assignment['region'], assignment['server_id']) == (region, server)
             result.append(dict(id=identifier, email=email, password_saved=bool(password_saved), mail_password_saved=bool(mail_saved),
                 registration_status=registration, mail_status=mail_status, active_game_account=name is not None,
-                reported_character_name=name if same_server else None, reported_device=device or '', **assignment))
+                reported_character_name=name if same_server else None, reported_device=device or '',
+                device_template_name=template['name'] if template else '',
+                device_template_revision=template['revision'] if template else None,
+                device_verified=verified.get(identifier) == self._fingerprint(assignment), **assignment))
         return result
 
     def reveal_password(self, identifier, kind):
@@ -447,7 +489,7 @@ class AccountStore:
             raise KeyError('Unknown account')
         if self.assignment(json.loads(row[2]))['login_provider'] == 'google':
             raise ValueError('Вход через Google пока не подключён. Пароль Netmarble не используется.')
-        return row[0], self.vault.decrypt(row[1]), json.loads(row[2])
+        return row[0], self.vault.decrypt(row[1]), self._resolve_template(json.loads(row[2]), self._template_map())
 
     def save_catalog(self, region, data):
         if region not in ('EU', 'NA', 'SG', 'JP', 'TW', 'ASIA', 'KR') or type(data) is not dict:

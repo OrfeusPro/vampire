@@ -70,95 +70,113 @@ for (const [purpose, title, pathname] of [
         result = subprocess.run(['node', '-e', fixture, str(source.resolve())], capture_output=True, text=True, timeout=10)
         self.assertEqual(result.returncode, 0, result.stderr)
 
-    def test_password_reveals_only_on_click_and_blur_clears_it(self):
+    def test_table_dialogs_keep_viewing_separate_from_saving_and_game_actions(self):
         source = Path(__file__).parent / 'vampir-headless/console/console.js'
         fixture = r'''
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-class Element{
- constructor(){this.children=[];this.elements=[];this.value='';this.dataset={};this.attributes={};}
- append(...items){this.children.push(...items);}
- replaceChildren(...items){this.children=items;}
- setAttribute(key,value){this.attributes[key]=value;}
- get options(){return this.children;}
-}
 const nodes=new Map(),events={},calls=[];
-const document={hasFocus:()=>true,querySelector:()=>({content:'fixture-token'}),createElement:()=>new Element(),getElementById(id){if(!nodes.has(id))nodes.set(id,new Element());return nodes.get(id);}};
-const state={accounts:[],jobs:{},catalogs:{},character_lists:{},creation_classes:[]};
-const context=vm.createContext({document,window:{addEventListener:(name,fn)=>events[name]=fn},setInterval:()=>0,
- fetch:async(path,request)=>{calls.push({path,request});return {ok:true,json:async()=>path==='/api/reveal'?{password:'fake-private-secret'}:state};}});
+class Element{
+ constructor(){this.children=[];this.elements=[];this.value='';this.dataset={};this.attributes={};this.listeners={};this.open=false;this._text='';}
+ append(...items){this.children.push(...items);}
+ replaceChildren(...items){this.children=items;this._text='';}
+ setAttribute(key,value){this.attributes[key]=value;}
+ get parentElement(){if(!this._parent)this._parent=new Element();return this._parent;}
+ querySelector(selector){if(!this._span)this._span=new Element();return this._span;}
+ addEventListener(name,fn){this.listeners[name]=fn;}
+ showModal(){this.open=true;}
+ close(){this.open=false;this.listeners.close?.();}
+ set id(value){this._id=value;nodes.set(value,this);}
+ get id(){return this._id;}
+ set textContent(value){this._text=String(value);this.children=[];}
+ get textContent(){return this._text+this.children.map(x=>x.textContent).join('');}
+ get options(){return this.children;}
+ get selectedOptions(){return this.children.filter(x=>String(x.value)===String(this.value));}
+}
+const document={hasFocus:()=>true,querySelector:()=>({content:'fixture-token'}),querySelectorAll:()=>[],createElement:()=>new Element(),getElementById(id){if(!nodes.has(id))nodes.set(id,new Element());return nodes.get(id);}};
+const state={accounts:[],jobs:{},catalogs:{},character_lists:{},creation_classes:[],device_templates:[]};
+const pc={device_settings:{cpu:{vendor:'AuthenticAMD',brand:'Fixture CPU'},windows:{major:10,minor:0,build:12345,product_type:1,suite_mask:256}},display_metadata:{I_NMCPU:'AuthenticAMD|Fixture CPU'},unknown:[],source:'Fixture source'};
+let copied='',writes=0;
+const fixtureFetch=async(path,request)=>{calls.push({path,request});return {ok:true,json:async()=>path==='/api/reveal'?{password:'fake-private-secret'}:path==='/api/current-pc'?pc:state};};
+const context=vm.createContext({document,structuredClone,window:{addEventListener:(name,fn)=>events[name]=fn},setInterval:()=>0,navigator:{clipboard:{writeText:async text=>{copied=text;writes++;}}},
+ fetch:fixtureFetch});
 vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
 (async()=>{
  await new Promise(resolve=>setImmediate(resolve));
- vm.runInContext(`snapshot={accounts:[{id:'fixture',email:'fixture@unit.invalid',region:'EU',server_id:384,password_saved:true,mail_password_saved:true,mail_status:'planned',create_class:'Gunner',character_key:'11'}],jobs:{},catalogs:{EU:{servers:[{id:384,name:'Prelude 2'}]}},creation_classes:[{key:'Gunner',label:'Carnage'}],character_lists:{'fixture|EU|384':{characters:[{key:'11',name:'Confirmed'}]}}};renderRoster();`,context);
- let row=nodes.get('roster-body').children[0];
- assert.equal(row.children.length,8);assert.equal(row.children[3].textContent,'Confirmed');
- assert.equal(row.children[5].textContent,'EU · Prelude 2');assert.equal(row.children[7].textContent,'Ящик ещё не создан');
- assert.equal(calls.filter(c=>c.path==='/api/reveal').length,0);
- await row.children[1].children[0].children[1].onclick();
- row=nodes.get('roster-body').children[0];assert.equal(row.children[1].children[0].children[0].textContent,'fake-private-secret');
- assert.deepEqual(JSON.parse(calls.at(-1).request.body),{id:'fixture',kind:'mail'});
- events.blur();row=nodes.get('roster-body').children[0];
- assert.equal(row.children[1].children[0].children[0].textContent,'••••••••');
- assert.equal(vm.runInContext('shownPasswords.size',context),0);
- vm.runInContext(`snapshot.accounts[0].mail_status='verified';snapshot.accounts[0].registration_status='registered';snapshot.jobs.fixture={operation:'register',running:false,status:'stopped'};renderRoster();`,context);
- assert.match(nodes.get('roster-body').children[0].children[7].textContent,/Netmarble зарегистрирован/);
- let copied='',writes=0;
- context.navigator={clipboard:{writeText:async text=>{copied=text;writes++;}}};
- const cell=text=>({textContent:text,querySelector:()=>null});
- document.getElementById('roster').rows=[{cells:['Почта','Пароль почты','Пароль Netmarble'].map(cell)},
-  {cells:['fixture@unit.invalid','••••••••','••••••••'].map(cell)}];
- const before=calls.filter(c=>c.path==='/api/reveal').length;
- await nodes.get('copy-roster').onclick();
- assert.equal(copied,'Почта\tПароль почты\tПароль Netmarble\r\nfixture@unit.invalid\tfake-private-secret\tfake-private-secret');
- assert.deepEqual(calls.filter(c=>c.path==='/api/reveal').slice(before).map(c=>JSON.parse(c.request.body).kind),['mail','netmarble']);
- assert.equal(vm.runInContext('shownPasswords.size',context),0);
- assert.equal(nodes.get('copy-roster').disabled,false);
- context.fetch=async()=>({ok:false,json:async()=>({error:'fixture failure'})});
- await nodes.get('copy-roster').onclick();
- assert.equal(writes,1);assert.match(nodes.get('copy-roster-status').textContent,/Не удалось/);
- assert.equal(nodes.get('copy-roster').disabled,false);
- context.fetch=async(path,request)=>({ok:true,json:async()=>({password:JSON.parse(request.body).id})});
- vm.runInContext(`snapshot.accounts.unshift({id:'active',email:'active@vampir.top',region:'EU',server_id:384,
-  active_game_account:true,reported_character_name:'Reported',password_saved:true,mail_password_saved:true,create_class:'Gunner'});
-  renderRoster();`,context);
+ const account={id:'fixture',email:'fixture@unit.invalid',region:'EU',server_id:384,password_saved:true,mail_password_saved:true,mail_status:'verified',registration_status:'registered',create_class:'Gunner',create_nickname:'Unused proposal',character_key:'11',character_index:0,device_template_id:'device-one',device_template_revision:1,device_template_name:'Fixture PC',device_name:'FIXTURE-PC',device_profile:'custom',device_settings:{}};
+ const second={...account,id:'second',email:'other@unit.invalid',active_game_account:true,reported_character_name:'Reported',reported_device:'UgPhone',device_template_id:'device-two',device_template_name:'Other PC'};
+ const template={id:'device-one',name:'Fixture PC',device_name:'FIXTURE-PC',revision:1,settings:{cpu:{vendor:'AuthenticAMD',brand:'Fixture CPU'},metadata:{I_DeviceModel:'Desktop PC'},identity:{device_key:'a'.repeat(32),nm_device_key:'b'.repeat(32),nid_device_key:'c'.repeat(32)}},members:[{id:'fixture',email:account.email},{id:'third',email:'third@unit.invalid'}],source:'Fixture hardware'};
+ state.accounts=[account,second];state.catalogs={EU:{servers:[{id:384,name:'Prelude 2'}]}};state.creation_classes=[{key:'Gunner',label:'Carnage'}];state.character_lists={'fixture|EU|384':{characters:[{key:'11',name:'Confirmed'}]}};state.device_templates=[template,{...template,id:'device-two',name:'Other PC',members:[{id:'second',email:second.email}]}];
+ context.fixtureState=state;
+ vm.runInContext('snapshot=fixtureState;renderRoster();',context);
  const [ordinary,active]=nodes.get('roster-body').children;
- assert.equal(ordinary.children[0].children.at(-1).textContent,'fixture@unit.invalid');
- assert.equal(active.className,'active-game-account');
- assert.equal(active.children[3].textContent,'Reported');
- assert.equal(active.children[5].textContent,'EU · Prelude 2');
- document.getElementById('roster').rows.push({cells:['active@vampir.top','••••••••','••••••••'].map(cell)});
- await nodes.get('copy-roster').onclick();
- assert.match(copied,/fixture@unit.invalid\tfixture\tfixture\r\nactive@vampir.top\tactive\tactive$/);
- vm.runInContext(`snapshot.accounts.push({id:'google',email:'google@unit.invalid',login_provider:'google',region:'EU',server_id:381,
-  character_index:null,character_key:null,active_game_account:true,reported_character_name:'Player',reported_device:'UgPhone',
-  password_saved:false,mail_password_saved:false,create_class:'Gunner'});renderRoster();`,context);
- const google=nodes.get('roster-body').children.at(-1);
- assert.equal(google.children.length,8);
- assert.equal(google.className,'active-game-account');
- assert.equal(google.children[3].textContent,'Player');
- assert.equal(google.children[6].textContent,'UgPhone');
- assert.match(google.children[7].textContent,/Google/);
- assert.equal(google.children[0].children[0].disabled,false);
- for(const column of [1,2]){assert.equal(google.children[column].children[0].children[0].textContent,'—');assert.equal(google.children[column].children[0].children[1].disabled,true);}
- vm.runInContext('edit(snapshot.accounts.at(-1))',context);
- assert.equal(nodes.get('login-provider').value,'google');
- assert.equal(nodes.get('login-provider').disabled,true);
- assert.equal(nodes.get('password').required,false);assert.equal(nodes.get('password').disabled,true);
- for(const id of ['start','servers','characters','create','register','prepare-sdk','manual-sign-in'])assert.equal(nodes.get(id).disabled,true,id);
- assert.match(nodes.get('provider-hint').textContent,/код из Gmail/i);
- vm.runInContext("edit(null);el('login-provider').value='google';el('login-provider').onchange();",context);
- assert.equal(nodes.get('login-provider').disabled,false);assert.equal(nodes.get('password').required,false);
- vm.runInContext("el('login-provider').value='email';el('login-provider').onchange();",context);
- assert.equal(nodes.get('password').required,true);assert.equal(nodes.get('password').disabled,false);
- vm.runInContext(`currentPc={device_settings:{cpu:{vendor:'AuthenticAMD',brand:'Fixture CPU'},windows:{major:10,minor:0,build:12345,product_type:1,suite_mask:256}},
-  display_metadata:{I_NMCPU:'AuthenticAMD|Fixture CPU',I_DeviceOSVersion:'10.0.12345.1.256.64bit'},unknown:[],os_display:'Windows fixture',source:'Fixture source',limits:''};
-  el('device').value='current-pc';showCurrentPc();`,context);
- assert.equal(nodes.get('device-brand').value,'Fixture CPU');assert.equal(nodes.get('device-brand').readOnly,true);
- assert.equal(vm.runInContext('JSON.stringify(readDevice())',context),'{}');
- nodes.get('copy-current-pc').onclick();
- assert.equal(nodes.get('device').value,'custom');assert.equal(nodes.get('device-brand').readOnly,false);
- assert.equal(vm.runInContext('readDevice().cpu.brand',context),'Fixture CPU');
- assert.equal(vm.runInContext('readDevice().identity',context),undefined);
+ assert.equal(ordinary.children.length,10);assert.equal(ordinary.children[2].textContent,'Confirmed');assert.equal(ordinary.children[4].textContent,'EU · Prelude 2');
+ assert.match(active.className,/active-game-account.*device-type-ugphone/);assert.equal(active.children[2].textContent,'Reported');assert.equal(active.children[5].textContent,'UgPhone');
+ const writesBefore=calls.filter(x=>x.request.method==='POST').length;
+ ordinary.children[6].children[0].children[0].onclick();
+ assert.equal(nodes.get('template-dialog').open,true);assert.equal(nodes.get('template-device-name').value,'FIXTURE-PC');
+ assert.equal(nodes.get('template-device_key').type,'password');assert.equal(nodes.get('template-device_key').readOnly,true);
+ assert.equal(calls.filter(x=>x.request.method==='POST').length,writesBefore);
+ nodes.get('template-show-keys').checked=true;nodes.get('template-show-keys').onchange();assert.equal(nodes.get('template-device_key').type,'text');
+ events.blur();assert.equal(nodes.get('template-device_key').type,'password');
+ ordinary.children[1].children[0].children[1].children[0].onclick();
+ assert.equal(nodes.get('account-dialog').open,true);assert.equal(nodes.get('account-template').value,'device-one');
+ assert.equal(nodes.get('account-template').children.find(x=>x.value==='device-one').disabled,false);
+ assert.equal(nodes.get('account-template').children.find(x=>x.value==='device-two').disabled,false);
+ assert.equal(calls.filter(c=>c.path==='/api/reveal').length,0);
+ await nodes.get('account-secrets').children[0].children[1].children[1].onclick();
+ assert.equal(nodes.get('account-secrets').children[0].children[1].children[0].textContent,'fake-private-secret');
+ events.blur();assert.equal(nodes.get('account-secrets').children[0].children[1].children[0].textContent,'••••••••');
+ nodes.get('label').value='Unsaved label';await vm.runInContext('refresh()',context);assert.equal(nodes.get('label').value,'Unsaved label');
+ nodes.get('search').value='Reported';nodes.get('search').oninput();assert.equal(nodes.get('roster-body').children.length,1);
+ await nodes.get('copy-roster').onclick();assert.equal(writes,1);assert.match(copied,/fixture@unit.invalid\tfake-private-secret\tfake-private-secret\tConfirmed/);assert.match(copied,/other@unit.invalid/);
+ const prior=writes;context.fetch=async()=>({ok:false,json:async()=>({error:'fixture failure'})});await nodes.get('copy-roster').onclick();assert.equal(writes,prior);
+ context.fetch=fixtureFetch;
+ const google={...account,id:'google',email:'google@gmail.com',login_provider:'google',mail_password_saved:false,password_saved:false,device_template_id:null,device_name:''};state.accounts.push(google);
+ vm.runInContext('openAccount(fixtureState.accounts.at(-1));',context);assert.equal(nodes.get('password').required,false);assert.equal(nodes.get('password').disabled,true);
+ assert.equal(nodes.get('account-template').children.find(x=>x.value==='device-one').disabled,true);assert.equal(vm.runInContext('canVerify(current())',context),true);
+ assert.equal(nodes.get('start').disabled,true);assert.match(nodes.get('provider-hint').textContent,/код из Gmail/i);
+ vm.runInContext('openAccount(null);',context);assert.equal(nodes.get('password').required,true);
+ nodes.get('search').value='';vm.runInContext('snapshot=fixtureState;',context);
+ nodes.get('sort-account').onclick();assert.equal(nodes.get('roster-body').children[0].children[1].textContent.includes('fixture@unit.invalid'),true);
+ assert.equal(nodes.get('sort-account').parentElement.attributes['aria-sort'],'ascending');
+ nodes.get('sort-account').onclick();assert.equal(nodes.get('roster-body').children[0].children[1].textContent.includes('other@unit.invalid'),true);
+ state.catalogs.EU.servers.push({id:381,name:'Aria 10'},{id:382,name:'Aria 2'});state.accounts[0].server_id=381;state.accounts[1].server_id=382;
+ nodes.get('sort-server').onclick();assert.equal(nodes.get('roster-body').children[0].children[1].textContent.includes('other@unit.invalid'),true);
+ assert.equal(nodes.get('roster-body').children[0].children[0].textContent,'2');
+ const reserve={...account,id:'reserve',email:'reserve@vampir.top',enabled:true,device_type:'Не задействован',create_nickname:'NightPlan',create_class:'DarkMage',character_key:null,character_index:null};
+ const excluded={...reserve,id:'excluded',email:'excluded@vampir.top',device_type:'Не использовать',enabled:false,create_nickname:'ExcludedPlan'};
+ state.accounts.push(reserve,excluded);state.creation_classes.push({key:'DarkMage',label:'Viper'});
+ vm.runInContext('renderRoster();',context);
+ assert.deepEqual(Array.from(vm.runInContext('runnableAccounts().map(a=>a.id)',context)),['fixture','second']);
+ assert.equal(vm.runInContext('canVerify(fixtureState.accounts.at(-2))',context),true);
+ assert.equal(vm.runInContext('canVerify(fixtureState.accounts.at(-1))',context),false);
+ const reserveRow=nodes.get('roster-body').children.find(row=>row.children[1].textContent.includes('reserve@'));
+ assert.equal(reserveRow.children[2].textContent,'NightPlan · план');assert.match(reserveRow.className,/device-type-reserve/);
+ vm.runInContext('openAccount(fixtureState.accounts.at(-1));',context);
+ assert.equal(nodes.get('enabled').checked,false);assert.equal(nodes.get('enabled').disabled,true);assert.equal(nodes.get('start').disabled,true);
+ nodes.get('account-device-type').value='Не задействован';nodes.get('account-device-type').onchange();assert.equal(nodes.get('enabled').disabled,false);
+ assert.equal(vm.runInContext('canVerify(current())',context),false);
+ nodes.get('search').value='NightPlan';nodes.get('search').oninput();assert.equal(nodes.get('roster-body').children.length,1);
+ await nodes.get('copy-roster').onclick();assert.match(copied,/NightPlan · план\tViper/);
+ nodes.get('search').value='';
+ nodes.get('filter-device').value='Не задействован';nodes.get('filter-device').onchange();
+ nodes.get('filter-class').value='Carnage';nodes.get('filter-class').onchange();assert.equal(nodes.get('roster-body').children.length,0);
+ nodes.get('filter-class').value='Viper';nodes.get('filter-class').onchange();assert.equal(nodes.get('roster-body').children.length,1);
+ await vm.runInContext('refresh()',context);
+ assert.equal(nodes.get('filter-device').value,'Не задействован');assert.equal(nodes.get('filter-class').value,'Viper');
+ state.accounts.splice(state.accounts.indexOf(reserve),1);await vm.runInContext('refresh()',context);
+ assert.equal(nodes.get('filter-device').value,'Не задействован');assert.equal(nodes.get('roster-body').children.length,0);
+ assert.equal(nodes.get('filter-device').options.some(item=>item.value==='Не задействован'),true);
+ state.accounts.push(reserve);await vm.runInContext('refresh()',context);assert.equal(nodes.get('roster-body').children.length,1);
+ nodes.get('filter-character').value='Night';nodes.get('filter-character').oninput();assert.equal(nodes.get('roster-body').children.length,1);
+ nodes.get('filter-account').value='excluded';nodes.get('filter-account').oninput();assert.equal(nodes.get('roster-body').children.length,0);
+ nodes.get('reset-column-filters').onclick();assert.equal(nodes.get('roster-body').children.length,5);
+ for(const id of ['class','device','character','account'])assert.equal(nodes.get('filter-'+id).value,'');
+ nodes.get('roster-filter').value='reserve';nodes.get('roster-filter').onchange();assert.equal(nodes.get('roster-body').children.length,1);
+ nodes.get('roster-filter').value='excluded';nodes.get('roster-filter').onchange();assert.equal(nodes.get('roster-body').children.length,1);assert.match(nodes.get('roster-body').children[0].className,/device-type-excluded/);
+ nodes.get('roster-filter').value='all';nodes.get('roster-filter').onchange();
+ assert.equal(vm.runInContext('sortValue(fixtureState.accounts.at(-1),"character")',context),'NightPlan · план');
+ const dangerous=calls.filter(c=>['/api/save','/api/device-template','/api/assign-device','/api/generate-devices','/api/job','/api/verification-queue'].includes(c.path));assert.equal(dangerous.length,0);
  process.stdout.write('passed');
 })().catch(error=>{process.stderr.write(error.stack);process.exitCode=1;});
 '''

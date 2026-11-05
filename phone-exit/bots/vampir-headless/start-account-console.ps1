@@ -8,7 +8,7 @@ $browserJob = $null
 function Test-Console {
     try {
         $page = Invoke-WebRequest -UseBasicParsing -Uri $consoleUrl -TimeoutSec 2
-        return $page.StatusCode -eq 200 -and $page.Content.Contains('id="connection-settings"') -and $page.Content.Contains('id="roster"')
+        return $page.StatusCode -eq 200 -and ($page.Content.Contains('id="account-dialog"') -or $page.Content.Contains('id="connection-settings"')) -and $page.Content.Contains('id="roster"')
     } catch { return $false }
 }
 try {
@@ -27,7 +27,7 @@ try {
             for ($attempt = 0; $attempt -lt 40; $attempt++) {
                 try {
                     $page = Invoke-WebRequest -UseBasicParsing -Uri $address -TimeoutSec 1
-                    if ($page.StatusCode -eq 200 -and $page.Content.Contains('id="connection-settings"')) {
+                    if ($page.StatusCode -eq 200 -and ($page.Content.Contains('id="account-dialog"') -or $page.Content.Contains('id="connection-settings"'))) {
                         Start-Process $address
                         return
                     }
