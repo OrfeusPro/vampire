@@ -1,4 +1,4 @@
-"""Seven offline SDK Launcher composition cases with explicit immutable inputs."""
+"""SDK Launcher composition and isolated, explicit immutable runtime scope."""
 from contextlib import contextmanager
 import hashlib
 import importlib.util
@@ -56,32 +56,15 @@ class SdkLauncherRuntimeTests(unittest.TestCase):
 
     @contextmanager
     def composition_fixture(self):
-        # The existing runner has no standalone SDK selector. Only its dynamic
-        # profile-loader boundary is substituted in this fixture. The new
-        # loader still checks the explicit profile and every real pinned input.
-        util = self.runner.importlib.util
-        original_spec, original_module = util.spec_from_file_location, util.module_from_spec
-        sentinel = SimpleNamespace(loader=SimpleNamespace(exec_module=lambda module: None))
-        fixture_loader = SimpleNamespace(load_release_profile=lambda kind, **kwargs:
-            self.loader.load_profile(kind, **self.options, **kwargs))
-
-        def selected_spec(name, path, *args, **kwargs):
-            if name == 'nid_release_source':
-                return sentinel
-            return original_spec(name, path, *args, **kwargs)
-
-        def selected_module(spec):
-            return fixture_loader if spec is sentinel else original_module(spec)
-
-        from vampir_core import gmc2_context
-        # This test permission names one current SHA and one existing SDK
-        # policy. No persistent admission, release bundle or world permission
-        # is installed. Actual runtime rejects this unbound source afterward.
-        with patch.object(util, 'spec_from_file_location', side_effect=selected_spec), \
-                patch.object(util, 'module_from_spec', side_effect=selected_module), \
-                patch.object(gmc2_context, 'permits', side_effect=lambda sha, policy:
-                    sha == self.profile['source_sha256'] and policy == 'sdk-launcher-gmc2-geo-v2'):
+        from vampir_core.sdk_launcher_admission import scope
+        # Exercise the actual selector and integrity guard. Only external IO
+        # below is synthetic; profile loading and policy admission are real.
+        with scope(self.selector, root=self.loader.ROOT, workspace=self.loader.WORKSPACE):
             yield
+
+    @property
+    def selector(self):
+        return 'sdk-launcher:' + self.manifest.parent.name
 
     def prepared(self):
         identity = SimpleNamespace(device_key=self.binding.device_key, nid_device_key=self.binding.nid_device_key,
@@ -93,7 +76,7 @@ class SdkLauncherRuntimeTests(unittest.TestCase):
                 patch.object(self.runner.time, 'monotonic', return_value=100):
             registry.return_value.get.return_value = self.binding
             result = self.runner.load_inputs(self.binding.email, route=self.runner.SocksRoute(17948),
-                                             selected_profile='recovered-release')
+                                             selected_profile=self.selector)
         fetch.assert_called_once()
         self.assertEqual(result.source_sha256, self.profile['source_sha256'])
         self.assertEqual(result.geo.body_sha256, hashlib.sha256(self.body).hexdigest())
@@ -101,7 +84,7 @@ class SdkLauncherRuntimeTests(unittest.TestCase):
         return result
 
     def run_prepared(self, prepared, **kwargs):
-        return self.runner.run(prepared.email, selected_profile='recovered-release', socks_port=17948,
+        return self.runner.run(prepared.email, selected_profile=self.selector, socks_port=17948,
                                auth_flow='launcher', _prepared_inputs=prepared, **kwargs)
 
     def test_builder_reproduces_manifest_and_explicit_loader_declares_limits(self):
@@ -177,11 +160,49 @@ class SdkLauncherRuntimeTests(unittest.TestCase):
             capture, execute = Mock(), Mock()
             for options in ({}, dict(fetch_player=True), dict(create_sdk_player=True), dict(first_sdk_login=True)):
                 with self.subTest(options=options), patch.object(self.runner.time, 'monotonic', return_value=100):
-                    with self.assertRaisesRegex(ValueError, 'launcher sign-in only'):
-                        self.runner.run(prepared.email, selected_profile='recovered-release', socks_port=17948,
+                    with self.assertRaisesRegex(ValueError, 'supports launcher sign-in'):
+                        self.runner.run(prepared.email, selected_profile=self.selector, socks_port=17948,
                             _prepared_inputs=prepared, _capture=capture, _execute=execute, **options)
             capture.assert_not_called()
             execute.assert_not_called()
+
+    def test_scope_is_exact_sdk_only_and_is_removed_on_error(self):
+        from vampir_core.sdk_launcher_admission import scope, current, POLICY
+        from vampir_core.runtime_admission import permits, POLICIES, current_bundle
+        from concurrent.futures import ThreadPoolExecutor
+        sha = self.profile['source_sha256']
+        self.assertFalse(permits(sha, POLICY))
+        with self.assertRaisesRegex(RuntimeError, 'fixture stopped'):
+            with self.composition_fixture():
+                self.assertTrue(permits(sha, POLICY))
+                self.assertFalse(permits('0' * 64, POLICY))
+                self.assertIsNone(current_bundle(self.selector))
+                for policy in POLICIES - {POLICY}:
+                    self.assertFalse(permits(sha, policy), policy)
+                with ThreadPoolExecutor(max_workers=1) as workers:
+                    self.assertFalse(workers.submit(permits, sha, POLICY).result())
+                detached = current(self.selector)
+                detached['nid'].clear()
+                self.assertTrue(current(self.selector)['nid'])
+                with self.assertRaisesRegex(ValueError, 'switch'):
+                    with scope('sdk-launcher:' + '0' * 64,
+                               root=self.loader.ROOT, workspace=self.loader.WORKSPACE):
+                        self.fail('Different profile entered')
+                raise RuntimeError('fixture stopped')
+        self.assertFalse(permits(sha, POLICY))
+        with self.assertRaisesRegex(ValueError, 'explicit admitted scope'):
+            current(self.selector)
+        with self.assertRaisesRegex(ValueError, 'full immutable'):
+            with scope('sdk-launcher:../invalid', root=self.loader.ROOT, workspace=self.loader.WORKSPACE):
+                self.fail('Invalid selector entered')
+        from vampir_core import runtime_admission as world
+        token = world._active.set(SimpleNamespace(source_sha256=sha))
+        try:
+            with self.assertRaisesRegex(ValueError, 'world worker'):
+                with self.composition_fixture():
+                    self.fail('SDK-only selector entered a world worker')
+        finally:
+            world._active.reset(token)
 
     def test_changed_installed_source_rejects_profile_build(self):
         original = self.builder.digest
@@ -227,6 +248,89 @@ class SdkLauncherRuntimeTests(unittest.TestCase):
                 self.loader.load_profile('nid', **self.options)
         with self.assertRaisesRegex(ValueError, 'explicit full'):
             self.loader.load_profile('nid', profile_sha256='../invalid', source_sha256=self.profile['source_sha256'])
+
+
+class AccountEntryDiagnosticTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tool = load('account_entry_diagnostic_tests', HERE / 'vampir-headless/run-account-entry-diagnostic.py')
+
+    def test_shape_does_not_include_values_or_untrusted_labels(self):
+        fields = self.tool.shape({'deviceKey': 'private-device', 'items': [{'token': 'private-token'}],
+                                  'invalid label with private data': 'secret'})
+        self.assertEqual(fields['$.deviceKey'], 'string')
+        self.assertEqual(fields['$.items[].token'], 'string')
+        self.assertNotIn('private', json.dumps(fields))
+        self.assertNotIn('secret', json.dumps(fields))
+
+    def test_old_account_settings_are_normalized_without_changing_saved_assignment(self):
+        from vampir_core.account_store import AccountStore
+        store = Mock()
+        original = {}
+        store.credential.return_value = ('fixture@example.invalid', 'private-password', original)
+        factory = Mock(return_value=store)
+        factory.assignment = AccountStore.assignment
+        runner = Mock()
+        runner.run.return_value = SimpleNamespace(player_id='fixture-player', access_token='fixture-token')
+        browser = SimpleNamespace(capture_nid_credential=Mock())
+        capture = Mock()
+        capture.folder = Path('fixture-private')
+        capture.finish.side_effect = lambda result: dict(result=result)
+        with patch.object(self.tool, 'AccountStore', factory), patch.object(self.tool, 'Capture', return_value=capture), \
+                patch.object(self.tool, 'load', side_effect=lambda name: browser if name == 'nid-browser' else runner), \
+                patch('builtins.print') as output:
+            self.assertTrue(self.tool.run('fixture-account', 'a' * 64))
+        self.assertEqual(original, {})
+        self.assertIsNone(runner.run.call_args.kwargs['socks_port'])
+        self.assertEqual(runner.run.call_args.kwargs['device_settings'], {})
+        self.assertNotIn('private-password', str(output.call_args_list))
+        self.assertNotIn('fixture-token', str(output.call_args_list))
+
+    def test_private_chunks_use_protection_and_enforce_total_budget(self):
+        with tempfile.TemporaryDirectory() as folder:
+            calls = []
+            def protect(raw):
+                calls.append(raw)
+                return b'encrypted-fixture'
+            capture = self.tool.Capture(Path(folder) / 'capture', protect=protect, limit=90000)
+            capture.record('fixture', b'x' * 80000)
+            self.assertEqual(len(calls), 2)
+            self.assertNotIn(b'x' * 100, (capture.folder / 'sdk-http.dpapi').read_bytes())
+            with self.assertRaisesRegex(RuntimeError, 'limit'):
+                capture.record('fixture', b'x' * 10001)
+            self.assertEqual(len(calls), 2)
+            capture.inspect('fixture', b'{"accessToken":"private-fixture"}')
+            report = capture.finish(dict(sdk_response_accepted=False))
+            self.assertFalse(report['game_session_ready'])
+            self.assertNotIn('private-fixture', (capture.folder / 'report.json').read_text())
+
+    def test_sdk_transport_is_unmodified_observed_and_closed(self):
+        from io import BytesIO
+        from email.message import Message
+        from vampir_core.sdk_sign_in import SdkSignInRequestPlan
+        from vampir_core.sdk_sign_in_http import execute_launcher_token
+        url = 'https://sdk.example.invalid/launcher/token'
+        body = b'{"credential":{"channelAccessToken":"private-fixture","channelCode":33}}'
+        plan = SdkSignInRequestPlan(url, body, (('Accept', 'application/json'), ('Content-Type', 'application/json')))
+        response = BytesIO(b'{"errorCode":0,"resultData":"token-fixture"}')
+        response.status, response.headers = 200, Message()
+        opener = Mock()
+        opener.open.return_value = response
+        with tempfile.TemporaryDirectory() as folder:
+            capture = self.tool.Capture(Path(folder) / 'capture', protect=lambda raw: b'protected-fixture')
+            with patch.object(self.tool.urllib.request, 'build_opener', return_value=opener):
+                result = capture.executor('launcher/token', execute_launcher_token)(plan, expected_url=url)
+            self.assertEqual(result.value, 'token-fixture')
+            opener.open.assert_called_once()
+            request = opener.open.call_args.args[0]
+            self.assertEqual(request.data, body)
+            self.assertEqual(request.full_url, url)
+            self.assertTrue(response.closed)
+            headers = next(x['fields'] for x in capture.inventory if x['stage'].endswith(':headers'))
+            self.assertIn('user-agent', {x.lower() for x in headers})
+            self.assertIn('accept-encoding', {x.lower() for x in headers})
+            self.assertNotIn('private-fixture', json.dumps(capture.inventory))
+            self.assertNotIn('token-fixture', json.dumps(capture.inventory))
 
 
 if __name__ == '__main__':

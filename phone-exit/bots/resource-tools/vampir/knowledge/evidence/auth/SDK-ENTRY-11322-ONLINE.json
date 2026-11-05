@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "sdk_profile_sha256": "c3c53ee890ca3c570a22ccaaabee6db9d2cfaab4fba11fc80374b78073f24e78",
+  "observed_utc": "2026-11-05T19:39:23Z",
+  "scope": "SDK launcher authentication only",
+  "route": "direct",
+  "device": "observed-current-pc",
+  "private_report_sha256": "0a1a6e024d509605f2b305ad8dd95aac0b67cb85541e14bdba5dac2e86ffa3c7",
+  "result": {
+    "sdk_response_accepted": true,
+    "player_id_present": true,
+    "sdk_token_present": true
+  },
+  "player_status": {
+    "status": 2,
+    "restriction": [
+      "workplace"
+    ],
+    "withdraw": [],
+    "deviceSecure": [
+      "device-registration"
+    ]
+  },
+  "duration_seconds": 18.673,
+  "captured_application_payload_bytes": 3964,
+  "captured_records": 8,
+  "inventory": [
+    {
+      "stage": "nid:query",
+      "fields": {
+        "authType": "string",
+        "buildCode": "string",
+        "clientId": "string",
+        "deviceKey": "string",
+        "gameCode": "string",
+        "language": "string",
+        "nidV": "string",
+        "nmDeviceKey": "string",
+        "os": "string",
+        "osVersion": "string",
+        "webViewType": "string"
+      }
+    },
+    {
+      "stage": "launcher/token:request",
+      "fields": {
+        "$": "object",
+        "$.nmDeviceKey": "string",
+        "$.deviceKey": "string",
+        "$.countryCode": "string",
+        "$.os": "string",
+        "$.credential": "object",
+        "$.credential.channelAccessToken": "string",
+        "$.credential.channelCode": "integer",
+        "$.credential.gameCode": "string",
+        "$.credential.buildCode": "string"
+      }
+    },
+    {
+      "stage": "launcher/token:headers",
+      "fields": {
+        "Content-type": "string",
+        "Accept": "string",
+        "Gamecode": "string",
+        "Buildcode": "string",
+        "Accept-encoding": "string",
+        "User-agent": "string"
+      }
+    },
+    {
+      "stage": "launcher/token:response",
+      "fields": {
+        "$": "object",
+        "$.errorMessage": "string",
+        "$.resultData": "string",
+        "$.errorCode": "integer"
+      }
+    },
+    {
+      "stage": "launcher/sign-in:request",
+      "fields": {
+        "$": "object",
+        "$.nmDeviceKey": "string",
+        "$.deviceKey": "string",
+        "$.countryCode": "string",
+        "$.os": "string"
+      }
+    },
+    {
+      "stage": "launcher/sign-in:headers",
+      "fields": {
+        "Content-type": "string",
+        "Accept": "string",
+        "Gamecode": "string",
+        "Buildcode": "string",
+        "Launchertoken": "string",
+        "Accept-encoding": "string",
+        "User-agent": "string"
+      }
+    },
+    {
+      "stage": "launcher/sign-in:response",
+      "fields": {
+        "$": "object",
+        "$.errorMessage": "string",
+        "$.resultData": "object",
+        "$.resultData.accessToken": "string",
+        "$.resultData.playerInfo": "object",
+        "$.resultData.playerInfo.player": "object",
+        "$.resultData.playerInfo.player.playerId": "string",
+        "$.resultData.playerInfo.player.gameCode": "string",
+        "$.resultData.playerInfo.player.joinedCountryCode": "string",
+        "$.resultData.playerInfo.player.joinedOs": "string",
+        "$.resultData.playerInfo.player.gameRegion": "string",
+        "$.resultData.playerInfo.player.status": "integer",
+        "$.resultData.playerInfo.player.playerStatus": "object",
+        "$.resultData.playerInfo.player.playerStatus.restriction": "array",
+        "$.resultData.playerInfo.player.playerStatus.restriction[]": "string",
+        "$.resultData.playerInfo.player.playerStatus.withdraw": "array",
+        "$.resultData.playerInfo.player.playerStatus.deviceSecure": "array",
+        "$.resultData.playerInfo.player.playerStatus.deviceSecure[]": "string",
+        "$.resultData.playerInfo.idpInfo": "array",
+        "$.resultData.playerInfo.idpInfo[]": "object",
+        "$.resultData.playerInfo.idpInfo[].idp": "string",
+        "$.resultData.playerInfo.idpInfo[].key": "string",
+        "$.errorCode": "integer"
+      }
+    }
+  ],
+  "nid_inventory_omitted_empty_query_values": true,
+  "game_session_ready": false,
+  "device_registration_complete": false,
+  "account_unprotection_complete": false,
+  "custom_device_template_verified": false
+}

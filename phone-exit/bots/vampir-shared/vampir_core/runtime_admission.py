@@ -15,6 +15,7 @@ POLICIES=frozenset(('sdk-launcher-gmc2-geo-v2','lobby-ping-clock-v1','periodic-p
     'world-selection-move-v1','game-login-world-v1'))
 CONSUMERS=tuple('phone-exit/bots/'+name for name in (
     'vampir-shared/vampir_core/runtime_admission.py',
+    'vampir-shared/vampir_core/sdk_launcher_admission.py',
     'vampir-shared/vampir_core/gmc2_context.py',
     'vampir-shared/vampir_core/session_clock.py',
     'vampir-shared/vampir_core/heartbeat.py',
@@ -69,6 +70,10 @@ def current_bundle(selected):
 
 
 def permits(source_sha256,policy):
+    if policy == 'sdk-launcher-gmc2-geo-v2':
+        from .sdk_launcher_admission import permits as sdk_permits
+        if sdk_permits(source_sha256, policy):
+            return True
     active=_active.get()
     return (active is not None and policy in POLICIES and type(source_sha256) is str
         and source_sha256==active.source_sha256)
@@ -99,6 +104,10 @@ def prepared_entrypoint(*,root,workspace,keyword='selected_profile'):
         @wraps(function)
         def call(*args,**kwargs):
             selected=kwargs.get(keyword)
+            from .sdk_launcher_admission import selected as sdk_selected, scope as sdk_scope
+            if sdk_selected(selected):
+                with sdk_scope(selected, root=root, workspace=workspace):
+                    return function(*args, **kwargs)
             if not is_prepared(selected):return function(*args,**kwargs)
             with profile_scope(selected,root=root,workspace=workspace) as pinned:
                 return function(*args,**{**kwargs,keyword:pinned})

@@ -1413,9 +1413,9 @@
       "id": "sdk-launcher-runtime-current",
       "status": "bounded_answer",
       "question": "Как связать текущие SDK и Launcher proofs с ограниченной runtime composition?",
-      "known": "Текущий immutable профиль связывает девять SDK component manifests и Launcher14root audit. Семь offline composition сценариев проверены с точнымиSHA и scoped SDK-policy fixture.",
-      "unknown": "Настоящая серверная авторизация и подключение явного standalone профиля к боевому runner. Игровой candidate и создание отдельно.",
-      "next_action": "Подключить source check и guard текущего профиля к on_update; проверить cached повтор без SDK/native/Ghidra запуска. Сохранить существующий runtime sourceguard до готовности ограниченного входа.",
+      "known": "Текущий immutable профиль связывает девять SDK component manifests и аудит 14 функций Launcher. Явный SDK-only selector проверяет 98 входов; 12 composition/diagnostic сценариев проходят. Один настоящий NID → launcher/token → launcher/sign-in принят сервером; playerStatus содержит workplace и device-registration.",
+      "unknown": "Полная web-цепочка регистрации устройства и защиты аккаунта, очередь верификации; игровой candidate, создание и мир остаются отдельно. Custom-шаблоны онлайн не проверены.",
+      "next_action": "Связать свежие SDK credentials с официальными web-окнами, читать свежий IMAP код правильного назначения и проверять завершение. Переиспользовать SDK native proofs и готовый кэш; перейти к game/lobby contracts отдельно.",
       "decision_rule": "Готовые SDK 3667 native и Launcher static proofs переиспользовать после проверки полных SHA. Fixture composition не выдавать за live authentication или активацию профиля. Loader должен проверять каждый input при любом обращении.",
       "do_not_repeat": "Не повторять старые или текущие standalone SDK native матрицы без изменения входов.",
       "addresses": [
@@ -1424,7 +1424,10 @@
       ],
       "evidence": [
         "evidence/updates/HEADLESS-ENTRY-PROOFS-CURRENT.md",
-        "evidence/updates/AUTO-ENTRY-PROOFS-CURRENT.json"
+        "evidence/updates/AUTO-ENTRY-PROOFS-CURRENT.json",
+        "evidence/auth/HEADLESS-SDK-ENTRY-11322.md",
+        "evidence/auth/SDK-ENTRY-11322-ONLINE.json",
+        "evidence/auth/SDK-ENTRY-11322-VALIDATION.json"
       ]
     },
     {

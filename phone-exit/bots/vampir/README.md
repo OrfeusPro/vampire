@@ -13,6 +13,9 @@
 включается отдельно по явной команде. Текущая сессия сохраняет закреплённый пакет.
 
 Текущий выпуск исследования — 1.13.22; целый игровой вход ещё не подтверждён.
+Отдельный [SDK-only вход](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-ENTRY-11322.md)
+уже принят настоящим сервером: ограничения устройства / аккаунта и игровой мир
+остаются отдельными этапами. [Шаблоны и список полей](../vampir-headless/ENTRY-DIAGNOSTICS.md).
 [Доказательства и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-11322.md).
 [Статическая сверка семи SDK / Launcher entry функций](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-SDK-LAUNCHER-ENTRY-11322.md)
 подключена к штатному обновлению и кэшу.

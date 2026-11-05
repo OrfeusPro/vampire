@@ -2638,6 +2638,43 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты source-bound lobby reader/handler сценарии, новый wire decoder и текущий clock/Ping/bounded world пакет.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444eeb30",
+        "0x144503c70"
+      ],
+      "checks": [
+        {
+          "cache_key": "a44d10f4a3ef5e68161e5a86840a558ef1c234ee52f74a17a671f81a654f7118",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\939b6710cfe76408ba8ae2d6665f0bd273d7246ff8b242b8ae126da747e63a5d\\manifest.json",
+          "sha256": "939b6710cfe76408ba8ae2d6665f0bd273d7246ff8b242b8ae126da747e63a5d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Подключён явный SDK-only selector текущего immutable профиля с отдельным ContextVar policy; source check использует реальный guard вместо fixture bypass. Один настоящий launcher SDK-вход принят сервером; результат записан отдельно от переноса native функций и игрового допуска.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-ENTRY-11322.md",
+          "sha256": "de17dd613323e19a412db4fc63b79985eb31ff29eab645e5818c600f08ec3df3"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\SDK-ENTRY-11322-ONLINE.json",
+          "sha256": "8f2364ff8b495a93ecc9a27bcf386a0407b94b0c56add38587dbd7090451601e"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "b68f5a4497da057a78ac9783f5f6ccfc3f6e8f318452aa50db318543d5a964be",
+      "limits": [
+        "Переиспользованы прежние SHA-проверенные SDK 3667 native и Launcher14 static proofs, новых native/JVM запусков нет. Двенадцать source-bound composition/diagnostic случаев используют внешние IO fixtures. Онлайн подтверждены только NID и launcher/token/sign-in с наблюдаемым Windows ПК через direct. Не подтверждены game login/world, custom hardware, device registration или account unprotection."
+      ],
+      "method": "static",
+      "next_check": "Связать свежие SDK credentials и server playerStatus с официальными web-окнами; читать только свежие коды соответствующего аккаунта и подтверждать результат. Не повторять готовые standalone native SDK сценарии.",
+      "question": "sdk-launcher-runtime-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Штатная web-цепочка device-registration и workplace/email protection, свежий OTP и результат верификации; затем текущие game/lobby/character contracts и многоаккаунтная очередь.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

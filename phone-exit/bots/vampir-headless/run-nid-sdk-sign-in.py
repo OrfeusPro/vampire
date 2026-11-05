@@ -29,13 +29,18 @@ from vampir_core.sdk_sign_in_http import (execute_sdk_sign_in, execute_sdk_sign_
 from vampir_core.socks_route import SocksRoute
 from vampir_core.windows_version import observe_windows_version
 from vampir_core.runtime_admission import prepared_entrypoint,is_prepared
+from vampir_core.sdk_launcher_admission import selected as is_sdk_only, current as current_sdk_only
 
 PROFILE_SHA = '1d98be691d899b6c9d6280c86d6f42ceeab8ce01cac9685d5e0b8495793cc7ad'
 
 
 @prepared_entrypoint(root=ROOT,workspace=HERE.parents[2])
 def load_inputs(email, *, device_settings=None, route=None, selected_profile='recovered-base'):
-    if selected_profile == 'recovered-release' or is_prepared(selected_profile):
+    if is_sdk_only(selected_profile):
+        sdk_only_profile = current_sdk_only(selected_profile)
+        source = dict(sdk_only_profile['nid'], source=sdk_only_profile['source'],
+            source_sha256=sdk_only_profile['source_sha256'], profile_sha256=selected_profile.split(':', 1)[1])
+    elif selected_profile == 'recovered-release' or is_prepared(selected_profile):
         spec = importlib.util.spec_from_file_location('nid_release_source', HERE / 'sdk-source-profile.py')
         loader = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(loader)
@@ -62,8 +67,10 @@ def load_inputs(email, *, device_settings=None, route=None, selected_profile='re
     settings = validate(device_settings)
     binding = apply_binding(binding, settings)
     geo = None
-    if selected_profile == 'recovered-release' or is_prepared(selected_profile):
-        public = (loader.load_prepared_profile('public_gmc2',selected_profile=selected_profile,root=ROOT)
+    if selected_profile == 'recovered-release' or is_prepared(selected_profile) or is_sdk_only(selected_profile):
+        public = (dict(sdk_only_profile['public_gmc2'], source_sha256=source['source_sha256'],
+            profile_sha256=source['profile_sha256']) if is_sdk_only(selected_profile) else
+            loader.load_prepared_profile('public_gmc2',selected_profile=selected_profile,root=ROOT)
             if is_prepared(selected_profile) else loader.load_release_profile('public_gmc2', root=ROOT))
         if (public['source_sha256'], public['profile_sha256']) != (source['source_sha256'], source['profile_sha256']):
             raise ValueError('SDK public request and NID source profiles differ')
@@ -112,6 +119,8 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_playe
         _capture=None, _execute=None, _execute_token=None, _progress=None, _prepared_inputs=None, device_settings=None):
     from vampir_core.bot_device_settings import validate
     device_settings = validate(device_settings)
+    if is_sdk_only(selected_profile) and (auth_flow != 'launcher' or create_sdk_player or fetch_player or first_sdk_login):
+        raise ValueError('SDK-only scope supports launcher sign-in without account creation')
     if is_prepared(selected_profile) and (auth_flow!='launcher' or create_sdk_player or fetch_player or first_sdk_login):
         raise ValueError('Prepared SDK supports launcher sign-in only')
     if type(create_sdk_player) is not bool: raise ValueError('Explicit SDK operation required')

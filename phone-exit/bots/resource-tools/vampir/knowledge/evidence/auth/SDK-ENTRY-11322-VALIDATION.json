@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "check_id": "sdk-runtime-launcher-11316",
+  "on_update": true,
+  "cached_dispatcher_repeats": [
+    {
+      "checks": [
+        {
+          "id": "sdk-runtime-launcher-11316",
+          "state": "passed",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\939b6710cfe76408ba8ae2d6665f0bd273d7246ff8b242b8ae126da747e63a5d\\manifest.json",
+          "sha256": "939b6710cfe76408ba8ae2d6665f0bd273d7246ff8b242b8ae126da747e63a5d",
+          "cache_key": "a44d10f4a3ef5e68161e5a86840a558ef1c234ee52f74a17a671f81a654f7118"
+        }
+      ],
+      "seconds": 2.076,
+      "new_jvm": 0,
+      "new_native_executions": 0,
+      "new_child_processes": 0
+    },
+    {
+      "checks": [
+        {
+          "id": "sdk-runtime-launcher-11316",
+          "state": "passed",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\939b6710cfe76408ba8ae2d6665f0bd273d7246ff8b242b8ae126da747e63a5d\\manifest.json",
+          "sha256": "939b6710cfe76408ba8ae2d6665f0bd273d7246ff8b242b8ae126da747e63a5d",
+          "cache_key": "a44d10f4a3ef5e68161e5a86840a558ef1c234ee52f74a17a671f81a654f7118"
+        }
+      ],
+      "seconds": 2.095,
+      "new_jvm": 0,
+      "new_native_executions": 0,
+      "new_child_processes": 0
+    }
+  ],
+  "frozen_inputs_unchanged": 59,
+  "tooling_group_report": {
+    "path": "F:/PhoneExit Resources/Vampir/knowledge/tooling-groups-v1/aggregate-results/f9e3c12c08543d4a58a27e89c24088fdb6c23b5572e94d6da23af194e254b82f/manifest.json",
+    "sha256": "f9e3c12c08543d4a58a27e89c24088fdb6c23b5572e94d6da23af194e254b82f"
+  },
+  "tooling_metrics": {
+    "executed_groups": 9,
+    "cached_groups": 18,
+    "executed_cases": 1099,
+    "cached_cases": 960,
+    "executed_skips": 3,
+    "cached_skips": 1
+  },
+  "source_fixture_cases": 12,
+  "console_tests": 20,
+  "prepared_runtime_tests": 11,
+  "account_table_tests": 1,
+  "console_http_status": 200,
+  "console_duplicate_launch_reused": true
+}

@@ -1468,7 +1468,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in_http.py",
         "phone-exit/bots/vampir-shared/vampir_core/socks_route.py",
         "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
-        "phone-exit/bots/vampir-shared/vampir_core/windows_version.py"
+        "phone-exit/bots/vampir-shared/vampir_core/windows_version.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py"
       ]
     },
     {
@@ -4186,7 +4187,8 @@
         "phone-exit/bots/vampir-headless/run-nid-sdk-sign-in.py",
         "phone-exit/bots/test_vampir_nid_sdk_runner.py",
         "phone-exit/bots/test_vampir_sdk_sign_in_http.py",
-        "phone-exit/bots/vampir_test_sources.py"
+        "phone-exit/bots/vampir_test_sources.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py"
       ]
     },
     {
@@ -4366,7 +4368,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/sdk_terms.py",
         "phone-exit/bots/vampir-shared/vampir_core/sdk_terms_http.py",
         "phone-exit/bots/test_vampir_sdk_terms.py",
-        "phone-exit/bots/test_vampir_sdk_launcher_auth.py"
+        "phone-exit/bots/test_vampir_sdk_launcher_auth.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py"
       ]
     },
     {
@@ -4476,7 +4479,8 @@
         "phone-exit/bots/vampir-headless/account-worker.py",
         "phone-exit/bots/vampir-headless/console/index.html",
         "phone-exit/bots/vampir-headless/console/console.js",
-        "phone-exit/bots/test_vampir_account_console.py"
+        "phone-exit/bots/test_vampir_account_console.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py"
       ]
     },
     {
@@ -5401,7 +5405,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/sdk_terms.py",
         "phone-exit/bots/vampir-shared/vampir_core/socks_route.py",
         "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
-        "phone-exit/bots/vampir-shared/vampir_core/windows_version.py"
+        "phone-exit/bots/vampir-shared/vampir_core/windows_version.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py"
       ],
       "system_runtime_files": [
         "ucrtbase.dll"
@@ -5469,7 +5474,8 @@
             "phone-exit/bots/vampir-shared/vampir_core/sdk_terms.py",
             "phone-exit/bots/vampir-shared/vampir_core/socks_route.py",
             "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
-            "phone-exit/bots/vampir-shared/vampir_core/windows_version.py"
+            "phone-exit/bots/vampir-shared/vampir_core/windows_version.py",
+            "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py"
           ],
           "artifact_dependencies": [
             "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-1a7e48a82067/details.json",
@@ -5530,9 +5536,19 @@
             "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
             "phone-exit/bots/resource-tools/vampir/update-profile.py",
             "phone-exit/bots/resource-tools/vampir/verify-sdk-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/webview2.lock.json",
             "phone-exit/bots/test_vampir_update_contracts.py",
+            "phone-exit/bots/vampir-headless/nid-browser.py",
+            "phone-exit/bots/vampir-headless/run-account-entry-diagnostic.py",
             "phone-exit/bots/vampir-headless/run-nid-sdk-sign-in.py",
             "phone-exit/bots/vampir-headless/sdk-launcher-profile.py",
+            "phone-exit/bots/vampir-headless/windows/nid-browser.cs",
+            "phone-exit/bots/vampir-headless/windows/nid-browser.ps1",
+            "phone-exit/bots/vampir-headless/windows/nid-http-diagnostics.cs",
+            "phone-exit/bots/vampir-headless/windows/nid-page-status.js",
+            "phone-exit/bots/vampir-headless/windows/nid-register.js",
+            "phone-exit/bots/vampir-headless/windows/nid-sign-in.js",
+            "phone-exit/bots/vampir-shared/vampir_core/account_store.py",
             "phone-exit/bots/vampir-shared/vampir_core/bot_device_settings.py",
             "phone-exit/bots/vampir-shared/vampir_core/cdn_config.py",
             "phone-exit/bots/vampir-shared/vampir_core/device_registry.py",
@@ -5546,9 +5562,11 @@
             "phone-exit/bots/vampir-shared/vampir_core/nid_sdk_credential.py",
             "phone-exit/bots/vampir-shared/vampir_core/nid_web_context.py",
             "phone-exit/bots/vampir-shared/vampir_core/nid_web_url.py",
+            "phone-exit/bots/vampir-shared/vampir_core/runtime_admission.py",
             "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
             "phone-exit/bots/vampir-shared/vampir_core/sdk_fetch.py",
             "phone-exit/bots/vampir-shared/vampir_core/sdk_first_login.py",
+            "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py",
             "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_auth.py",
             "phone-exit/bots/vampir-shared/vampir_core/sdk_secret.py",
             "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in.py",
@@ -11738,6 +11756,7 @@
         "phone-exit/bots/test_vampir_prepared_runtime.py",
         "phone-exit/bots/vampir-shared/vampir_core/release_bundle.py",
         "phone-exit/bots/vampir-shared/vampir_core/runtime_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py",
         "phone-exit/bots/vampir-shared/vampir_core/scheduled_worker.py",
         "phone-exit/bots/vampir-shared/vampir_core/detached_worker.py",
         "phone-exit/bots/resource-tools/vampir/update-auto.py",

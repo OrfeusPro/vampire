@@ -609,3 +609,12 @@ bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TOOLING-SHARED-DE
 bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-TOOLING-SHARED-DEPS-V1.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TOOLING-PATH-V1.md text eol=crlf
 bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-TOOLING-PATH-V1.json text eol=lf
+# SDK-only scope and receipts retain their recorded byte SHA after checkout.
+bots/vampir-shared/vampir_core/runtime_admission.py text eol=lf
+bots/vampir-shared/vampir_core/sdk_launcher_admission.py text eol=lf
+bots/vampir-headless/run-account-entry-diagnostic.py text eol=lf
+bots/vampir-headless/run-nid-sdk-sign-in.py text eol=crlf
+bots/test_vampir_sdk_launcher_runtime.py text eol=crlf
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-ENTRY-11322.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/SDK-ENTRY-11322-ONLINE.json text eol=crlf
+bots/resource-tools/vampir/knowledge/evidence/auth/SDK-ENTRY-11322-VALIDATION.json text eol=crlf
