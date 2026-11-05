@@ -38,6 +38,23 @@ def emit(kind, **values):
 
 def run(args):
     store = AccountStore(args.store)
+    if args.operation == 'verify':
+        tool = load('account_verification', HERE / 'verify-account.py')
+        status, completed = tool.verify(store, args.account, selector=args.verification_profile,
+            progress=lambda stage: emit('phase', stage=stage))
+        if status == 'verified':
+            message = 'Верификация подтверждена.' if completed else 'SDK сообщает, что верификация не требуется.'
+        else:
+            message = {
+                'captcha_required': 'Официальная форма запросила CAPTCHA.',
+                'abnormal_pattern': 'Netmarble сообщил об ограничении An abnormal pattern.',
+                'mail_unavailable': 'Свежий код для этого этапа не получен.',
+                'server_rejected': 'Netmarble отклонил запрос верификации.',
+                'unknown_player_status': 'SDK вернул незнакомый статус защиты.',
+            }.get(status, 'Верификация остановлена. Результат этапа не подтверждён.')
+        emit('result', status='verified' if status == 'verified' else 'error', message=message,
+             verification_status=status, verification_steps=completed)
+        return
     email, password, settings = store.credential(args.account)
     from vampir_core.bot_device_settings import validate, route_port
     from vampir_core.socks_route import SocksRoute
@@ -317,7 +334,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--store', required=True, type=Path)
     parser.add_argument('--account', required=True)
-    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register', 'create', 'prepare-sdk'], required=True)
+    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register', 'create', 'prepare-sdk', 'verify'], required=True)
+    parser.add_argument('--verification-profile')
     parser.add_argument('--terms-country')
     parser.add_argument('--terms-locale')
     parser.add_argument('--basic-terms-mode', choices=['all', 'filtered-unique'])

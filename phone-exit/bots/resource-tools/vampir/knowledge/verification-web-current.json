@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "public_html_sha256": "360beb3c626bf43a4cb2b2af868c41b05ce93a52410d6f9307d23b7b4a10506e",
+  "public_js_sha256": "42d2c37313e69f7fd68e9b1c4507cf3196de1ec3e6b02d5df19df90152742cde",
+  "native_export_sha256": "76c59a37473c37edfe654635efbf2de555b2f1626b8425b7c690a4c94c4dadb7",
+  "forms": {
+    "device-registration": {
+      "native_builder": "0x1444e0a00",
+      "config_key": "deviceWebViewUrl",
+      "endpoint": "https://profile-auth-view.netmarble.com/secure/device"
+    },
+    "workplace": {
+      "native_builder": "0x1444e1720",
+      "config_key": "unrestrictionWebViewUrl",
+      "endpoint": "https://profile-auth-view.netmarble.com/restriction"
+    }
+  }
+}

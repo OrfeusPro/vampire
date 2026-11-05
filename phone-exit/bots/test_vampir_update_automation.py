@@ -5,6 +5,9 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_account_console',
+    'test_vampir_account_table',
+    'test_vampir_nid_mail_code',
     'test_vampir_update_auto_watch',
     'test_vampir_prepared_bundle',
     'test_vampir_prepared_runtime',

@@ -1,5 +1,6 @@
 """Local account console, owns at most two independent bot worker processes."""
 import argparse
+import importlib.util
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -20,19 +21,83 @@ from vampir_core.bot_device_settings import connection_presets, new_identity
 class Jobs:
     def __init__(self, store):
         self.store, self.lock, self.jobs = store, threading.RLock(), {}
+        self.verification = None
+
+    def verification_snapshot(self):
+        with self.lock:
+            if self.verification is None:
+                return None
+            queue = self.verification
+            return dict(state=queue['state'], active=queue['active'], pending=list(queue['pending']),
+                        completed=list(queue['completed']), failed=queue['failed'])
+
+    def is_reserved(self, identifier):
+        queue = self.verification
+        return bool(queue and queue['state'] in ('running', 'cancelling') and
+                    (identifier == queue['active'] or identifier in queue['pending']))
+
+    def verify_batch(self, identifiers):
+        if (type(identifiers) is not list or not 1 <= len(identifiers) <= 32
+                or any(type(identifier) is not str for identifier in identifiers)
+                or len(set(identifiers)) != len(identifiers)):
+            raise ValueError('Select 1–32 distinct accounts')
+        with self.lock:
+            if self.verification and self.verification['state'] in ('running', 'cancelling'):
+                raise ValueError('Verification queue is already active')
+            accounts = {row['id']: row for row in self.store.accounts()}
+            for identifier in identifiers:
+                row = accounts.get(identifier)
+                if (not row or not row['enabled'] or not row['mail_password_saved']
+                        or not row['email'].endswith('@vampir.top')
+                        or self.jobs.get(identifier, {}).get('running')):
+                    raise ValueError('Selected accounts must be enabled, stopped and have mail credentials')
+            spec = importlib.util.spec_from_file_location('account_verification_profile', HERE / 'verify-account.py')
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            selector = module.selected_profile()
+            self.verification = dict(state='running', active=None, pending=list(identifiers),
+                                     completed=[], failed=None, selector=selector)
+            self._next_verification()
+
+    def _next_verification(self):
+        queue = self.verification
+        if not queue['pending']:
+            queue.update(state='completed', active=None)
+            return
+        identifier = queue['pending'][0]
+        try:
+            self.start(identifier, 'verify', _verification_profile=queue['selector'])
+        except (ValueError, OSError, RuntimeError):
+            queue.update(state='stopped', active=None, failed=identifier)
+            raise
+        queue['active'] = queue['pending'].pop(0)
+
+    def stop_verification(self, identifier=None):
+        with self.lock:
+            queue = self.verification
+            if not queue or queue['state'] != 'running':
+                return
+            if identifier is not None and queue['active'] != identifier:
+                return
+            queue['state'] = 'cancelling'
+            job = self.jobs.get(queue['active'])
+        if job:
+            self._terminate(job['process'])
 
     def snapshot(self):
         with self.lock:
             return {key: {k: v for k, v in job.items() if k != 'process'} for key, job in self.jobs.items()}
 
     def start(self, identifier, operation, *, accept_required_terms=False, manual_mail_code=False, manual_sign_in=False,
-              terms_country=None, terms_locale=None, basic_terms_mode=None):
+              terms_country=None, terms_locale=None, basic_terms_mode=None, _verification_profile=None):
         if type(manual_sign_in) is not bool or (manual_sign_in and operation not in ('servers', 'characters', 'start', 'create', 'prepare-sdk')):
             raise ValueError('Manual sign-in is only available for login operations')
         if type(manual_mail_code) is not bool or (manual_mail_code and operation != 'register'):
             raise ValueError('Invalid mail-code mode')
-        if operation not in ('servers', 'characters', 'start', 'register', 'create', 'prepare-sdk'):
+        if operation not in ('servers', 'characters', 'start', 'register', 'create', 'prepare-sdk', 'verify'):
             raise ValueError('Unknown operation')
+        if (operation == 'verify') != (_verification_profile is not None):
+            raise ValueError('Verification requires an explicit queue')
         account = next((a for a in self.store.accounts() if a['id'] == identifier), None)
         if account is None:
             raise ValueError('Unknown account')
@@ -49,6 +114,8 @@ class Jobs:
                 or account['registration_status'] in ('registered', 'in_progress', 'email_in_use', 'nid_verified', 'sdk_created')):
             raise ValueError('Registration requires a mailbox password and explicit terms acceptance')
         with self.lock:
+            if operation != 'verify' and self.is_reserved(identifier):
+                raise ValueError('Account is in the verification queue')
             if self.jobs.get(identifier, {}).get('running'):
                 raise ValueError('This account already has a job')
             if sum(bool(job.get('running')) for job in self.jobs.values()) >= 2:
@@ -64,6 +131,8 @@ class Jobs:
             if operation == 'prepare-sdk':
                 command.extend(['--terms-country', terms_country, '--terms-locale', terms_locale,
                                 '--basic-terms-mode', basic_terms_mode])
+            if operation == 'verify':
+                command.extend(['--verification-profile', _verification_profile])
             process = subprocess.Popen(command,
                 stdin=subprocess.PIPE if manual_mail_code else subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                 creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
@@ -96,6 +165,9 @@ class Jobs:
                         job.update(active=False, status=event['status'], message=event['message'],
                             characters=event.get('characters', []), login_code=event.get('login_code'),
                             sdk_error=event.get('sdk_error'))
+                        if job['operation'] == 'verify':
+                            job.update(verification_status=event.get('verification_status'),
+                                       verification_steps=event.get('verification_steps', []))
             process.wait(timeout=10)
         except Exception:
             self._terminate(process)
@@ -117,6 +189,24 @@ class Jobs:
                 job.update(running=False, active=False)
                 if job['status'] in ('active', 'connecting'):
                     job.update(status='stopped', message='Процесс остановлен, соединение закрыто.')
+                if job['operation'] == 'verify':
+                    self._finish_verification(job)
+
+    def _finish_verification(self, job):
+        queue = self.verification
+        identifier = job['account_id']
+        if queue['state'] == 'cancelling':
+            queue.update(state='cancelled', active=None, failed=identifier)
+            job.update(status='stopped', message='Очередь остановлена пользователем.')
+            return
+        if job['status'] != 'verified' or job['process'].returncode != 0:
+            queue.update(state='stopped', active=None, failed=identifier)
+            return
+        queue['completed'].append(identifier)
+        try:
+            self._next_verification()
+        except (ValueError, OSError, RuntimeError):
+            pass  # _next_verification records the failed launch in the queue snapshot.
 
     @staticmethod
     def _terminate(process):
@@ -149,7 +239,11 @@ class Jobs:
     def stop(self, identifier):
         with self.lock:
             job = self.jobs.get(identifier)
+            verify = bool(job and job['operation'] == 'verify' and job['running'])
             process = job.get('process') if job else None
+        if verify:
+            self.stop_verification(identifier)
+            return
         if process:
             self._terminate(process)
         with self.lock:
@@ -157,6 +251,7 @@ class Jobs:
                 job.update(running=False, active=False, status='stopped', message='Остановлено пользователем.')
 
     def close(self):
+        self.stop_verification()
         for identifier in list(self.jobs):
             self.stop(identifier)
 
@@ -200,6 +295,7 @@ def server(store, *, port=17949):
                 return self.response(403, dict(error='Forbidden'))
             accounts, catalogs, lists = store.accounts(), store.catalogs(), store.character_lists()
             return self.response(200, dict(accounts=accounts, jobs=jobs.snapshot(), catalogs=catalogs,
+                verification=jobs.verification_snapshot(),
                 character_lists=lists,
                 readiness={a['id']: account_readiness(a, catalogs, lists) for a in accounts},
                 connection_presets=connection_presets() + store.connection_presets(),
@@ -220,11 +316,12 @@ def server(store, *, port=17949):
                 if type(body) is not dict:
                     raise ValueError('Invalid request')
                 if self.path == '/api/save':
-                    existing = next((a for a in store.accounts() if a['email'] == body['email'].strip().lower()), None)
-                    if existing and jobs.snapshot().get(existing['id'], {}).get('running'):
-                        raise ValueError('Stop this bot before editing')
-                    identifier = store.save(body['email'], password=body.get('password') or None,
-                        mail_password=body.get('mail_password') or None, assignment=body['assignment'])
+                    with jobs.lock:
+                        existing = next((a for a in store.accounts() if a['email'] == body['email'].strip().lower()), None)
+                        if existing and (jobs.jobs.get(existing['id'], {}).get('running') or jobs.is_reserved(existing['id'])):
+                            raise ValueError('Stop this bot before editing')
+                        identifier = store.save(body['email'], password=body.get('password') or None,
+                            mail_password=body.get('mail_password') or None, assignment=body['assignment'])
                     return self.response(200, dict(id=identifier))
                 if self.path == '/api/nickname':
                     return self.response(200, dict(nickname=random_nickname(a.get('create_nickname', '') for a in store.accounts())))
@@ -246,8 +343,16 @@ def server(store, *, port=17949):
                 if self.path == '/api/registration-code':
                     jobs.submit_code(body['id'], body['code'])
                     return self.response(200, dict(ok=True))
+                if self.path == '/api/verification-queue':
+                    if body == {'action': 'stop'}:
+                        jobs.stop_verification()
+                    elif set(body) == {'accounts'}:
+                        jobs.verify_batch(body['accounts'])
+                    else:
+                        raise ValueError('Invalid verification action')
+                    return self.response(200, dict(ok=True))
                 return self.response(404, dict(error='Unknown action'))
-            except (ValueError, KeyError, TypeError, RuntimeError):
+            except (ValueError, KeyError, TypeError, RuntimeError, OSError):
                 return self.response(400, dict(error='Проверьте данные, пароль и состояние бота. Перед изменением остановите его.'))
     http = ThreadingHTTPServer(('127.0.0.1', port), Handler)
     http.daemon_threads = True

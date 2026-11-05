@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source_check": {
+    "id": "sdk-runtime-launcher-11316",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9f7444af60858eba152ee7e1f2290267f0b1b3296ffc54327f3ca6d02816bed9\\manifest.json",
+    "sha256": "9f7444af60858eba152ee7e1f2290267f0b1b3296ffc54327f3ca6d02816bed9",
+    "cache_key": "402aa5dd47164fd7a7227794f9cc35512c4b5b78794a24cc25eef3f708a6897c"
+  },
+  "on_update": true,
+  "cached_source_check_seconds": 2.119,
+  "new_child_processes_on_cached_source_check": 0,
+  "source_fixture_cases": 14,
+  "tooling": {
+    "group": "account-verification",
+    "executed_cases": 30,
+    "cached_groups": 27,
+    "cached_cases": 2059,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\0e9b0b42d6c2ef60d9033a4eaa64639350382355cae8022ed8a5d5ea944cee07\\manifest.json",
+    "sha256": "0e9b0b42d6c2ef60d9033a4eaa64639350382355cae8022ed8a5d5ea944cee07"
+  },
+  "browser_compilation_passed": true,
+  "source_collect_reused": true,
+  "frozen_inputs_unchanged": 59
+}

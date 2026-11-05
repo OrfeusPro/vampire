@@ -2,6 +2,7 @@ import importlib.util
 from pathlib import Path
 import unittest
 from unittest.mock import Mock, patch
+from datetime import datetime, timezone
 
 
 class RegistrationMailTests(unittest.TestCase):
@@ -61,6 +62,38 @@ class RegistrationMailTests(unittest.TestCase):
                 self.module.RegistrationMailbox('fixture@vampir.top', 'fixture-password')
         client.login.assert_not_called()
         client.logout.assert_called_once()
+
+    def test_device_code_requires_new_uid_and_recent_delivery_for_its_purpose(self):
+        client = Mock()
+        client.select.return_value = ('OK', [b'4'])
+        client.response.side_effect = [('UIDNEXT', [b'10']), ('UIDVALIDITY', [b'71']), ('UIDVALIDITY', [None])]
+        device = self.module.SUBJECTS['device-registration']
+        protection = self.module.SUBJECTS['account-protection']
+        def uid(operation, *args):
+            if operation == 'search':
+                return ('OK', [b'9 10 11 12'])
+            number = int(args[0])
+            self.assertGreaterEqual(number, 10)
+            self.assertEqual(args[1], '(INTERNALDATE BODY.PEEK[]<0.131072>)')
+            date = b'00:01:00' if number == 11 else b'00:15:00'
+            raw = self.message('12345' if number == 10 else '56789', subject=protection if number == 12 else device)
+            return ('OK', [(b'1 (INTERNALDATE "05-Nov-2026 ' + date + b' +0000"', raw)])
+        client.uid.side_effect = uid
+        baseline = datetime(2026, 11, 5, 0, 14, tzinfo=timezone.utc).timestamp()
+        with patch.object(self.module.imaplib, 'IMAP4', return_value=client), \
+                patch.object(self.module.time, 'time', side_effect=[baseline] + [baseline + 70] * 3):
+            mailbox = self.module.RegistrationMailbox('fixture@vampir.top', 'fixture-password', purpose='device-registration')
+            self.assertEqual(mailbox.get_code(600), '12345')
+
+    def test_mailbox_uid_reset_stops_before_reading(self):
+        client = Mock()
+        client.select.return_value = ('OK', [b'1'])
+        client.response.side_effect = [('UIDNEXT', [b'10']), ('UIDVALIDITY', [b'71']), ('UIDVALIDITY', [b'72'])]
+        with patch.object(self.module.imaplib, 'IMAP4', return_value=client):
+            mailbox = self.module.RegistrationMailbox('fixture@vampir.top', 'fixture-password', purpose='account-protection')
+            with self.assertRaisesRegex(RuntimeError, 'UID validity changed'):
+                mailbox.get_code(600)
+        client.uid.assert_not_called()
 
 
 if __name__ == '__main__': unittest.main()

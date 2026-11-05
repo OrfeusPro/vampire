@@ -333,5 +333,50 @@ class AccountEntryDiagnosticTests(unittest.TestCase):
             self.assertNotIn('token-fixture', json.dumps(capture.inventory))
 
 
+class VerificationWebTests(unittest.TestCase):
+    def test_only_explicit_known_sdk_states_schedule_verification(self):
+        from vampir_core.sdk_sign_in_response import parse_sdk_sign_in_response
+        for state, expected in (
+            (dict(deviceSecure=['device-registration'], restriction=['workplace'], withdraw=[]),
+             ('device-registration', 'workplace')),
+            (dict(deviceSecure=[], restriction=[], withdraw=[]), ()),
+            (dict(deviceSecure=[], restriction=['other'], withdraw=[]), None),
+            (dict(deviceSecure=[], restriction=[], withdraw=['pending']), None),
+            ({}, None),
+        ):
+            with self.subTest(state=state):
+                value = dict(errorCode=0, resultData=dict(accessToken='fixture-token',
+                    playerInfo=dict(player=dict(playerId='fixture-player', playerStatus=state))))
+                result = parse_sdk_sign_in_response(status=200, body=json.dumps(value).encode())
+                self.assertEqual(result.verification_steps, expected)
+                self.assertNotIn('fixture-token', repr(result))
+
+    def test_form_urls_use_fresh_sdk_data_and_the_correct_device_key(self):
+        from urllib.parse import urlsplit, parse_qs
+        tool = load('verify_account_source_tests', HERE / 'vampir-headless/verify-account.py')
+        contract = json.loads((tool.KNOWLEDGE / 'verification-web-current.json').read_bytes())
+        tool.check_source(contract['source_sha256'])
+        with self.assertRaises(ValueError):
+            tool.check_source('0' * 64)
+        prepared = SimpleNamespace(constants={key: url for key, url in tool.ENDPOINTS.values()},
+            profile=dict(game_code='thered', build_code=0, language='en', os_type='windows'),
+            geo=SimpleNamespace(iso_country='UA', client_ip='192.0.2.40'),
+            binding=SimpleNamespace(device_key='sdk-device', nm_device_key='nm-device', nid_device_key='nid-device'))
+        data = SimpleNamespace(access_token='fixture-token', player_id='player', joined_country_code='US')
+        for purpose in tool.ENDPOINTS:
+            url = tool.web_url(purpose, prepared, data, 'Test & Device')
+            parts = urlsplit(url)
+            params = parse_qs(parts.query)
+            self.assertEqual(parts.hostname, 'profile-auth-view.netmarble.com')
+            self.assertEqual(params['deviceName'], ['Test & Device'])
+            self.assertEqual(params['accessToken'], ['fixture-token'])
+            self.assertEqual(params['countryCode'], ['UA'])
+            self.assertEqual(params.get('deviceKey'), ['sdk-device'] if purpose == 'device-registration' else None)
+            self.assertNotIn('nid-device', url)
+        prepared.constants['deviceWebViewUrl'] = 'https://fixture.invalid/'
+        with self.assertRaises(ValueError):
+            tool.web_url('device-registration', prepared, data, 'Test Device')
+
+
 if __name__ == '__main__':
     unittest.main()

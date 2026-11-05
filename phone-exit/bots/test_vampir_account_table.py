@@ -5,6 +5,44 @@ import unittest
 
 
 class AccountTableTests(unittest.TestCase):
+    def test_both_official_code_forms_use_the_same_confirm_control(self):
+        source = Path(__file__).parent / 'vampir-headless/windows/verification-form.js'
+        fixture = r'''
+const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
+const source = fs.readFileSync(process.argv[1], 'utf8');
+class Input {
+    constructor(placeholder, value = '') { this.placeholder = placeholder; this.value = value; }
+    get value() { return this.text; }
+    set value(value) { this.text = value; }
+    getClientRects() { return [{}]; }
+    dispatchEvent() {}
+}
+for (const [purpose, title, pathname] of [
+    ['device-registration', 'Enter Verification Code', '/secure/device/additional/step3'],
+    ['workplace', 'Verify with Email', '/restriction/release/email/step2'],
+]) {
+    let clicked = 0;
+    const code = new Input('Enter only numbers.');
+    const email = new Input('', 'test**@vampir.top');
+    const context = vm.createContext({location:{origin:'https://profile-auth-view.netmarble.com',pathname},
+        document:{body:{innerText:title},querySelectorAll:selector => ({
+            input:[email,code], button:[{textContent:'Confirm',getClientRects:()=>[{}],click:()=>clicked++}],
+            'iframe[title]':[],
+        })[selector]}, HTMLInputElement:Input, Event:class {},
+    });
+    const run = vm.runInContext(source, context);
+    assert.equal(run({purpose,email:'other@vampir.top',code:'12345',actions:['mail_requested']}), 'waiting');
+    assert.equal(clicked, 0);
+    assert.equal(run({purpose,email:'tester@vampir.top',code:'12345',actions:['mail_requested']}), 'code_submitted');
+    assert.equal(code.value, '12345');
+    assert.equal(clicked, 1);
+    assert.equal(run({purpose,email:'tester@vampir.top',code:'12345',actions:['mail_requested','code_submitted']}), 'waiting');
+    assert.equal(clicked, 1);
+}
+'''
+        result = subprocess.run(['node', '-e', fixture, str(source.resolve())], capture_output=True, text=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_password_reveals_only_on_click_and_blur_clears_it(self):
         source = Path(__file__).parent / 'vampir-headless/console/console.js'
         fixture = r'''

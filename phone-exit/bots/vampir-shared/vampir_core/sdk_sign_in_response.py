@@ -10,6 +10,18 @@ class SdkSignInData:
     game_region: str | None = field(repr=False)
     joined_country_code: str | None = field(repr=False)
     idp_info_count: int | None
+    verification_steps: tuple[str, ...] | None = None
+
+
+def _verification_steps(player):
+    """Only route explicitly supported states. An unknown state cannot advance a queue."""
+    status = player.get('playerStatus')
+    if not isinstance(status, dict) or status.get('withdraw') != []:
+        return None
+    device, protection = status.get('deviceSecure'), status.get('restriction')
+    if device not in ([], ['device-registration']) or protection not in ([], ['workplace']):
+        return None
+    return tuple(device + protection)
 
 
 def _object_pairs(pairs):
@@ -69,4 +81,4 @@ def parse_sdk_sign_in_response(*, status: int, body: bytes) -> SdkSignInData:
             raise ValueError('Invalid SDK identity provider array')
         count = len(providers)
     # Raw idpInfo can include identity details; retain only its count until mapped.
-    return SdkSignInData(token, player_id, region, country, count)
+    return SdkSignInData(token, player_id, region, country, count, _verification_steps(player))

@@ -13,6 +13,42 @@ function characters(value){const cached=snapshot.character_lists?.[selected+'|'+
 function edit(account){selected=account?.id||null;el('heading').textContent=account?.email||'Новый аккаунт';el('email').value=account?.email||'';el('email').readOnly=!!account;el('password').value='';el('mail-password').value='';el('terms').checked=false;el('manual-mail-code').checked=false;el('manual-sign-in').checked=false;el('registration-code').value='';el('sdk-country').value='';el('sdk-locale').value='';el('sdk-terms-mode').value='';el('password').required=!account;el('enabled').checked=account?.enabled!==false;el('label').value=account?.label||'';el('device').value=account?.device_profile||'current-pc';editConnection(account);el('auth-flow').value=account?.auth_flow||'launcher';el('region').value=account?.region||'EU';el('nickname').value=account?.create_nickname||'';el('random-nickname').checked=account?.create_random_nickname!==false;el('create-class').replaceChildren(...(snapshot.creation_classes||[]).map(c=>option(c.key,c.label)));el('create-class').value=account?.create_class||'Gunner';servers(account?.server_id);characters(account?.character_index);render();}
 
 const shownPasswords=new Map();
+const verificationSelection=new Set();
+labels.verified='Верификация подтверждена';
+stages['verify_device-registration']='Регистрация устройства Netmarble';
+stages.verify_workplace='Подтверждение защиты аккаунта';
+stages.verification_mail='Ожидание свежего письма';
+
+function renderVerification(){
+ const queue=snapshot.verification;
+ const active=queue?.state==='running'||queue?.state==='cancelling';
+ el('verify-selected').disabled=active||verificationSelection.size===0;
+ el('stop-verification').disabled=queue?.state!=='running';
+ const account=snapshot.accounts.find(row=>row.id===(queue?.active||queue?.failed));
+ const job=snapshot.jobs[account?.id];
+ const stage=stages[job?.stage]||'Подготовка';
+ let summary='Выбрано аккаунтов: '+verificationSelection.size;
+ if(queue?.state==='running') summary=`${account?.email||''} · ${stage} · в очереди ${queue.pending.length}`;
+ if(queue?.state==='cancelling') summary='Остановка очереди…';
+ if(queue?.state==='completed') summary=`Подтверждено аккаунтов: ${queue.completed.length}`;
+ if(queue?.state==='cancelled') summary=`Очередь остановлена. Подтверждено аккаунтов: ${queue.completed.length}`;
+ if(queue?.state==='stopped') summary=`${account?.email||''} · ${job?.message||'Не удалось запустить верификацию.'} Подтверждено аккаунтов: ${queue.completed.length}`;
+ el('verification-status').textContent=summary;
+}
+
+el('verify-selected').onclick=async()=>{
+ const accounts=snapshot.accounts.filter(row=>verificationSelection.has(row.id)).map(row=>row.id);
+ el('verify-selected').disabled=true;
+ try{
+  await api('/api/verification-queue',{accounts});
+  verificationSelection.clear();
+  await refresh();
+ }catch(error){notice(error.message);renderVerification();}
+};
+el('stop-verification').onclick=async()=>{
+ try{await api('/api/verification-queue',{action:'stop'});await refresh();}
+ catch(error){notice(error.message);}
+};
 const registrationLabels={unknown:'Netmarble не проверен',in_progress:'Регистрация идёт',unconfirmed:'Регистрация не подтверждена',registered:'Netmarble зарегистрирован',email_in_use:'Почта занята в Netmarble',nid_verified:'Вход Netmarble подтверждён',sdk_created:'Профиль SDK подтверждён'};
 function passwordCell(account,kind){
  const cell=document.createElement('td'),wrap=document.createElement('div'),text=document.createElement('span'),button=document.createElement('button');
@@ -25,20 +61,35 @@ function passwordCell(account,kind){
 }
 function renderRoster(){
  const body=el('roster-body');body.replaceChildren();
+ const queue=snapshot.verification;
+ const active=queue?.state==='running'||queue?.state==='cancelling';
  for(const account of snapshot.accounts){
   const row=document.createElement('tr'),email=document.createElement('td'),link=document.createElement('button');
-  link.className='email-link';link.type='button';link.textContent=account.email;link.onclick=()=>edit(account);email.append(link);row.append(email,passwordCell(account,'mail'),passwordCell(account,'netmarble'));
+  const checkbox=document.createElement('input');
+  checkbox.type='checkbox';checkbox.className='verify-checkbox';
+  checkbox.setAttribute('aria-label','Выбрать для верификации '+account.email);
+  checkbox.checked=verificationSelection.has(account.id);
+  checkbox.disabled=active||account.enabled===false||!account.email.endsWith('@vampir.top')||
+   !account.mail_password_saved||!!snapshot.jobs[account.id]?.running;
+  checkbox.onchange=()=>{
+   if(checkbox.checked) verificationSelection.add(account.id);
+   else verificationSelection.delete(account.id);
+   renderVerification();
+  };
+  link.className='email-link';link.type='button';link.textContent=account.email;link.onclick=()=>edit(account);email.append(checkbox,link);row.append(email,passwordCell(account,'mail'),passwordCell(account,'netmarble'));
   const list=snapshot.character_lists?.[account.id+'|'+account.region+'|'+account.server_id]?.characters||[];
   const character=account.character_key?list.find(c=>c.key===account.character_key):(list.length===1?list[0]:null);
   const server=snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id);
   const job=snapshot.jobs[account.id],registrationStatus=registrationLabels[account.registration_status]||'Не проверен';
-  const sessionStatus=job?(job.operation==='register'?(job.running?(job.stage==='registration_code'?'Регистрация · ожидание кода':'Регистрация Netmarble'):registrationStatus+' · '+(labels[job.status]||job.status)):(labels[job.status]||job.status)):registrationStatus;
+  const sessionStatus=active&&queue.pending.includes(account.id)?'В очереди на верификацию':
+   job?(job.operation==='register'?(job.running?(job.stage==='registration_code'?'Регистрация · ожидание кода':'Регистрация Netmarble'):registrationStatus+' · '+(labels[job.status]||job.status)):(labels[job.status]||job.status)):registrationStatus;
   const mailStatus=({created:'Почта создана',verified:'Почта проверена',unconfirmed:'Создание почты не подтверждено',error:'Ошибка почты'})[account.mail_status];
   const status=account.mail_status==='planned'?'Ящик ещё не создан':(mailStatus?mailStatus+' · ':'')+sessionStatus;
   const attempt=(snapshot.creation_attempts||[]).filter(a=>a.account_id===account.id&&a.region===account.region&&a.server_id===account.server_id).at(-1);
   for(const value of [character?.name||(attempt?.character_name?attempt.character_name+' · не подтверждён списком':'—'),snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,account.region+' · '+(server?.name||account.server_id||'Не выбран'),status]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}
   body.append(row);
  }
+ renderVerification();
 }
 window.addEventListener('blur',()=>{shownPasswords.clear();renderRoster();});
 

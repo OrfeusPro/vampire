@@ -2,3 +2,5 @@
 
 label:has(>input[type="checkbox"]){flex-direction:row;align-items:flex-start;gap:10px;line-height:1.5}input[type="checkbox"]{width:auto;flex:0 0 auto;margin-top:4px;accent-color:#378d7b}
 .roster-section{max-width:1440px;margin:auto;padding:24px 30px;border-bottom:1px solid #263143}.roster-scroll{max-height:420px;overflow:auto;margin-top:16px}#roster{width:100%;border-collapse:collapse;font-size:13px}#roster th{position:sticky;top:0;background:#162130;text-align:left;color:#9fb4ca}#roster th,#roster td{padding:12px;border-bottom:1px solid #263143;white-space:nowrap}#roster .email-link{border:0;background:none;color:#6fd4bf;padding:0}#roster .password-cell{display:flex;align-items:center;gap:8px}#roster .password-cell span{display:inline-block;min-width:90px;font-family:monospace}#roster .password-cell button{padding:4px 8px}#roster tr:hover{background:#121d2b}
+.verification-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem}
+#roster .verify-checkbox{width:auto;margin:0 .5rem 0 0;vertical-align:middle}

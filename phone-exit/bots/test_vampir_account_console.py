@@ -1,4 +1,5 @@
 import hashlib
+import io
 import importlib.util
 import json
 from pathlib import Path
@@ -26,6 +27,41 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_verification_queue_waits_for_cleanup_and_cancel_stops_next_account(self):
+        spec = importlib.util.spec_from_file_location('verification_queue', HERE / 'vampir-headless/account-manager.py')
+        tool = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tool)
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            ids = [store.save(f'fixture-{index}@vampir.top', password='fixture', mail_password='mail', assignment={})
+                   for index in range(3)]
+            jobs = tool.Jobs(store)
+            success = b'{"event":"result","status":"verified","message":"fixture"}\n'
+            first = MagicMock(stdout=io.BytesIO(success), stdin=None, returncode=0)
+            second = MagicMock(stdout=io.BytesIO(success), stdin=None, returncode=0)
+            def launch(*args, **kwargs):
+                if first.stdout.closed:
+                    self.assertTrue(first.wait.called)
+                    return second
+                return first
+            with patch.object(tool.subprocess, 'Popen', side_effect=launch) as popen, \
+                    patch.object(tool.threading, 'Thread'), patch.object(jobs, '_terminate'):
+                with self.assertRaises(ValueError):
+                    jobs.verify_batch([ids[0], ids[0]])
+                self.assertEqual(popen.call_count, 0)
+                jobs.verify_batch(ids)
+                self.assertEqual(jobs.verification_snapshot()['active'], ids[0])
+                with self.assertRaises(ValueError):
+                    jobs.start(ids[1], 'servers')
+                jobs._watch(jobs.jobs[ids[0]])
+                self.assertEqual(jobs.verification_snapshot()['active'], ids[1])
+                self.assertEqual(jobs.verification_snapshot()['completed'], ids[:1])
+                jobs.stop_verification()
+                jobs._watch(jobs.jobs[ids[1]])
+                self.assertEqual(jobs.verification_snapshot()['state'], 'cancelled')
+                self.assertEqual(jobs.verification_snapshot()['pending'], ids[2:])
+                self.assertEqual(popen.call_count, 2)
+
     def test_creation_nickname_reuses_persisted_proposal_and_changes_only_after_confirmed_collision(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / 'console.sqlite3'

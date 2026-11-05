@@ -2675,6 +2675,48 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Штатная web-цепочка device-registration и workplace/email protection, свежий OTP и результат верификации; затем текущие game/lobby/character contracts и многоаккаунтная очередь.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444e0a00",
+        "0x1444e1720"
+      ],
+      "checks": [
+        {
+          "cache_key": "402aa5dd47164fd7a7227794f9cc35512c4b5b78794a24cc25eef3f708a6897c",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9f7444af60858eba152ee7e1f2290267f0b1b3296ffc54327f3ca6d02816bed9\\manifest.json",
+          "sha256": "9f7444af60858eba152ee7e1f2290267f0b1b3296ffc54327f3ca6d02816bed9",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Два штатных WebView маршрута сопоставлены с точным EXE и свежим playerStatus. Для очереди панели подтверждена живая регистрация устройства с новым IMAP-кодом. Автоматический путь верификации встроен в проверку SDK и группу tooling.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-ACCOUNT-VERIFICATION-11322.md",
+          "sha256": "57fd8db0d509115ab5b224e3eed31f30fe65d0dca938875281b9927236b9061a"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\ACCOUNT-VERIFICATION-11322-VALIDATION.json",
+          "sha256": "d6013a5cb3b8f864476f6ede56c7bd2f58f0bc50312068ad03c9c971e65aac20"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\verification-web-current.json",
+          "sha256": "24341680ed2003bea9248566b36bd56b7cfe9557468fbe2e95f1018f12c1de36"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "7db5ca65b76bd88368e48c5614e1f076755f484cd9c00f377143dbb1b9e77f62",
+      "limits": [
+        "Нативные builders разобраны статически. Прямой приватный WebView адаптер пользуется публичным контрактом query. Отдельная нативная ветка cookie handoff не воспроизводится.",
+        "SDK вход и устройство наблюдались онлайн. Для защиты аккаунта подтверждены отправка письма и форма кода. Селектор исправленного экрана проверен на фикстуре."
+      ],
+      "method": "static",
+      "next_check": "Получить положительный ответ и callback workplace, затем проверить свежий playerStatus без повторной отправки письма.",
+      "question": "sdk-launcher-runtime-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Живое автоматическое завершение защиты после исправления заголовка и состояние игрового входа.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,
