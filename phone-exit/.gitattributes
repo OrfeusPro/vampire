@@ -590,3 +590,8 @@ bots/resource-tools/vampir/knowledge/quest-matching-state-transfer.json text eol
 bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-QUEST-MATCHING-STATE-NATIVE-V1-11322.json text eol=lf
 bots/test_vampir_quest_matching_state_integration_v1.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-MATCHING-STATE-NATIVE-V1-11322.md text eol=crlf
+bots/resource-tools/vampir/knowledge-index-refresh-v2.py text eol=lf
+bots/resource-tools/vampir/knowledge-check-v2.py text eol=lf
+bots/test_vampir_knowledge_refresh_v2.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-KNOWLEDGE-CHECK-V2.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-KNOWLEDGE-CHECK-V2.md text eol=crlf

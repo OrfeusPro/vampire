@@ -1,5 +1,10 @@
 # Vampir — разработка и обновление
 
+[Полная проверка знаний v2](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-KNOWLEDGE-CHECK-V2.md)
+сокращает повторное чтение исторических файлов при обновлении индекса.
+Новая команда для precommit — `knowledge-check-v2.py`; неизменный повтор
+сохраняет полную SHA-проверку. Общий набор тестов пока имеет один ключ кэша.
+
 Основной вход после изменения игры — [автоматическое обновление](../resource-tools/vampir/knowledge/RESUMABLE-UPDATE.md).
 Разовый запуск выполняется ярлыком **«Обновить Vampir вручную»** в корне
 проекта либо командой `knowledge-index.py update --auto`. Наблюдатель

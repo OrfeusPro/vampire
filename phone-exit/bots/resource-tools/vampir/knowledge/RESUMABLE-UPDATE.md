@@ -704,7 +704,8 @@ provenance обрабатывает отдельный typed bridge, не мен
 Новые ручные исследования общих блокеров ведутся через
 `research-scoped-v2.py prepare/collect/finish`; старые requests остаются в своём
 workflow. Команда scoped check проверяет одну completion, полную историю —
-прежний `knowledge-index.py check`. Квитанции явно содержат
+`knowledge-check-v2.py` (прежний `knowledge-index.py check` также поддерживается).
+Квитанции scoped workflow явно содержат
 `validation_scope=selected_materials_only`, `global_history_verified=false`.
 Файлы, переданные через --context, остаются SHA-pinned inputs: их изменение,
 включая собственную запись такого файла, требует нового request.
@@ -831,3 +832,26 @@ LoginResult — в `generated-login-input/<family>/index.json`;
 [автоматический archive-wire 20 → 22](evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md).
 Подготовка и чтение ответа:
 [автоматический Version 20 → 22](evidence/updates/HEADLESS-AUTO-VERSION-11322.md).
+
+## Полная проверка базы знаний v2
+
+После изменения кода или документации перед коммитом:
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/knowledge-check-v2.py --output "F:/PhoneExit Resources/Vampir/knowledge/knowledge-check-v2-last.json"
+```
+
+Команда сохраняет прежние consistency, Markdown и staged проверки. При
+изменении контекста она готовит частную копию индекса и выполняет один
+итоговый полный проход по историческим файлам вместо двух. Неизменный
+повтор также проверяет все исторические SHA. Файл базы заменяется только
+после проверки входов, Git index и самой базы назначения; WAL / journal,
+алиасы назначения и параллельная замена дают конкретный отказ.
+
+`--root`, `--knowledge` и `--database` выбирают отдельную библиотеку / базу.
+`--output` необязателен и должен находиться вне входных материалов.
+Это проверка инструментов и знаний: она не выполняет вход, не меняет
+admission и не включает наблюдатель. Frozen этапы обычного обновления
+и прежний `knowledge-index.py check` сохраняются. Стабильность проверяется
+по полным SHA до / после; атомарный снимок всей файловой системы не создаётся.
+[Измерение, проверки и границы](evidence/updates/HEADLESS-KNOWLEDGE-CHECK-V2.md).

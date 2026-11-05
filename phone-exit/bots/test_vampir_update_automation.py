@@ -73,7 +73,8 @@ def load_tests(loader, tests, pattern):
             'test_vampir_quest_action_integration_v1','test_vampir_quest_action_rules_v1',
             'test_vampir_quest_dispatch_harness_v1','test_vampir_quest_dispatch_integration_v1',
             'test_vampir_tutorial_state_harness_v1','test_vampir_tutorial_state_integration_v1',
-            'test_vampir_quest_matching_state_integration_v1'):
+            'test_vampir_quest_matching_state_integration_v1',
+            'test_vampir_knowledge_refresh_v2'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

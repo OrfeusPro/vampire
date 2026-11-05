@@ -2124,6 +2124,40 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты композиция Tutorial consumer → настоящий apply, создание / replacement задач QuestSync, wrapper модели, реальные callbacks и runtime quest-контракт. Reuse / growth / настоящие storage providers / cleanup effects и server action admission требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1455f4a70",
+        "0x1455fd340"
+      ],
+      "checks": [],
+      "conclusion": "Полная проверка знаний v2 сохраняет legacy structural checks и SQL/query parity; при обновлении контекста 37337 исторических pseudocode SHA проверяются одним итоговым проходом вместо двух. Тесты и producer dependencies подключены к on_update tooling gate.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-KNOWLEDGE-CHECK-V2.md",
+          "sha256": "14858f5abbdc2c892ac40ae39890560477dc878fd7be5cbfd8cf32877f84e76d"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-KNOWLEDGE-CHECK-V2.json",
+          "sha256": "70588d85d41b37f42f5d4762a2b90a808adfca39eb7731e10f2c727c9ee2132e"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "97f9f31a996778362c504355c7c7ee3a2550146533c1a1f99f4e4fac0418e5ab",
+      "limits": [
+        "Versioned precommit command only; frozen ordinary-update index stages remain unchanged.",
+        "Endpoint full SHA and Git identities do not provide an atomic filesystem snapshot.",
+        "Unchanged full check still verifies all historical inputs and may not be faster.",
+        "Wall times are local measurements; concurrent tooling tests and OS cache affect them.",
+        "Automatic-update-tooling retains one aggregate cache key; grouping remains open.",
+        "Адреса и SHA — anchors прежнего scoped request; этот пакет не доказывает новой семантики QuestSync или входа."
+      ],
+      "method": "static",
+      "next_check": "Версионированный групповой runner: полное покрытие состава и зависимостей, отдельные квитанции и длительности, ноль запущенных групп при неизменном повторе.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Разделение общего automatic-update-tooling ключа на группы и стабильная регистрация native семейств остаются открыты; wall time неизменного запуска отдельно не обещается.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

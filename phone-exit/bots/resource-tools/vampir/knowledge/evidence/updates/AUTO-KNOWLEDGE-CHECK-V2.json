@@ -1,0 +1,269 @@
+{
+  "schema": 1,
+  "recipe": "knowledge-check-v2",
+  "validation_scope": "tooling_and_full_history",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source_is_research_anchor_only": true,
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge-index-refresh-v2.py": "dec88d9b949e7daa49ebcaab0d12ac73cfe113e141b8e269ca8837c9fb5db611",
+    "phone-exit/bots/resource-tools/vampir/knowledge-check-v2.py": "ae41773915063a02e7561c9a7453c8e2e867b37389881e44af8e46847c108252",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "8de38da10d2a8b4545e1c87e8db70218e74055f30f76b60f59f011d53dc4afe5",
+    "phone-exit/bots/test_vampir_knowledge_refresh_v2.py": "07cdf8a146cc4f92657f9a737952dafd85dbdf908c455e472dffbb89dfedb1aa",
+    "phone-exit/bots/test_vampir_update_automation.py": "3a787e285323fbdb71e4c97b2af62b85aa49767151c6a1a6cac921591a73ce14"
+  },
+  "benchmark": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\knowledge-check-v2-benchmark-current.json",
+    "sha256": "3d2c29c6c78f14a8866e9d2e7f7178e0194bed3e38f2db92338ee37037784bb1"
+  },
+  "benchmark_result": {
+    "schema": 1,
+    "baseline_database_sha256": "faf73f1fdf7d90f919d8a834d82372ef0d808c63545d4ecaad366df44c255e4d",
+    "legacy": {
+      "mode": "legacy",
+      "database": "F:\\PhoneExit Resources\\Vampir\\knowledge\\knowledge-check-v2-benchmark-1793839680859867500\\legacy.sqlite3",
+      "elapsed_seconds": 191.734183,
+      "result": {
+        "state": "passed",
+        "knowledge_consistent": true,
+        "staged_markdown_checked": 0,
+        "limits": "Structural checks do not establish semantic truth or replace review of Russian text and numeric meaning."
+      },
+      "digest_calls": 86921,
+      "unique_digest_paths": 40318,
+      "digest_bytes": 5741228650,
+      "pseudocode_digest_calls": 74674,
+      "pseudocode_paths": 37337,
+      "source_digest_calls": 25,
+      "source_digest_bytes": 4964753920
+    },
+    "optimized": {
+      "mode": "v2",
+      "database": "F:\\PhoneExit Resources\\Vampir\\knowledge\\knowledge-check-v2-benchmark-1793839680859867500\\v2.sqlite3",
+      "elapsed_seconds": 160.33014,
+      "result": {
+        "state": "passed",
+        "knowledge_consistent": true,
+        "staged_markdown_checked": 0,
+        "limits": "Structural checks do not establish semantic truth or replace review of Russian text and numeric meaning.",
+        "producer": {
+          "id": "knowledge-check-v2",
+          "version": 2,
+          "sha256": "ae41773915063a02e7561c9a7453c8e2e867b37389881e44af8e46847c108252"
+        },
+        "full_history_verified": true,
+        "index_build": {
+          "counts": {
+            "releases": 6,
+            "artifacts": 682,
+            "functions": 1944,
+            "variants": 2210,
+            "observations": 37343,
+            "calls": 36558,
+            "literals": 2273,
+            "literal_refs": 2577,
+            "unresolved": 99
+          },
+          "reused": false,
+          "code_reused": true,
+          "imported_reports": 0,
+          "roles_transferred": false,
+          "game_or_ghidra_started": false,
+          "database": "F:\\PhoneExit Resources\\Vampir\\knowledge\\knowledge-check-v2-benchmark-1793839680859867500\\v2.sqlite3",
+          "producer": "knowledge-index-refresh-v2",
+          "full_history_verified": true,
+          "metrics": {
+            "mode": "incremental",
+            "history_verification_passes": 1,
+            "digest_memoization": false,
+            "history_hash_scope": {
+              "artifacts": 682,
+              "receipt_references": 680,
+              "pseudocode_pairs": 37337,
+              "releases": 6
+            },
+            "expected_history_digest_calls": 38705,
+            "durations": {
+              "initial_inventory_seconds": 2.5107947000069544,
+              "history_verification_seconds": 29.13492199999746,
+              "total_seconds": 93.98958210006822
+            }
+          }
+        },
+        "metrics": {
+          "duration_seconds": 160.32551490003243,
+          "input_guard_seconds": 9.358330799965188,
+          "guarded_files": 1717,
+          "staged_index_entries": 4416
+        },
+        "proves_client_compatibility": false,
+        "runtime_admitted": false,
+        "stable_inputs": "Full input hashes and Git index identities compared at endpoints; no atomic filesystem snapshot or protection against change-and-restore."
+      },
+      "digest_calls": 51652,
+      "unique_digest_paths": 40320,
+      "digest_bytes": 4554499584,
+      "pseudocode_digest_calls": 37337,
+      "pseudocode_paths": 37337,
+      "source_digest_calls": 19,
+      "source_digest_bytes": 3773234176
+    },
+    "logical_tables": {
+      "releases": {
+        "rows": 6,
+        "sha256": "5db28858bfb9114a9f27fb2d55648bfccdd474cd9b4557fead1cd435544cfb68"
+      },
+      "metadata": {
+        "rows": 2,
+        "sha256": "fbd9980cf4058453ca5a4779f9ccf68bb7c18bd511ed6a3486cbf7b9086d9c82"
+      },
+      "artifacts": {
+        "rows": 682,
+        "sha256": "0fd4450f22c68856f03cb8b9b60315e7fdb6ae1a25dfe7203131d6a923b72a3a"
+      },
+      "functions": {
+        "rows": 1944,
+        "sha256": "a8fcd01b23dfc5979d49c308634d7aeda68313a95c219f56f0aca75deede8e0e"
+      },
+      "unresolved": {
+        "rows": 99,
+        "sha256": "9795306e48da95f346ae7325761a854957a8ba6be8583bb1574cb68ec9625c5b"
+      },
+      "variants": {
+        "rows": 2210,
+        "sha256": "c317eb77d353bf8fb24e385a0067ce1602eb2c6d77aa4acb9f341d35c1dd7842"
+      },
+      "observations": {
+        "rows": 37343,
+        "sha256": "8bdf8bddb03f914991fc64845fd1478f782d3bf709e71fb5831abe11194304cd"
+      },
+      "calls": {
+        "rows": 36558,
+        "sha256": "588dc0e54fd52187469aa1d083e6c7ab52e169400557db05e83199147c88264b"
+      },
+      "literals": {
+        "rows": 2273,
+        "sha256": "4c2c42d9eb586d2edda14667cda633224ce9f562a350e1d3dad5c565f635b095"
+      },
+      "literal_refs": {
+        "rows": 2577,
+        "sha256": "1caaaa765bd5cc0339ca3e237c243724460acacfdb1aadb9ca74f9ece04200b4"
+      },
+      "context": {
+        "rows": 1258,
+        "sha256": "02df3969b9f9c1d375ada7837cf52070622cb29770e0e40da866768dff6c1f30"
+      },
+      "context_inputs": {
+        "rows": 810,
+        "sha256": "e7aa37ee858c139e855af126f6f557b17d9b596a36bfe44c15f5f5c3a5af22a4"
+      },
+      "search": {
+        "rows": 5481,
+        "sha256": "c5a924ab550db4697f64f630b14669f29101778a30d7267fe1b9d935360bfca2"
+      }
+    },
+    "logical_parity": true,
+    "canonical_untouched": true,
+    "new_jvm": 0,
+    "native_replays": 0,
+    "limits": [
+      "Two sequential checks on private copies; timings include OS cache and are a local measurement.",
+      "The separate v2 command does not change frozen ordinary-update stages or runtime admission."
+    ],
+    "baseline_database": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\knowledge-check-v2-benchmark-1793839680859867500\\baseline.sqlite3",
+      "sha256": "faf73f1fdf7d90f919d8a834d82372ef0d808c63545d4ecaad366df44c255e4d"
+    }
+  },
+  "checks": [
+    {
+      "cache_key": "075adbe9211397f64232e00d0deca044f66ff32405750369f485ee2c701aaeb7",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\59a8b67f1d23eac0a96699647893a3ffa6520256d9d48fdbcca61359e20acc04\\manifest.json",
+      "sha256": "59a8b67f1d23eac0a96699647893a3ffa6520256d9d48fdbcca61359e20acc04",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1be6e730775ef19842a0f1722057b6474a7620e79a1aa81c9f6da8c754294667",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4ce4153cd748bac514aa0950f2686640ac460add6fd45cb3da7b8a013795ab6b\\manifest.json",
+      "sha256": "4ce4153cd748bac514aa0950f2686640ac460add6fd45cb3da7b8a013795ab6b",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "4edf4f1aaa8abeddb1ea70dea56d89ca57c43cfd5e455bd73864a6a88ed65bf2",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8cf1c4998daa381fd2bfdd951b923e3ec7961a2a7b9b869ee84ea15a893c6936\\manifest.json",
+      "sha256": "8cf1c4998daa381fd2bfdd951b923e3ec7961a2a7b9b869ee84ea15a893c6936",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "22aed4b9dbbf6b9d103969f2d0a92f243e38c9a5891d9bd373d1635ca5be0c5c",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6d963238b917b1a8458a773c2d0363384827c0f3926cdc348144ebe570e31318\\manifest.json",
+      "sha256": "6d963238b917b1a8458a773c2d0363384827c0f3926cdc348144ebe570e31318",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "tests": {
+    "aggregate": 1989,
+    "skipped": 3,
+    "added": 20
+  },
+  "frozen_producers_changed": false,
+  "new_jvm": 0,
+  "native_replays": 0,
+  "on_update": {
+    "check_id": "automatic-update-tooling",
+    "source_scope": "tooling",
+    "proves_client_compatibility": false,
+    "unchanged_passed_receipts_reused": true
+  },
+  "runtime_admitted": false,
+  "watcher_started": false,
+  "limits": [
+    "Versioned precommit command only; frozen ordinary-update index stages remain unchanged.",
+    "Endpoint full SHA and Git identities do not provide an atomic filesystem snapshot.",
+    "Unchanged full check still verifies all historical inputs and may not be faster.",
+    "Wall times are local measurements; concurrent tooling tests and OS cache affect them.",
+    "Automatic-update-tooling retains one aggregate cache key; grouping remains open."
+  ],
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\knowledge-check-v2-acceptance\\1b30a17c15e975efff9b47a920db78d5d412aee9feb1f1e1421747ca2b056f64\\manifest.json",
+    "sha256": "1b30a17c15e975efff9b47a920db78d5d412aee9feb1f1e1421747ca2b056f64"
+  }
+}

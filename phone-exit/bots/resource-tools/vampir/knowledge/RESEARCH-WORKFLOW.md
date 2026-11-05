@@ -40,7 +40,8 @@ Tooling checks остаются инфраструктурным gate, не до
 файл должен оставаться неизменным; scoped CLI пока не переносит selected-fact
 projection через собственную запись этого registry. Использовать отдельные
 immutable context pointers. Полная история и обязательный staged Markdown audit
-по-прежнему проверяются `knowledge-index.py check` перед коммитом.
+проверяются `knowledge-check-v2.py` перед коммитом; прежний
+`knowledge-index.py check` также поддерживается.
 
 [Результаты и ограничения v2](evidence/updates/HEADLESS-UPDATE-INFRASTRUCTURE-V2-11322.md).
 
@@ -202,13 +203,21 @@ release manifest, `configs` — быть пустым. В кэш входят ma
 После staging перед коммитом:
 
 ```powershell
-python -X utf8 phone-exit/bots/resource-tools/vampir/knowledge-index.py check
+python -X utf8 phone-exit/bots/resource-tools/vampir/knowledge-check-v2.py
 git -c core.safecrlf=false diff --cached --check
 ```
 
-`check` проверяет связи вопросов / фактов / evidence, Markdown-ссылки, индекс и
-признаки ошибочно экранированного Markdown в staged документах. Числовой смысл и
-русский текст проверяются по diff: автоматической замены слов / цифр нет.
+`knowledge-check-v2.py` выполняет прежние проверки вопросов / фактов / evidence,
+Markdown-ссылок и staged Markdown. Для обновления контекста индекс готовится
+в отдельной SQLite, затем проходит одну полную сверку исторических SHA
+и проверки стабильности входов перед заменой базы. Неизменный повтор тоже
+сверяет всю историю; доверия к size / mtime и постоянного SHA-кэша нет.
+Прежний `knowledge-index.py check` поддерживается; frozen update stages
+сохраняют свои producer и ключи. [Приёмка и границы](evidence/updates/HEADLESS-KNOWLEDGE-CHECK-V2.md).
+
+Признаки ошибочно экранированного Markdown проверяются в staged документах.
+Числовой смысл и русский текст проверяются по diff: автоматической замены
+слов / цифр нет.
 
 ## Обновления клиента
 

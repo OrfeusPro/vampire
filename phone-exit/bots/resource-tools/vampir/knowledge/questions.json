@@ -1232,7 +1232,9 @@
         "evidence/updates/AUTO-TUTORIAL-STATE-NATIVE-V1-11322.json",
         "evidence/updates/HEADLESS-TUTORIAL-STATE-NATIVE-V1-11322.md",
         "evidence/updates/AUTO-QUEST-MATCHING-STATE-NATIVE-V1-11322.json",
-        "evidence/updates/HEADLESS-QUEST-MATCHING-STATE-NATIVE-V1-11322.md"
+        "evidence/updates/HEADLESS-QUEST-MATCHING-STATE-NATIVE-V1-11322.md",
+        "evidence/updates/HEADLESS-KNOWLEDGE-CHECK-V2.md",
+        "evidence/updates/AUTO-KNOWLEDGE-CHECK-V2.json"
       ]
     }
   ]

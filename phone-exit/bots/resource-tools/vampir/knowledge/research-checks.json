@@ -11801,7 +11801,13 @@
         "phone-exit/bots/resource-tools/vampir/quest-matching-state-cases-v1.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/quest-matching-state-native.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/quest-matching-state-transfer.json",
-        "phone-exit/bots/test_vampir_quest_matching_state_integration_v1.py"
+        "phone-exit/bots/test_vampir_quest_matching_state_integration_v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index-refresh-v2.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-check-v2.py",
+        "phone-exit/bots/test_vampir_knowledge_refresh_v2.py",
+        "phone-exit/bots/test_vampir_knowledge_index.py",
+        "phone-exit/bots/resource-tools/vampir/build-headless-sdk-config.py",
+        "phone-exit/bots/resource-tools/vampir/check-knowledge.py"
       ],
       "artifact_dependencies": []
     }
