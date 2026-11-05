@@ -1306,6 +1306,25 @@
         "evidence/updates/HEADLESS-LAUNCHER-CONTRACT-CURRENT.md",
         "evidence/updates/AUTO-LAUNCHER-CONTRACT-CURRENT.json"
       ]
+    },
+    {
+      "id": "version-result-flow-current",
+      "status": "bounded_answer",
+      "question": "Как связать готовые VersionResult input и общий gate с текущим обработчиком и Login handoff?",
+      "known": "Текущий whole handler найден по последней базе 1.13.20 и экспортирован отдельно. Его 42 инструкции, bounded registration window, packet ID/constructor и native gate связаны с текущими input proofs. Композиция reader→handler→gate→captured Login выполняется для прежних восьми code и двух flag.",
+      "unknown": "Реальное dispatcher delivery, полноценное Login preparation в этом composition и серверное принятие. Остальные CharacterList и clock/world prerequisites проверочного профиля остаются отдельными пакетами.",
+      "next_action": "Использовать VersionResult composition и готовые текущие Version/Login доказательства. Продолжить общие CharacterList и clock/Ping/world пакеты для прежнего ограниченного candidate.",
+      "decision_rule": "Сохранять исходную матрицу и fixtures прежнего проверочного профиля. Captured Login entry не выдавать за сетевой Login. Не переисполнять отдельно готовые input и gate матрицы.",
+      "do_not_repeat": "Проверенные standalone input/gate proofs использовать после контроля целостности. Повторять только композицию с новым handler или изменёнными inputs.",
+      "addresses": [
+        "0x1467a0660",
+        "0x1467d0cb0",
+        "0x1467d1530"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-VERSION-RESULT-FLOW-CURRENT.md",
+        "evidence/updates/AUTO-VERSION-RESULT-FLOW-CURRENT.json"
+      ]
     }
   ]
 }

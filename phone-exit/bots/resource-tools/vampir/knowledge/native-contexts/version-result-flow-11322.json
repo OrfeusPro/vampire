@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "recipe": "version-result-flow-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "handler": "0x1467a0660",
+  "baseline": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-result-handler-11320.json",
+    "sha256": "9256608cd55dc23a588849a96327b0370fb7d6c2d2478a8ca62899e7cc94f713"
+  },
+  "exports": {
+    "run-cd2fee6014d7": "733f025e63860cdc05197d452fb3fd135713c768631b244317be8012f69ff261"
+  },
+  "helpers": {
+    "memcpy": "0x1487f8c99"
+  },
+  "login_prepare": "0x1467d1530",
+  "fixtures": {
+    "string_init": "0x141426b90",
+    "log": "0x141403bd0",
+    "free": "0x1414830e0",
+    "peer": "0x144ab0d30"
+  },
+  "direct_calls": {
+    "0x1467a0675": "0x141426b90",
+    "0x1467a06b0": "0x141403bd0",
+    "0x1467a06bf": "0x1414830e0",
+    "0x1467a06eb": "0x1467d0cb0",
+    "0x1467a06f4": "0x144ab0d30"
+  },
+  "registration": {
+    "address": "0x1467b806b",
+    "bytes": "8d4b08e89d3d1500488bf84885c0740c488d052e146103488907eb03488bfbb928000000e87c3d15004885c0740a488bc8e81ffcf1feeb03488bc34c8bc7488bd0488bcee80c6b0100",
+    "owner": "0x1467b8040",
+    "handler_table": "0x149dc94b0"
+  },
+  "gate": {
+    "context": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\d2fdda2e91c6adb2c230203b5a29400b2e6e1b827fd7e4baf0429d34db0d10a3\\manifest.json",
+      "sha256": "d2fdda2e91c6adb2c230203b5a29400b2e6e1b827fd7e4baf0429d34db0d10a3"
+    },
+    "check": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\a25ddf46f31f1a9a778d96aa51e084fcf0bbba7849975c28f0703f07e80ce323\\manifest.json",
+      "sha256": "a25ddf46f31f1a9a778d96aa51e084fcf0bbba7849975c28f0703f07e80ce323"
+    }
+  },
+  "input": {
+    "context": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\6fad7861f8d4b4c6890236ba4b06775c78d5b420d53d86e16b3a0f0259d43a09\\manifest.json",
+      "sha256": "6fad7861f8d4b4c6890236ba4b06775c78d5b420d53d86e16b3a0f0259d43a09"
+    },
+    "check": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\091cea3f8e398f57c4a5818db59ca6e1ce43d0c1d279da5ced2bb1e570a0f97a\\manifest.json",
+      "sha256": "091cea3f8e398f57c4a5818db59ca6e1ce43d0c1d279da5ced2bb1e570a0f97a"
+    }
+  }
+}

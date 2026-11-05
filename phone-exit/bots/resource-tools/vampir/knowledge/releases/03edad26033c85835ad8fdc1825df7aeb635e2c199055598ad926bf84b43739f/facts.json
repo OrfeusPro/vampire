@@ -2417,6 +2417,44 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "SDK/Launcher runtime composition текущего SHA, оставшиеся candidate proofs, отдельный допуск создания и stats.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467a0660",
+        "0x1467d0cb0",
+        "0x1467d1530"
+      ],
+      "checks": [
+        {
+          "cache_key": "8ee844ddf4ae4836236d03b2ac3f858cf17e9af9c7526cadd89f36db454bfc9c",
+          "id": "native-version-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ca9ee0898a9b9960151219537b0ddec2edeb544d0ddeffa7b88077af120f27d5\\manifest.json",
+          "sha256": "ca9ee0898a9b9960151219537b0ddec2edeb544d0ddeffa7b88077af120f27d5",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущие native reader, обработчик VersionResult и общий result gate связаны в 16 сценариях с перехватом Login handoff. Привязка текущего SHA и source check подключены к штатному on_update и кэшу.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-RESULT-FLOW-CURRENT.md",
+          "sha256": "fc20224b827c4846df285c224611f9d2dc0f72448643aee96ded3daf015aa4fb"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-VERSION-RESULT-FLOW-CURRENT.json",
+          "sha256": "14b1b6ddf908a182cf66b33e8b84bed08268acb460ba78009d308ca2d6029aec"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "3db64b7a4e564c620c5ac7268ed8178f2950e2374a021d96b744bc9a73f7cc9f",
+      "limits": [
+        "Регистрация проверена статическим окном. Dispatcher не исполняется; state/string/log/error services и peer имеют fixtures. Login preparation перехвачена на входе. Серверная сессия и активация профиля не выполнялись."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать готовую VersionResult композицию. Продолжить CharacterList/выбор и clock/Ping/world пакетами без повторения неизменных standalone матриц.",
+      "question": "version-result-flow-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "CharacterList/выбор, clock/Ping/ограниченный вход в мир, связывание proofs с candidate и runtime composition. Создание Carnage и stats требуют собственного текущего допуска. Генерация composition context для следующего SHA открыта.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

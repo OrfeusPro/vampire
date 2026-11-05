@@ -179,6 +179,45 @@ class ToolingCheckDispatchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Python identity'):
             guard.runtime_inputs(self.index,self.workflow,self.root,report,identifier)
 
+    def version_flow_fixture(self):
+        sha='a'*64;identifier='native-version-result-handler-context'
+        transfer=self.workflow.snapshot(self.root,'native-transfer-fixture',dict(source_sha256=sha))
+        reference=dict(path=str(transfer),sha256=self.index.digest(transfer))
+        parent=self.workflow.snapshot(self.root,'generated-native-contexts',dict(source_sha256=sha,transfer_proof=reference))
+        pointer=dict(path=str(parent),sha256=self.index.digest(parent))
+        context=self.knowledge/'flow-fixture.json'
+        context.write_text(json.dumps(dict(schema=1,recipe='version-result-flow-v1',source_sha256=sha,
+            baseline=reference,gate=dict(context=pointer,check=reference),input=dict(context=pointer,check=reference))))
+        definition=dict(self.client,id=identifier,version_flow_contexts={sha:context.name},
+            dependencies=[context.relative_to(self.workspace).as_posix()])
+        self.write_registry([definition])
+        def checked(*args,**kwargs):
+            path=self.workflow.snapshot(self.root,'check-results',dict(state='passed',definition=dict(
+                source_sha256=sha,check=dict(id=identifier),inputs={},artifacts={})))
+            return [dict(id=identifier,state='passed',report=str(path),sha256=self.index.digest(path),cache_key='fixture')]
+        self.legacy.side_effect=checked
+        return identifier,parent
+
+    def test_version_flow_material_is_pinned_on_cached_check(self):
+        identifier,parent=self.version_flow_fixture()
+        first=self.run_check(check_ids=[identifier])[0]
+        second=self.run_check(check_ids=[identifier])[0]
+        self.assertEqual(first,second)
+        report=self.index.read_json(first['report'])
+        self.assertIn(str(parent.resolve()),report['definition']['artifacts'])
+        parent.write_bytes(b'corrupt')
+        with self.assertRaisesRegex(ValueError,'proof SHA changed'):
+            self.run_check(check_ids=[identifier])
+
+    def test_version_flow_change_during_cached_check_rejects(self):
+        identifier,parent=self.version_flow_fixture()
+        original=self.legacy.side_effect
+        def changed(*args,**kwargs):
+            report=original(*args,**kwargs);parent.write_bytes(b'changed after parent check');return report
+        self.legacy.side_effect=changed
+        with self.assertRaisesRegex(ValueError,'material changed'):
+            self.run_check(check_ids=[identifier])
+
     def test_absent_manifest_keeps_legacy_fixture_behavior(self):
         self.manifest.unlink()
         result = self.run_check()

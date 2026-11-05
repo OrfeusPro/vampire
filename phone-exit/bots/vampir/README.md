@@ -21,7 +21,9 @@
 [Launcher source contract](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-CONTRACT-CURRENT.md)
 из 14 функций также подтверждён. Восстановление живого входа продолжается через
 прежний ограниченный candidate с переиспользованием готовых server-list /
-character / world flow. Остались runtime composition и необходимые candidate proofs.
+character / world flow. [VersionResult reader → handler → gate](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-RESULT-FLOW-CURRENT.md)
+прошёл 16 совместных native сценариев; неизменный повтор не запускает native / JVM.
+Остались runtime composition и необходимые CharacterList / clock / world candidate proofs.
 Свежие результаты работы скрипта читать из `update-watch status` и указанного
 run: версия в этом абзаце не заменяет проверку установленных файлов.
 

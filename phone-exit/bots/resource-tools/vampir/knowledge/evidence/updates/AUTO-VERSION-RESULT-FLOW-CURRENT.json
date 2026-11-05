@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "recipe": "version-result-flow-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "method": "bounded_native",
+  "context": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-result-flow-11322.json",
+    "sha256": "2c4341bb7cf20e3ffe5d2aa2a0b10028d2d35c84abc018f7cf69495115164e73"
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-result-flow-checks\\65ac145bad6e63305d27251d66e2e3347ff7a87bb4aca328c6fdf3a068df83af\\manifest.json",
+    "sha256": "65ac145bad6e63305d27251d66e2e3347ff7a87bb4aca328c6fdf3a068df83af"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\a1beaee14c818399b0368e070cf25a4c31dcb309188c31b22ab44daed0a308c8\\manifest.json",
+    "sha256": "a1beaee14c818399b0368e070cf25a4c31dcb309188c31b22ab44daed0a308c8"
+  },
+  "collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\fbaea24f4e1a39ae56cfc8479a630029efb84e2b8583207486a71d2d712a84f1\\manifest.json",
+    "sha256": "fbaea24f4e1a39ae56cfc8479a630029efb84e2b8583207486a71d2d712a84f1"
+  },
+  "registered_check": "native-version-result-handler-context",
+  "source_check": {
+    "id": "native-version-result-handler-context",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ca9ee0898a9b9960151219537b0ddec2edeb544d0ddeffa7b88077af120f27d5\\manifest.json",
+    "sha256": "ca9ee0898a9b9960151219537b0ddec2edeb544d0ddeffa7b88077af120f27d5",
+    "cache_key": "8ee844ddf4ae4836236d03b2ac3f858cf17e9af9c7526cadd89f36db454bfc9c"
+  },
+  "cases": 16,
+  "handler_instructions": 42,
+  "registration_window_bytes": 75,
+  "cache": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\version-flow-cache-current.json",
+    "sha256": "6e7ec47335a984289ca61cd90549bd1bbd92c3435e77afd5cd6b69ba877b99b8"
+  },
+  "cache_seconds": 0.542103,
+  "cache_native_executions": 0,
+  "cache_new_jvm": 0,
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\f7bc829c75b97ed3aadcd1977ad8bda4f2e253ded9555ec32a6cf9041075b2d2\\manifest.json",
+    "sha256": "f7bc829c75b97ed3aadcd1977ad8bda4f2e253ded9555ec32a6cf9041075b2d2"
+  },
+  "tooling_metrics": {
+    "executed_groups": 27,
+    "cached_groups": 0,
+    "executed_cases": 2056,
+    "cached_cases": 0,
+    "executed_discovered_cases": 2056,
+    "cached_discovered_cases": 0,
+    "executed_skips": 4,
+    "cached_skips": 0,
+    "incomplete_groups": 0,
+    "duration_seconds": 309.51197939994745
+  },
+  "future_context_generation": "open",
+  "network_used": false,
+  "profile_activated": false,
+  "runtime_admitted": false
+}

@@ -401,7 +401,8 @@
           "combiner-grow": "0x1414380b0"
         },
         "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": {
-          "utf8-length": "0x14144c5b0"
+          "utf8-length": "0x14144c5b0",
+          "result-handler": "0x1467a0660"
         }
       },
       "resources": [

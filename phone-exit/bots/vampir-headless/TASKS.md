@@ -8,8 +8,13 @@ exports и проверки вручную не повторять. Счётчи
 со списком серверов / персонажей, выбором и входом в мир. Его прежние обязательства
 отделены от полной очереди world-session. Существующие flow, codecs и adapters
 переиспользовать. Для семи из 16 областей уже найдены текущие материалы;
-девять пробелов сгруппированы в три пакета. Создание и stats имеют отдельный допуск.
+девять исходных пробелов сгруппированы в три пакета. VersionResult handler / gate
+закрыт в ограниченной композиции reader → handler → gate → captured Login.
+Остались два пакета: CharacterList / выбор и clock / Ping / ограниченный вход в мир.
+Готовые семь областей ещё нужно связать с candidate, сохранив owner barriers.
+Создание и stats имеют отдельный допуск.
 [Матрица повторного использования и текущий Launcher](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-CONTRACT-CURRENT.md).
+[16 сценариев VersionResult, подключение к on_update и кэш](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-RESULT-FLOW-CURRENT.md).
 
 - Service lifecycle: bounded assignment / constructors / refcount / deleting /
   reset / ring cleanup закрыты новым пакетом ниже. Остаются engine registration

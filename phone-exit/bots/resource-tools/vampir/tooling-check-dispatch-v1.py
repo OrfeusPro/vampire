@@ -103,6 +103,8 @@ def run_checks(index, args, sha, question, *, check_ids=None, workflow=None):
             outcomes.append(grouped(index, workflow, args, definition))
         elif sha in definition.get('generated_sdk_contexts', {}):
             outcomes.extend(index.extension('sdk-check-guard').run(index, workflow, args, sha, definition))
+        elif sha in definition.get('version_flow_contexts', {}):
+            outcomes.extend(index.extension('version-result-flow-guard').run(index, workflow, args, sha, definition))
         else:
             outcomes.extend(workflow.run_checks(index, args, sha, question,
                                                check_ids=[definition['id']]))
