@@ -32,14 +32,14 @@ exports и проверки вручную не повторять. Счётчи
   Старый MapProjection allowlist и legacy check не расширять по одному
   совпадению таблиц.
   [Данные и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-MAP-TABLES-V1-268356.md).
-- Квесты / обучение: чтение пакетов, QuestUpdate wire и bounded dispatch
-  подтверждены отдельными пакетами. Tutorial startup / populated / drain
-  прошли 736 сценариев и подключены к обновлению и кэшу. Дальше связать
-  consumer с настоящим apply и проверить владение storage. Для применения
-  состояния QuestSync подготовлен source-bound план matching-task из двух
-  roots и двух leaves поверх готового baseline на 324 сценария. Replacement
-  имеет отдельный baseline с исправленным экспортом factory.
-  [Данные и границы Tutorial](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TUTORIAL-STATE-NATIVE-V1-11322.md).
+- Квесты / обучение: INPUT, QuestUpdate wire, bounded dispatch и Tutorial
+  startup / populated / drain подтверждены отдельными пакетами. Matching-task
+  QuestSync state / progress прошли 324 сценария и подключены к обновлению.
+  Дальше перенести создание / replacement по готовому baseline из 378 случаев
+  с исправленным factory export, связать wrapper модели с state / progress.
+  Для Tutorial остаются consumer → настоящий apply и владение storage.
+  Реальные callbacks, таблицы задач и runtime-контракт требуют своих проверок.
+  [Данные и границы QuestSync](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-MATCHING-STATE-NATIVE-V1-11322.md).
 - Input seed v2: новая композиция имеет упорядоченные baseline / target
   pointers в ключе кэша и собственный финальный барьер. Frozen login-input
   engine сохраняется; его прежний memo не использовать в новом recipe.

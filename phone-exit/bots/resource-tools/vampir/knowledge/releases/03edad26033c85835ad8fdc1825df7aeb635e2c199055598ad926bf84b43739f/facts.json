@@ -2095,6 +2095,35 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты композиция Tutorial consumer → настоящий apply, реальное обновление модели QuestSync и runtime quest-контракт. Reuse / growth / настоящие storage providers / cleanup effects и server action admission требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1455f4a70",
+        "0x1455fd340"
+      ],
+      "checks": [],
+      "conclusion": "Matching-task state/progress подключены к автоматическому переносу, штатному исполнению и кэшу. Source-bound отчёты подтверждают 324 сценария, 648 вызовов Win64, native копирование 32 байт и sender getter. Два повтора используют четыре сохранённых этапа.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-QUEST-MATCHING-STATE-NATIVE-V1-11322.json",
+          "sha256": "b9c9259f3333d1af82bbb1a71e901fccaeaa0f21ddecd28199772beb1c14eda6"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-QUEST-MATCHING-STATE-NATIVE-V1-11322.md",
+          "sha256": "be1799e02c7fc7ecac6238fb020fecf7ddd2aed9e48f0a0995cc87f554879589"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "ac6de5a5d76e8ef7e87de094540bb8d75bffe7a5db46c3ebf58f9c5fecf62eec",
+      "limits": [
+        "Existing matching task only. Native state/progress, 32-byte virtual copy and sender index getter execute. Start/update callbacks use exact return-PC fixtures. Factory, replacement and real callback effects remain open."
+      ],
+      "method": "static",
+      "next_check": "Перенести QuestSync factory / replacement по готовому baseline из 378 сценариев и исправленному экспорту factory. Связать wrapper модели с готовыми state / progress. Для Tutorial проверить consumer → apply и heap lifecycle. Использовать кэш готовых пакетов. Полный update и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты композиция Tutorial consumer → настоящий apply, создание / replacement задач QuestSync, wrapper модели, реальные callbacks и runtime quest-контракт. Reuse / growth / настоящие storage providers / cleanup effects и server action admission требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

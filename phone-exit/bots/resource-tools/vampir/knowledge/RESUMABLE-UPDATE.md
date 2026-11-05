@@ -236,6 +236,18 @@ resource-comparison-cache-v3/directory-record-<key>.json. Назначение �
 directory_records metrics. Warm reuse не вызывает новый decode.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
 
+## QuestSync matching-task
+
+Селектор добавляет перенос двух whole roots и двух leaves, затем проверку
+324 сценариев для существующей задачи с совпадающим ключом. Журнал содержит
+quest_matching_state_native. Готовый reader proof задаёт источник.
+Стенд сверяет callback по source-bound адресу возврата и сохраняет границы
+создания / replacement. Повтор использует отчёт после проверки входов
+и конечного барьера владельца scope.
+[Селектор](quest-matching-state-native.json).
+[Правило переноса](quest-matching-state-transfer.json).
+[Приёмка и границы](evidence/updates/HEADLESS-QUEST-MATCHING-STATE-NATIVE-V1-11322.md).
+
 ## Применение состояния Tutorial
 
 Селектор включает общий перенос Tutorial startup / populated / drain

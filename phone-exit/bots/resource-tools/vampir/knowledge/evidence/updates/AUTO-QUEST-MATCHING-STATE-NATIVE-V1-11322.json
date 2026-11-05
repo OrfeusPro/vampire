@@ -1,0 +1,120 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-matching-state-native-v1-acceptance\\b52f02368661584a771fd85d36be3503d6cb042b1e1bbba470782fca73c50346\\manifest.json",
+    "sha256": "b52f02368661584a771fd85d36be3503d6cb042b1e1bbba470782fca73c50346"
+  },
+  "callback_counts": {
+    "start": 72,
+    "update": 252
+  },
+  "cases": 324,
+  "checks": [
+    {
+      "cache_key": "d05210f70af0500b7afbd5eb41e745188bfca0358fca1bd7386824b95745264b",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\53b2e3e5ab66736c47d446d15db2c4023465c0d0d615543b1572c504e9eed070\\manifest.json",
+      "sha256": "53b2e3e5ab66736c47d446d15db2c4023465c0d0d615543b1572c504e9eed070",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "7fa67ec19d1860ad23d764d4e908d1e686a9fb4cb153ada0052855d6d33143d5",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8cac005af411d63133e5e3df95b4890c320f7a3c0dfa0974e3c735f284bdf7cf\\manifest.json",
+      "sha256": "8cac005af411d63133e5e3df95b4890c320f7a3c0dfa0974e3c735f284bdf7cf",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "4edf4f1aaa8abeddb1ea70dea56d89ca57c43cfd5e455bd73864a6a88ed65bf2",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8cf1c4998daa381fd2bfdd951b923e3ec7961a2a7b9b869ee84ea15a893c6936\\manifest.json",
+      "sha256": "8cf1c4998daa381fd2bfdd951b923e3ec7961a2a7b9b869ee84ea15a893c6936",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "22aed4b9dbbf6b9d103969f2d0a92f243e38c9a5891d9bd373d1635ca5be0c5c",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6d963238b917b1a8458a773c2d0363384827c0f3926cdc348144ebe570e31318\\manifest.json",
+      "sha256": "6d963238b917b1a8458a773c2d0363384827c0f3926cdc348144ebe570e31318",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-matching-state-native.json": "7eda3f66faf94c7dae999c2f9e569b69c878e4f0ba8765545b29403cc479b3ec",
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-matching-state-transfer.json": "47d7cc862bec82862b40e13d5cefecf617e6e49eb13ac21b7e6ab10d3257241d",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "b656f78ed3a6621695c5aa539156fd954c9cdc9ef9eab7162dbacd63bd40be8c",
+    "phone-exit/bots/resource-tools/vampir/quest-matching-state-cases-v1.py": "ae73dce77a4780c330c60f7c31bb2893f3da93a73fb53d49d9583fda6f186ba6",
+    "phone-exit/bots/resource-tools/vampir/quest-matching-state-native-v1.py": "968ef22eb2f8d975e8ea7f24a7911a69b30fb2fce6a925d471897634936fc4f2",
+    "phone-exit/bots/resource-tools/vampir/quest-matching-state-transfer-v1.py": "effb2d072ff61f2db528207ce59f29875cd865899b5b1933292f2de648783eea",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "e22fb7ffa460a6954c79c5eac5be5b3f8228361c4207d23fbdcb03af3080fb57",
+    "phone-exit/bots/test_vampir_quest_matching_state_integration_v1.py": "274337ac5900ff4e2207a7a18ea2800f5201e26fdaaa43e69cce2bef2257c09a",
+    "phone-exit/bots/test_vampir_update_automation.py": "5a5afccb844d2d48d9cf730263b2a0b803f6be8cf105705743e5e8ace05b9389"
+  },
+  "exports": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-matching-state-v1-export-handoff\\5e7aaf87925fdc0ca6c09f0474968e0b15106f89d14aae320fee6f4c6aa446d0\\manifest.json",
+    "sha256": "5e7aaf87925fdc0ca6c09f0474968e0b15106f89d14aae320fee6f4c6aa446d0"
+  },
+  "factory_replacement_verified": false,
+  "first_component_seconds": 43.448639,
+  "limits": {
+    "quest-matching-state": "Existing matching task only. Native state/progress, 32-byte virtual copy and sender index getter execute. Start/update callbacks use exact return-PC fixtures. Factory, replacement and real callback effects remain open."
+  },
+  "method": "bounded_native_component_acceptance",
+  "native_calls": 648,
+  "native_check": {
+    "cases": 324,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-matching-state-checks-v1\\5ce3a5c8f2cba87bcc401ba8ea8d794c23daba0856937b36d4b6fe14604e62fe\\manifest.json",
+    "sha256": "5ce3a5c8f2cba87bcc401ba8ea8d794c23daba0856937b36d4b6fe14604e62fe",
+    "state": "passed"
+  },
+  "new_jvm": 0,
+  "profile_activated": false,
+  "real_task_callbacks_verified": false,
+  "recipe": "quest-matching-state-native-v1",
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tests": {
+    "added": 9,
+    "aggregate": 1969,
+    "skipped": 3
+  },
+  "warm_reused_stages": 4,
+  "warm_seconds": [
+    16.862124,
+    16.705569
+  ]
+}

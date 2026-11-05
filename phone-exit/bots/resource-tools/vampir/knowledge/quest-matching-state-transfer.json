@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "recipe": "quest-matching-state-transfer-v1",
+  "baseline_source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "baseline_context": {
+    "file": "quest-state-application-11316.json",
+    "sha256": "3e8201155cda62283e8c1a2417509de4096d02521239f3394c9ae12c925b7be5"
+  },
+  "baseline_native": {
+    "path": "code-clues/quest-state-application-11316/ac49a6a439bf283f26198731b3cfb90053492c026ee67415bf49f8d2d6a3135c/manifest.json",
+    "sha256": "ac49a6a439bf283f26198731b3cfb90053492c026ee67415bf49f8d2d6a3135c"
+  },
+  "baseline_export": {
+    "path": "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-dee1f2864d6e/details.json",
+    "sha256": "b1a0e4ce2409a44bce98c3f63cda68aea57e1b239e0fe71cbca8516148ceff1d"
+  },
+  "roots": {
+    "state": {
+      "address": "0x1455f4a80",
+      "calls": {
+        "16": "0x1455fd350"
+      },
+      "data": {},
+      "tails": {}
+    },
+    "progress": {
+      "address": "0x1455fd350",
+      "calls": {
+        "51": "qword ptr [rax + 0x10]",
+        "72": "qword ptr [rax + 0x28]",
+        "99": "qword ptr [rax + 0x30]",
+        "125": "qword ptr [rax + 0x38]",
+        "179": "0x1414734e0",
+        "222": "qword ptr [rax]",
+        "247": "qword ptr [rax + 8]",
+        "258": "0x1455b8ff0",
+        "300": "0x1455b5450",
+        "377": "qword ptr [rax]",
+        "404": "qword ptr [rax + 8]",
+        "420": "qword ptr [rax + 0x28]",
+        "451": "qword ptr [rax]",
+        "471": "qword ptr [rax + 8]"
+      },
+      "data": {},
+      "tails": {}
+    }
+  },
+  "leaves": {
+    "copy": {
+      "address": "0x1455cec20",
+      "bytes": "0f10020f1141200f104a100f114930c3"
+    },
+    "index_getter": {
+      "address": "0x1455e7510",
+      "bytes": "488b41304885c07503b0ffc30fb64029c3"
+    }
+  },
+  "excluded": {
+    "factory": {
+      "address": "0x1455b8ff0",
+      "offsets": [
+        258
+      ]
+    },
+    "shared_move_release": {
+      "address": "0x1414734e0",
+      "offsets": [
+        179
+      ]
+    },
+    "bind_owner": {
+      "address": "0x1455b5450",
+      "offsets": [
+        300
+      ]
+    }
+  },
+  "callbacks": {
+    "task_start": {
+      "offset": 72,
+      "operand": "qword ptr [rax + 0x28]",
+      "size": 3,
+      "fixture": "0x2803e000"
+    },
+    "task_update": {
+      "offset": 99,
+      "operand": "qword ptr [rax + 0x30]",
+      "size": 3,
+      "fixture": "0x2803e000"
+    }
+  }
+}

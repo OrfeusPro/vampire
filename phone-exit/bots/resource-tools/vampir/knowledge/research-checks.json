@@ -11795,7 +11795,13 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/quest-tutorial-state-native.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/quest-tutorial-state-transfer.json",
         "phone-exit/bots/test_vampir_tutorial_state_harness_v1.py",
-        "phone-exit/bots/test_vampir_tutorial_state_integration_v1.py"
+        "phone-exit/bots/test_vampir_tutorial_state_integration_v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-matching-state-native-v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-matching-state-transfer-v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-matching-state-cases-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/quest-matching-state-native.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/quest-matching-state-transfer.json",
+        "phone-exit/bots/test_vampir_quest_matching_state_integration_v1.py"
       ],
       "artifact_dependencies": []
     }
