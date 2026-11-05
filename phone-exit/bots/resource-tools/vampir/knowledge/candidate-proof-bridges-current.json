@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "context": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\candidate-proof-bridges-11322.json",
+    "sha256": "6b5ce1ab477277f4f784fcf14a5d77c3edceb45a80c8d0a78425125482455520"
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\candidate-proof-bridges-v1\\00a774a537a4e8c3d1f3b75ff25225891624549dc370e796eb54890d08b13eb1\\manifest.json",
+    "sha256": "00a774a537a4e8c3d1f3b75ff25225891624549dc370e796eb54890d08b13eb1"
+  }
+}

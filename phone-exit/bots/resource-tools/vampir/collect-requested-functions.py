@@ -16,6 +16,7 @@ REVIEWED_LEAF_TAILS = {
     '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f': {
         0x144aad2c0: '488d05f962bc04488901e921fcffff',
         0x141431fe0: 'e9fb100500',
+        0x144ab11e0: '488b491033d2e9c51b0000',
     },
     'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c': {
         0x144552540: '890d9a5bc306c3',
@@ -84,11 +85,13 @@ def checked_leaf_tails(native, image, sha, *, registry_path=None, root=None):
         reviewed_source = sha == 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
         setter_leaf = reviewed_source and at == 0x144552540 and encoded == '890d9a5bc306c3'
         terminal_jump = reviewed_source and at == 0x144ab13f0 and encoded == '488b491033d2e9c51b0000'
+        current_terminal_jump = (sha == '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+            and at == 0x144ab11e0 and encoded == '488b491033d2e9c51b0000')
         archive_cleanup = (sha == '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
             and at == 0x144aad2c0 and encoded == '488d05f962bc04488901e921fcffff')
         sized_free = (sha == '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
             and at == 0x141431fe0 and encoded == 'e9fb100500')
-        if not setter_leaf and not terminal_jump and not archive_cleanup and not sized_free:raise ValueError('Unreviewed tail leaf model')
+        if not setter_leaf and not terminal_jump and not current_terminal_jump and not archive_cleanup and not sized_free:raise ValueError('Unreviewed tail leaf model')
         raw = bytes.fromhex(encoded)
         if not 1 <= len(raw) <= 16:
             raise ValueError('Reviewed tail leaf budget')
@@ -96,13 +99,14 @@ def checked_leaf_tails(native, image, sha, *, registry_path=None, root=None):
         if image.data[off:off + len(raw)] != raw:
             raise ValueError('Reviewed tail leaf source differs')
         rows = list(decoder.disasm(raw, at))
-        if terminal_jump:
+        if terminal_jump or current_terminal_jump:
             # Exact finite model only. Its terminal target is observed, never
             # added as an inferred function or followed recursively.
+            target = 0x144ab2fc0 if terminal_jump else 0x144ab2db0
             valid = ([(r.mnemonic, r.op_str) for r in rows] ==
-                     [('mov', 'rcx, qword ptr [rcx + 0x10]'), ('xor', 'edx, edx'), ('jmp', '0x144ab2fc0')]
+                     [('mov', 'rcx, qword ptr [rcx + 0x10]'), ('xor', 'edx, edx'), ('jmp', hex(target))]
                      and rows[-1].address == at + 6 and rows[-1].size == 5
-                     and rows[-1].operands[0].imm == 0x144ab2fc0)
+                     and rows[-1].operands[0].imm == target)
         elif archive_cleanup:
             valid = ([(r.mnemonic, r.op_str) for r in rows] == [
                 ('lea', 'rax, [rip + 0x4bc62f9]'), ('mov', 'qword ptr [rcx], rax'), ('jmp', '0x144aacef0')]

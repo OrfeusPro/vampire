@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "generation": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-batch-generated-v1\\3fd0e3356d14ef4dab08fd65bf59fa1042d23a7591ae83e2e7fd4804f01e3a89\\manifest.json",
+    "sha256": "3fd0e3356d14ef4dab08fd65bf59fa1042d23a7591ae83e2e7fd4804f01e3a89"
+  },
+  "native": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-batch-native-v1\\d73b3f0e246fb4fe5c3765698a33311a43fb9ae7c10f5155466db3cc952759ec\\manifest.json",
+    "sha256": "d73b3f0e246fb4fe5c3765698a33311a43fb9ae7c10f5155466db3cc952759ec"
+  },
+  "launcher": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\launcher-contract-v1\\46519b66e6a5671d103e9bad1ba4b36ce9593f4339415a4fa9550ef62a353571\\manifest.json",
+    "sha256": "46519b66e6a5671d103e9bad1ba4b36ce9593f4339415a4fa9550ef62a353571"
+  },
+  "launcher_context": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\launcher-contract-11322.json",
+    "sha256": "48b4ffa2844df305daf131a545591331faadf0ce70c4497b94742e798684e22c"
+  }
+}

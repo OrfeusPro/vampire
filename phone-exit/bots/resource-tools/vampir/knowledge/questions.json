@@ -1325,6 +1325,125 @@
         "evidence/updates/HEADLESS-VERSION-RESULT-FLOW-CURRENT.md",
         "evidence/updates/AUTO-VERSION-RESULT-FLOW-CURRENT.json"
       ]
+    },
+    {
+      "id": "character-list-current",
+      "status": "open",
+      "question": "Как перенести общий WaitingEnd, CharacterList records и handler для прежнего ограниченного candidate на текущий SHA?",
+      "known": "24 явных roots собраны с точными SHA в run-acc24c5196b9. Первоначальный collect отказ устранён добавлением двух source-checked E9 tail targets. Прежние 18 готовых exports переиспользуются. Генератор contexts сохранён как незавершённый материал.",
+      "unknown": "Перенос всех leaves/tables/registration и dedicated bounded harness / runner для текущих шести native семейств. Создание персонажа требует отдельного допуска.",
+      "next_action": "Завершить сохранённый генератор с отдельным harness / runner и выполнить только текущие сценарии. Готовые input/gate proofs переиспользовать; exports повторно не собирать.",
+      "decision_rule": "Сохранять latest baseline каждого семейства, полные SHA, все инструкции/зависимости и прежние fixture границы. Function navigation и export не доказывают семантику; настоящий вход и создание подтверждать отдельно.",
+      "do_not_repeat": "Не повторять завершённый discovery, исторические native матрицы и неизменные общие input/gate сценарии.",
+      "addresses": [
+        "0x1456ba480",
+        "0x1456bbbf0",
+        "0x1456bd7c0",
+        "0x1456c3020",
+        "0x1456c6e90",
+        "0x1456d2280",
+        "0x1456dbc80",
+        "0x1456dce50",
+        "0x1456e6bd0",
+        "0x14573bbc0",
+        "0x145783c00",
+        "0x145784580",
+        "0x145786750",
+        "0x145787df0",
+        "0x1457888c0",
+        "0x145789770",
+        "0x145794f80",
+        "0x145c9e430",
+        "0x145d5f4f0",
+        "0x145db1010",
+        "0x1467997c0",
+        "0x1467a0780",
+        "0x1456d19e0",
+        "0x1456c72a0"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md",
+        "evidence/updates/AUTO-ENTRY-COLLECT-CURRENT.json"
+      ]
+    },
+    {
+      "id": "clock-world-current",
+      "status": "open",
+      "question": "Как перенести clock/Ping и bounded world proof, учитывая изменённый lobby VersionResult текущего клиента?",
+      "known": "27 roots собраны с точными SHA в run-4496e2332dcf. Изменённый lobby VersionResult имеет новый constructor, reader и строковое поле с двумя u32. Конечная модель текущего peer tail прошла Python тест и фактический Ghidra collect.",
+      "unknown": "Новые source-bound сценарии lobby reader/handler, актуальный wire decoder и перенос clock/Ping/bounded-world сценариев. Полный engine/world-session остаётся отдельным контрактом.",
+      "next_action": "Использовать готовые 27 exports. Проверить новый lobby layout и обновить strict decoder, затем исполнить текущий clock/Ping/bounded-world пакет без повторения старых матриц.",
+      "decision_rule": "Изменённый handler и layout требуют нового доказательства. Новый layout не подменять старым strict23byte decoder. Проверять все read-failure gates и реальные native инструкции; engine/OS/network effects обозначать fixtures. Онлайн подтверждается отдельно.",
+      "do_not_repeat": "Не повторять завершённый discovery и старые native матрицы. Текущие общие input/gate proofs использовать после проверки целостности.",
+      "addresses": [
+        "0x141548620",
+        "0x14156b000",
+        "0x1415daba0",
+        "0x1445d7e10",
+        "0x1445da030",
+        "0x144aad0c0",
+        "0x144ab2370",
+        "0x14561bc90",
+        "0x1456bab10",
+        "0x1456db460",
+        "0x1456e8430",
+        "0x1456f02c0",
+        "0x145749a50",
+        "0x14574f5d0",
+        "0x1458223b0",
+        "0x1458224f0",
+        "0x14584f520",
+        "0x14584f7d0",
+        "0x14584f8f0",
+        "0x145d603e0",
+        "0x145db2dd0",
+        "0x145db5f80",
+        "0x145db64b0",
+        "0x14679f900",
+        "0x1467aeb30",
+        "0x1467d2820",
+        "0x1467d2b80"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md",
+        "evidence/updates/AUTO-ENTRY-COLLECT-CURRENT.json"
+      ]
+    },
+    {
+      "id": "sdk-launcher-runtime-current",
+      "status": "bounded_answer",
+      "question": "Как связать текущие SDK и Launcher proofs с ограниченной runtime composition?",
+      "known": "Текущий immutable профиль связывает девять SDK component manifests и Launcher14root audit. Семь offline composition сценариев проверены с точнымиSHA и scoped SDK-policy fixture.",
+      "unknown": "Настоящая серверная авторизация и подключение явного standalone профиля к боевому runner. Игровой candidate и создание отдельно.",
+      "next_action": "Подключить source check и guard текущего профиля к on_update; проверить cached повтор без SDK/native/Ghidra запуска. Сохранить существующий runtime sourceguard до готовности ограниченного входа.",
+      "decision_rule": "Готовые SDK 3667 native и Launcher static proofs переиспользовать после проверки полных SHA. Fixture composition не выдавать за live authentication или активацию профиля. Loader должен проверять каждый input при любом обращении.",
+      "do_not_repeat": "Не повторять старые или текущие standalone SDK native матрицы без изменения входов.",
+      "addresses": [
+        "0x1444eeb30",
+        "0x144503c70"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-ENTRY-PROOFS-CURRENT.md",
+        "evidence/updates/AUTO-ENTRY-PROOFS-CURRENT.json"
+      ]
+    },
+    {
+      "id": "candidate-proof-bridges-current",
+      "status": "bounded_answer",
+      "question": "Как переиспользовать семь готовых source-proof областей прежнего candidate без повторного native разбора?",
+      "known": "Текущие published native proofs проверены штатным publication v3. Четыре Version/Login projections завершили owner barrier; сохранены 371 вход и прежние fixture границы. Старые check reports не выдаются заново.",
+      "unknown": "Оставшиеся CharacterList и clock/world scopes, изменённый lobby decoder, runtime composition и допуск полного ограниченного candidate.",
+      "next_action": "Подключить read-only SHA guard к on_update и проверить повтор без native/JVM. Использовать семь scopes при сборке нового bounded candidate с точными границами.",
+      "decision_rule": "Сохранённый результат переиспользовать только после проверки всех файлов, контекста и producer SHA. Static inheritance не выдавать за исполненные target cases. Мост не меняет runtime admission.",
+      "do_not_repeat": "Не повторять неизменные standalone native матрицы и validated publication closure, если saved scope и все inputs совпадают.",
+      "addresses": [
+        "0x1467d1ba0",
+        "0x1467d1530"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-ENTRY-PROOFS-CURRENT.md",
+        "evidence/updates/AUTO-ENTRY-PROOFS-CURRENT.json"
+      ]
     }
   ]
 }

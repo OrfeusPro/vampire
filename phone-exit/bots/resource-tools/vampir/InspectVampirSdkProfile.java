@@ -53,7 +53,10 @@ public class InspectVampirSdkProfile extends GhidraScript {
                         .equals(entry.getValue().getAsString())
                     && expected.length == 7 && expected[0] == (byte)0x89 && expected[1] == (byte)0x0d
                     && expected[6] == (byte)0xc3;
-                boolean jumpLeaf = reviewedSource && at.getOffset() == 0x144ab13f0L
+                boolean currentJump = source.get("new_source_sha256").getAsString().equals(
+                    "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f")
+                    && at.getOffset() == 0x144ab11e0L;
+                boolean jumpLeaf = ((reviewedSource && at.getOffset() == 0x144ab13f0L) || currentJump)
                     && entry.getValue().getAsString().equals("488b491033d2e9c51b0000");
                 boolean archiveCleanup = source.get("new_source_sha256").getAsString().equals(
                     "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f")
@@ -87,9 +90,10 @@ public class InspectVampirSdkProfile extends GhidraScript {
                             Address[] flows = ins.getFlows();
                             int displacement = java.nio.ByteBuffer.wrap(expected, 7, 4)
                                 .order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+                            long target = currentJump ? 0x144ab2db0L : 0x144ab2fc0L;
                             flowMatches &= count == 2 && ins.getAddress().equals(at.add(6))
-                                && at.add(11L + displacement).getOffset() == 0x144ab2fc0L
-                                && flows.length == 1 && flows[0].getOffset() == 0x144ab2fc0L;
+                                && at.add(11L + displacement).getOffset() == target
+                                && flows.length == 1 && flows[0].getOffset() == target;
                         }
                     } else if (archiveCleanup) {
                         String[] mnemonics = {"LEA", "MOV", "JMP"};

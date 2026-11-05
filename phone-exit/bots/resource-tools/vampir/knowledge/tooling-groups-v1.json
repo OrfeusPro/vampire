@@ -27,7 +27,9 @@
     "phone-exit/bots/test_vampir_update_contracts.py",
     "phone-exit/bots/resource-tools/vampir/sdk-check-guard.py",
     "phone-exit/bots/resource-tools/vampir/knowledge/requested-leaf-models.json",
-    "phone-exit/bots/resource-tools/vampir/version-result-flow-guard.py"
+    "phone-exit/bots/resource-tools/vampir/version-result-flow-guard.py",
+    "phone-exit/bots/resource-tools/vampir/sdk-launcher-check-guard.py",
+    "phone-exit/bots/resource-tools/vampir/candidate-bridge-check-guard.py"
   ],
   "groups": [
     {

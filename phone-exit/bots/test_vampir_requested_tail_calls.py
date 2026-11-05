@@ -9,6 +9,23 @@ from test_vampir_update_contracts import load
 
 
 class RequestedTailCallsTests(unittest.TestCase):
+    def test_current_peer_tail_keeps_bounded_target_and_rejects_drift(self):
+        tool=load('collect-requested-functions');native=load('build-native-entry-code')
+        sha='03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+        at=0x144ab11e0;encoded='488b491033d2e9c51b0000';raw=bytes.fromhex(encoded)
+        self.assertEqual(tool.REVIEWED_LEAF_TAILS[sha][at],encoded)
+        tool.REVIEWED_LEAF_TAILS={sha:{at:encoded}}
+        image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
+        self.assertEqual(tool.checked_leaf_tails(native,image,sha),{at:encoded})
+        self.assertNotIn(0x144ab2db0,tool.checked_leaf_tails(native,image,sha))
+        image.data=raw[:-1]+b'\x01'
+        with self.assertRaisesRegex(ValueError,'source differs'):
+            tool.checked_leaf_tails(native,image,sha)
+        for entry,body in ((at+1,encoded),(at,encoded[:-2]+'01')):
+            with patch.object(tool,'REVIEWED_LEAF_TAILS',{sha:{entry:body}}):
+                with self.assertRaisesRegex(ValueError,'Unreviewed'):
+                    tool.checked_leaf_tails(native,image,sha)
+
     def test_declared_store_model_checks_proof_source_and_body(self):
         tool=load('collect-requested-functions');native=load('build-native-entry-code')
         sha='b'*64;at=0x1445523a0;raw=bytes.fromhex('890d00000000c3')

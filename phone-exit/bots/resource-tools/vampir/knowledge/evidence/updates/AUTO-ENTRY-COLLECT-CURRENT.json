@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "recipe": "entry-collect-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "method": "static",
+  "collections": {
+    "character-list-current": {
+      "roots": 24,
+      "plan": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\character-list-current-plan.json",
+        "sha256": "5a436082c2debc4c4beeb18e836d01182c54bf499b855343cd974289e0e8ad9d"
+      },
+      "collection": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\5e5dad739e49ec5510f5a5a9eda7bbbd59f380177e500c1811f51b2dd6cb83d9\\manifest.json",
+        "sha256": "5e5dad739e49ec5510f5a5a9eda7bbbd59f380177e500c1811f51b2dd6cb83d9"
+      },
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-acc24c5196b9\\details.json",
+        "sha256": "fc8cae5bd2348ae09abc8496eb4f9d253be6c0c0edf1257071bbe5b850a1df99"
+      }
+    },
+    "clock-world-current": {
+      "roots": 27,
+      "plan": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\clock-world-current-plan.json",
+        "sha256": "e78ff91fc8af851687c5955920887b4e26b7a8c417a233996fd30a5140b36705"
+      },
+      "collection": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\47559a7d60427a72d9d23c3974b30db12a0e62029cfd1a071ff1f0b38692d8ae\\manifest.json",
+        "sha256": "47559a7d60427a72d9d23c3974b30db12a0e62029cfd1a071ff1f0b38692d8ae"
+      },
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-4496e2332dcf\\details.json",
+        "sha256": "8a3e629ec401d80e3d5393249b3c96e21d46bc9d59ad81455b3259b2a7b34c0b"
+      }
+    }
+  },
+  "failed_diagnostics": {
+    "character-list-current": {
+      "log": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-557775249662\\headless.log",
+        "sha256": "7b8f17bb61c8fe1fc4e926212228eca750b7097b70a5d350d09e8f3ce3d32794"
+      },
+      "source": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-557775249662\\source.json",
+        "sha256": "a1ee952d3d0fbd88a31d2dc22e3d5ffb63c0be982407a1e1beff23bfef3b5713"
+      }
+    },
+    "clock-world-current": {
+      "log": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-c16ea8946841\\headless.log",
+        "sha256": "8a86114307c6317c90b8a4290e02832cb6b585954e01e21c727b8263c498ba31"
+      },
+      "source": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-c16ea8946841\\source.json",
+        "sha256": "b96a0833c8a64cccb81775ba33d0a6e113fda3f5b3d3ec185c30ce2499748d94"
+      }
+    }
+  },
+  "runtime_admitted": false,
+  "network_used": false,
+  "semantic_execution": false,
+  "profile_activated": false,
+  "character_generator_wip": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\entry-current-wip\\6ad59edf4df67f40dc53195c15717014aa63ba4de5955ef1717e41b4f35e7ee5\\manifest.json",
+    "sha256": "a4a24e746eafc034e0a8dca97af0add615416fcfe32ab62444d12369b76f6627"
+  },
+  "lobby_source_layout": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\clock-world-current-lobby-layout-result.json",
+    "sha256": "12c9eed2ba957472a0df4f05bbd59077eca6f21342a2e1af81104bdde745c1fc"
+  },
+  "lobby_source_constructor": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\clock-world-current-lobby-constructor-result.json",
+    "sha256": "4d758c63c51c1b43b6c172d9a255f48852237113f3787b4a90ef5807eb47b988"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\c14afc6b774b198e8327f50b28fb335238b7809877c433224d662389cc0ae4fc\\manifest.json",
+    "sha256": "c14afc6b774b198e8327f50b28fb335238b7809877c433224d662389cc0ae4fc"
+  },
+  "metrics": {
+    "executed_groups": 27,
+    "cached_groups": 0,
+    "executed_cases": 2059,
+    "cached_cases": 0,
+    "executed_discovered_cases": 2059,
+    "cached_discovered_cases": 0,
+    "executed_skips": 4,
+    "cached_skips": 0,
+    "incomplete_groups": 0,
+    "duration_seconds": 323.90181969990954
+  },
+  "scoped_completions": {
+    "sdk-launcher-runtime-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\82c8ee930d9634140efd88c8214b1cd355ec570d771eb87ce496d5ad49c1b9bc\\manifest.json",
+      "sha256": "82c8ee930d9634140efd88c8214b1cd355ec570d771eb87ce496d5ad49c1b9bc"
+    },
+    "candidate-proof-bridges-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\b4c31cee19d4e464bf3fbf7eb81f073e509ecba116326813c4fb90c210a9288a\\manifest.json",
+      "sha256": "b4c31cee19d4e464bf3fbf7eb81f073e509ecba116326813c4fb90c210a9288a"
+    },
+    "character-list-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\8d4df64c6d04b3525438946e8dfbf168ccecd0938fa88ed7b14004e59a42cdcd\\manifest.json",
+      "sha256": "8d4df64c6d04b3525438946e8dfbf168ccecd0938fa88ed7b14004e59a42cdcd"
+    },
+    "clock-world-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\09d9b9b3434e521230befc2789b0e4aefc290a3b1483dc71c738a1b55d291253\\manifest.json",
+      "sha256": "09d9b9b3434e521230befc2789b0e4aefc290a3b1483dc71c738a1b55d291253"
+    }
+  },
+  "frozen_inputs_unchanged": 59,
+  "runtime_admitted": false,
+  "network_used": false
+}

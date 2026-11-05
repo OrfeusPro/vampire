@@ -11,10 +11,17 @@ exports и проверки вручную не повторять. Счётчи
 девять исходных пробелов сгруппированы в три пакета. VersionResult handler / gate
 закрыт в ограниченной композиции reader → handler → gate → captured Login.
 Остались два пакета: CharacterList / выбор и clock / Ping / ограниченный вход в мир.
-Готовые семь областей ещё нужно связать с candidate, сохранив owner barriers.
+Семь готовых областей связаны source-proof мостом с завершёнными owner barriers;
+SDK → Launcher composition прошла семь fixture сценариев. Оба пакета подключены
+к on_update с SHA guard. Их runtime admission сохраняет отдельные границы.
+CharacterList 24 и clock / lobby / world 27 roots экспортированы. Дальше —
+текущие native сценарии и новый lobby VersionResult codec: прежние 23 байта
+не покрывают найденные добавленные поля. Затем собрать bounded runtime candidate.
 Создание и stats имеют отдельный допуск.
 [Матрица повторного использования и текущий Launcher](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-CONTRACT-CURRENT.md).
 [16 сценариев VersionResult, подключение к on_update и кэш](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-RESULT-FLOW-CURRENT.md).
+[SDK composition / bridges](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-PROOFS-CURRENT.md),
+[готовые exports и конкретный lobby layout blocker](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md).
 
 - Service lifecycle: bounded assignment / constructors / refcount / deleting /
   reset / ring cleanup закрыты новым пакетом ниже. Остаются engine registration

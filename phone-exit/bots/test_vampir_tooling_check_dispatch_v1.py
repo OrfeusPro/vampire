@@ -218,6 +218,70 @@ class ToolingCheckDispatchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'material changed'):
             self.run_check(check_ids=[identifier])
 
+    def test_sdk_launcher_guard_pins_profile_and_rechecks_cached_inputs(self):
+        identifier='sdk-runtime-launcher-11316';sha='a'*64
+        value=self.workflow.canonical(dict(inputs={str(self.runtime):self.index.digest(self.runtime)}))
+        import hashlib
+        manifest=self.root/'sdk-launcher-profiles'/hashlib.sha256(value).hexdigest()/'manifest.json'
+        manifest.parent.mkdir(parents=True);manifest.write_bytes(value)
+        selected=self.knowledge/'sdk-selection.json'
+        selected.write_text(json.dumps(dict(schema=1,source_sha256=sha,profile=dict(path=str(manifest),sha256=self.index.digest(manifest)))))
+        definition=dict(self.client,id=identifier,sdk_launcher_profiles={sha:selected.name},
+            dependencies=[selected.relative_to(self.workspace).as_posix()])
+        self.write_registry([definition])
+        def native_loader(**kwargs):
+            value=self.index.read_json(manifest)
+            if any(self.index.digest(name)!=expected for name,expected in value['inputs'].items()):
+                raise ValueError('SDK Launcher dependency changed')
+            return value
+        def checked(*args,**kwargs):
+            path=self.workflow.snapshot(self.root,'check-results',dict(state='passed',definition=dict(
+                source_sha256=sha,check=dict(id=identifier),inputs={},artifacts={})))
+            return [dict(id=identifier,state='passed',report=str(path),sha256=self.index.digest(path),cache_key='fixture')]
+        self.legacy.side_effect=checked
+        guard=load('sdk-launcher-check-guard')
+        extension=self.index.extension
+        self.index.extension=lambda name:guard if name=='sdk-launcher-check-guard' else extension(name)
+        with patch.object(guard,'loader',return_value=SimpleNamespace(load_manifest=native_loader)):
+            first=self.run_check(check_ids=[identifier])[0]
+            self.assertEqual(first,self.run_check(check_ids=[identifier])[0])
+            report=self.index.read_json(first['report'])
+            self.assertIn(str(manifest.resolve()),report['definition']['artifacts'])
+            self.assertIn(str(self.runtime),report['definition']['artifacts'])
+            self.runtime.write_bytes(b'changed')
+            with self.assertRaisesRegex(ValueError,'dependency changed'):
+                self.run_check(check_ids=[identifier])
+
+    def test_candidate_bridge_guard_rechecks_cached_dependency(self):
+        identifier='candidate-proof-bridges-current';sha='a'*64
+        context=self.knowledge/'native-contexts/bridge-fixture.json'
+        context.parent.mkdir();context.write_text(json.dumps(dict(source_sha256=sha)))
+        context_pointer=dict(path=str(context.resolve()),sha256=self.index.digest(context))
+        proof=self.workflow.snapshot(self.root,'candidate-proof-bridges-v1',dict(
+            context_sha256=context_pointer['sha256'],files={str(self.runtime):self.index.digest(self.runtime)}))
+        selected=self.knowledge/'bridge-selection.json'
+        selected.write_text(json.dumps(dict(schema=1,source_sha256=sha,context=context_pointer,
+            proof=dict(path=str(proof),sha256=self.index.digest(proof)))))
+        self.write_registry([dict(self.client,id=identifier,candidate_bridge_profiles={sha:selected.name},
+            dependencies=[selected.relative_to(self.workspace).as_posix()])])
+        def validate(context,report):
+            if any(self.index.digest(name)!=value for name,value in report['files'].items()):
+                raise ValueError('Saved candidate bridge input changed')
+        def checked(*args,**kwargs):
+            path=self.workflow.snapshot(self.root,'check-results',dict(state='passed',definition=dict(
+                source_sha256=sha,check=dict(id=identifier),inputs={},artifacts={})))
+            return [dict(id=identifier,state='passed',report=str(path),sha256=self.index.digest(path),cache_key='fixture')]
+        self.legacy.side_effect=checked
+        tool=SimpleNamespace(RECIPE='candidate-proof-bridges-v1',validate_saved=validate,
+            checked=lambda root,pointer,category:self.workflow.checked_manifest(self.index,Path(pointer['path'])))
+        extension=self.index.extension
+        self.index.extension=lambda name:tool if name=='candidate-proof-bridges' else extension(name)
+        first=self.run_check(check_ids=[identifier])[0]
+        self.assertEqual(first,self.run_check(check_ids=[identifier])[0])
+        self.runtime.write_bytes(b'corrupt')
+        with self.assertRaisesRegex(ValueError,'input changed'):
+            self.run_check(check_ids=[identifier])
+
     def test_absent_manifest_keeps_legacy_fixture_behavior(self):
         self.manifest.unlink()
         result = self.run_check()

@@ -2455,6 +2455,189 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "CharacterList/выбор, clock/Ping/ограниченный вход в мир, связывание proofs с candidate и runtime composition. Создание Carnage и stats требуют собственного текущего допуска. Генерация composition context для следующего SHA открыта.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444eeb30",
+        "0x144503c70"
+      ],
+      "checks": [
+        {
+          "cache_key": "dcabea28d48da3aa77a5d70a1530751f5ec7b04d499c838942d68533a3630c31",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3512e4f693cf406079479138cb6bc49bab100d1bd66734f2fa4affa37b8c71fe\\manifest.json",
+          "sha256": "3512e4f693cf406079479138cb6bc49bab100d1bd66734f2fa4affa37b8c71fe",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Семь offline SDK→Launcher composition сценариев текущего immutable профиля прошли. Девять component proofs и Launcher source contract переиспользованы, новый source variant и guard подключены к on_update.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-ENTRY-PROOFS-CURRENT.md",
+          "sha256": "8a4681d783faff6ad1e891e440d6355ef959c82c2041dee1395f2cfda484fda1"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-ENTRY-PROOFS-CURRENT.json",
+          "sha256": "66b8ee1c4f766f1ba9239a9f697b423abca620e63b252e9441d4cc553d6c70a8"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "5bc21a4c868e84e6af2b82e454c62bc1076a3eaa81b4513f939a36f83455a778",
+      "limits": [
+        "HTTP/browser, credentials/device identity и ровно одна SDK policy ограничены fixtures. Реальная авторизация не выполнялась.",
+        "Не выдаёт runtime admission, game protocol или право на прямые SDK операции."
+      ],
+      "method": "static",
+      "next_check": "Продолжить CharacterList и clock/world, новый lobby decoder и сборку bounded runtime candidate; профиль переиспользовать после полной SHA проверки.",
+      "question": "sdk-launcher-runtime-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Standalone SDK loader ещё не подключён к боевому runner; целый ограниченный игровой candidate и создание не допущены.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1530",
+        "0x1467d1ba0"
+      ],
+      "checks": [
+        {
+          "cache_key": "6740dc1b06bdf839351fe3757dba499da5f9d94ab07844c4292c11ade42aa174",
+          "id": "candidate-proof-bridges-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b7d19a9c7989ba26028926111828ea98a8ff664759c14fe9d4d46f0a7f3d047b\\manifest.json",
+          "sha256": "b7d19a9c7989ba26028926111828ea98a8ff664759c14fe9d4d46f0a7f3d047b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Семь готовых source-proof областей прежнего candidate связаны с текущим SHA. Штатные publication/projection owner barriers завершены, сохранены 371 вход и исходные fixture границы. Cached guard подключён к on_update.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-ENTRY-PROOFS-CURRENT.md",
+          "sha256": "8a4681d783faff6ad1e891e440d6355ef959c82c2041dee1395f2cfda484fda1"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-ENTRY-PROOFS-CURRENT.json",
+          "sha256": "66b8ee1c4f766f1ba9239a9f697b423abca620e63b252e9441d4cc553d6c70a8"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "53978a1275f659372f5e9a28d28011de7386455f2137722b1fc25051f726e9fd",
+      "limits": [
+        "Native матрицы не повторялись. Восемь tag и 160 writer случаев наследуются статически.",
+        "Старые source-check reports не создаются. Профиль не активируется, runtime admission и online не подтверждены."
+      ],
+      "method": "static",
+      "next_check": "Использовать готовые семь scopes с их ограничениями при сборке candidate; повторять только изменённые входы.",
+      "question": "candidate-proof-bridges-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Текущие CharacterList, clock/world сценарии, изменённый lobby layout и полный ограниченный runtime candidate ещё открыты.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1456ba480",
+        "0x1456bbbf0",
+        "0x1456bd7c0",
+        "0x1456c3020",
+        "0x1456c6e90",
+        "0x1456c72a0",
+        "0x1456d19e0",
+        "0x1456d2280",
+        "0x1456dbc80",
+        "0x1456dce50",
+        "0x1456e6bd0",
+        "0x14573bbc0",
+        "0x145783c00",
+        "0x145784580",
+        "0x145786750",
+        "0x145787df0",
+        "0x1457888c0",
+        "0x145789770",
+        "0x145794f80",
+        "0x145c9e430",
+        "0x145d5f4f0",
+        "0x145db1010",
+        "0x1467997c0",
+        "0x1467a0780"
+      ],
+      "checks": [],
+      "conclusion": "Для CharacterList собраны 24 явных current roots, включая два source-checked E9 tail targets. Первоначальный отказ границ устранён без ослабления unwind проверок. Остальные 18 готовых exports доступны отдельно.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-ENTRY-COLLECT-CURRENT.md",
+          "sha256": "a38ee18894aca82e4717f59ac519c8be767691425751150d149f94904f430f51"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-ENTRY-COLLECT-CURRENT.json",
+          "sha256": "138d5cea09c305be1a8982e025e572ebc4eb377ce827780d132f3a34b683f76b"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "f8b8d361da3d891594f840b49f140446e8b90ae5e7e23a16bec7e3f711b8d629",
+      "limits": [
+        "Результат подтверждает выбранные exports и навигационные source shapes. Native семантика текущих шести семейств ещё не проверена.",
+        "Незавершённый генератор сохранён в библиотеке WIP и не зарегистрирован. Создание персонажа не допущено."
+      ],
+      "method": "static",
+      "next_check": "Продолжить сохранённый генератор и текущий общий native пакет по готовым exports, без нового Ghidra/discovery.",
+      "question": "character-list-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Нужны полная конверсия leaves/tables/registration и dedicated bounded harness/runner для текущих сценариев.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141548620",
+        "0x14156b000",
+        "0x1415daba0",
+        "0x1445d7e10",
+        "0x1445da030",
+        "0x144aad0c0",
+        "0x144ab2370",
+        "0x14561bc90",
+        "0x1456bab10",
+        "0x1456db460",
+        "0x1456e8430",
+        "0x1456f02c0",
+        "0x145749a50",
+        "0x14574f5d0",
+        "0x1458223b0",
+        "0x1458224f0",
+        "0x14584f520",
+        "0x14584f7d0",
+        "0x14584f8f0",
+        "0x145d603e0",
+        "0x145db2dd0",
+        "0x145db5f80",
+        "0x145db64b0",
+        "0x14679f900",
+        "0x1467aeb30",
+        "0x1467d2820",
+        "0x1467d2b80"
+      ],
+      "checks": [],
+      "conclusion": "Для clock/Ping/lobby/world собраны 27 current roots. Найден изменённый lobby VersionResult handler/reader с добавленными полями. Source-specific peer tail модель прошла строгий Python guard и фактический Ghidra collect.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-ENTRY-COLLECT-CURRENT.md",
+          "sha256": "a38ee18894aca82e4717f59ac519c8be767691425751150d149f94904f430f51"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-ENTRY-COLLECT-CURRENT.json",
+          "sha256": "138d5cea09c305be1a8982e025e572ebc4eb377ce827780d132f3a34b683f76b"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "ff3f5719cd75e02800ea496356d8d38d85ab1455bd6dbca98719aa3409db2524",
+      "limits": [
+        "Изменённый lobby layout выявлен статически; точный wire contract и новые ветви ещё требуют native сценариев.",
+        "Прежний strict23byte decoder не покрывает новый reader. Сетевой вход и whole engine/world-session не подтверждены."
+      ],
+      "method": "static",
+      "next_check": "Использовать готовые 27 exports, проверить новый layout и decoder, затем исполнить ограниченные текущие сценарии.",
+      "question": "clock-world-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты source-bound lobby reader/handler сценарии, новый wire decoder и текущий clock/Ping/bounded world пакет.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

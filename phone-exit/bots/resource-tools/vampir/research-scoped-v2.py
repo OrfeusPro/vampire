@@ -143,6 +143,12 @@ def pin_checks(index, scope, checks):
         elif report.get('sdk_generation_guard', {}).get('recipe') == 'sdk-check-guard-v1':
             runtime_inputs = index.extension('sdk-check-guard').runtime_inputs(
                 index, index.extension('research-workflow'), scope.root, report, outcome['id'])
+        elif report.get('sdk_launcher_guard', {}).get('recipe') == 'sdk-launcher-runtime-v1':
+            runtime_inputs = index.extension('sdk-launcher-check-guard').runtime_inputs(
+                index, scope.root, report, outcome['id'])
+        elif report.get('candidate_bridge_guard', {}).get('recipe') == 'candidate-proof-bridges-v1':
+            runtime_inputs = index.extension('candidate-bridge-check-guard').runtime_inputs(
+                index, scope.root, report, outcome['id'])
         for field in ('inputs', 'artifacts'):
             for path, expected in definition.get(field, {}).items():
                 kind = ('runtime' if path in runtime_inputs or Path(path).parent ==

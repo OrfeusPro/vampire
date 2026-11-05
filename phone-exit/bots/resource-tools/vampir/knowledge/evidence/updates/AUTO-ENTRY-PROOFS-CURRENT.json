@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "recipe": "entry-proofs-current-v1",
+  "profiles": {
+    "sdk": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\sdk-launcher-runtime-profile-current.json",
+      "sha256": "5b8d0a544fdefbca6696bfe8976d3e56bc74742fb1fa6e2735af81a5a431be4b"
+    },
+    "bridges": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\candidate-proof-bridges-current.json",
+      "sha256": "698b1d3bfcecdba3e41dd55471b6f76484eed7c57d0c906136dd041cd8281f21"
+    }
+  },
+  "bridge_proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\candidate-proof-bridges-v1\\00a774a537a4e8c3d1f3b75ff25225891624549dc370e796eb54890d08b13eb1\\manifest.json",
+    "sha256": "00a774a537a4e8c3d1f3b75ff25225891624549dc370e796eb54890d08b13eb1"
+  },
+  "sdk_profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\sdk-launcher-profiles\\c3c53ee890ca3c570a22ccaaabee6db9d2cfaab4fba11fc80374b78073f24e78\\manifest.json",
+    "sha256": "c3c53ee890ca3c570a22ccaaabee6db9d2cfaab4fba11fc80374b78073f24e78"
+  },
+  "sdk_fixture_cases": 7,
+  "bridge_source_tests": 4,
+  "sdk_retained_inputs": 98,
+  "bridge_retained_inputs": 371,
+  "cache": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-bridge-cache-current.json",
+    "sha256": "05a037e27f0c950d304864e74c1c05da705bf51acb581d3bb768070dfc677457"
+  },
+  "cache_results": [
+    {
+      "question": "sdk-launcher-runtime-current",
+      "checks": [
+        {
+          "id": "sdk-runtime-launcher-11316",
+          "state": "passed",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3512e4f693cf406079479138cb6bc49bab100d1bd66734f2fa4affa37b8c71fe\\manifest.json",
+          "sha256": "3512e4f693cf406079479138cb6bc49bab100d1bd66734f2fa4affa37b8c71fe",
+          "cache_key": "dcabea28d48da3aa77a5d70a1530751f5ec7b04d499c838942d68533a3630c31"
+        }
+      ],
+      "seconds": 2.293602,
+      "new_jvm": 0,
+      "native_executions": 0,
+      "child_process_blocked": true
+    },
+    {
+      "question": "candidate-proof-bridges-current",
+      "checks": [
+        {
+          "id": "candidate-proof-bridges-current",
+          "state": "passed",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b7d19a9c7989ba26028926111828ea98a8ff664759c14fe9d4d46f0a7f3d047b\\manifest.json",
+          "sha256": "b7d19a9c7989ba26028926111828ea98a8ff664759c14fe9d4d46f0a7f3d047b",
+          "cache_key": "6740dc1b06bdf839351fe3757dba499da5f9d94ab07844c4292c11ade42aa174"
+        }
+      ],
+      "seconds": 2.261081,
+      "new_jvm": 0,
+      "native_executions": 0,
+      "child_process_blocked": true
+    }
+  ],
+  "new_native_executions": 0,
+  "new_jvm": 0,
+  "network_used": false,
+  "runtime_admitted": false,
+  "profile_activated": false,
+  "checks": {
+    "sdk-launcher-runtime-current": [
+      {
+        "id": "sdk-runtime-launcher-11316",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3512e4f693cf406079479138cb6bc49bab100d1bd66734f2fa4affa37b8c71fe\\manifest.json",
+        "sha256": "3512e4f693cf406079479138cb6bc49bab100d1bd66734f2fa4affa37b8c71fe",
+        "cache_key": "dcabea28d48da3aa77a5d70a1530751f5ec7b04d499c838942d68533a3630c31"
+      }
+    ],
+    "candidate-proof-bridges-current": [
+      {
+        "id": "candidate-proof-bridges-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b7d19a9c7989ba26028926111828ea98a8ff664759c14fe9d4d46f0a7f3d047b\\manifest.json",
+        "sha256": "b7d19a9c7989ba26028926111828ea98a8ff664759c14fe9d4d46f0a7f3d047b",
+        "cache_key": "6740dc1b06bdf839351fe3757dba499da5f9d94ab07844c4292c11ade42aa174"
+      }
+    ]
+  }
+}

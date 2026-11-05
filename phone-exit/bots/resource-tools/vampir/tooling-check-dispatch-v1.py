@@ -105,6 +105,10 @@ def run_checks(index, args, sha, question, *, check_ids=None, workflow=None):
             outcomes.extend(index.extension('sdk-check-guard').run(index, workflow, args, sha, definition))
         elif sha in definition.get('version_flow_contexts', {}):
             outcomes.extend(index.extension('version-result-flow-guard').run(index, workflow, args, sha, definition))
+        elif sha in definition.get('sdk_launcher_profiles', {}):
+            outcomes.extend(index.extension('sdk-launcher-check-guard').run(index, workflow, args, sha, definition))
+        elif sha in definition.get('candidate_bridge_profiles', {}):
+            outcomes.extend(index.extension('candidate-bridge-check-guard').run(index, workflow, args, sha, definition))
         else:
             outcomes.extend(workflow.run_checks(index, args, sha, question,
                                                check_ids=[definition['id']]))
