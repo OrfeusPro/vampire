@@ -2253,6 +2253,31 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Состав исторического PATH неизвестен. Остальные общие зависимости ещё можно уточнять по потребителям.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1530"
+      ],
+      "checks": [],
+      "conclusion": "Командный владелец передаёт прямой маршрут EU и SOCKS-маршрут JP разным аккаунтам с одним закреплённым профилем. Штатный automatic-update-tooling выполнил девять зависимых групп и использовал 18 из кэша.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LIVE-OWNER-DIRECT-EU-V1.json",
+          "sha256": "0305820752b431bc29a7f5cb389b00ea4ca09a9486b630b1a76e1e49a59d86a4"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "460911a0467075f22957922baf57fa9e58016bf96f4b2fe95908efe78d37a41d",
+      "limits": [
+        "Вход в тесте заменён локальным fixture. Экспорт Login используется как опора исследования.",
+        "Допуск текущего клиента, создание персонажа и живое соединение этим тестом не подтверждаются."
+      ],
+      "method": "static",
+      "next_check": "Проверить общий SDK/GMC2 и Launcher для текущего SHA, затем подготовить профили входа и создания.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Для текущего SHA нет подтверждённого пакета входа; создание персонажа требует отдельного допуска.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

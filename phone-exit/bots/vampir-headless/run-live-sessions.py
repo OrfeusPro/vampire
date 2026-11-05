@@ -67,9 +67,12 @@ def validate_accounts(value):
             raise ValueError('Неверный email')
         if row['bot_id'] in bots or email.lower() in emails:raise ValueError('Повторный бот или аккаунт')
         bots.add(row['bot_id']);emails.add(email.lower())
-        for key,lower,upper in [('socks_port',1024,65535),('server_id',1,0xffffffff),('character_index',0,65535)]:
+        socks_port=row['socks_port']
+        if socks_port is not None and (type(socks_port) is not int or not 1024<=socks_port<=65535):
+            raise ValueError('Неверный socks_port')
+        for key,lower,upper in [('server_id',1,0xffffffff),('character_index',0,65535)]:
             if type(row[key]) is not int or not lower<=row[key]<=upper:raise ValueError('Неверный '+key)
-        if row['region'] not in ('HK','JP'):raise ValueError('Неверный регион')
+        if row['region'] not in ('HK','JP','EU'):raise ValueError('Неверный регион')
     return value
 
 

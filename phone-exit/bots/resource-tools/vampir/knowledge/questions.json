@@ -1240,7 +1240,8 @@
         "evidence/updates/HEADLESS-TOOLING-SHARED-DEPS-V1.md",
         "evidence/updates/AUTO-TOOLING-SHARED-DEPS-V1.json",
         "evidence/updates/HEADLESS-TOOLING-PATH-V1.md",
-        "evidence/updates/AUTO-TOOLING-PATH-V1.json"
+        "evidence/updates/AUTO-TOOLING-PATH-V1.json",
+        "evidence/updates/AUTO-LIVE-OWNER-DIRECT-EU-V1.json"
       ]
     }
   ]

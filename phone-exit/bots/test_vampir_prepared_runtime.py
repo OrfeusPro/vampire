@@ -145,10 +145,12 @@ class PreparedRuntimeTests(unittest.TestCase):
 
     def test_multiple_workers_share_one_pinned_bundle_not_next_pointer(self):
         tool=load('run-live-sessions');observed=[]
-        accounts=[dict(bot_id='fixture'+str(i),email='fixture'+str(i)+'@example.invalid',socks_port=17948,
-            region='JP',server_id=42,character_index=0) for i in range(2)]
+        accounts=[dict(bot_id='fixture'+str(i),email='fixture'+str(i)+'@example.invalid',socks_port=socks_port,
+            region=region,server_id=42,character_index=0)
+            for i,(region,socks_port) in enumerate((('JP',17948),('EU',None)))]
         def run(email,**kwargs):
-            observed.append((kwargs['selected_profile'],admission.permits(TARGET,'game-login-world-v1')))
+            observed.append((email,kwargs['region'],kwargs['socks_port'],kwargs['selected_profile'],
+                admission.permits(TARGET,'game-login-world-v1')))
             return dict(status='fixture',game=dict(status='fixture'))
         # Real loopback server lifecycle; the probe is a local callable, never an
         # external transport or authentication. Port 0 requests an OS free port.
@@ -156,7 +158,9 @@ class PreparedRuntimeTests(unittest.TestCase):
                 patch.object(tool,'verify_launch_source',return_value=dict(profile=SELECTOR)):
             result=tool.run_accounts(accounts,{'fixture0':'fixture','fixture1':'fixture'},manifest=Path('fixture'),
                 client_version=1,profile='prepared-next',probe=SimpleNamespace(run=run),port=0,max_runtime_seconds=1)
-        self.assertEqual(len(result),2);self.assertEqual(observed,[(SELECTOR,True)]*2)
+        self.assertEqual(len(result),2)
+        self.assertCountEqual(observed,[('fixture0@example.invalid','JP',17948,SELECTOR,True),
+            ('fixture1@example.invalid','EU',None,SELECTOR,True)])
         self.assertEqual(validate.call_count,1)
         self.assertFalse(admission.permits(TARGET,'game-login-world-v1'))
 

@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "recipe": "live-owner-direct-eu-v1",
+  "scope": "fixture_only_tooling",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source_is_research_anchor_only": true,
+  "components": {
+    "phone-exit/bots/vampir-headless/run-live-sessions.py": "498d99091936cbaf6305f5d76ec816a76ab7cb7d3c131793d57c6a0835be9697",
+    "phone-exit/bots/test_vampir_prepared_runtime.py": "994e8b8eb207ce094a2fe3eab9abddb18d77546937ea4367edf619aecd1c9463"
+  },
+  "tooling": {
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\895a099e952609ae77bcb947d645c77173963adbefa4249c5fe5961a50c7dbb5\\manifest.json",
+    "sha256": "895a099e952609ae77bcb947d645c77173963adbefa4249c5fe5961a50c7dbb5",
+    "metrics": {
+      "executed_groups": 9,
+      "cached_groups": 18,
+      "executed_cases": 1084,
+      "cached_cases": 953,
+      "executed_discovered_cases": 1084,
+      "cached_discovered_cases": 953,
+      "executed_skips": 3,
+      "cached_skips": 1,
+      "incomplete_groups": 0,
+      "duration_seconds": 220.77828650001902
+    }
+  },
+  "fixtures": {
+    "prepared_runtime_cases": 11,
+    "live_session_cases": 8,
+    "direct_eu": true,
+    "socks_jp": true,
+    "shared_pinned_bundle": true
+  },
+  "source_preflight": {
+    "profile": "prepared-next",
+    "reason": "source_profile_not_verified",
+    "exit_code": 2,
+    "network_attempted": false
+  },
+  "new_jvm": 0,
+  "game_native_replays": 0,
+  "proves_client_compatibility": false,
+  "runtime_admitted": false
+}
