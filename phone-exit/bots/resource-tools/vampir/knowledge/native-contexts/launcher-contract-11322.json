@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "recipe": "launcher-contract-v1",
+  "baseline": {
+    "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+    "exports": {
+      "run-5e88e50e265d": "8a81049376b63fbb7b476c3381aae08b0f9e325360c73ddf249f2108e3d799b4",
+      "run-652644c53992": "fd7a0e84eb9246d0eaa4b57e864eb1e4c99d41609e705a3f4c1e1dd61a9f22ad",
+      "run-8b262adbaa98": "6da48cc0ed1312cb30f3141e86f01ea9569ae81b4f08d853c2efca264bd98fcb",
+      "run-e3abc26162e7": "0c9394ae43e34f37e6bf092b6788883dee745525de939b4f67c2544703c24d42"
+    },
+    "keys": {
+      "buildCode": {
+        "entry": "0x1411b0170",
+        "literal": "0x14952cbe8",
+        "global": "0x14b563cb0"
+      },
+      "countryCode": {
+        "entry": "0x1411b0260",
+        "literal": "0x14952cd88",
+        "global": "0x14b563d70"
+      },
+      "credential": {
+        "entry": "0x1411b0290",
+        "literal": "0x14952ccb8",
+        "global": "0x14b563d20"
+      },
+      "deviceKey": {
+        "entry": "0x1411b02f0",
+        "literal": "0x14952cc88",
+        "global": "0x14b563d00"
+      },
+      "gameCode": {
+        "entry": "0x1411b03e0",
+        "literal": "0x14952cbd0",
+        "global": "0x14b563ca0"
+      },
+      "launcherToken": {
+        "entry": "0x1411b04a0",
+        "literal": "0x14952cc68",
+        "global": "0x14b563cf0"
+      },
+      "nmDeviceKey": {
+        "entry": "0x1411b04d0",
+        "literal": "0x14952cca0",
+        "global": "0x14b563d10"
+      },
+      "os": {
+        "entry": "0x1411b0500",
+        "literal": "0x14952cda0",
+        "global": "0x14b563d80"
+      },
+      "errorCode": {
+        "entry": "0x1411b0350",
+        "literal": "0x14952cde0",
+        "global": "0x14b563da0"
+      },
+      "resultData": {
+        "entry": "0x1411b05c0",
+        "literal": "0x14952ce60",
+        "global": "0x14b563df0"
+      }
+    },
+    "requests": [
+      {
+        "endpoint": "launcher/token",
+        "entry": "0x1444eecd0",
+        "callback": "0x1444df0b0",
+        "response": "0x1444cc4b0",
+        "transport": "0x144522f90",
+        "shared_literal": "0x149530980",
+        "shared_literal_text": "authUrl",
+        "result_getter": "0x14447d460",
+        "dispatcher": "0x1444e57f0",
+        "crt_offset": 1046
+      },
+      {
+        "endpoint": "launcher/sign-in",
+        "entry": "0x144503e10",
+        "callback": "0x1444df1a0",
+        "response": "0x1444d3a30",
+        "transport": "0x144523110",
+        "shared_literal": "0x149530980",
+        "shared_literal_text": "authUrl",
+        "result_getter": "0x14447d210",
+        "dispatcher": "0x1444e6ac0",
+        "crt_offset": 1064
+      }
+    ],
+    "string_constructor": "0x141426b30",
+    "cleanup_tail": "0x1487e976c"
+  },
+  "target": {
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "exports": {
+      "run-e1e179d90d4c": "ab845794c6c8276df190fc37fb599fb5946468bcbc18c27f539fd5e9dba53075",
+      "run-ff9992487494": "2aa1098c943bdec21d4360b9eed40ebce46f73fa05a4324f19d21e961896f52f",
+      "run-9f0a37b3ed68": "a34b1076aee8826ee705aaafcbabe7fff90883a25945d0b4454a9f836a8eb6c1",
+      "run-2af588b5fc98": "757ba32573c3e4d75003f7621bef8a539657dabce574853fe003035ca5363e26"
+    },
+    "keys": {
+      "buildCode": {
+        "entry": "0x1411b0170",
+        "literal": "0x14952dee8",
+        "global": "0x14b564b30"
+      },
+      "countryCode": {
+        "entry": "0x1411b0260",
+        "literal": "0x14952e088",
+        "global": "0x14b564bf0"
+      },
+      "credential": {
+        "entry": "0x1411b0290",
+        "literal": "0x14952dfb8",
+        "global": "0x14b564ba0"
+      },
+      "deviceKey": {
+        "entry": "0x1411b02f0",
+        "literal": "0x14952df88",
+        "global": "0x14b564b80"
+      },
+      "gameCode": {
+        "entry": "0x1411b03e0",
+        "literal": "0x14952ded0",
+        "global": "0x14b564b20"
+      },
+      "launcherToken": {
+        "entry": "0x1411b04a0",
+        "literal": "0x14952df68",
+        "global": "0x14b564b70"
+      },
+      "nmDeviceKey": {
+        "entry": "0x1411b04d0",
+        "literal": "0x14952dfa0",
+        "global": "0x14b564b90"
+      },
+      "os": {
+        "entry": "0x1411b0500",
+        "literal": "0x14952e0a0",
+        "global": "0x14b564c00"
+      },
+      "errorCode": {
+        "entry": "0x1411b0350",
+        "literal": "0x14952e0e0",
+        "global": "0x14b564c20"
+      },
+      "resultData": {
+        "entry": "0x1411b05c0",
+        "literal": "0x14952e160",
+        "global": "0x14b564c70"
+      }
+    },
+    "requests": [
+      {
+        "endpoint": "launcher/token",
+        "entry": "0x1444eeb30",
+        "callback": "0x1444def10",
+        "response": "0x1444cc310",
+        "transport": "0x144522df0",
+        "shared_literal": "0x149531c80",
+        "shared_literal_text": "authUrl",
+        "result_getter": "0x14447d2c0",
+        "dispatcher": "0x1444e5650",
+        "crt_offset": 1046
+      },
+      {
+        "endpoint": "launcher/sign-in",
+        "entry": "0x144503c70",
+        "callback": "0x1444df000",
+        "response": "0x1444d3890",
+        "transport": "0x144522f70",
+        "shared_literal": "0x149531c80",
+        "shared_literal_text": "authUrl",
+        "result_getter": "0x14447d070",
+        "dispatcher": "0x1444e6920",
+        "crt_offset": 1064
+      }
+    ],
+    "string_constructor": "0x141426b90",
+    "cleanup_tail": "0x1487ec32c"
+  }
+}

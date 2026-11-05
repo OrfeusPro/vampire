@@ -18,7 +18,10 @@
 подключена к штатному обновлению и кэшу.
 [Общий SDK/GMC2/NID пакет](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-SDK-BATCH-CURRENT.md)
 прошёл 3667 native случаев на текущем SHA и опубликовал девять отчётов компонентов.
-Следующий пакет — зависимости и runtime composition Launcher.
+[Launcher source contract](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-CONTRACT-CURRENT.md)
+из 14 функций также подтверждён. Восстановление живого входа продолжается через
+прежний ограниченный candidate с переиспользованием готовых server-list /
+character / world flow. Остались runtime composition и необходимые candidate proofs.
 Свежие результаты работы скрипта читать из `update-watch status` и указанного
 run: версия в этом абзаце не заменяет проверку установленных файлов.
 

@@ -144,6 +144,12 @@
           "sign-in": "0x144503e10",
           "anchor-launcher-token": "0x1444eecd0",
           "anchor-launcher-sign-in": "0x144503e10"
+        },
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": {
+          "token": "0x1444eeb30",
+          "sign-in": "0x144503c70",
+          "anchor-launcher-token": "0x1444eeb30",
+          "anchor-launcher-sign-in": "0x144503c70"
         }
       },
       "resources": [],
@@ -152,7 +158,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Сверить launcher/token и launcher/sign-in: body, headers, response callbacks и срок действия контекста; затем подготовить профиль без активации.",
+      "next_check": "Текущий source contract Launcher из 14 roots проверен. Связать его с SDK runtime composition и прежним ограниченным проверочным профилем, используя готовые доказательства.",
       "targets": [
         "launcher-fields-callbacks",
         "sdk-runtime-launcher-current"

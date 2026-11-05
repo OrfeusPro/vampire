@@ -4,6 +4,13 @@
 Продолжать по сгруппированным корневым блокерам его отчёта; неизменные готовые
 exports и проверки вручную не повторять. Счётчики прежних выпусков не складывать.
 
+Для восстановления живого входа сначала перенести прежний ограниченный candidate
+со списком серверов / персонажей, выбором и входом в мир. Его прежние обязательства
+отделены от полной очереди world-session. Существующие flow, codecs и adapters
+переиспользовать. Для семи из 16 областей уже найдены текущие материалы;
+девять пробелов сгруппированы в три пакета. Создание и stats имеют отдельный допуск.
+[Матрица повторного использования и текущий Launcher](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-CONTRACT-CURRENT.md).
+
 - Service lifecycle: bounded assignment / constructors / refcount / deleting /
   reset / ring cleanup закрыты новым пакетом ниже. Остаются engine registration
   helpers / vector storage / callback lifetime, включая native unregistration:
@@ -20,7 +27,7 @@ exports и проверки вручную не повторять. Счётчи
   контракты текущего SHA; общий helper разбирать один раз для всех потребителей.
   SDK/GMC2/NID текущего SHA прошёл 3667 native случаев, девять component reports
   подключены к трём source checks и общему кэшу. Продолжить с Launcher dependencies
-  и runtime composition, используя готовые четыре request / response формы.
+  и runtime composition. Source contract Launcher из 14 функций уже подтверждён.
   [Готовые SDK доказательства и следующий пакет](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-SDK-BATCH-CURRENT.md).
 - Semantic adapters: подключать семейства, для которых автомат выдаёт конкретный
   unsupported reason. Function-only receipt не выдавать за исполненный сценарий.

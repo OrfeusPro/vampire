@@ -1285,6 +1285,27 @@
         "evidence/updates/HEADLESS-SDK-BATCH-CURRENT.md",
         "evidence/updates/AUTO-SDK-BATCH-CURRENT.json"
       ]
+    },
+    {
+      "id": "launcher-contract-current",
+      "status": "bounded_answer",
+      "question": "Как связать текущие Launcher keys и request/response с готовым путём проверочного входа?",
+      "known": "14 whole roots текущего SHA статически сверены с последней Launcher базой 1.13.18. Девять отсутствовавших key exports собраны одним пакетом, пять готовых roots переиспользованы. Проверены десять ключей, constructor/cleanup, route/callback/transport и response links/CRT. Прежние живые server-list/select/world и HP/MP подтверждены отдельно.",
+      "unknown": "Launcher runtime composition текущего SHA, необходимые оставшиеся доказательства проверочного профиля и отдельный source-bound допуск создания.",
+      "next_action": "Взять текущие Launcher/SDK proofs и перенести прежний ограниченный candidate по матрице повторного использования. Общие пробелы handler, CharacterList и clock/world разбирать пакетами; полную очередь world-session не делать обязательной для этого candidate.",
+      "decision_rule": "Сохранять точный текущий SHA и прежнюю область проверочного входа. Static source audit не подтверждает native execution, актуальные credentials/backend или серверную сессию.",
+      "do_not_repeat": "Использовать готовые entry/SDK proofs, полный Launcher export и существующие game/HP/MP decoders. Повторять только изменённые inputs или конкретный пробел.",
+      "addresses": [
+        "0x1444eeb30",
+        "0x144503c70",
+        "0x1444cc310",
+        "0x1444d3890",
+        "0x1411b0350"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-LAUNCHER-CONTRACT-CURRENT.md",
+        "evidence/updates/AUTO-LAUNCHER-CONTRACT-CURRENT.json"
+      ]
     }
   ]
 }

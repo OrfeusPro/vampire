@@ -2375,6 +2375,48 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Launcher keys/transport/getters/dispatch/identity и runtime composition, прочие world entry и создание Carnage текущего SHA.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1411b0350",
+        "0x1444cc310",
+        "0x1444d3890",
+        "0x1444eeb30",
+        "0x144503c70"
+      ],
+      "checks": [
+        {
+          "cache_key": "79bb8cec8e8655fcb519dddd461e2c3688d0d51570df29ad33f7522322725582",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\30621fde6be130a3fef31240af967ed94850ad1e68c59a6e45c0608b3391681a\\manifest.json",
+          "sha256": "30621fde6be130a3fef31240af967ed94850ad1e68c59a6e45c0608b3391681a",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий Launcher source contract из 14 roots и десяти ключей прошёл сравнение с базой 1.13.18. Вариант check подключён к обновлению. Продолжение использует существующий ограниченный candidate и готовые flow, без требования полного world-session закрытия.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LAUNCHER-CONTRACT-CURRENT.md",
+          "sha256": "c292b0ee990688b23a84f6269ef6261fd688bbce72c4ec3afc39f7b267ba0bef"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LAUNCHER-CONTRACT-CURRENT.json",
+          "sha256": "970f8b9c6eedf723a29bf4c5530d2fa2a5ffcf1258175cb6c33a68cbd7525ffc"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "d9f1e942875b90ccd3fb2dc8628031a424f1dc612b7e6f550af8d78f1ab2d5e7",
+      "limits": [
+        "Static audit подтверждает source keys/request/response links, а внешние implementations и runtime composition остаются отдельными проверками.",
+        "Семь областей имеют материалы для связывания, но не автоматически допущенные старые проверки. Девять scope gaps остаются в трёх общих пакетах.",
+        "Создание персонажа и текущая online сессия не выполнены."
+      ],
+      "method": "static",
+      "next_check": "Связать готовые current материалы с прежним проверочным candidate, затем разобрать только три общих недостающих пакета и создание.",
+      "question": "launcher-contract-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "SDK/Launcher runtime composition текущего SHA, оставшиеся candidate proofs, отдельный допуск создания и stats.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,
