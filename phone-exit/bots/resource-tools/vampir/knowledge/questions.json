@@ -1236,7 +1236,9 @@
         "evidence/updates/HEADLESS-KNOWLEDGE-CHECK-V2.md",
         "evidence/updates/AUTO-KNOWLEDGE-CHECK-V2.json",
         "evidence/updates/HEADLESS-TOOLING-GROUPS-V1.md",
-        "evidence/updates/AUTO-TOOLING-GROUPS-V1.json"
+        "evidence/updates/AUTO-TOOLING-GROUPS-V1.json",
+        "evidence/updates/HEADLESS-TOOLING-SHARED-DEPS-V1.md",
+        "evidence/updates/AUTO-TOOLING-SHARED-DEPS-V1.json"
       ]
     }
   ]

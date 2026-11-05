@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "recipe": "tooling-shared-deps-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source_is_research_anchor_only": true,
+  "scope": "fixture_only_tooling",
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/tooling-groups-v1.json": "a9e999885d0ccf4608d97db70fbe0bf6577cf2518e0f86cdbb0428a2e66f477b",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "1e951ff2f1576c9dbdc4f2bbd1daa0e8387f922bd3b6a692daa8919d646e5ce1"
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-shared-deps-v1-acceptance.json",
+    "sha256": "cc3bd88c9b2adddc1f0be2c9bb6a912878f6c4d8dfb6fcce7947182e76ef46ab"
+  },
+  "mapping": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-shared-deps-v1-mapping.json",
+    "sha256": "120376dc217a6e9756168b7f51cf63b79d76dc29b313b4d4a1d08d6f939fbf8f"
+  },
+  "mapper": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\map-tooling-shared-deps-v1.py",
+    "sha256": "1c230396a5c392301c7a49cd05fa5f809790e197529e6351db204dffa627e917"
+  },
+  "verifier": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\accept-tooling-shared-deps-v1.py",
+    "sha256": "c565260e30598ea4b46e57e229bb1b2c069017c39478da6111485a8c762a7219"
+  },
+  "checks": [
+    {
+      "cache_key": "0cafdadd42107c8fa09afca9fec20db13a010cdd488d68af50adbf20d4c2a05f",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e4b11bcf42f5ab95f1175215c1fbfff7b1695184295739d855f235dcb1016d02\\manifest.json",
+      "sha256": "e4b11bcf42f5ab95f1175215c1fbfff7b1695184295739d855f235dcb1016d02",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "e3754eb8a6ddcfd68b3d205a32b0410559bd8adba316efea61c7082276709135",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c17d62a94dfa121b7323591d07c461445de8cf57ef838a2e9b997977f8b88be0\\manifest.json",
+      "sha256": "c17d62a94dfa121b7323591d07c461445de8cf57ef838a2e9b997977f8b88be0",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "65a8af814ca3bcbe32c833f84cd455fb44705545446f3b60d407c4b33d1ab413",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a8aa0bfa0acc7fec7053e8a5c13f9401535e16b8455e64fd5eb53b6e0a1c06a3\\manifest.json",
+      "sha256": "a8aa0bfa0acc7fec7053e8a5c13f9401535e16b8455e64fd5eb53b6e0a1c06a3",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "migration": {
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\c80ffa5072374bc33a84aed31f19298cdb171a86ae4c65c2dd8d8cbd3f5c7ddc\\manifest.json",
+    "sha256": "c80ffa5072374bc33a84aed31f19298cdb171a86ae4c65c2dd8d8cbd3f5c7ddc",
+    "cache_key": "701f83cfa92cca8b96c179ee290a312baa79927e6e0c3a03ae0ae04cffba10e9",
+    "metrics": {
+      "executed_groups": 27,
+      "cached_groups": 0,
+      "executed_cases": 2036,
+      "cached_cases": 0,
+      "executed_discovered_cases": 2036,
+      "cached_discovered_cases": 0,
+      "executed_skips": 4,
+      "cached_skips": 0,
+      "incomplete_groups": 0,
+      "duration_seconds": 663.685344700003
+    }
+  },
+  "warm": {
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\c80ffa5072374bc33a84aed31f19298cdb171a86ae4c65c2dd8d8cbd3f5c7ddc\\manifest.json",
+    "sha256": "c80ffa5072374bc33a84aed31f19298cdb171a86ae4c65c2dd8d8cbd3f5c7ddc",
+    "cache_key": "701f83cfa92cca8b96c179ee290a312baa79927e6e0c3a03ae0ae04cffba10e9",
+    "metrics": {
+      "executed_groups": 0,
+      "cached_groups": 27,
+      "executed_cases": 0,
+      "cached_cases": 2036,
+      "executed_discovered_cases": 0,
+      "cached_discovered_cases": 2036,
+      "executed_skips": 0,
+      "cached_skips": 4,
+      "incomplete_groups": 0,
+      "duration_seconds": 42.020950999925844
+    }
+  },
+  "case_ids_preserved": true,
+  "key_change_simulation": {
+    "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py": {
+      "before": {
+        "groups": [
+          "buffer-transport",
+          "contract-projections",
+          "frame-integrity",
+          "knowledge-audit",
+          "login-backend-wire",
+          "login-composition",
+          "login-container",
+          "login-dispatch",
+          "login-full",
+          "login-handler",
+          "login-input",
+          "login-metadata",
+          "login-preparation",
+          "login-registration",
+          "login-send-handoff",
+          "login-state-flow",
+          "publication-research",
+          "quest-dispatch-state",
+          "quest-input-reader",
+          "quest-packet-action-wire",
+          "resource-directory-tables",
+          "resource-pipeline-owner",
+          "service-lifecycle",
+          "string-archive",
+          "update-orchestration",
+          "version-families",
+          "tooling-cache"
+        ],
+        "cases": 2036
+      },
+      "after": {
+        "groups": [
+          "contract-projections",
+          "publication-research",
+          "quest-dispatch-state",
+          "quest-input-reader",
+          "quest-packet-action-wire",
+          "resource-directory-tables",
+          "resource-pipeline-owner",
+          "string-archive",
+          "update-orchestration",
+          "version-families"
+        ],
+        "cases": 1167
+      }
+    },
+    "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py": {
+      "before": {
+        "groups": [
+          "buffer-transport",
+          "contract-projections",
+          "frame-integrity",
+          "knowledge-audit",
+          "login-backend-wire",
+          "login-composition",
+          "login-container",
+          "login-dispatch",
+          "login-full",
+          "login-handler",
+          "login-input",
+          "login-metadata",
+          "login-preparation",
+          "login-registration",
+          "login-send-handoff",
+          "login-state-flow",
+          "publication-research",
+          "quest-dispatch-state",
+          "quest-input-reader",
+          "quest-packet-action-wire",
+          "resource-directory-tables",
+          "resource-pipeline-owner",
+          "service-lifecycle",
+          "string-archive",
+          "update-orchestration",
+          "version-families",
+          "tooling-cache"
+        ],
+        "cases": 2036
+      },
+      "after": {
+        "groups": [
+          "contract-projections",
+          "publication-research",
+          "quest-dispatch-state",
+          "quest-input-reader",
+          "quest-packet-action-wire",
+          "resource-directory-tables",
+          "resource-pipeline-owner",
+          "string-archive",
+          "update-orchestration",
+          "version-families"
+        ],
+        "cases": 1167
+      }
+    },
+    "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py": {
+      "before": {
+        "groups": [
+          "buffer-transport",
+          "contract-projections",
+          "frame-integrity",
+          "knowledge-audit",
+          "login-backend-wire",
+          "login-composition",
+          "login-container",
+          "login-dispatch",
+          "login-full",
+          "login-handler",
+          "login-input",
+          "login-metadata",
+          "login-preparation",
+          "login-registration",
+          "login-send-handoff",
+          "login-state-flow",
+          "publication-research",
+          "quest-dispatch-state",
+          "quest-input-reader",
+          "quest-packet-action-wire",
+          "resource-directory-tables",
+          "resource-pipeline-owner",
+          "service-lifecycle",
+          "string-archive",
+          "update-orchestration",
+          "version-families",
+          "tooling-cache"
+        ],
+        "cases": 2036
+      },
+      "after": {
+        "groups": [
+          "contract-projections",
+          "publication-research",
+          "quest-dispatch-state",
+          "quest-input-reader",
+          "quest-packet-action-wire",
+          "resource-directory-tables",
+          "resource-pipeline-owner",
+          "string-archive",
+          "update-orchestration",
+          "version-families"
+        ],
+        "cases": 1167
+      }
+    },
+    "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py": {
+      "before": {
+        "groups": [
+          "buffer-transport",
+          "contract-projections",
+          "frame-integrity",
+          "knowledge-audit",
+          "login-backend-wire",
+          "login-composition",
+          "login-container",
+          "login-dispatch",
+          "login-full",
+          "login-handler",
+          "login-input",
+          "login-metadata",
+          "login-preparation",
+          "login-registration",
+          "login-send-handoff",
+          "login-state-flow",
+          "publication-research",
+          "quest-dispatch-state",
+          "quest-input-reader",
+          "quest-packet-action-wire",
+          "resource-directory-tables",
+          "resource-pipeline-owner",
+          "service-lifecycle",
+          "string-archive",
+          "update-orchestration",
+          "version-families",
+          "tooling-cache"
+        ],
+        "cases": 2036
+      },
+      "after": {
+        "groups": [
+          "contract-projections",
+          "publication-research",
+          "quest-dispatch-state",
+          "quest-input-reader",
+          "quest-packet-action-wire",
+          "resource-directory-tables",
+          "resource-pipeline-owner",
+          "string-archive",
+          "update-orchestration",
+          "version-families"
+        ],
+        "cases": 1167
+      }
+    }
+  },
+  "dependency_count": 563,
+  "added_dependencies": 83,
+  "proves_client_compatibility": false,
+  "runtime_admitted": false,
+  "new_jvm": 0,
+  "game_native_replays": 0,
+  "receipt": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-shared-deps-v1-acceptance\\8f74ee3993c95cc18095694ff84019e0da4ee823f3ef196686c1b7e6627d89a2\\manifest.json",
+    "sha256": "8f74ee3993c95cc18095694ff84019e0da4ee823f3ef196686c1b7e6627d89a2"
+  }
+}

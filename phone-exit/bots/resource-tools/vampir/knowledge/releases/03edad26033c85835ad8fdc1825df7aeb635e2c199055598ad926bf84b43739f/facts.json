@@ -2192,6 +2192,37 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Консервативный fan-out общих native helpers и dispatcher сохраняется; дальнейшее сужение требует отдельного доказательства потребителей.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1455f4a70",
+        "0x1455fd340"
+      ],
+      "checks": [],
+      "conclusion": "Четыре Version verifier переведены в 10 групп потребителей. Девять вычисляемых JSON и импортируемые fixture inputs зарегистрированы. Сохранены 2036 case IDs и четыре пропуска, повтор использовал 27 квитанций без запуска workers.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-TOOLING-SHARED-DEPS-V1.md",
+          "sha256": "d5e3d4ba6eba78d0911bb6ada4688bc8548641cfe753ec705eb235fa4e452b5b"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-TOOLING-SHARED-DEPS-V1.json",
+          "sha256": "3d816473d2a4bade62f531cdf444bca043632bddb95de5a059bdcb83caeffd4c"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "6265958ab4042acf2d8f17f726753ac02d1e3724e867b7808cddea3e53645315",
+      "limits": [
+        "Смена SHA смоделирована в копиях сохранённых определений ключей.",
+        "Адреса и SHA — опорные поля scoped research. Tooling не доказывает игровые контракты.",
+        "Общие ветки update-run и неоднозначные зависимости сохранены консервативно."
+      ],
+      "method": "static",
+      "next_check": "Сужать следующую группу входов по конкретным подтверждённым потребителям и сверять влияние на ключи.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Остальные широкие зависимости должны быть сопоставлены с путями чтения прежде чем сужать их.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,
