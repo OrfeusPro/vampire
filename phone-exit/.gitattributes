@@ -637,3 +637,9 @@ bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-ACCOUNT-VERIFICATION
 bots/test_vampir_account_table.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/auth/ACCOUNT-VERIFICATION-11322-VALIDATION.json text eol=lf
 bots/vampir-shared/vampir_core/account_store.py text eol=lf
+# Manual Netmarble handoff retains exact dependency hashes.
+bots/vampir-headless/nid-browser.py text eol=lf
+bots/vampir-headless/windows/nid-browser.cs text eol=lf
+bots/vampir-headless/windows/nid-browser.ps1 text eol=lf
+bots/vampir-headless/windows/nid-sign-in.js text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-MANUAL-NID-QUEUE.md text eol=lf

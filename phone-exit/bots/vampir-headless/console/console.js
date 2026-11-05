@@ -24,21 +24,25 @@ labels.verified='Верификация подтверждена';
 stages['verify_device-registration']='Регистрация устройства Netmarble';
 stages.verify_workplace='Подтверждение защиты аккаунта';
 stages.verification_mail='Ожидание свежего письма';
+stages.manual_nid_browser='Введите логин и пароль в отдельном окне Netmarble';
 
 function renderVerification(){
  const queue=snapshot.verification;
  const active=queue?.state==='running'||queue?.state==='cancelling';
- el('verify-selected').disabled=active||verificationSelection.size===0;
- el('stop-verification').disabled=queue?.state!=='running';
+ const canResume=queue?.state==='stopped'&&queue.manual_retry===true;
+ el('verify-selected').disabled=active||canResume||verificationSelection.size===0;
+ el('resume-verification').hidden=!canResume;
+ el('resume-verification').disabled=!canResume;
+ el('stop-verification').disabled=queue?.state!=='running'&&!canResume;
  const account=snapshot.accounts.find(row=>row.id===(queue?.active||queue?.failed));
  const job=snapshot.jobs[account?.id];
  const stage=stages[job?.stage]||'Подготовка';
  let summary='Выбрано аккаунтов: '+verificationSelection.size;
- if(queue?.state==='running') summary=`${account?.email||''} · ${stage} · в очереди ${queue.pending.length}`;
+ if(queue?.state==='running') summary=`${account?.email||''} · ${stage} · подтверждено ${queue.completed.length} · в очереди ${queue.pending.length}`;
  if(queue?.state==='cancelling') summary='Остановка очереди…';
  if(queue?.state==='completed') summary=`Подтверждено аккаунтов: ${queue.completed.length}`;
  if(queue?.state==='cancelled') summary=`Очередь остановлена. Подтверждено аккаунтов: ${queue.completed.length}`;
- if(queue?.state==='stopped') summary=`${account?.email||''} · ${job?.message||'Не удалось запустить верификацию.'} Подтверждено аккаунтов: ${queue.completed.length}`;
+ if(queue?.state==='stopped') summary=`${account?.email||''} · ${queue.message||job?.message||'Не удалось запустить верификацию.'} Подтверждено аккаунтов: ${queue.completed.length}`;
  el('verification-status').textContent=summary;
 }
 
@@ -54,6 +58,11 @@ el('verify-selected').onclick=async()=>{
 el('stop-verification').onclick=async()=>{
  try{await api('/api/verification-queue',{action:'stop'});await refresh();}
  catch(error){notice(error.message);}
+};
+el('resume-verification').onclick=async()=>{
+ el('resume-verification').disabled=true;
+ try{await api('/api/verification-queue',{action:'resume-manual'});await refresh();}
+ catch(error){notice(error.message);renderVerification();}
 };
 const registrationLabels={unknown:'Netmarble не проверен',in_progress:'Регистрация идёт',unconfirmed:'Регистрация не подтверждена',registered:'Netmarble зарегистрирован',email_in_use:'Почта занята в Netmarble',nid_verified:'Вход Netmarble подтверждён',sdk_created:'Профиль SDK подтверждён'};
 function passwordCell(account,kind){
@@ -88,8 +97,10 @@ function renderRoster(){
   const character=account.character_key?list.find(c=>c.key===account.character_key):(list.length===1?list[0]:null);
   const server=snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id);
   const job=snapshot.jobs[account.id],registrationStatus=registrationLabels[account.registration_status]||'Не проверен';
-  const sessionStatus=active&&queue.pending.includes(account.id)?'В очереди на верификацию':
-   job?(job.operation==='register'?(job.running?(job.stage==='registration_code'?'Регистрация · ожидание кода':'Регистрация Netmarble'):registrationStatus+' · '+(labels[job.status]||job.status)):(labels[job.status]||job.status)):registrationStatus;
+  let sessionStatus=queue?.completed.includes(account.id)?labels.verified:registrationStatus;
+  if(job) sessionStatus=job.operation==='register'?(job.running?(job.stage==='registration_code'?'Регистрация · ожидание кода':'Регистрация Netmarble'):registrationStatus+' · '+(labels[job.status]||job.status)):(labels[job.status]||job.status);
+  if(active&&queue.pending.includes(account.id)) sessionStatus='В очереди на верификацию';
+  if(active&&job?.stage==='manual_nid_browser'&&job.running) sessionStatus='Ожидает ручного входа';
   const mailStatus=({created:'Почта создана',verified:'Почта проверена',unconfirmed:'Создание почты не подтверждено',error:'Ошибка почты'})[account.mail_status];
   const status=account.mail_status==='planned'?'Ящик ещё не создан':(mailStatus?mailStatus+' · ':'')+sessionStatus;
   const attempt=(snapshot.creation_attempts||[]).filter(a=>a.account_id===account.id&&a.region===account.region&&a.server_id===account.server_id).at(-1);

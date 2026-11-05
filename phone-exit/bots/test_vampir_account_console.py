@@ -27,6 +27,37 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_manual_verification_resumes_saved_queue_without_repeating_completed_accounts(self):
+        spec = importlib.util.spec_from_file_location('manual_verification_queue', HERE / 'vampir-headless/account-manager.py')
+        tool = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tool)
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            done, failed, waiting = [store.save(f'{index}@vampir.top', password='fixture', mail_password='mail', assignment={})
+                                     for index in range(3)]
+            store.save_verification_checkpoint(dict(state='stopped', active=None, completed=[done], pending=[waiting],
+                                                    failed=failed, manual_retry=True, message='NID refused'))
+            jobs = tool.Jobs(store)
+            success = b'{"event":"result","status":"verified","message":"fixture"}\n'
+            manual = MagicMock(stdout=io.BytesIO(success), stdin=None, returncode=0)
+            following = MagicMock(stdout=io.BytesIO(success), stdin=None, returncode=0)
+            with patch.object(tool.subprocess, 'Popen', side_effect=[manual, following]) as popen, \
+                    patch.object(tool.threading, 'Thread'):
+                with self.assertRaises(ValueError):
+                    jobs.verify_batch([done])
+                jobs.resume_verification_manually()
+                command = popen.call_args.args[0]
+                self.assertIn(failed, command)
+                self.assertIn('--manual-sign-in', command)
+                self.assertEqual(store.load_verification_checkpoint()['completed'], [done])
+                jobs._watch(jobs.jobs[failed])
+                command = popen.call_args.args[0]
+                self.assertIn(waiting, command)
+                self.assertNotIn('--manual-sign-in', command)
+                jobs._watch(jobs.jobs[waiting])
+                self.assertEqual(tool.Jobs(store).verification_snapshot()['completed'], [done, failed, waiting])
+                self.assertEqual(store.load_verification_checkpoint()['state'], 'completed')
+
     def test_active_game_roster_updates_existing_account_without_reusing_old_character_slot(self):
         with tempfile.TemporaryDirectory() as folder:
             store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
@@ -268,7 +299,7 @@ class AccountConsoleTests(unittest.TestCase):
         spec = importlib.util.spec_from_file_location('console_code_test', HERE / 'vampir-headless/account-manager.py')
         tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
         process = MagicMock(); process.stdin = io.BytesIO(); process.poll.return_value = None
-        jobs = tool.Jobs(None)
+        jobs = tool.Jobs(SimpleNamespace(load_verification_checkpoint=lambda: None))
         jobs.jobs['fixture'] = dict(process=process, running=True, manual_mail_code=True,
             code_sent=False, stage='registration_code')
         for identifier, code in (('other', '12345'), ('fixture', '1234'), ('fixture', '１２３４５')):

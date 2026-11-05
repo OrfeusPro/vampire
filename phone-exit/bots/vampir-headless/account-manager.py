@@ -21,7 +21,11 @@ from vampir_core.bot_device_settings import connection_presets, new_identity
 class Jobs:
     def __init__(self, store):
         self.store, self.lock, self.jobs = store, threading.RLock(), {}
-        self.verification = None
+        self.verification = store.load_verification_checkpoint()
+        if self.verification and self.verification['state'] in ('running', 'cancelling'):
+            self.verification.update(state='stopped', failed=self.verification['active'], active=None,
+                manual_retry=False, message='Панель перезапустилась во время проверки. Результат текущего аккаунта не подтверждён.')
+            self._save_verification()
 
     def verification_snapshot(self):
         with self.lock:
@@ -29,7 +33,24 @@ class Jobs:
                 return None
             queue = self.verification
             return dict(state=queue['state'], active=queue['active'], pending=list(queue['pending']),
-                        completed=list(queue['completed']), failed=queue['failed'])
+                        completed=list(queue['completed']), failed=queue['failed'],
+                        manual_retry=queue.get('manual_retry', False), message=queue.get('message', ''))
+
+    def _save_verification(self):
+        self.store.save_verification_checkpoint(self.verification_snapshot())
+
+    def _verification_profile(self, identifiers):
+        accounts = {row['id']: row for row in self.store.accounts()}
+        for identifier in identifiers:
+            row = accounts.get(identifier)
+            if (not row or not row['enabled'] or not row['mail_password_saved']
+                    or not row['email'].endswith('@vampir.top')
+                    or self.jobs.get(identifier, {}).get('running')):
+                raise ValueError('Selected accounts must be enabled, stopped and have mail credentials')
+        spec = importlib.util.spec_from_file_location('account_verification_profile', HERE / 'verify-account.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module.selected_profile()
 
     def is_reserved(self, identifier):
         queue = self.verification
@@ -44,42 +65,55 @@ class Jobs:
         with self.lock:
             if self.verification and self.verification['state'] in ('running', 'cancelling'):
                 raise ValueError('Verification queue is already active')
-            accounts = {row['id']: row for row in self.store.accounts()}
-            for identifier in identifiers:
-                row = accounts.get(identifier)
-                if (not row or not row['enabled'] or not row['mail_password_saved']
-                        or not row['email'].endswith('@vampir.top')
-                        or self.jobs.get(identifier, {}).get('running')):
-                    raise ValueError('Selected accounts must be enabled, stopped and have mail credentials')
-            spec = importlib.util.spec_from_file_location('account_verification_profile', HERE / 'verify-account.py')
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-            selector = module.selected_profile()
+            if self.verification and self.verification.get('manual_retry'):
+                raise ValueError('Resume or stop the current queue first')
+            selector = self._verification_profile(identifiers)
             self.verification = dict(state='running', active=None, pending=list(identifiers),
                                      completed=[], failed=None, selector=selector)
             self._next_verification()
 
-    def _next_verification(self):
+    def resume_verification_manually(self):
+        with self.lock:
+            queue = self.verification
+            if not queue or queue['state'] != 'stopped' or not queue.get('manual_retry') or not queue['failed']:
+                raise ValueError('No verification account is waiting for manual sign-in')
+            remaining = [queue['failed'], *queue['pending']]
+            selector = self._verification_profile(remaining)
+            queue.update(state='running', active=None, pending=remaining, failed=None, selector=selector)
+            self._next_verification(manual_sign_in=True)
+
+    def _next_verification(self, *, manual_sign_in=False):
         queue = self.verification
         if not queue['pending']:
-            queue.update(state='completed', active=None)
+            queue.update(state='completed', active=None, manual_retry=False, message='')
+            self._save_verification()
             return
-        identifier = queue['pending'][0]
+        identifier = queue['pending'].pop(0)
+        queue.update(active=identifier, manual_retry=False, message='')
+        self._save_verification()
         try:
-            self.start(identifier, 'verify', _verification_profile=queue['selector'])
+            self.start(identifier, 'verify', _verification_profile=queue['selector'], manual_sign_in=manual_sign_in)
         except (ValueError, OSError, RuntimeError):
-            queue.update(state='stopped', active=None, failed=identifier)
+            queue.update(state='stopped', active=None, failed=identifier, manual_retry=manual_sign_in,
+                         message='Не удалось запустить проверку. Проверьте состояние панели.')
+            self._save_verification()
             raise
-        queue['active'] = queue['pending'].pop(0)
 
     def stop_verification(self, identifier=None):
         with self.lock:
             queue = self.verification
-            if not queue or queue['state'] != 'running':
+            if not queue:
+                return
+            if identifier is None and queue['state'] == 'stopped' and queue.get('manual_retry'):
+                queue.update(state='cancelled', manual_retry=False, message='Очередь остановлена пользователем.')
+                self._save_verification()
+                return
+            if queue['state'] != 'running':
                 return
             if identifier is not None and queue['active'] != identifier:
                 return
             queue['state'] = 'cancelling'
+            self._save_verification()
             job = self.jobs.get(queue['active'])
         if job:
             self._terminate(job['process'])
@@ -90,7 +124,7 @@ class Jobs:
 
     def start(self, identifier, operation, *, accept_required_terms=False, manual_mail_code=False, manual_sign_in=False,
               terms_country=None, terms_locale=None, basic_terms_mode=None, _verification_profile=None):
-        if type(manual_sign_in) is not bool or (manual_sign_in and operation not in ('servers', 'characters', 'start', 'create', 'prepare-sdk')):
+        if type(manual_sign_in) is not bool or (manual_sign_in and operation not in ('servers', 'characters', 'start', 'create', 'prepare-sdk', 'verify')):
             raise ValueError('Manual sign-in is only available for login operations')
         if type(manual_mail_code) is not bool or (manual_mail_code and operation != 'register'):
             raise ValueError('Invalid mail-code mode')
@@ -167,7 +201,8 @@ class Jobs:
                             sdk_error=event.get('sdk_error'))
                         if job['operation'] == 'verify':
                             job.update(verification_status=event.get('verification_status'),
-                                       verification_steps=event.get('verification_steps', []))
+                                       verification_steps=event.get('verification_steps', []),
+                                       manual_sign_in_available=event.get('manual_sign_in_available') is True)
             process.wait(timeout=10)
         except Exception:
             self._terminate(process)
@@ -196,11 +231,14 @@ class Jobs:
         queue = self.verification
         identifier = job['account_id']
         if queue['state'] == 'cancelling':
-            queue.update(state='cancelled', active=None, failed=identifier)
+            queue.update(state='cancelled', active=None, failed=identifier, manual_retry=False)
             job.update(status='stopped', message='Очередь остановлена пользователем.')
+            self._save_verification()
             return
         if job['status'] != 'verified' or job['process'].returncode != 0:
-            queue.update(state='stopped', active=None, failed=identifier)
+            queue.update(state='stopped', active=None, failed=identifier, message=job['message'],
+                         manual_retry=job.get('manual_sign_in_available', False))
+            self._save_verification()
             return
         queue['completed'].append(identifier)
         try:
@@ -251,7 +289,8 @@ class Jobs:
                 job.update(running=False, active=False, status='stopped', message='Остановлено пользователем.')
 
     def close(self):
-        self.stop_verification()
+        if self.verification and self.verification['state'] == 'running':
+            self.stop_verification()
         for identifier in list(self.jobs):
             self.stop(identifier)
 
@@ -346,6 +385,8 @@ def server(store, *, port=17949):
                 if self.path == '/api/verification-queue':
                     if body == {'action': 'stop'}:
                         jobs.stop_verification()
+                    elif body == {'action': 'resume-manual'}:
+                        jobs.resume_verification_manually()
                     elif set(body) == {'accounts'}:
                         jobs.verify_batch(body['accounts'])
                     else:

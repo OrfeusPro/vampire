@@ -89,6 +89,17 @@ class AccountStore:
             db.execute('''CREATE TABLE IF NOT EXISTS active_game_roster(
                 account_id TEXT PRIMARY KEY,region TEXT NOT NULL,server_id INTEGER NOT NULL,
                 character_name TEXT NOT NULL)''')
+            db.execute('CREATE TABLE IF NOT EXISTS verification_checkpoint(id INTEGER PRIMARY KEY CHECK(id=1), data TEXT NOT NULL)')
+
+    def load_verification_checkpoint(self):
+        with self._db() as db:
+            row = db.execute('SELECT data FROM verification_checkpoint WHERE id=1').fetchone()
+        return json.loads(row[0]) if row else None
+
+    def save_verification_checkpoint(self, snapshot):
+        with self._db() as db:
+            db.execute('INSERT INTO verification_checkpoint VALUES(1,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data',
+                       (json.dumps(snapshot, ensure_ascii=False),))
 
     def character_connections(self):
         with self._db() as db:

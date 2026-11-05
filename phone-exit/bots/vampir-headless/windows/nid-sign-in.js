@@ -1,5 +1,23 @@
 (function (credentials) {
     'use strict';
+    if (credentials.bindManual) {
+        if (window !== window.top || location.origin !== 'https://members.netmarble.com') return;
+        const bindEmail = event => {
+            if (location.pathname !== '/auth/signin/email') return;
+            if (event.type === 'click' && event.target.closest('button')?.textContent.trim() !== 'Sign in with email') return;
+            if (event.type === 'keydown' && (event.key !== 'Enter' || !event.target.matches('input'))) return;
+            const emails = Array.from(document.querySelectorAll('input')).filter(input =>
+                ['text', 'email'].includes(input.type) && input.placeholder === 'Email');
+            const matches = emails.length === 1 && emails[0].value.trim().toLowerCase() === credentials.email.toLowerCase();
+            window.chrome.webview.postMessage(matches ? 'manual_email_matched' : 'manual_email_mismatch');
+            if (!matches) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }
+        };
+        for (const type of ['click', 'keydown', 'submit']) document.addEventListener(type, bindEmail, true);
+        return;
+    }
     // Only the official top-level sign-in routes may receive credentials.
     if (location.origin !== 'https://members.netmarble.com' ||
         !['/auth/signin', '/auth/signin/email'].includes(location.pathname)) return 'waiting';

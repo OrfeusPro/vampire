@@ -12375,7 +12375,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/sdk_terms_http.py",
         "phone-exit/bots/vampir-shared/vampir_core/socks_route.py",
         "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
-        "phone-exit/bots/vampir-headless/windows/verification-form.js"
+        "phone-exit/bots/vampir-headless/windows/verification-form.js",
+        "phone-exit/bots/vampir-headless/windows/nid-sign-in.js"
       ],
       "artifact_dependencies": []
     },

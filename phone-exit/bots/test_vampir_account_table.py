@@ -5,6 +5,33 @@ import unittest
 
 
 class AccountTableTests(unittest.TestCase):
+    def test_manual_netmarble_form_rejects_the_wrong_account(self):
+        source = Path(__file__).parent / 'vampir-headless/windows/nid-sign-in.js'
+        fixture = r'''
+const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
+const events = {}, messages = [];
+const email = {type:'text', placeholder:'Email', value:'other@vampir.top'};
+const window = {chrome:{webview:{postMessage:message=>messages.push(message)}}};
+window.top = window;
+const location = {origin:'https://members.netmarble.com', pathname:'/auth'};
+const document = {querySelectorAll:()=>[email], addEventListener:(name,fn)=>events[name]=fn};
+const run = vm.runInNewContext(fs.readFileSync(process.argv[1],'utf8'), {window, location, document});
+run({bindManual:true,email:'fixture@vampir.top'});
+location.pathname = '/auth/signin/email';
+let blocked = 0;
+const click = {type:'click',target:{closest:()=>({textContent:'Sign in with email'})},
+  preventDefault:()=>blocked++,stopImmediatePropagation:()=>{}};
+events.click(click);
+assert.equal(blocked,1);
+assert.equal(messages.at(-1),'manual_email_mismatch');
+email.value='FIXTURE@vampir.top';
+events.click(click);
+assert.equal(blocked,1);
+assert.equal(messages.at(-1),'manual_email_matched');
+'''
+        result = subprocess.run(['node', '-e', fixture, str(source.resolve())], capture_output=True, text=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_both_official_code_forms_use_the_same_confirm_control(self):
         source = Path(__file__).parent / 'vampir-headless/windows/verification-form.js'
         fixture = r'''

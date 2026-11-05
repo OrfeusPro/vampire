@@ -334,6 +334,33 @@ class AccountEntryDiagnosticTests(unittest.TestCase):
 
 
 class VerificationWebTests(unittest.TestCase):
+    def test_nid_failure_uses_fresh_context_and_manual_input_before_any_mail(self):
+        tool = load('verify_account_manual_fallback', HERE / 'vampir-headless/verify-account.py')
+        class LoginError(RuntimeError):
+            browser_status = 'login_failed'
+        store = Mock()
+        store.credential.return_value = ('fixture@vampir.top', 'saved-password', {})
+        runner = Mock()
+        first, second = SimpleNamespace(source_sha256='fixture'), SimpleNamespace(source_sha256='fixture')
+        runner.load_inputs.side_effect = [first, second]
+        def sign_in(email, **kwargs):
+            kwargs['_progress']('nid_browser')
+            if kwargs['_prepared_inputs'] is first:
+                self.assertEqual(kwargs['password'], 'saved-password')
+                raise LoginError()
+            self.assertIs(kwargs['_prepared_inputs'], second)
+            self.assertEqual(kwargs['password'], '')
+            self.assertEqual(kwargs['_capture'].keywords, {'bind_manual_email': True})
+            return SimpleNamespace(verification_steps=())
+        runner.run.side_effect = sign_in
+        browser = SimpleNamespace(NidBrowserStatusError=LoginError, capture_nid_credential=Mock())
+        calls = []
+        def load_fixture(name):
+            return {'run-nid-sdk-sign-in': runner, 'nid-browser': browser}[name]
+        with patch.object(tool, 'load', side_effect=load_fixture), patch.object(tool, 'scope'), patch.object(tool, 'check_source'):
+            self.assertEqual(tool.verify(store, 'fixture', selector='fixture', progress=calls.append), ('verified', []))
+        self.assertEqual(calls, ['configuration', 'nid_browser', 'configuration', 'manual_nid_browser'])
+
     def test_only_explicit_known_sdk_states_schedule_verification(self):
         from vampir_core.sdk_sign_in_response import parse_sdk_sign_in_response
         for state, expected in (

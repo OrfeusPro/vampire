@@ -17,7 +17,8 @@ public static class NidBrowserHost {
     public static string NidResponseShape;
 
     public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint,
-            string signInScript, string emailJson, string passwordJson, int socksPort, string registrationScript, string statusScript) {
+            string signInScript, string emailJson, string passwordJson, int socksPort, string registrationScript, string statusScript,
+            bool bindManualEmail) {
         Callback = null; Status = "cancelled"; BlockedExternal = 0; BlockedPopups = 0; LastBlockedScheme = "";
         SignInStep = "manual";
         NidHttpStatus = 0; NidErrorCode = null;
@@ -44,13 +45,14 @@ public static class NidBrowserHost {
                 ? "--no-proxy-server --disable-quic"
                 : "--proxy-server=socks5://127.0.0.1:" + socksPort.ToString(System.Globalization.CultureInfo.InvariantCulture) + " --disable-quic";
             form.Controls.Add(view);
+            Label hint = null;
             if (!String.IsNullOrEmpty(accountHint)) {
-                Label hint = new Label { Dock = DockStyle.Top, Height = 42, AutoEllipsis = true,
-                    Padding = new Padding(10), Text = "Войдите в тестовый аккаунт: " + accountHint };
+                hint = new Label { Dock = DockStyle.Top, Height = 42, AutoEllipsis = true,
+                    Padding = new Padding(10), Text = "Войдите в аккаунт: " + accountHint };
                 form.Controls.Add(hint);
             }
             if (smoke) { form.ShowInTaskbar = false; form.Opacity = 0; }
-            bool done = false;
+            bool done = false, manualEmailMatched = false;
             bool signInBusy = false, emailOpened = false, filled = false;
             bool autoSignIn = !smoke && passwordJson != "\"\"" && !String.IsNullOrEmpty(passwordJson);
             bool registering = !smoke && !String.IsNullOrEmpty(registrationScript);
@@ -72,17 +74,36 @@ public static class NidBrowserHost {
                 bool trusted = smoke || (Uri.TryCreate(view.CoreWebView2.Source, UriKind.Absolute, out source) &&
                     source.Scheme == "https" && source.Host == "members.netmarble.com");
                 if (!trusted) { finish("untrusted_callback_origin"); return; }
+                if (bindManualEmail && !manualEmailMatched) { finish("manual_account_unconfirmed"); return; }
                 Callback = uri;
                 finish("callback");
             };
-            view.CoreWebView2InitializationCompleted += (sender, args) => {
+            view.CoreWebView2InitializationCompleted += async (sender, args) => {
                 if (!args.IsSuccess) { finish("browser_initialization_failed"); return; }
                 var core = view.CoreWebView2;
                 core.Settings.AreDevToolsEnabled = false;
                 core.Settings.AreDefaultContextMenusEnabled = false;
-                core.Settings.IsWebMessageEnabled = false;
+                core.Settings.IsWebMessageEnabled = bindManualEmail;
                 core.Settings.IsPasswordAutosaveEnabled = false;
                 core.Settings.IsGeneralAutofillEnabled = false;
+                if (bindManualEmail) {
+                    core.WebMessageReceived += (s, e) => {
+                        Uri source;
+                        if (done || !Uri.TryCreate(e.Source, UriKind.Absolute, out source) || source.Scheme != "https" ||
+                            source.Host != "members.netmarble.com" || !source.IsDefaultPort || source.UserInfo != "" ||
+                            source.AbsolutePath != "/auth/signin/email") return;
+                        if (e.WebMessageAsJson == "\"manual_email_matched\"") manualEmailMatched = true;
+                        else if (e.WebMessageAsJson == "\"manual_email_mismatch\"") {
+                            manualEmailMatched = false;
+                            if (hint != null) hint.Text = "Введите адрес этого аккаунта: " + accountHint;
+                        }
+                    };
+                    try {
+                        await core.AddScriptToExecuteOnDocumentCreatedAsync(signInScript +
+                            "({bindManual:true,email:" + emailJson + "})");
+                    } catch { finish("browser_initialization_failed"); return; }
+                    if (done) return;
+                }
                 const string smokeUrl = "https://members.netmarble.com/__phone_exit_smoke__";
                 if (smoke) {
                     // Intercept every resource in this synthetic test: no network login.

@@ -2717,6 +2717,40 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Живое автоматическое завершение защиты после исправления заголовка и состояние игрового входа.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444e0a00",
+        "0x1444e1720"
+      ],
+      "checks": [
+        {
+          "cache_key": "f51e921fc438ba4824e76c548531ddd074ea459322fdd3f8e6e0c59217b3d288",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4849d409aa032e8f803923a2c9c97e917ef0414337c1ecf0e762684d96f8e932\\manifest.json",
+          "sha256": "4849d409aa032e8f803923a2c9c97e917ef0414337c1ecf0e762684d96f8e932",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Подключён ручной NID-вход после отказа и продолжение очереди с сохранённым прогрессом. Адрес проверяется перед отправкой и callback. На настоящем аккаунте ручной вход принят SDK после восстановления восьми завершённых записей.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-MANUAL-NID-QUEUE.md",
+          "sha256": "2aff964f81534b78dac989e35eba2579e227e7b2dd26f2ade080aaf5403d7867"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "7b951a7a6f2242cdc47cb4f3f754b12529f88d3f660f033b5e2671a2fd7fe50d",
+      "limits": [
+        "Старые native SDK и экспорт двух builders переиспользованы. Нового native replay нет.",
+        "15 SDK и 33 инфраструктурных сценария проверяют оркестрацию с fixtures. WebView2 smoke синтетический. Отдельно наблюдались ручной вход и переход к письму устройства на одном аккаунте."
+      ],
+      "method": "static",
+      "next_check": "Дождаться ответа каждой официальной формы и сохранить результат очереди. Повторно использовать checks после проверки SHA.",
+      "question": "sdk-launcher-runtime-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Результат оставшихся этапов восстановленной очереди определяется текущими ответами сервера.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

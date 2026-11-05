@@ -41,6 +41,7 @@ def run(args):
     if args.operation == 'verify':
         tool = load('account_verification', HERE / 'verify-account.py')
         status, completed = tool.verify(store, args.account, selector=args.verification_profile,
+            manual_sign_in=args.manual_sign_in,
             progress=lambda stage: emit('phase', stage=stage))
         if status == 'verified':
             message = 'Верификация подтверждена.' if completed else 'SDK сообщает, что верификация не требуется.'
@@ -342,9 +343,17 @@ if __name__ == '__main__':
     parser.add_argument('--accept-required-terms', action='store_true')
     parser.add_argument('--manual-mail-code', action='store_true')
     parser.add_argument('--manual-sign-in', action='store_true')
+    args = parser.parse_args()
     try:
-        run(parser.parse_args())
+        run(args)
     except Exception as error:
         # Messages from networking / auth helpers may contain sensitive values.
-        emit('result', **failure(error))
+        report = failure(error)
+        if args.operation == 'verify':
+            browser_status = getattr(error, 'browser_status', None)
+            report['manual_sign_in_available'] = browser_status in (
+                'login_failed', 'timeout', 'cancelled', 'manual_account_unconfirmed')
+            if browser_status == 'manual_account_unconfirmed':
+                report['message'] = 'Окно Netmarble не подтвердило вход под адресом этого аккаунта.'
+        emit('result', **report)
         raise SystemExit(2)

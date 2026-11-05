@@ -1,5 +1,6 @@
 """Bounded official verification web flows for a saved account."""
 import argparse
+from functools import partial
 import hashlib
 import imaplib
 import importlib.util
@@ -128,7 +129,7 @@ def browser(purpose, *, url, email, directory, port, library, mailbox, progress)
             process.stdout.close()
 
 
-def verify(store, account, *, selector=None, progress=lambda stage: None):
+def verify(store, account, *, selector=None, manual_sign_in=False, progress=lambda stage: None):
     email, password, settings = store.credential(account)
     settings = AccountStore.assignment(settings)
     if not settings['enabled'] or not email.endswith('@vampir.top'):
@@ -138,14 +139,29 @@ def verify(store, account, *, selector=None, progress=lambda stage: None):
     port = settings['socks_port']
     route = SocksRoute(port) if port is not None else None
     runner = load('run-nid-sdk-sign-in')
-    with scope(selector, root=ROOT, workspace=WORKSPACE):
-        progress('configuration')
-        prepared = runner.load_inputs(email, route=route, selected_profile=selector,
-                                      device_settings=settings['device_settings'])
-        check_source(prepared.source_sha256)
-        data = runner.run(email, password=password, timeout=180, selected_profile=selector,
-            auth_flow='launcher', socks_port=port, _prepared_inputs=prepared,
-            device_settings=settings['device_settings'], _progress=progress)
+    nid = load('nid-browser')
+
+    def sign_in(manual):
+        with scope(selector, root=ROOT, workspace=WORKSPACE):
+            progress('configuration')
+            prepared = runner.load_inputs(email, route=route, selected_profile=selector,
+                                          device_settings=settings['device_settings'])
+            check_source(prepared.source_sha256)
+            def sign_in_progress(stage):
+                progress('manual_nid_browser' if manual and stage == 'nid_browser' else stage)
+            capture = partial(nid.capture_nid_credential, bind_manual_email=True) if manual else nid.capture_nid_credential
+            data = runner.run(email, password='' if manual else password, timeout=180, selected_profile=selector,
+                auth_flow='launcher', socks_port=port, _prepared_inputs=prepared, _capture=capture,
+                device_settings=settings['device_settings'], _progress=sign_in_progress)
+        return data, prepared
+
+    try:
+        data, prepared = sign_in(manual_sign_in)
+    except nid.NidBrowserStatusError as error:
+        if manual_sign_in or error.browser_status != 'login_failed':
+            raise
+        # NID refused before SDK or mail actions. Open the same account's form without autofill.
+        data, prepared = sign_in(True)
     password = None
     if data.verification_steps is None:
         return 'unknown_player_status', []
@@ -153,7 +169,7 @@ def verify(store, account, *, selector=None, progress=lambda stage: None):
     if not data.verification_steps:
         return 'verified', completed
     mail = load('nid-mail-code')
-    library = load('nid-browser')._library()
+    library = nid._library()
     private_key = '|'.join((email, prepared.binding.device_key, prepared.binding.nm_device_key, str(port)))
     directory = HERE / '.local/verification-browser' / hashlib.sha256(private_key.encode()).hexdigest()[:32]
     for purpose in data.verification_steps:
@@ -175,10 +191,11 @@ def verify(store, account, *, selector=None, progress=lambda stage: None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Верификация одного сохранённого аккаунта Vampir')
     parser.add_argument('--account', required=True)
+    parser.add_argument('--manual-sign-in', action='store_true')
     parser.add_argument('--store', type=Path, default=HERE / '.local/console.sqlite3')
     args = parser.parse_args()
     try:
-        status, completed = verify(AccountStore(args.store), args.account,
+        status, completed = verify(AccountStore(args.store), args.account, manual_sign_in=args.manual_sign_in,
             progress=lambda stage: print(json.dumps(dict(stage=stage)), flush=True))
     except (ValueError, RuntimeError, OSError, KeyError) as error:
         status, completed = 'local_error', []

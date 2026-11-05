@@ -4618,7 +4618,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/version_cpu.py",
         "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
         "phone-exit/bots/vampir-shared/vampir_core/windows_version.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/vampir-headless/windows/nid-sign-in.js"
       ]
     }
   ],

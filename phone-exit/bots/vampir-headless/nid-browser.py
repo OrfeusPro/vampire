@@ -23,7 +23,7 @@ class NidBrowserStatusError(RuntimeError):
     def __init__(self, status, step, http_status=None, code=None, response_state=None, hint=None, shape=None):
         super().__init__('NID browser did not return a sign-in result')
         self.browser_status = status if status in ('timeout', 'cancelled', 'browser_initialization_failed',
-            'browser_process_failed', 'untrusted_callback_origin', 'login_failed') else 'unknown'
+            'browser_process_failed', 'untrusted_callback_origin', 'login_failed', 'manual_account_unconfirmed') else 'unknown'
         self.sign_in_step = step if step in ('manual', 'waiting', 'opened_email', 'filled',
             'submitted', 'form_changed', 'script_failed') else 'unknown'
         self.nid_http_status = http_status if type(http_status) is int and 100 <= http_status <= 599 else None
@@ -48,7 +48,7 @@ def _library():
 
 
 def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sign_in_password='', socks_port=None,
-         register_account=False, code_provider=None, progress=None):
+         register_account=False, code_provider=None, progress=None, bind_manual_email=False):
     if sys.platform != 'win32': raise RuntimeError('NID browser adapter requires Windows')
     if socks_port is not None: SocksRoute(socks_port)
     if type(timeout) is not int or not 1 <= timeout <= 900: raise ValueError('Invalid browser timeout')
@@ -61,10 +61,13 @@ def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sig
     if type(register_account) is not bool or (register_account and
             (smoke or not sign_in_password or not callable(code_provider))):
         raise ValueError('Registration requires a password and mail-code provider')
+    if type(bind_manual_email) is not bool or (bind_manual_email and
+            (smoke or register_account or sign_in_password or not account_hint)):
+        raise ValueError('Manual account binding requires an explicit email and manual sign-in')
     request = json.dumps(dict(url=url, game_code=game_code, timeout=timeout,
         data_directory=str(Path(data_directory).resolve()), library=str(_library()), smoke=smoke,
         account_hint=account_hint, sign_in_password=sign_in_password, socks_port=socks_port or 0,
-        register_account=register_account))
+        register_account=register_account, bind_manual_email=bind_manual_email))
     command = ['powershell.exe', '-NoProfile', '-STA', '-ExecutionPolicy', 'Bypass',
                '-File', str(HERE / 'windows/nid-browser.ps1')]
     process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -128,7 +131,7 @@ def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sig
 
 
 def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=300, expected_email='', sign_in_password='', socks_port=None,
-                           register_account=False, code_provider=None, progress=None):
+                           register_account=False, code_provider=None, progress=None, bind_manual_email=False):
     """Open official sign-in UI; the user completes login/verification there.
 
     The parent validates the captured route and email result, then returns a
@@ -147,6 +150,8 @@ def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=
     except ValueError:
         raise ValueError('NID browser requires the expected SDK sign-in context') from None
     registration = dict(register_account=True, code_provider=code_provider, progress=progress) if register_account else {}
+    if bind_manual_email:
+        registration['bind_manual_email'] = True
     result = _run(url=plan.url, game_code=expected_game_code, timeout=timeout,
                   data_directory=data_directory, smoke=False, account_hint=expected_email,
                   sign_in_password=sign_in_password, socks_port=socks_port, **registration)
