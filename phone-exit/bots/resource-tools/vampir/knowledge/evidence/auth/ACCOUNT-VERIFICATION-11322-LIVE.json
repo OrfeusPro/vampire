@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-05T20:45:19+00:00",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tested_commit": "cd2c44f9",
+  "account_scope": "one saved test account",
+  "automatic_nid_attempt": {
+    "status": "login_failed",
+    "http_status": 400,
+    "hint": "captcha_required"
+  },
+  "nid_sign_in": "manual_accepted",
+  "sdk_required_steps": [
+    "workplace"
+  ],
+  "automatic_steps": [
+    "request_mail",
+    "read_fresh_imap_code",
+    "submit_code",
+    "confirm_success"
+  ],
+  "result": {
+    "status": "verified",
+    "completed": [
+      "workplace"
+    ]
+  },
+  "success_observation": [
+    "accepted_completion_post",
+    "trusted_success_callback"
+  ],
+  "game_session_opened": false
+}

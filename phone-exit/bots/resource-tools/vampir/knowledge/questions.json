@@ -1413,9 +1413,9 @@
       "id": "sdk-launcher-runtime-current",
       "status": "bounded_answer",
       "question": "Как связать текущие SDK и Launcher proofs с ограниченной runtime composition?",
-      "known": "SDK Launcher допущен для точного SHA. Вход принят сервером. Панель подтвердила регистрацию устройства через официальную форму и IMAP. Защита workplace дошла до свежего письма и поля кода. Контракт двух форм и последовательная очередь покрыты отдельными проверками.",
-      "unknown": "Автоматическое завершение защиты workplace в живой форме после исправления заголовка, игровой candidate и мир. Custom-шаблоны онлайн не проверены.",
-      "next_action": "Проверить завершение защиты с исправленным селектором и свежий playerStatus. Игровой вход продолжить отдельно по уже готовым доказательствам.",
+      "known": "SDK Launcher допущен для точного SHA. На одном аккаунте устройство зарегистрировано через панель. Защита workplace снята после ручного NID-входа с автоматическим запросом, чтением и вводом нового кода. Получены положительный POST и callback официальной формы.",
+      "unknown": "Причина HTTP 400 с признаком CAPTCHA при автоматическом NID-входе, приёмка custom-шаблонов и игровой вход.",
+      "next_action": "При необходимости связать ручной NID-вход с панелью. Игровой вход продолжить отдельно по готовым доказательствам.",
       "decision_rule": "Готовые SDK 3667 native и Launcher static proofs переиспользовать после проверки полных SHA. Fixture composition не выдавать за live authentication или активацию профиля. Loader должен проверять каждый input при любом обращении.",
       "do_not_repeat": "Не повторять старые или текущие standalone SDK native матрицы без изменения входов.",
       "addresses": [
@@ -1430,7 +1430,8 @@
         "evidence/auth/SDK-ENTRY-11322-VALIDATION.json",
         "evidence/auth/HEADLESS-ACCOUNT-VERIFICATION-11322.md",
         "evidence/auth/ACCOUNT-VERIFICATION-11322-VALIDATION.json",
-        "verification-web-current.json"
+        "verification-web-current.json",
+        "evidence/auth/ACCOUNT-VERIFICATION-11322-LIVE.json"
       ]
     },
     {
