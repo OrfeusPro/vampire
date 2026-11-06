@@ -1689,9 +1689,9 @@
       "id": "quest-reply-current",
       "status": "open",
       "question": "Как текущий клиент читает 1811 и передаёт результат обработчику квестов?",
-      "known": "Приём 1811 и read-only observer сохранены. Current native lookup/projection и wrapper существующей модели проверены; 324 matching cases использованы повторно, factory закреплена статически. Отдельный on_update и неизменный повтор прошли. Active task и action admission не подтверждены.",
-      "unknown": "Открыты загрузка, фильтрация и порядок актуального QuestTask каталога, factory/replacement closure, реальные callbacks/setter и выбор активной задачи. TargetId, readiness, актуальная позиция, provider, подтверждённый переход и current action admission остаются отдельными проверками.",
-      "next_action": "Переиспользовать принятые lookup/projection/wrapper и 324 matching cases. Закрыть whole factory case-6 constructor 1455ab5c0, control constructor 1455a9330, shared move 141473540 и data/lifecycle providers либо перенести loader/order цепочку для актуального CSV. После них связать конкретный task и допустимый provider; текущую сессию сохранять.",
+      "known": "Приём 1811, observer, current lookup/projection/model сохранены. Whole kind-6 creation/replacement и primary failure fallback проверены в 48 сценариях с native refcounts и явными providers. Новый on_update и неизменный повтор прошли; active task/action admission не подтверждены.",
+      "unknown": "Открыты актуальная загрузка, фильтрация и порядок QuestTask, RU override и service policy, реальные task-data/lifecycle/owner providers. Активная задача, TargetId, readiness, актуальная позиция, action provider, подтверждённый переход и current action admission не установлены.",
+      "next_action": "Переиспользовать принятые lookup/model/replacement proofs. Следующий общий missing-only пакет loader/order: manager 145b54bb0, main 145b5f680, RU override 145b6a0b0; source candidates ещё требуют whole exports и семантики. Расширение по точной closure: growth 145b736a0 / 145b73280, record 145b48c70 / copy 145b4c130, tokenizer 1445f6680, boolean 1445f5fc0, localization 14585e470, service 145a4d700. Именованные CSV уже готовы; сессию сохранять.",
       "decision_rule": "Отдельно доказать чтение полного тела, привязку обработчика и границы state application. Успешный gate и совпавший ID сами по себе не дают подтверждения игрового действия.",
       "do_not_repeat": "Переиспользовать исторические сценарии, текущие экспорты gate и готовую матрицу INPUT. Текущую сессию сохранять.",
       "addresses": [
@@ -1711,7 +1711,10 @@
         "evidence/quests/QUEST-REPLY-OBSERVER-CURRENT-RESULT.json",
         "evidence/quests/HEADLESS-QUEST-MODEL-CURRENT.md",
         "evidence/quests/QUEST-MODEL-CURRENT-VALIDATION.json",
-        "evidence/quests/QUEST-MODEL-CURRENT-RESULT.json"
+        "evidence/quests/QUEST-MODEL-CURRENT-RESULT.json",
+        "evidence/quests/HEADLESS-QUEST-TASK-REPLACEMENT-CURRENT.md",
+        "evidence/quests/QUEST-TASK-REPLACEMENT-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-TASK-REPLACEMENT-CURRENT-RESULT.json"
       ]
     }
   ]

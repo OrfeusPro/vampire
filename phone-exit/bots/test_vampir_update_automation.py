@@ -11,6 +11,7 @@ MODULES = (
     'test_vampir_dialogue_resources_current',
     'test_vampir_quest_parameters_current',
     'test_vampir_quest_model_current',
+    'test_vampir_quest_task_replacement_current',
     'test_vampir_quest_labels_current',
     'test_vampir_quest_observation_current',
     'test_vampir_quest_automation',

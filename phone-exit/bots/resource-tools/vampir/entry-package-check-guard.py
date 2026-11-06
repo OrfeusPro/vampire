@@ -29,6 +29,7 @@ PACKAGES = {
     'quest-dialogue-current': 'verify-dialogue-resources-current',
     'quest-reply-current': 'verify-quest-reply-current',
     'quest-model-current': 'verify-quest-model-current',
+    'quest-task-replacement-current': 'verify-quest-task-replacement-current',
 }
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 PROFILE_SCOPES = {
@@ -105,7 +106,8 @@ def runtime_inputs(index, root, report, identifier):
                         ('Saved/PersistentDownloadDir/Patch/Install/pakchunk' + number + '-Windows.pak'))
     runtime.update(path.resolve() for path in index.extension('native-publication-v2').runtime_files())
     if identifier in ('quest-observation-current', 'quest-labels-current', 'quest-dialogue-current',
-                      'quest-reply-current', 'quest-model-current', 'bounded-world-current'):
+                      'quest-reply-current', 'quest-model-current', 'quest-task-replacement-current',
+                      'bounded-world-current'):
         proof=index.read_json(pointer['path'])
         if identifier == 'bounded-world-current':
             observed=proof['proofs']['quest-observation-current']

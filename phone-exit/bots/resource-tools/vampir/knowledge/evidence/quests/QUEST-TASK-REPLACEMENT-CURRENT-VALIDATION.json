@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "scope": "kind6_task_creation_and_replacement",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-task-replacement-current-v1\\f44c2a5403ccd8245c6bb521e18f30ff209f46c8bfd1a72be7a59635498ef805\\manifest.json",
+    "sha256": "f44c2a5403ccd8245c6bb521e18f30ff209f46c8bfd1a72be7a59635498ef805"
+  },
+  "model_proof_reused": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-model-current-v1\\69cbdf717bac9600ad9cf5eef807171791c985530db7048aef48a01b26d91bfe\\manifest.json",
+    "sha256": "69cbdf717bac9600ad9cf5eef807171791c985530db7048aef48a01b26d91bfe"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\4869c89b0b274e22893c76a27858559c5d2c949f6e0a22137bd6f2a5c9cb0108\\manifest.json",
+    "sha256": "4869c89b0b274e22893c76a27858559c5d2c949f6e0a22137bd6f2a5c9cb0108"
+  },
+  "first_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\bdffd944429fec3802975da8b34130c96db14e5ae9e7e4e491c0ac6f30311a70\\manifest.json",
+    "sha256": "bdffd944429fec3802975da8b34130c96db14e5ae9e7e4e491c0ac6f30311a70"
+  },
+  "newly_exported_roots": [
+    "0x1455ab5c0",
+    "0x1455a9330"
+  ],
+  "reused_shared_move_root": "0x141473540",
+  "final_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\537266265a8be686c1ab2a98c6d318b3067946b7decddb2ffcaf79a2604cc63d\\manifest.json",
+    "sha256": "537266265a8be686c1ab2a98c6d318b3067946b7decddb2ffcaf79a2604cc63d"
+  },
+  "final_collection_new_jvm": 0,
+  "cases": 48,
+  "abi_calls": 96,
+  "native_entry_counts": {
+    "0x141409210": 36,
+    "0x141426b90": 24,
+    "0x1414333a0": 24,
+    "0x141473540": 96,
+    "0x1414c33a0": 24,
+    "0x141584450": 24,
+    "0x1417f4470": 24,
+    "0x141c9ee20": 48,
+    "0x1445df7e0": 24,
+    "0x144aaa990": 24,
+    "0x14546d9d0": 24,
+    "0x1455a9330": 48,
+    "0x1455ab5c0": 24,
+    "0x1455b5440": 48,
+    "0x1455b8fe0": 48,
+    "0x1455c3cf0": 12,
+    "0x1455c3ea0": 12,
+    "0x1455d1050": 24,
+    "0x1455d2620": 24,
+    "0x1455e7500": 48,
+    "0x1455f4a70": 48,
+    "0x1455fd340": 48,
+    "0x14690be10": 144,
+    "0x1487ebec0": 48,
+    "0x1487f8ca5": 48,
+    "0x2803e000": 20
+  },
+  "component_tests": 6,
+  "source_checks": [
+    {
+      "id": "bounded-world-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bb2e9ed60b1f5a3571b04015a769e45868b6e0bcd1f1311d266d451b860b3202\\manifest.json",
+      "sha256": "bb2e9ed60b1f5a3571b04015a769e45868b6e0bcd1f1311d266d451b860b3202",
+      "cache_key": "3ab912dd0ae7deda00762c1cd454c58e8b6675738a01596f273266620f5f6a0d"
+    },
+    {
+      "id": "quest-reply-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4acbada4e58fab258a0f4545139bf6f7d2fd49f861014b4271fd9a8831fdcb9a\\manifest.json",
+      "sha256": "4acbada4e58fab258a0f4545139bf6f7d2fd49f861014b4271fd9a8831fdcb9a",
+      "cache_key": "294af621c428c59dd963aa215534cfbc0ffd075d3c913f5a0f6ea21af15b436d"
+    },
+    {
+      "id": "quest-model-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0861d81cf55e821fdece71bf801454380b4dd68a0f4d88ce91a55524c97511f5\\manifest.json",
+      "sha256": "0861d81cf55e821fdece71bf801454380b4dd68a0f4d88ce91a55524c97511f5",
+      "cache_key": "2d7bc134087c0e13d41a1a83175e5360a6ea3e602f799336f98066774caa0076"
+    },
+    {
+      "id": "quest-task-replacement-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ac1035c63b84a4a8314df96bfa8e1c0a08fba0e657412428a548ff3c4d10146e\\manifest.json",
+      "sha256": "ac1035c63b84a4a8314df96bfa8e1c0a08fba0e657412428a548ff3c4d10146e",
+      "cache_key": "aaa635df9ddbbb5d336e944141e46b6a67aa32d3b6f40f46b786f221dfcbffd9"
+    }
+  ],
+  "ordinary_update_warm": {
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "checks": [
+      {
+        "id": "automatic-update-tooling",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\cd77a7822f90320ec06bce397e5f1f53fc6a7b0da66c4760c419fed82e1e2599\\manifest.json",
+        "sha256": "cd77a7822f90320ec06bce397e5f1f53fc6a7b0da66c4760c419fed82e1e2599",
+        "cache_key": "7aec59724c02b7b70706607ee6a8649cc37090b6b68aac6fd54b7496045ec612",
+        "source_scope": "tooling",
+        "proves_client_compatibility": false
+      },
+      {
+        "id": "bounded-world-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bb2e9ed60b1f5a3571b04015a769e45868b6e0bcd1f1311d266d451b860b3202\\manifest.json",
+        "sha256": "bb2e9ed60b1f5a3571b04015a769e45868b6e0bcd1f1311d266d451b860b3202",
+        "cache_key": "3ab912dd0ae7deda00762c1cd454c58e8b6675738a01596f273266620f5f6a0d"
+      },
+      {
+        "id": "quest-reply-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4acbada4e58fab258a0f4545139bf6f7d2fd49f861014b4271fd9a8831fdcb9a\\manifest.json",
+        "sha256": "4acbada4e58fab258a0f4545139bf6f7d2fd49f861014b4271fd9a8831fdcb9a",
+        "cache_key": "294af621c428c59dd963aa215534cfbc0ffd075d3c913f5a0f6ea21af15b436d"
+      },
+      {
+        "id": "quest-model-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0861d81cf55e821fdece71bf801454380b4dd68a0f4d88ce91a55524c97511f5\\manifest.json",
+        "sha256": "0861d81cf55e821fdece71bf801454380b4dd68a0f4d88ce91a55524c97511f5",
+        "cache_key": "2d7bc134087c0e13d41a1a83175e5360a6ea3e602f799336f98066774caa0076"
+      },
+      {
+        "id": "quest-task-replacement-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ac1035c63b84a4a8314df96bfa8e1c0a08fba0e657412428a548ff3c4d10146e\\manifest.json",
+        "sha256": "ac1035c63b84a4a8314df96bfa8e1c0a08fba0e657412428a548ff3c4d10146e",
+        "cache_key": "aaa635df9ddbbb5d336e944141e46b6a67aa32d3b6f40f46b786f221dfcbffd9"
+      }
+    ],
+    "warm_seconds": 73.873,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\753905b39dc80666dc90d09b4d45ec00e7f40adefcf65f361202470c2fdaa490\\manifest.json",
+    "sha256": "753905b39dc80666dc90d09b4d45ec00e7f40adefcf65f361202470c2fdaa490",
+    "groups": 71,
+    "tests": 2337,
+    "skips": 4,
+    "metrics": {
+      "executed_groups": 35,
+      "cached_groups": 36,
+      "executed_cases": 1263,
+      "cached_cases": 1074,
+      "executed_discovered_cases": 1263,
+      "cached_discovered_cases": 1074,
+      "executed_skips": 4,
+      "cached_skips": 0,
+      "incomplete_groups": 0,
+      "duration_seconds": 438.2268582000397
+    }
+  },
+  "runtime_admitted": false,
+  "active_task_verified": false,
+  "ordered_catalog_verified": false,
+  "action_admitted": false,
+  "new_entry_tested_online": false,
+  "online": {
+    "character": "Bipoberiho",
+    "state": "connected",
+    "same_session": true,
+    "session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+    "game_commands_sent": false,
+    "owner_replaced": false
+  },
+  "limits": [
+    "Native factory executes only kind 6 and its fallback after primary task allocation failure.",
+    "Task/control constructors, shared move/release, state/progress and index getter execute with bounded memory and ABI checks.",
+    "Allocation, nested initialization, task-data lookup, owner binding, lifecycle, destruction and free effects remain explicit fixtures.",
+    "Synthetic task data and null parent weak control do not establish installed catalogue order, active task or real gameplay lifecycle.",
+    "Qualified current projection/model and matching evidence is reused without replay; no runtime action admission, live mutation or network command is established."
+  ]
+}

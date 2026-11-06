@@ -14,9 +14,11 @@
   включено в пакет следующего входа. Доказать provider текущего шага и корреляцию
   ответа с отправленным действием. [Наблюдатель и границы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-REPLY-OBSERVER-CURRENT.md).
   Текущие lookup / проекция и wrapper существующей модели проверены отдельно.
-  Продолжить загрузку и порядок актуального каталога, factory / replacement
-  closure и реальные callbacks; не считать синтетический массив активной задачей.
+  Создание / замена типа 6 и primary failure fallback проверены с явными providers.
+  Продолжить загрузку и порядок актуального каталога и реальные callbacks;
+  не считать синтетический массив активной задачей.
   [Модель и следующие блокеры](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-MODEL-CURRENT.md).
+  [Создание и границы lifecycle](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TASK-REPLACEMENT-CURRENT.md).
   После перезапуска Codex визуально проверены HP/MP, уровень, маркер и журнал;
   та же игровая сессия сохранилась. Данные квестов в прежнем owner недоступны,
   поэтому клик и выполнение на текущем сервере остаются непроверенными.

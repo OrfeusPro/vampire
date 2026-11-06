@@ -4661,6 +4661,72 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты загрузка, фильтрация и порядок актуального QuestTask каталога, factory/replacement closure, реальные callbacks/setter и выбор активной задачи. TargetId, readiness, актуальная позиция, provider, подтверждённый переход и current action admission остаются отдельными проверками.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141473540",
+        "0x1455a9330",
+        "0x1455ab5c0",
+        "0x1455b8fe0",
+        "0x1455f4a70",
+        "0x1455fd340"
+      ],
+      "checks": [
+        {
+          "cache_key": "3ab912dd0ae7deda00762c1cd454c58e8b6675738a01596f273266620f5f6a0d",
+          "id": "bounded-world-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bb2e9ed60b1f5a3571b04015a769e45868b6e0bcd1f1311d266d451b860b3202\\manifest.json",
+          "sha256": "bb2e9ed60b1f5a3571b04015a769e45868b6e0bcd1f1311d266d451b860b3202",
+          "state": "passed"
+        },
+        {
+          "cache_key": "294af621c428c59dd963aa215534cfbc0ffd075d3c913f5a0f6ea21af15b436d",
+          "id": "quest-reply-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4acbada4e58fab258a0f4545139bf6f7d2fd49f861014b4271fd9a8831fdcb9a\\manifest.json",
+          "sha256": "4acbada4e58fab258a0f4545139bf6f7d2fd49f861014b4271fd9a8831fdcb9a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d7bc134087c0e13d41a1a83175e5360a6ea3e602f799336f98066774caa0076",
+          "id": "quest-model-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0861d81cf55e821fdece71bf801454380b4dd68a0f4d88ce91a55524c97511f5\\manifest.json",
+          "sha256": "0861d81cf55e821fdece71bf801454380b4dd68a0f4d88ce91a55524c97511f5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "aaa635df9ddbbb5d336e944141e46b6a67aa32d3b6f40f46b786f221dfcbffd9",
+          "id": "quest-task-replacement-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ac1035c63b84a4a8314df96bfa8e1c0a08fba0e657412428a548ff3c4d10146e\\manifest.json",
+          "sha256": "ac1035c63b84a4a8314df96bfa8e1c0a08fba0e657412428a548ff3c4d10146e",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole current factory case 6, объект/control constructors, shared move/release и state/progress прошли 48 сценариев / 96 ABI-вызовов. Проверены creation/replacement, signed key comparison, primary failure fallback, native refcounts, exact entry coverage и guards. Готовый пакет модели переиспользован, отдельный on_update и кэш проверены без допуска активной задачи и действий.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-TASK-REPLACEMENT-CURRENT-VALIDATION.json",
+          "sha256": "1497afda25d3af0bb079eb5197b1a479e0a746dc0b8b5b4a341ad99cf7a37c51"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-TASK-REPLACEMENT-CURRENT.md",
+          "sha256": "6b52abd36f0a63c1b1ab4974e08de0239f7e80afad5d540c2a11f247abb86189"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "755048abf22151b2550791897fbbc9f682744a202d934c278057a673a7207c4d",
+      "limits": [
+        "Native factory executes only kind 6 and its fallback after primary task allocation failure.",
+        "Task/control constructors, shared move/release, state/progress and index getter execute with bounded memory and ABI checks.",
+        "Allocation, nested initialization, task-data lookup, owner binding, lifecycle, destruction and free effects remain explicit fixtures.",
+        "Synthetic task data and null parent weak control do not establish installed catalogue order, active task or real gameplay lifecycle.",
+        "Qualified current projection/model and matching evidence is reused without replay; no runtime action admission, live mutation or network command is established."
+      ],
+      "method": "bounded_native",
+      "next_check": "Переиспользовать принятые lookup/model/replacement proofs. Следующий общий missing-only пакет loader/order: manager 145b54bb0, main 145b5f680, RU override 145b6a0b0; source candidates ещё требуют whole exports и семантики. Расширение по точной closure: growth 145b736a0 / 145b73280, record 145b48c70 / copy 145b4c130, tokenizer 1445f6680, boolean 1445f5fc0, localization 14585e470, service 145a4d700. Именованные CSV уже готовы; сессию сохранять.",
+      "question": "quest-reply-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты актуальная загрузка, фильтрация и порядок QuestTask, RU override и service policy, реальные task-data/lifecycle/owner providers. Активная задача, TargetId, readiness, актуальная позиция, action provider, подтверждённый переход и current action admission не установлены.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,
