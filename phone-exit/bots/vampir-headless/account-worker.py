@@ -110,6 +110,22 @@ def run(args):
         store.registration_status(args.account, 'sdk_created')
         emit('result', status='stopped', message='Профиль SDK подтверждён. Теперь можно войти и прочитать персонажей. Игровое соединение не открывалось.')
         return
+    def verification(prepared, data):
+        tool = load('account_entry_verification', HERE / 'verify-account.py')
+        steps = data.verification_steps
+        needs_code = steps in (('device-registration',), ('workplace',), ('device-registration', 'workplace'))
+        mail_password = store.reveal_password(args.account, 'mail') if needs_code else None
+        try:
+            status, completed = tool.continue_verification(email=email, settings=settings,
+                prepared=prepared, data=data, mail_password=mail_password, progress=progress)
+        finally:
+            mail_password = None
+        if status != 'verified':
+            raise tool.VerificationStopped(status)
+        if not store.record_device_verification(args.account, store._fingerprint(AccountStore.assignment(settings))):
+            raise tool.VerificationStopped('invalid_context')
+        return 'verified'
+    extras['_verification'] = verification
     emit('phase', stage='configuration')
     cdn = load('account_cdn', HERE.parent / 'resource-tools/vampir/fetch-public-cdn-config.py')
     profile = cdn.profile('recovered-release')
@@ -178,6 +194,9 @@ def run(args):
     finally:
         if attempt[0] is not None: store.finish_creation(attempt[0], state='unknown')
     password = None
+    if result.get('verification_status'):
+        tool = load('account_entry_verification_failure', HERE / 'verify-account.py')
+        raise tool.VerificationStopped(result['verification_status'])
     if result.get('browser_status') in ('timeout', 'login_failed'):
         browser = load('account_browser_failure', HERE / 'nid-browser.py')
         error = browser.NidBrowserStatusError(result['browser_status'], result.get('sign_in_step'),
@@ -275,6 +294,20 @@ def register_account(store, args, email, password, *, device_settings=None, sock
 
 
 def failure(error):
+    verification_status = getattr(error, 'verification_status', None)
+    if verification_status in ('cancelled', 'invalid_context', 'timeout', 'browser_failed',
+            'multiple_mail_requests', 'server_rejected', 'response_unknown', 'mail_unavailable',
+            'abnormal_pattern', 'captcha_required', 'form_unknown', 'unknown_player_status'):
+        message = {
+            'captcha_required': 'Официальная форма запросила CAPTCHA; требуется ручное продолжение.',
+            'abnormal_pattern': 'Netmarble сообщил об ограничении An abnormal pattern.',
+            'mail_unavailable': 'Свежий код для этапа верификации не получен.',
+            'server_rejected': 'Netmarble отклонил запрос верификации.',
+            'unknown_player_status': 'SDK вернул незнакомый статус защиты.',
+            'invalid_context': 'Контекст верификации или назначенное устройство изменились.',
+        }.get(verification_status, 'Верификация остановлена; результат этапа не подтверждён.')
+        return dict(status='error', verification_status=verification_status,
+            message=message + ' Игровое соединение не открыто; автоматического повтора нет.')
     if isinstance(error, FirstSdkLoginStopped):
         message = {
             'basic_terms_require_review': 'Получены основные условия: требуется просмотр и принятие.',

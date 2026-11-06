@@ -45,8 +45,9 @@ run: версия в этом абзаце не заменяет проверк�
 включены в `account-verification` и source check SDK Launcher; принятие новых
 custom identity сервером отдельно от локального назначения.
 [Результат и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SHARED-DEVICE-TEMPLATES.md).
-[Будущий общий вход и проверки после отключения](../vampir-headless/BOT-ENTRY-FLOW.md)
-пока описаны требованиями; игровой контроллер ещё не подключён.
+[Общий адаптер проверок перед лобби](../vampir-headless/BOT-ENTRY-FLOW.md)
+использует тот же свежий SDK контекст без второй авторизации; игровой admission
+и восстановление после отключения остаются открытыми.
 
 [Автоматический проход и проверка повторного использования](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTOMATIC-UPDATE.md):
 реальные 222 UTF-8 сценария 20 → 22; неизменный повтор — 132 cached этапа,

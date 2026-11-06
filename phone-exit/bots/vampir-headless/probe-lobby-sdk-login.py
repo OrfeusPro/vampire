@@ -30,11 +30,13 @@ def module(name, filename):
 
 @prepared_entrypoint(root=ROOT,workspace=HERE.parents[2])
 def run(email, *, selected_profile, manifest_path, socks_port, context, password='', read_server_list=False, server_policy_byte=None,
-        auth_flow='nid', lobby_region=None, auth_timeout=180, _progress=None, _consume_auth=None, _select_server=None, _use_session=None, device_settings=None):
+        auth_flow='nid', lobby_region=None, auth_timeout=180, _progress=None, _consume_auth=None, _select_server=None, _use_session=None, device_settings=None, _verification=None):
     if type(auth_timeout) is not int or not 1 <= auth_timeout <= 900:
         raise ValueError('Bounded authentication timeout required')
     if auth_flow not in ('nid', 'launcher'): raise ValueError('Unsupported explicit SDK auth flow')
     if _consume_auth is not None and not callable(_consume_auth): raise TypeError('Expected in-memory auth consumer')
+    if _verification is not None and not callable(_verification):
+        raise TypeError('Expected in-memory SDK verification continuation')
     if _select_server is not None and (not callable(_select_server) or not read_server_list):
         raise TypeError('Server selection requires a callback and server list')
     if _use_session is not None and (not callable(_use_session) or _select_server is None):
@@ -72,6 +74,13 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     data = sdk.run(email, timeout=auth_timeout, password=password, socks_port=socks_port, _capture=capture,
         auth_flow=auth_flow, selected_profile=sdk_profile_name, _progress=_progress, **extra)
     password = None
+    if _verification is not None:
+        if not isinstance(prepared, SdkInputs):
+            raise ValueError('Account verification requires a fresh SDK context')
+        prepared.check_usage(email=email, selected_profile=sdk_profile_name, route=route)
+        if _verification(prepared=prepared, data=data) != 'verified':
+            raise ValueError('Account verification did not complete')
+        prepared.check_usage(email=email, selected_profile=sdk_profile_name, route=route)
     provider = captured.pop('provider')
     country = ''
     if context in ('sdk-with-joined-country','sdk-with-partial-metadata'):

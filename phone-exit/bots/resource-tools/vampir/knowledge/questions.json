@@ -1413,9 +1413,9 @@
       "id": "sdk-launcher-runtime-current",
       "status": "bounded_answer",
       "question": "Как связать текущие SDK и Launcher proofs с ограниченной runtime composition?",
-      "known": "SDK Launcher и официальные формы подтверждены на текущем SHA. Ручной NID-вход, проверка адреса и сохранённая очередь реализованы. Для Google подключён PCV2 внешний браузер, отдельный provider 29 и общий Netmarble SDK credential 33. Google-вход, регистрация устройства и снятие защиты подтверждены онлайн с ручными кодами; очередь завершилась. Привязка новой записи создаётся из наблюдённых ключей ПК. Общие постоянные устройства на два места, три ключа и имя регистрации реализованы в хранилище и панели; новые fingerprints не наследуют прежнюю верификацию.",
-      "unknown": "Причина HTTP 400 с признаком CAPTCHA при автоматическом почтовом NID-входе, приёмка custom-шаблонов, Google через SOCKS и игровой вход.",
-      "next_action": "Сохранять готовые SDK / web доказательства и кэш. Игровой вход и Google через SOCKS продолжать отдельными пакетами по соответствующим контрактам. При будущем общем входе выделить продолжение готовых форм без второй авторизации; серверный restart contract подтвердить отдельно по BOT-ENTRY-FLOW.",
+      "known": "SDK Launcher и официальные формы подтверждены на текущем SHA. Ручной NID-вход, проверка адреса и сохранённая очередь реализованы. Для Google подключён PCV2 внешний браузер, отдельный provider 29 и общий Netmarble SDK credential 33. Google-вход, регистрация устройства и снятие защиты подтверждены онлайн с ручными кодами; очередь завершилась. Привязка новой записи создаётся из наблюдённых ключей ПК. Общие постоянные устройства на два места, три ключа и имя регистрации реализованы в хранилище и панели; новые fingerprints не наследуют прежнюю верификацию. Продолжение device-registration/workplace выделено и подключено до lobby в том же SDK контексте без второй авторизации; проверены fixtures.",
+      "unknown": "Причина HTTP 400 с признаком CAPTCHA при автоматическом почтовом NID-входе, приёмка custom-шаблонов, Google через SOCKS и игровой вход. Первый Silvercrow на новом общем устройстве вернул SDK launcher SignIn HTTP400/1203 до форм; причина не установлена, текущий Fetch контракт ещё не перенесён.",
+      "next_action": "Закрыть текущий SDK Fetch контракт по сохранённым bounded candidate roots без интерпретации SignIn1203 как разрешения SignUp; отдельно продолжить игровой admission и Viper consumer. Готовые SDK/web proofs использовать через штатный кэш.",
       "decision_rule": "Готовые SDK 3667 native и Launcher static proofs переиспользовать после проверки полных SHA. Fixture composition не выдавать за live authentication или активацию профиля. Loader должен проверять каждый input при любом обращении.",
       "do_not_repeat": "Не повторять старые или текущие standalone SDK native матрицы без изменения входов.",
       "addresses": [
@@ -1436,7 +1436,8 @@
         "google-verification-web-current.json",
         "evidence/auth/HEADLESS-GOOGLE-MANUAL-VERIFICATION.md",
         "evidence/auth/HEADLESS-GOOGLE-MANUAL-VERIFICATION-LIVE.json",
-        "evidence/auth/HEADLESS-SHARED-DEVICE-TEMPLATES.md"
+        "evidence/auth/HEADLESS-SHARED-DEVICE-TEMPLATES.md",
+        "evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md"
       ]
     },
     {
@@ -1455,6 +1456,22 @@
       "evidence": [
         "evidence/updates/HEADLESS-ENTRY-PROOFS-CURRENT.md",
         "evidence/updates/AUTO-ENTRY-PROOFS-CURRENT.json"
+      ]
+    },
+    {
+      "id": "character-creation-resource-selection",
+      "status": "bounded_answer",
+      "question": "Как выбрать ресурс внешности по классу, ID пресета и полу без повторного native разбора и без допуска игрового Create?",
+      "known": "Историческая схема SHA98802d55 и полный installed pakchunk100 SHA58eb7e06 позволяют разобрать точные named tables и ссылки. Resource-only режим оставляет пропущенные поля unknown, не исполняет native defaults. Viper/DarkMage type1 выбирает preset ID1 F/M.",
+      "unknown": "Текущая native схема/consumer нового EXE, CDO defaults и серверная приёмка Viper не подтверждены.",
+      "next_action": "Использовать точные source/decoded SHA ресурса при переносе Create на текущий EXE; consumer и runtime допуск подтвердить отдельно.",
+      "decision_rule": "Выбор только по table class_type + optional preset_id + gender; ноль/несколько совпадений — блокер. Не переносить omitted native defaults со старого EXE в новый.",
+      "do_not_repeat": "Не повторять constructor/default native матрицы для resource-only извлечения неизменного PAK.",
+      "addresses": [
+        "0x1454d6800"
+      ],
+      "evidence": [
+        "evidence/characters/HEADLESS-CREATE-VIPER-RESOURCES.md"
       ]
     }
   ]

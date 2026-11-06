@@ -4643,7 +4643,22 @@
         "phone-exit/bots/test_vampir_device_templates.py",
         "phone-exit/bots/test_vampir_bot_device_settings.py",
         "phone-exit/bots/test_vampir_character_connections.py",
-        "phone-exit/bots/vampir-headless/start-account-console.ps1"
+        "phone-exit/bots/vampir-headless/start-account-console.ps1",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-headless/probe-lobby-sdk-login.py",
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py"
+      ]
+    },
+    {
+      "id": "creation-resource-selection",
+      "test_modules": [
+        "test_vampir_creation_resource_selection"
+      ],
+      "timeout_seconds": 60,
+      "dependencies": [
+        "phone-exit/bots/test_vampir_creation_resource_selection.py",
+        "phone-exit/bots/resource-tools/vampir/extract-release-creation-presets.py",
+        "phone-exit/bots/resource-tools/vampir/decode-canvas-slots.py"
       ]
     }
   ],

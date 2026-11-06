@@ -5,6 +5,7 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_creation_resource_selection',
     'test_vampir_account_console',
     'test_vampir_account_table',
     'test_vampir_device_templates',

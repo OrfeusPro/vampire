@@ -2825,6 +2825,89 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Новые custom identity, аппаратные metadata и имена не проверены живым сервером. Google через SOCKS и вход в мир остаются отдельными пробелами.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444e0a00"
+      ],
+      "checks": [
+        {
+          "cache_key": "376bcefa3f83e9509ef8f23beb4e692e6525292ab344f15673f8c73153c270ee",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3f288f0f2c6bf36f88c9569c4927825846c76de1c5bb8a6f058f27290e036af5\\manifest.json",
+          "sha256": "3f288f0f2c6bf36f88c9569c4927825846c76de1c5bb8a6f058f27290e036af5",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Официальные device-registration/workplace формы выделены в общий адаптер и вызываются до лобби с теми же свежими SDK данными без второй авторизации. Терминальные формы сохраняют серверные 600 секунд; обычное продолжение проверяет GMC2 до/после. Первый Silvercrow принят NID, но launcher SignIn остановился на HTTP400/1203 до форм; причина не установлена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md",
+          "sha256": "c8ea239a8e08bd50ab70831483ffd717cbd06b004f31f7b2f299eb8ef78480c5"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\EIGHT-ACCOUNT-ENTRY-VALIDATION.json",
+          "sha256": "bab634abdbd8357f4a1cd84c523e8baf124e8a1ca20826bad4d13914f0161db8"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "7401d75f5618647e0b79326c089e2322c392ce06cdde09433b8203bf60714b96",
+      "limits": [
+        "SDK/web fixtures и source-bound collection не подтверждают игровой вход или новый Fetch admission.",
+        "Живой отказ до лобби не доказывает отсутствие SDK-профиля и не разрешает автоматический SignUp."
+      ],
+      "method": "static",
+      "next_check": "Закрыть Fetch source contract по двум готовым current whole exports и отдельной границе CRT initializer, затем допустить только read-only Fetch. В игровой цепочке использовать прежние готовые scopes и новые CharacterList/clock/lobby/Viper контракты.",
+      "question": "sdk-launcher-runtime-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Причина Silvercrow SDK1203; текущий Fetch-only contract; игровой admission, Viper defaults/Create и приёмка сервера.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444c9c80",
+        "0x1444e7b80"
+      ],
+      "checks": [
+        {
+          "cache_key": "376bcefa3f83e9509ef8f23beb4e692e6525292ab344f15673f8c73153c270ee",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3f288f0f2c6bf36f88c9569c4927825846c76de1c5bb8a6f058f27290e036af5\\manifest.json",
+          "sha256": "3f288f0f2c6bf36f88c9569c4927825846c76de1c5bb8a6f058f27290e036af5",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "По source-linked E9 уточнён текущий Fetch callback; два whole тела request и response собраны для следующего source contract. Runtime Fetch не разрешён; initializer CRT tail остаётся отдельным пробелом.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md",
+          "sha256": "c8ea239a8e08bd50ab70831483ffd717cbd06b004f31f7b2f299eb8ef78480c5"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\EIGHT-ACCOUNT-ENTRY-VALIDATION.json",
+          "sha256": "bab634abdbd8357f4a1cd84c523e8baf124e8a1ca20826bad4d13914f0161db8"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-FETCH-CURRENT-COLLECT.md",
+          "sha256": "eae64d2dc4836863e755cf8dc03d3daf3d35c424976a38433c3f817864af921e"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-74606681db58\\details.json",
+          "sha256": "e81bbb5d28ebd4a416c8d936d9cf3642e23241cf5e6ad43dc398dfd43501b926"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "9070a4a768c91e9b8698f7f8ca2e57ec4af419c4ce345d5123aa28885835349e",
+      "limits": [
+        "SDK/web fixtures и source-bound collection не подтверждают игровой вход или новый Fetch admission.",
+        "Живой отказ до лобби не доказывает отсутствие SDK-профиля и не разрешает автоматический SignUp."
+      ],
+      "method": "static",
+      "next_check": "Закрыть Fetch source contract по двум готовым current whole exports и отдельной границе CRT initializer, затем допустить только read-only Fetch. В игровой цепочке использовать прежние готовые scopes и новые CharacterList/clock/lobby/Viper контракты.",
+      "question": "sdk-launcher-runtime-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Причина Silvercrow SDK1203; текущий Fetch-only contract; игровой admission, Viper defaults/Create и приёмка сервера.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

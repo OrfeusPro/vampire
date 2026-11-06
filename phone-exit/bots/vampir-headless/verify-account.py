@@ -20,6 +20,7 @@ from vampir_core.account_store import AccountStore
 from vampir_core.sdk_config import select_sdk_build_code
 from vampir_core.sdk_launcher_admission import scope
 from vampir_core.socks_route import SocksRoute
+from vampir_core.gmc2_context import SdkInputs
 
 SHA = re.compile('[a-f0-9]{64}')
 KNOWLEDGE = HERE.parent / 'resource-tools/vampir/knowledge'
@@ -30,6 +31,15 @@ ENDPOINTS = {
 BROWSER_RESULTS = frozenset(('verified', 'cancelled', 'invalid_context', 'timeout', 'browser_failed',
     'multiple_mail_requests', 'server_rejected', 'response_unknown', 'mail_unavailable',
     'abnormal_pattern', 'captcha_required', 'form_unknown'))
+
+
+class VerificationStopped(RuntimeError):
+    """Fixed public status; never retain a URL, credential or server response."""
+    def __init__(self, status):
+        if status not in BROWSER_RESULTS | {'unknown_player_status'}:
+            status = 'response_unknown'
+        self.verification_status = status
+        super().__init__('Account verification did not complete')
 
 
 def load(name):
@@ -167,6 +177,60 @@ def ensure_pc_binding(runner, email):
             source='Observed current Windows PC, account verification')
 
 
+def continue_verification(*, email, settings, prepared, data, mail_password=None,
+                          google=False, progress=lambda stage: None, require_fresh_context=True):
+    """Complete official forms using the caller's existing fresh SDK authorization.
+
+    The caller owns the admitted profile scope and subsequent lobby connection.
+    This function never starts NID/SDK authentication or refreshes expired inputs.
+    A terminal verification may outlive the local GMC2 age after its initial
+    fresh check; its caller must not continue to the lobby with that context.
+    """
+    settings = AccountStore.assignment(settings)
+    if (type(require_fresh_context) is not bool or not settings['enabled']
+            or (not google and not email.endswith('@vampir.top'))
+            or not isinstance(prepared, SdkInputs)):
+        raise ValueError('Expected enabled account and fresh in-memory SDK context')
+    port = settings['socks_port']
+    if google and port is not None:
+        raise ValueError('Manual Google verification requires the direct PC route')
+    route = SocksRoute(port) if port is not None else None
+    def check_context():
+        prepared.check_usage(email=email, selected_profile=prepared.selected_profile, route=route)
+    check_context()
+    check_source(prepared.source_sha256)
+    steps = data.verification_steps
+    if steps not in ((), ('device-registration',), ('workplace',), ('device-registration', 'workplace')):
+        return 'unknown_player_status', []
+    completed = []
+    if not steps:
+        return 'verified', completed
+    nid = load('nid-browser')
+    mail = None if google else load('nid-mail-code')
+    library = nid._library()
+    private_key = '|'.join((email, prepared.binding.device_key, prepared.binding.nm_device_key, str(port)))
+    directory = HERE / '.local/verification-browser' / hashlib.sha256(private_key.encode()).hexdigest()[:32]
+    for purpose in steps:
+        if require_fresh_context:
+            check_context()
+        url = web_url(purpose, prepared, data, settings.get('device_name') or 'Vampir PC')
+        progress('verify_' + purpose)
+        mailbox = None if google else mail.RegistrationMailbox(email, mail_password,
+            purpose=purpose if purpose == 'device-registration' else 'account-protection')
+        try:
+            result = browser(purpose, url=url, email=email, directory=directory, port=port,
+                             library=library, mailbox=mailbox, progress=progress)
+        finally:
+            if mailbox is not None:
+                mailbox.close()
+        if require_fresh_context:
+            check_context()
+        if result != 'verified':
+            return result, completed
+        completed.append(purpose)
+    return 'verified', completed
+
+
 def verify(store, account, *, selector=None, manual_sign_in=False, progress=lambda stage: None):
     saved = next((a for a in store.accounts() if a['id'] == account), None)
     google = saved is not None and saved.get('login_provider') == 'google'
@@ -201,39 +265,18 @@ def verify(store, account, *, selector=None, manual_sign_in=False, progress=lamb
             data = runner.run(email, password='' if manual else password, timeout=600 if google else 180, selected_profile=selector,
                 auth_flow='launcher', socks_port=port, _prepared_inputs=prepared, _capture=capture,
                 device_settings=settings['device_settings'], _progress=sign_in_progress)
-        return data, prepared
+            return continue_verification(email=email, settings=settings, prepared=prepared, data=data,
+                mail_password=mail_password, google=google, progress=progress, require_fresh_context=False)
 
     try:
-        data, prepared = sign_in(manual_sign_in or google)
+        return sign_in(manual_sign_in or google)
     except nid.NidBrowserStatusError as error:
         if google or manual_sign_in or error.browser_status != 'login_failed':
             raise
         # NID refused before SDK or mail actions. Open the same account's form without autofill.
-        data, prepared = sign_in(True)
-    password = None
-    if data.verification_steps is None:
-        return 'unknown_player_status', []
-    completed = []
-    if not data.verification_steps:
-        return 'verified', completed
-    mail = None if google else load('nid-mail-code')
-    library = nid._library()
-    private_key = '|'.join((email, prepared.binding.device_key, prepared.binding.nm_device_key, str(port)))
-    directory = HERE / '.local/verification-browser' / hashlib.sha256(private_key.encode()).hexdigest()[:32]
-    for purpose in data.verification_steps:
-        url = web_url(purpose, prepared, data, settings.get('device_name') or 'Vampir PC')
-        progress('verify_' + purpose)
-        mailbox = None if google else mail.RegistrationMailbox(email, mail_password,
-            purpose=purpose if purpose == 'device-registration' else 'account-protection')
-        try:
-            result = browser(purpose, url=url, email=email, directory=directory, port=port,
-                             library=library, mailbox=mailbox, progress=progress)
-        finally:
-            if mailbox is not None: mailbox.close()
-        if result != 'verified':
-            return result, completed
-        completed.append(purpose)
-    return 'verified', completed
+        return sign_in(True)
+    finally:
+        password = mail_password = None
 
 
 if __name__ == '__main__':

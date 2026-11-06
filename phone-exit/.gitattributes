@@ -657,3 +657,7 @@ bots/test_vampir_device_templates.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SHARED-DEVICE-TEMPLATES.md text eol=lf
 bots/vampir-headless/BOT-ENTRY-FLOW.md text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/auth/SHARED-DEVICE-TEMPLATES-VALIDATION.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-CURRENT-COLLECT.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/EIGHT-ACCOUNT-ENTRY-VALIDATION.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-VIPER-RESOURCES.md text eol=lf

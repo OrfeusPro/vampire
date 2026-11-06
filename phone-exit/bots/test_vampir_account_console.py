@@ -113,9 +113,13 @@ try {
             store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
             identifier = store.save('fixture@gmail.com', assignment={'login_provider': 'google', 'device_name': 'DESKTOP-ABC1234'})
             runner, nid = MagicMock(), MagicMock()
-            runner.load_inputs.return_value = SimpleNamespace(source_sha256='fixture-source',
-                binding=SimpleNamespace(device_key='fixture-sdk', nm_device_key='fixture-nm'))
-            runner.run.return_value = SimpleNamespace(verification_steps=['device-registration', 'workplace'])
+            from vampir_core.gmc2_context import SdkInputs
+            prepared = MagicMock(spec=SdkInputs)
+            prepared.source_sha256 = 'fixture-source'
+            prepared.selected_profile = 'fixture-profile'
+            prepared.binding = SimpleNamespace(device_key='fixture-sdk', nm_device_key='fixture-nm')
+            runner.load_inputs.return_value = prepared
+            runner.run.return_value = SimpleNamespace(verification_steps=('device-registration', 'workplace'))
             modules = {'run-nid-sdk-sign-in': runner, 'nid-browser': nid}
             with patch.object(tool, 'load', side_effect=lambda name: modules[name]), \
                     patch.object(tool, 'scope', return_value=nullcontext()), patch.object(tool, 'check_source'), \
@@ -130,6 +134,157 @@ try {
             self.assertEqual(browser.call_count, 2)
             self.assertTrue(all(call.args[3] == 'DESKTOP-ABC1234' for call in url.call_args_list))
             self.assertTrue(all(call.kwargs['mailbox'] is None for call in browser.call_args_list))
+
+    def test_existing_sdk_authorization_completes_forms_before_any_lobby_connection(self):
+        from vampir_core.gmc2_context import SdkInputs, Gmc2Geo, LATEST_SOURCE_SHA256, MAX_CONTEXT_AGE
+        from vampir_core.sdk_sign_in_response import SdkSignInData
+        spec = importlib.util.spec_from_file_location('entry_verification_fixture', HERE / 'vampir-headless/verify-account.py')
+        verifier = importlib.util.module_from_spec(spec); spec.loader.exec_module(verifier)
+        spec = importlib.util.spec_from_file_location('entry_lobby_fixture', HERE / 'vampir-headless/probe-lobby-sdk-login.py')
+        lobby = importlib.util.module_from_spec(spec); spec.loader.exec_module(lobby)
+        for steps, browser_status, expire, expected in (
+                (('device-registration', 'workplace'), 'verified', False, ['device-registration', 'workplace']),
+                (('device-registration', 'workplace'), 'server_rejected', False, ['device-registration']),
+                (None, 'verified', False, []),
+                (('device-registration',), 'verified', True, ['device-registration']),
+                ((), 'verified', False, [])):
+            with self.subTest(steps=steps, result=browser_status, expire=expire):
+                events = []
+                binding = SimpleNamespace(device_key='sdk-fixture', nm_device_key='nm-fixture')
+                prepared = SdkInputs('fixture@vampir.top', binding, {'game_code': 'thered'}, {},
+                    'recovered-release', None, LATEST_SOURCE_SHA256,
+                    Gmc2Geo('1.1.1.1', 'UA', 'UA', 'fixture-body', LATEST_SOURCE_SHA256), time.monotonic())
+                data = SdkSignInData('token-fixture', 'player-fixture', 'EU', 'UA', 1, steps)
+                provider = SimpleNamespace(netmarble_id='nid-fixture', joined_country_code='UA')
+                nid, mail = MagicMock(), MagicMock()
+                def form(purpose, **kwargs):
+                    events.append(purpose)
+                    if expire:
+                        object.__setattr__(prepared, 'fetched_at', time.monotonic() - MAX_CONTEXT_AGE - 1)
+                    return browser_status
+                def sdk_run(email, **kwargs):
+                    events.append('sdk')
+                    kwargs['_capture']('https://fixture.invalid')
+                    self.assertIs(kwargs['_prepared_inputs'], prepared)
+                    return data
+                sdk = SimpleNamespace(load_inputs=MagicMock(return_value=prepared), run=MagicMock(side_effect=sdk_run))
+                modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='fixture',
+                    source_snapshot_sha256='fixture-snapshot', source_exe_sha256=LATEST_SOURCE_SHA256)),
+                    SimpleNamespace(selected_endpoint=lambda *args, **kwargs: ('lobby.invalid', 1)), sdk,
+                    SimpleNamespace(capture_nid_credential=lambda *args, **kwargs: provider),
+                    SimpleNamespace(prepare_version=lambda **kwargs: object(), observe_computer_name=lambda: 'fixture')]
+                def continuation(**kwargs):
+                    self.assertIs(kwargs['prepared'], prepared); self.assertIs(kwargs['data'], data)
+                    status, _ = verifier.continue_verification(email='fixture@vampir.top', settings={},
+                        prepared=prepared, data=data, mail_password='mail-fixture')
+                    return status
+                def connect(*args, **kwargs):
+                    events.append('lobby-connect')
+                    return MagicMock()
+                exchange = MagicMock(return_value=SimpleNamespace(summary={}, response=SimpleNamespace(result_code=0)))
+                with patch.object(lobby, 'module', side_effect=modules), patch.object(lobby, 'connect_direct', side_effect=connect) as socket, \
+                        patch.object(lobby, 'observe_windows_version', return_value=None), patch.object(lobby, 'exchange_lobby_login', exchange), \
+                        patch.object(verifier, 'load', side_effect=lambda name: {'nid-browser': nid, 'nid-mail-code': mail}[name]), \
+                        patch.object(verifier, 'check_source'), patch.object(verifier, 'web_url', return_value='https://fixture.invalid'), \
+                        patch.object(verifier, 'browser', side_effect=form):
+                    kwargs = dict(selected_profile='recovered-release', manifest_path=Path('fixture'), socks_port=None,
+                        context='sdk-without-nid-info', _verification=continuation)
+                    success = steps is not None and browser_status == 'verified' and not expire
+                    if success:
+                        lobby.run('fixture@vampir.top', **kwargs)
+                        self.assertEqual(events, ['sdk'] + expected + ['lobby-connect'])
+                        socket.assert_called_once(); exchange.assert_called_once()
+                    else:
+                        with self.assertRaises(ValueError): lobby.run('fixture@vampir.top', **kwargs)
+                        self.assertEqual(events, ['sdk'] + expected)
+                        socket.assert_not_called(); exchange.assert_not_called()
+                sdk.run.assert_called_once()
+                self.assertEqual(mail.RegistrationMailbox.call_count, len(expected))
+                self.assertEqual(mail.RegistrationMailbox.return_value.close.call_count, len(expected))
+
+    def test_worker_passes_existing_sdk_context_and_records_only_confirmed_device(self):
+        spec = importlib.util.spec_from_file_location('worker_verification_fixture', HERE / 'vampir-headless/account-worker.py')
+        worker = importlib.util.module_from_spec(spec); spec.loader.exec_module(worker)
+        spec = importlib.util.spec_from_file_location('worker_verifier_type_fixture', HERE / 'vampir-headless/verify-account.py')
+        verifier_types = importlib.util.module_from_spec(spec); spec.loader.exec_module(verifier_types)
+        for status, fingerprint_matches in (('verified', True), ('server_rejected', True), ('unknown_player_status', True), ('verified', False)):
+            with self.subTest(status=status, fingerprint_matches=fingerprint_matches):
+                store, registry, cdn, lobby = MagicMock(), MagicMock(), MagicMock(), MagicMock()
+                store.credential.return_value = ('fixture@vampir.top', 'game-fixture', dict(enabled=True, region='EU', server_id=387))
+                store.record_device_verification.return_value = fingerprint_matches
+                cdn.profile.return_value = dict(url='https://fixture.invalid')
+                cdn.fetch.return_value = (b'fixture', {})
+                cdn.save.return_value = (Path('fixture'), None)
+                prepared, data = object(), SimpleNamespace(verification_steps=('device-registration',))
+                verifier = SimpleNamespace(VerificationStopped=verifier_types.VerificationStopped,
+                    continue_verification=MagicMock(return_value=(status, ['device-registration'] if status == 'verified' else [])))
+                def run_lobby(*args, **kwargs):
+                    kwargs['_verification'](prepared=prepared, data=data)
+                    return SimpleNamespace(server_list_response=SimpleNamespace(result_code=0))
+                lobby.run.side_effect = run_lobby
+                def load(name, path):
+                    return {'fetch-public-cdn-config.py': cdn, 'probe-lobby-sdk-login.py': lobby, 'verify-account.py': verifier}[path.name]
+                with patch.object(worker, 'AccountStore', return_value=store), patch.object(worker, 'DeviceRegistry', return_value=registry), \
+                        patch.object(worker, 'load', side_effect=load), patch.object(worker, 'build_account_catalog', return_value={}), \
+                        patch.object(worker, 'emit'):
+                    args = SimpleNamespace(store=Path('fixture'), account='fixture-id', operation='servers')
+                    if status == 'verified' and fingerprint_matches:
+                        worker.run(args)
+                    else:
+                        with self.assertRaises(verifier_types.VerificationStopped) as failure:
+                            worker.run(args)
+                        self.assertNotIn('fixture', str(worker.failure(failure.exception)))
+                self.assertEqual(verifier.continue_verification.call_count, 1)
+                self.assertIs(verifier.continue_verification.call_args.kwargs['prepared'], prepared)
+                self.assertIs(verifier.continue_verification.call_args.kwargs['data'], data)
+                self.assertEqual(store.record_device_verification.call_count, int(status == 'verified'))
+                if status != 'verified' or not fingerprint_matches: store.save_catalog.assert_not_called()
+
+    def test_terminal_verification_accepts_server_success_after_local_gmc2_expiry(self):
+        from vampir_core.gmc2_context import SdkInputs, Gmc2Geo, LATEST_SOURCE_SHA256, MAX_CONTEXT_AGE
+        from vampir_core.sdk_sign_in_response import SdkSignInData
+        spec = importlib.util.spec_from_file_location('terminal_verification_fixture', HERE / 'vampir-headless/verify-account.py')
+        verifier = importlib.util.module_from_spec(spec); spec.loader.exec_module(verifier)
+        binding = SimpleNamespace(device_key='sdk-fixture', nm_device_key='nm-fixture')
+        prepared = SdkInputs('fixture@vampir.top', binding, {'game_code': 'thered'}, {},
+            'recovered-release', None, LATEST_SOURCE_SHA256,
+            Gmc2Geo('1.1.1.1', 'UA', 'UA', 'fixture-body', LATEST_SOURCE_SHA256), time.monotonic())
+        data = SdkSignInData('token-fixture', 'player-fixture', 'EU', 'UA', 1, ('device-registration', 'workplace'))
+        nid, mail = MagicMock(), MagicMock()
+        def form(purpose, **kwargs):
+            # The server's mail-code/form deadline remains independently enforced by browser().
+            object.__setattr__(prepared, 'fetched_at', time.monotonic() - MAX_CONTEXT_AGE - 1)
+            return 'verified'
+        with patch.object(verifier, 'load', side_effect=lambda name: {'nid-browser': nid, 'nid-mail-code': mail}[name]), \
+                patch.object(verifier, 'check_source'), patch.object(verifier, 'web_url', return_value='https://fixture.invalid'), \
+                patch.object(verifier, 'browser', side_effect=form) as browser:
+            result = verifier.continue_verification(email='fixture@vampir.top', settings={}, prepared=prepared,
+                data=data, mail_password='mail-fixture', require_fresh_context=False)
+        self.assertEqual(result, ('verified', ['device-registration', 'workplace']))
+        self.assertEqual(browser.call_count, 2)
+        with self.assertRaises(ValueError):
+            prepared.check_usage(email='fixture@vampir.top', selected_profile='recovered-release', route=None)
+
+    def test_selected_entry_forwards_one_verification_continuation_and_redacts_its_failure(self):
+        spec = importlib.util.spec_from_file_location('selected_verification_fixture', HERE / 'vampir-headless/probe-selected-game-login.py')
+        selected = importlib.util.module_from_spec(spec); spec.loader.exec_module(selected)
+        callback = MagicMock()
+        lobby = SimpleNamespace(run=MagicMock(return_value=object()))
+        modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='fixture')), lobby]
+        kwargs = dict(selected_profile='recovered-base', manifest_path=Path('fixture'), socks_port=None,
+            server_policy_byte=0, extra_number=1, context='windows-sdk-initial-reset', region='EU', server_id=387,
+            server_list_only=True, _verification=callback)
+        with patch.object(selected, 'module', side_effect=modules), patch.object(selected, '_after_lobby', return_value={'fixture': 'finished'}):
+            result = selected.run('fixture@vampir.top', **kwargs)
+        self.assertEqual(result, {'fixture': 'finished'})
+        lobby.run.assert_called_once()
+        self.assertIs(lobby.run.call_args.kwargs['_verification'], callback)
+        error = RuntimeError('private-token-fixture')
+        error.verification_status = 'server_rejected'
+        with patch.object(selected, '_run', side_effect=error):
+            result = selected.run('fixture@vampir.top', **kwargs)
+        self.assertEqual(result['verification_status'], 'server_rejected')
+        self.assertNotIn('private', str(result))
 
     def test_current_pc_observation_copies_hardware_without_private_identity(self):
         from vampir_core.version_cpu import VersionCpuInput

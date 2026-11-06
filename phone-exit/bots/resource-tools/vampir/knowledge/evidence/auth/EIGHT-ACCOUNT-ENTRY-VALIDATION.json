@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "checked_local_date": "2026-11-06",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "scope": "Shared same-context verification, Viper resource selection and collected current Fetch bodies; no complete game entry",
+  "tooling": {
+    "state": "passed",
+    "report": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\3285aeb8879a020d5756fa5739a7a5fdf81a3c8151510b3a123ab7b761004ac3\\manifest.json",
+      "sha256": "3285aeb8879a020d5756fa5739a7a5fdf81a3c8151510b3a123ab7b761004ac3"
+    },
+    "first": {
+      "executed_groups": 11,
+      "cached_groups": 18,
+      "executed_cases": 1169,
+      "cached_cases": 960,
+      "executed_skips": 3,
+      "cached_skips": 1,
+      "duration_seconds": 239.11786050000228
+    },
+    "warm": {
+      "executed_groups": 0,
+      "cached_groups": 29,
+      "executed_cases": 0,
+      "cached_cases": 2129,
+      "cached_skips": 4,
+      "duration_seconds": 14.001895800000057
+    }
+  },
+  "source_check": {
+    "id": "sdk-runtime-launcher-11316",
+    "state": "passed",
+    "report": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3f288f0f2c6bf36f88c9569c4927825846c76de1c5bb8a6f058f27290e036af5\\manifest.json",
+      "sha256": "3f288f0f2c6bf36f88c9569c4927825846c76de1c5bb8a6f058f27290e036af5"
+    }
+  },
+  "resource_check": {
+    "id": "creation-resource-selection",
+    "state": "passed",
+    "report": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d3bf90138e11e6753af0d489f54509bc5f065bdaeccbac50f3109c021921463a\\manifest.json",
+      "sha256": "d3bf90138e11e6753af0d489f54509bc5f065bdaeccbac50f3109c021921463a"
+    }
+  },
+  "live": {
+    "attempted_accounts": 1,
+    "nid_accepted": true,
+    "stage": "sdk_launcher_sign_in",
+    "http_status": 400,
+    "sdk_code": 1203,
+    "game_connection_opened": false,
+    "created_characters": 0,
+    "remaining_accounts_attempted": 0
+  },
+  "ready_scope": "Forms continuation only; current SDK launcher sign-in; exact historical-schema resource bytes",
+  "blockers": [
+    "sdk_fetch_current_source_contract",
+    "current_lobby_version_layout",
+    "current_character_selection",
+    "current_clock_ping_world",
+    "current_viper_defaults_and_create"
+  ],
+  "runtime_admitted": false,
+  "complete_eight_account_flow_verified": false
+}

@@ -1,4 +1,4 @@
-"""Decode explicit current preset tables and their unique class-3 asset links."""
+"""Decode named preset resources using the explicit historical schema."""
 import argparse
 import importlib.util
 import json
@@ -92,12 +92,15 @@ def table(body, names, references, struct_index):
     return rows
 
 
-def asset(body):
+def asset(body, *, use_constructor_defaults=True):
     uv = load('preset_asset_reader', 'decode-canvas-slots.py'); r = uv.Reader(body)
     values = {name: None for name in ASSET_FIELDS}
     origins = {name: 'unresolved_CDO_integer' for name in ASSET_FIELDS}
-    for name in ASSET_FIELDS[9:16]: values[name] = 0.5; origins[name] = 'native_constructor'
-    values['VoiceType'] = 0; origins['VoiceType'] = 'native_constructor'
+    if use_constructor_defaults:
+        for name in ASSET_FIELDS[9:16]: values[name] = 0.5; origins[name] = 'native_constructor'
+        values['VoiceType'] = 0; origins['VoiceType'] = 'native_constructor'
+    else:
+        origins = dict.fromkeys(ASSET_FIELDS, 'unresolved_native_default')
     seen = set()
     for index, zero in r.header():
         if index >= len(ASSET_FIELDS) or index in seen: raise ValueError('Unknown preset asset field')
@@ -178,7 +181,42 @@ def project_native_defaults(decoded, model):
         verified_loaded_asset=False, report=model['report'])
 
 
-def extract(index_path, directory_path, root):
+def validate_selection(class_type, preset_id, gender):
+    if type(class_type) is not int or not 0 <= class_type <= 255:
+        raise ValueError('Preset class type requires a byte')
+    if preset_id is not None and (type(preset_id) is not int or not 0 <= preset_id <= 0x7fffffff):
+        raise ValueError('Preset ID requires a nonnegative int32')
+    if gender not in (None, 'F', 'M'):
+        raise ValueError('Preset gender requires F or M')
+
+
+def select_presets(packages, *, class_type=3, preset_id=None, gender=None):
+    """Resolve exact table links; a class/name resemblance never chooses an asset."""
+    validate_selection(class_type, preset_id, gender)
+    expected = [p for p in TABLES if gender is None or p.endswith(gender)]
+    tables = [p for p in packages if p['package'] in expected]
+    if sorted(p['package'] for p in tables) != sorted(expected):
+        raise ValueError('Preset table is missing or duplicated')
+    links = []
+    for table in tables:
+        selected = [row for row in table['rows'] if row['class_type'] == class_type
+                    and (preset_id is None or row['id'] == preset_id)]
+        if len(selected) != 1:
+            raise ValueError('Preset selection is missing or ambiguous')
+        ref = selected[0]['asset']; target, object_name = ref.rsplit('.', 1)
+        if (not target.startswith(PREFIX + 'DataAsset/Customize/')
+                or target.rsplit('/', 1)[-1] != object_name):
+            raise ValueError('Preset object path differs')
+        links.append(dict(table=table['package'], preset_id=selected[0]['id'],
+                          class_type=class_type, package=target))
+    return links
+
+
+def extract(index_path, directory_path, root, *, class_type=3, preset_id=None, gender=None, resource_only=False):
+    # Check selection options before file/native access.
+    validate_selection(class_type, preset_id, gender)
+    if type(resource_only) is not bool:
+        raise ValueError('Resource-only choice requires bool')
     helpers = load('preset_named_helpers', 'extract-release-appearance-resources.py')
     if helpers.digest(index_path) != index_path.parent.name: raise ValueError('Preset record index hash changed')
     comparison = root / 'ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details'
@@ -197,7 +235,10 @@ def extract(index_path, directory_path, root):
             or helpers.digest(reader.ROOT / 'tools/oodle-data-shared.dll') != index['dependencies']['oodle_sha256']):
         raise ValueError('Preset pinned reader changed')
     package = load('preset_package_exports', 'inspect-ui.py'); references = load('preset_package_refs', 'decode-package-references.py')
-    descriptors = schema(root); defaults = constructor_defaults(); model = native_default_model(); blobs = {}; packages = []
+    descriptors = schema(root)
+    defaults = None if resource_only else constructor_defaults()
+    model = None if resource_only else native_default_model()
+    blobs = {}; packages = []
     def read_targets(targets):
         named = helpers.named_records(directory_path, index, targets)
         for target, entries in named.items():
@@ -225,17 +266,12 @@ def extract(index_path, directory_path, root):
             else:
                 if export['type'] != 'NnDataAssetForCustomizePreset': raise ValueError('Preset asset class differs')
                 item['native_template'] = native_template(refs, export)
-                item['decoded'] = asset(body)
-                item['native_default_projection'] = project_native_defaults(item['decoded'], model)
+                item['decoded'] = asset(body, use_constructor_defaults=not resource_only)
+                if model is not None:
+                    item['native_default_projection'] = project_native_defaults(item['decoded'], model)
             packages.append(item)
     read_targets(TABLES)
-    links = []
-    for item in packages:
-        selected = [row for row in item['rows'] if row['class_type'] == 3]
-        if len(selected) != 1: raise ValueError('Class-3 preset is missing or ambiguous')
-        ref = selected[0]['asset']; target, object_name = ref.rsplit('.', 1)
-        if target.rsplit('/', 1)[-1] != object_name: raise ValueError('Preset object path differs')
-        links.append(dict(table=item['package'], preset_id=selected[0]['id'], class_type=3, package=target))
+    links = select_presets(packages, class_type=class_type, preset_id=preset_id, gender=gender)
     read_targets(tuple(link['package'] for link in links))
     after = source.stat()
     if (before.st_size, before.st_mtime_ns) != (after.st_size, after.st_mtime_ns) or helpers.digest(source) != index['source']['sha256']:
@@ -254,12 +290,18 @@ def extract(index_path, directory_path, root):
     report = dict(source=index['source'], source_sha256=SHA, record_index=str(index_path),
         record_index_sha256=helpers.digest(index_path), directory_manifest=str(directory_path),
         directory_manifest_sha256=helpers.digest(directory_path), schema=descriptors, constructor=defaults, native_default_model=model,
-        packages=packages, selected_class3=links, dependencies=dependencies, ghidra_exports=exports,
+        packages=packages, selected_class3=links if class_type == 3 else [],
+        selected_presets=links, selection=dict(class_type=class_type,preset_id=preset_id,gender=gender),
+        resource_only=resource_only, runtime_admitted=False,
+        dependencies=dependencies, ghidra_exports=exports,
         limits=['Derived row fields precede inherited fields; exact observed six-field layout, complete body consumption and references checked.',
-            'Unique class-3 links in these current tables; active engine cache and F/M byte conversion are not executed here.',
+            'Unique selected class/preset links in these exact archive tables; active engine cache is not observed.',
             'Omitted float/voice values use reviewed native constructor; omitted integer CDO defaults stay explicitly unresolved.',
             'Separate native_default_projection infers omitted integers from the explicit zero-allocation native model; it is not loaded-asset verification and does not change decoded values.',
             'No game, authorization, JSON output, complete producer or character creation.'])
+    if resource_only:
+        report['limits'][2:4] = ['Resource-only mode runs no native scenarios; every omitted field remains unresolved.',
+            'Resource layout/schema is historical SHA ' + SHA + '; no compatibility with a different EXE is asserted.']
     path = audit.save_snapshot(root / 'code-clues/release-creation-presets', report)
     return path, report
 
@@ -268,5 +310,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('record_index', type=Path); parser.add_argument('--directory', type=Path, required=True)
     parser.add_argument('--root', type=Path, default=Path('F:/PhoneExit Resources/Vampir'))
-    args = parser.parse_args(); path, report = extract(args.record_index, args.directory, args.root)
-    print(json.dumps(dict(report=str(path), selected=report['selected_class3'])))
+    parser.add_argument('--class-type', type=int, default=3)
+    parser.add_argument('--preset-id', type=int)
+    parser.add_argument('--gender', choices=('F', 'M'))
+    parser.add_argument('--resource-only', action='store_true')
+    args = parser.parse_args(); path, report = extract(args.record_index, args.directory, args.root,
+        class_type=args.class_type, preset_id=args.preset_id, gender=args.gender, resource_only=args.resource_only)
+    print(json.dumps(dict(report=str(path), selected=report['selected_presets'], resource_only=report['resource_only'])))

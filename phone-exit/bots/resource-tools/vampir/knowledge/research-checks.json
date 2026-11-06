@@ -3919,7 +3919,9 @@
         "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
         "phone-exit/bots/vampir-headless/console/index.html",
         "phone-exit/bots/vampir-headless/console/console.js",
-        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py"
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py",
+        "phone-exit/bots/vampir-headless/verify-account.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py"
       ]
     },
     {
@@ -4004,7 +4006,9 @@
         "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
         "phone-exit/bots/vampir-headless/console/index.html",
         "phone-exit/bots/vampir-headless/console/console.js",
-        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py"
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py",
+        "phone-exit/bots/vampir-headless/verify-account.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py"
       ]
     },
     {
@@ -4398,7 +4402,9 @@
         "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
         "phone-exit/bots/test_vampir_nid_browser.py",
         "phone-exit/bots/test_vampir_account_console.py",
-        "phone-exit/bots/test_vampir_selected_game_login.py"
+        "phone-exit/bots/test_vampir_selected_game_login.py",
+        "phone-exit/bots/vampir-headless/verify-account.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py"
       ]
     },
     {
@@ -4487,7 +4493,8 @@
         "phone-exit/bots/test_vampir_account_console.py",
         "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py",
         "phone-exit/bots/vampir-shared/vampir_core/nid_google.py",
-        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py"
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py",
+        "phone-exit/bots/vampir-headless/verify-account.py"
       ]
     },
     {
@@ -12411,7 +12418,10 @@
         "phone-exit/bots/test_vampir_bot_device_settings.py",
         "phone-exit/bots/test_vampir_character_connections.py",
         "phone-exit/bots/test_vampir_device_templates.py",
-        "phone-exit/bots/vampir-headless/start-account-console.ps1"
+        "phone-exit/bots/vampir-headless/start-account-console.ps1",
+        "phone-exit/bots/test_vampir_creation_resource_selection.py",
+        "phone-exit/bots/resource-tools/vampir/extract-release-creation-presets.py",
+        "phone-exit/bots/resource-tools/vampir/decode-canvas-slots.py"
       ],
       "artifact_dependencies": []
     },
@@ -12622,6 +12632,42 @@
       "candidate_bridge_profiles": {
         "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "candidate-proof-bridges-current.json"
       }
+    },
+    {
+      "id": "creation-resource-selection",
+      "questions": [
+        "character-creation-resource-selection"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_creation_resource_selection.py",
+      "timeout_seconds": 60,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/extract-release-appearance-resources.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-ui.py",
+        "phone-exit/bots/resource-tools/vampir/decode-package-references.py",
+        "phone-exit/bots/resource-tools/vampir/decode-canvas-slots.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/rfnext/scan-pak.py",
+        "phone-exit/bots/resource-tools/vampir/recover-pak-game-config.py",
+        "phone-exit/bots/resource-tools/vampir/recover-release-game-config.py",
+        "phone-exit/bots/resource-tools/vampir/extract-release-creation-presets.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-archive-input.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-nested-read-thunk.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/replay-release-preset-object.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-0c0270dde1c5/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-2e4ce3671ec8/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-3cb7258f777e/details.json"
+      ]
     }
   ]
 }

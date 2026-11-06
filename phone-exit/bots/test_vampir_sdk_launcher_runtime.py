@@ -361,7 +361,13 @@ class VerificationWebTests(unittest.TestCase):
         store.accounts.return_value = []
         store.credential.return_value = ('fixture@vampir.top', 'saved-password', {})
         runner = Mock()
-        first, second = SimpleNamespace(source_sha256='fixture'), SimpleNamespace(source_sha256='fixture')
+        from vampir_core.gmc2_context import SdkInputs, Gmc2Geo, LATEST_SOURCE_SHA256
+        import time
+        def fresh_inputs():
+            return SdkInputs('fixture@vampir.top', SimpleNamespace(), {}, {}, 'fixture', None,
+                LATEST_SOURCE_SHA256,
+                Gmc2Geo('1.1.1.1', 'UA', 'UA', 'fixture-body', LATEST_SOURCE_SHA256), time.monotonic())
+        first, second = fresh_inputs(), fresh_inputs()
         runner.load_inputs.side_effect = [first, second]
         def sign_in(email, **kwargs):
             kwargs['_progress']('nid_browser')

@@ -9116,6 +9116,40 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Живой первый SDK-вход через новую кнопку на другом новом аккаунте; текущая причина EU lobby IsInspect; обработка доступных условий."
+    },
+    {
+      "addresses": [
+        "0x1454d6800"
+      ],
+      "checks": [
+        {
+          "cache_key": "d1189b5b3bdd0af911f67c8969f610f28f825ce667b9f5b58619ae21affd677a",
+          "id": "creation-resource-selection",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d3bf90138e11e6753af0d489f54509bc5f065bdaeccbac50f3109c021921463a\\manifest.json",
+          "sha256": "d3bf90138e11e6753af0d489f54509bc5f065bdaeccbac50f3109c021921463a",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Параметризовано извлечение точных preset resources по class_type / preset_id / F-M. Из installed pakchunk100 SHA58eb7e06 извлечены обе ссылки Viper type1 / ID1 и полные assets; omitted поля остаются unknown в resource-only режиме без native сценариев.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-VIPER-RESOURCES.md",
+          "sha256": "22f0500b047b6571c652471865aa7332bad300f9e6e9dc401cbe02148c062709"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "9fc14f0563b5b1380f16dd8fb4d963dcb16b4f5d09ee81c437b40abdd0f9719b",
+      "limits": [
+        "Native schema root относится к сохранённому EXE98802d55, не к текущему EXE.",
+        "Resource extraction report отдельно фиксирует before/after полный SHA PAK; scoped source check не перепроверяет installed PAK после сохранённого извлечения.",
+        "Runtime Create103/104/consumer/defaults и реальный сервер не проверены; никакого допуска создания Viper."
+      ],
+      "method": "static",
+      "next_check": "Перенести source-bound producer/consumer и defaults текущего EXE до создания Viper; использовать готовые точные asset SHA без повторной декомпиляции.",
+      "question": "character-creation-resource-selection",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Текущие native defaults / ClassInfo и preset consumers, перенос packet103/104, live server acceptance.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,
