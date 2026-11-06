@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "recipe": "quest-labels-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "named_baseline": {
+    "path": "F:/PhoneExit Resources/Vampir/knowledge/resource-named-baselines-v1/43204e85a3d2c4f5bb11581264688ca7f1b1502206f59d36f70fd1145a55cc2d/manifest.json",
+    "sha256": "43204e85a3d2c4f5bb11581264688ca7f1b1502206f59d36f70fd1145a55cc2d"
+  },
+  "dispatch_proof": {
+    "path": "F:/PhoneExit Resources/Vampir/knowledge/quest-sync-dispatch-proofs-v1/3529b7334c6541b349b0bc8f7cd2f8457d2e0036eecc8e4f8805cc2455bc60eb/manifest.json",
+    "sha256": "3529b7334c6541b349b0bc8f7cd2f8457d2e0036eecc8e4f8805cc2455bc60eb"
+  },
+  "receiver": "0x145d84e70",
+  "producer": "0x145d72d80",
+  "wrapper_prefix": "0x145de69f0",
+  "prefix_hex": "40555641544155488d6c24b84881ec480100004c8bea488955784c8be1488d5578488d4de0",
+  "key_rule": {
+    "receiver_load_offset": 186,
+    "receiver_load_hex": "488b5308",
+    "receiver_call_offset": 202,
+    "producer_literal_offset": 36,
+    "producer_result_offset": 66,
+    "producer_result_hex": "488bf8",
+    "producer_store_offset": 1024,
+    "producer_store_hex": "48897d6f",
+    "producer_call_offset": 1032,
+    "prefix_call_offset": 37
+  },
+  "tables": {
+    "Quest": "ProjectRED/Content/RED/Data/CSV/Quest.csv",
+    "QuestNamesRu": "ProjectRED/Content/RED/Data/CSV/L10N/ru/Quest_Name.csv"
+  },
+  "expected_table_sha256": {
+    "Quest": "f9b941f557103b79918b362aaeec0c50796631dedf1d5b6ab4d4092651ba74c2",
+    "QuestNamesRu": "c0215204ed57b9eec79f527a66935392a9a493cc624ad0d7aee019f1c46b5577"
+  },
+  "limits": [
+    "Key identity and exact Russian catalog only; no active quest/task inference, dialogue observation or outgoing commands.",
+    "Wrapper scope is the explicit forwarding prefix, not the complete chained constructor."
+  ],
+  "receiver_export": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-7cf92fb27528\\details.json",
+    "sha256": "8638e05af7b70e50a0a053558d3de896b79e01e9b5cb54d4c0ad5376c75d1807"
+  },
+  "producer_export": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-1cfc2fd949df\\details.json",
+    "sha256": "c8933f681d27d4ed43cf9d5d913efdabd294db865c1174a1005c522e524e7dd2"
+  },
+  "observation_proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-observation-current-v1\\496131426fd59ec4e30b36a04ab7c3b2bbadd45df34fb92e0a484f118dc599d2\\manifest.json",
+    "sha256": "496131426fd59ec4e30b36a04ab7c3b2bbadd45df34fb92e0a484f118dc599d2"
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "scope": "quest_labels_only",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-labels-current-v1\\d094de52ebf4a5f2690fe5ea42fce0f7693fe603cd345e19661bc68ba4aa6c28\\manifest.json",
+    "sha256": "d094de52ebf4a5f2690fe5ea42fce0f7693fe603cd345e19661bc68ba4aa6c28"
+  },
+  "names": 1341,
+  "ambiguous_ids": 12,
+  "tables": {
+    "Quest": {
+      "bytes": 84629,
+      "canonical_path": "ProjectRED/Content/RED/Data/CSV/Quest.csv",
+      "file": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\f9b941f557103b79918b362aaeec0c50796631dedf1d5b6ab4d4092651ba74c2.csv",
+      "header": [
+        "Id",
+        "PreQuestId",
+        "Type",
+        "Epic",
+        "SequenceId",
+        "Img",
+        "RecommendLevel",
+        "RequireCharacterLv",
+        "RequireCompleteQuestInfoId",
+        "ContentsLockInfoId",
+        "BeforeStartInstance",
+        "StartRunInInstance",
+        "HideInstanceExitButton",
+        "FinishRunInInstance",
+        "QuestInitParam",
+        "RewardGroupId1",
+        "RewardGroupId2",
+        "RewardGroupId3",
+        "RewardGroupId4",
+        "RewardGroupId5",
+        "Retryable",
+        "ServerServiceGroupId"
+      ],
+      "rows": 1353,
+      "sha256": "f9b941f557103b79918b362aaeec0c50796631dedf1d5b6ab4d4092651ba74c2"
+    },
+    "QuestNamesRu": {
+      "bytes": 664968,
+      "canonical_path": "ProjectRED/Content/RED/Data/CSV/L10N/ru/Quest_Name.csv",
+      "file": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\c0215204ed57b9eec79f527a66935392a9a493cc624ad0d7aee019f1c46b5577.csv",
+      "header": [
+        "Id",
+        "Name",
+        "Desc",
+        "Desc2",
+        "DescObjective",
+        "QuestAddInfoValue",
+        "L10NOrder",
+        "L10NRegistrationDate",
+        "Untranslated"
+      ],
+      "rows": 1691,
+      "sha256": "c0215204ed57b9eec79f527a66935392a9a493cc624ad0d7aee019f1c46b5577"
+    }
+  },
+  "key_binding": {
+    "active_task_verified": false,
+    "producer": "0x145d72d80",
+    "property": "QuestInfoId",
+    "receiver": "0x145d84e70",
+    "scope": "incoming_key_shared_lookup_prefix",
+    "shared_lookup": "0x145b4bf30",
+    "wrapper_prefix": "0x145de69f0"
+  },
+  "shared_catalog": true,
+  "source_check": {
+    "id": "quest-labels-current",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\da8cc3768c34fe1b5794c6da1ba801c10317a326fa7f7404c62fa7d07a89ee2b\\manifest.json",
+    "sha256": "da8cc3768c34fe1b5794c6da1ba801c10317a326fa7f7404c62fa7d07a89ee2b",
+    "cache_key": "890a987b4d91a3599fd6410b9edb17f262f3970e2950ca01afaf0973f13da12f"
+  },
+  "tooling_check": {
+    "id": "automatic-update-tooling",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\d485e278a64f56e93a47bc4ba89701f3234b5002e131a50c6aebc1080aa1a1ba\\manifest.json",
+    "sha256": "d485e278a64f56e93a47bc4ba89701f3234b5002e131a50c6aebc1080aa1a1ba",
+    "cache_key": "76a7322217cf83b6469a1189d485a62bbf9d8379ec6bae005e67b68483872bd8",
+    "source_scope": "tooling",
+    "proves_client_compatibility": false
+  },
+  "aggregate": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\0242273460bac02fc30df72526cfb4bacce5846b48528b41f6ea7c2ca0571a78\\manifest.json",
+    "sha256": "0242273460bac02fc30df72526cfb4bacce5846b48528b41f6ea7c2ca0571a78"
+  },
+  "groups": 65,
+  "tests_run": 2299,
+  "skipped": 4,
+  "ordinary_update_warm": {
+    "seconds": 31.059,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\9360fa6e3a03daf140b85a9f844dea64e6953c04e11eb6fb9c571be658b08856\\manifest.json",
+    "sha256": "9360fa6e3a03daf140b85a9f844dea64e6953c04e11eb6fb9c571be658b08856"
+  },
+  "collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\9663ce7a520b11e75e096def303a48df41363b78b26b35dd339cb01935c06b66\\manifest.json",
+    "sha256": "9663ce7a520b11e75e096def303a48df41363b78b26b35dd339cb01935c06b66"
+  },
+  "collection_new_jvm": 0,
+  "missing_exports_collected": 1,
+  "native_execution_repeated": false,
+  "delivery": {
+    "next_panel_generation_asset_verified": true,
+    "generated_sha256": "22c30fd2c9662e60821ee00ca13e8b85f5bb0065d2603c48ae286b1594348a7c",
+    "running_panel_restarted": false,
+    "restart_status": "rejected_by_automatic_permission_review",
+    "rejection_reason": "Command blocked by policy; no further reason supplied.",
+    "running_panel_delivery_verified": false
+  },
+  "online": {
+    "character": "Bipoberiho",
+    "state": "connected",
+    "session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+    "same_session": true,
+    "connection_preserved": true,
+    "hp": 2700,
+    "mp": 2000,
+    "level": 1,
+    "new_observer_loaded": false,
+    "current_quest_names_observed": false,
+    "game_commands_sent": false
+  },
+  "current_dialogues_verified": false,
+  "current_outgoing_actions_admitted": false,
+  "fixture_coverage": [
+    "qualified_current_and_legacy_names",
+    "unknown_source_and_id_fallback",
+    "ambiguous_and_untranslated_fallback",
+    "shared_live_model_projection_with_synthetic_snapshot",
+    "immutable_label_records",
+    "tampered_binding_scope_or_table_rejected",
+    "unchanged_no_cold_replay"
+  ],
+  "limits": [
+    "Подтверждены входящий ключ, именованные payloads и каталог текущего SHA; активный шаг и диалог не доказаны.",
+    "Существующий игровой owner сохраняет прежний пакет; стартовые тела квестов не были сохранены.",
+    "Проекция квеста в тесте синтетическая, а не ответ настоящего сервера.",
+    "Автоматический поиск контекста следующего EXE и публикация изменившихся текстов остаются открытыми.",
+    "Проверен снимок следующего запуска панели; доставка в работающую панель ожидает её перезапуска.",
+    "Tooling и проверка знаний не дают игрового допуска."
+  ]
+}

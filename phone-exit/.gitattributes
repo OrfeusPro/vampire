@@ -897,3 +897,12 @@ bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-AUTOMATION-CURRENT-VA
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-OBSERVATION-CURRENT-RESULT.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-AUTOMATION-CURRENT.md text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-AUTOMATION-VISUAL-CHECK.json text eol=lf
+
+bots/resource-tools/vampir/verify-quest-labels-current.py text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/quest-labels-current.json text eol=lf
+bots/test_vampir_quest_labels_current.py text eol=lf
+bots/vampir/ui-prototype/quest-names-current.js text eol=lf
+
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-LABELS-CURRENT-VALIDATION.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-LABELS-CURRENT-RESULT.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-LABELS-CURRENT.md text eol=lf

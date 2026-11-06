@@ -25,6 +25,7 @@ PACKAGES = {
     'initial-stats-current': 'verify-initial-stats-current',
     'stat-notifications-current': 'verify-stat-notifications-current',
     'quest-observation-current': 'verify-quest-observation-current',
+    'quest-labels-current': 'verify-quest-labels-current',
 }
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 PROFILE_SCOPES = {
@@ -63,7 +64,7 @@ def material(index, root, sha, identifier):
     report = index.read_json(path)
     derived = identifier in ('lobby-results-current', 'viper-appearance-current', 'create-producer-current',
                              'viper-creation-current', 'world-results-current',
-                             'initial-stats-current', 'stat-notifications-current', 'quest-observation-current')
+                             'initial-stats-current', 'stat-notifications-current', 'quest-observation-current', 'quest-labels-current')
     if (report.get('recipe') != verifier.RECIPE or report.get('source_sha256') != sha
             or report.get('native_execution') is not (not derived)
             or (derived and report.get('native_proofs_reused') is not True)
@@ -97,7 +98,7 @@ def runtime_inputs(index, root, report, identifier):
             runtime.add(Path(index.INSTALL).resolve().parents[2] /
                         ('Saved/PersistentDownloadDir/Patch/Install/pakchunk' + number + '-Windows.pak'))
     runtime.update(path.resolve() for path in index.extension('native-publication-v2').runtime_files())
-    if identifier == 'quest-observation-current':
+    if identifier in ('quest-observation-current','quest-labels-current'):
         proof=index.read_json(pointer['path'])
         inherited=proof['definition'].get('runtime_inputs',{})
         if (not inherited or any(retained.get(name)!=expected for name,expected in inherited.items())
@@ -106,6 +107,13 @@ def runtime_inputs(index, root, report, identifier):
                     and Path(name).resolve().parent!=Path('C:/Windows/System32') for name in inherited)):
             raise ValueError('Quest observation inherited runtime differs')
         runtime.update(Path(name).resolve() for name in inherited)
+        if identifier == 'quest-labels-current':
+            archive=Path(proof['definition']['source']['path']).resolve()
+            expected_archive=(Path(index.INSTALL).resolve().parents[2]/
+                'Saved/PersistentDownloadDir/Patch/Install/pakchunk1-Windows.pak')
+            if archive!=expected_archive or retained.get(str(archive))!=proof['definition']['source']['sha256']:
+                raise ValueError('Quest label archive identity differs')
+            runtime.add(archive)
     return {name: expected for name, expected in retained.items() if Path(name).resolve() in runtime}
 
 

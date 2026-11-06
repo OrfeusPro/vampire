@@ -4376,6 +4376,48 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Current live observation in the new owner, current Russian text/dialogue binding and outgoing selected-step provider with authoritative result correlation remain open.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x145d72d80",
+        "0x145d84e70"
+      ],
+      "checks": [
+        {
+          "cache_key": "890a987b4d91a3599fd6410b9edb17f262f3970e2950ca01afaf0973f13da12f",
+          "id": "quest-labels-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\da8cc3768c34fe1b5794c6da1ba801c10317a326fa7f7404c62fa7d07a89ee2b\\manifest.json",
+          "sha256": "da8cc3768c34fe1b5794c6da1ba801c10317a326fa7f7404c62fa7d07a89ee2b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Проверена связь QuestInfoId текущего QuestSync receiver через общий forwarding lookup и точные именованные CSV. Общий прототип поддерживает 1341 русское название на текущем SHA с повторным использованием неизменных строк. Штатный on_update, отдельная tooling группа и неизменный компонентный повтор проверены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-LABELS-CURRENT-VALIDATION.json",
+          "sha256": "de043fc2f2e44b7071dab7bd7e6f623d3b05160b2f2d02279cb095c1f6728b4c"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-LABELS-CURRENT.md",
+          "sha256": "aa8dfdd033bc2d009e4f847a1bd2d858534123be215ff6a2f95d582519a1b4da"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "8456304ef3fb2c93982b45a716a0d1576f57bafcadb9a1ea900d2e5a16afdcd4",
+      "limits": [
+        "Подтверждены входящий ключ, именованные payloads и каталог текущего SHA; активный шаг и диалог не доказаны.",
+        "Существующий игровой owner сохраняет прежний пакет; стартовые тела квестов не были сохранены.",
+        "Проекция квеста в тесте синтетическая, а не ответ настоящего сервера.",
+        "Автоматический поиск контекста следующего EXE и публикация изменившихся текстов остаются открытыми.",
+        "Проверен снимок следующего запуска панели; доставка в работающую панель ожидает её перезапуска.",
+        "Tooling и проверка знаний не дают игрового допуска."
+      ],
+      "method": "static",
+      "next_check": "Сохранить текущую игровую сессию. Применить каталог при следующем запуске панели; продолжить source-bound диалоги и provider выбранного шага по готовым экспортам.",
+      "question": "quest-labels-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Автоперенос контекста следующего SHA, доставка каталога в работающую панель, настоящие диалоги и provider выбранного шага с подтверждением результата остаются открытыми.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

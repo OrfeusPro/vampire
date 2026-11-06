@@ -1,0 +1,8 @@
+/* Generated current quest labels; verify-quest-labels-current.py. No game actions. */
+(function(root){'use strict';const base=root.VampirQuestNamesRu;
+if(!base||base.sourceSha256!=="d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"){if(typeof module!=='undefined')module.exports=null;return;}
+const source="03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",metadata=Object.freeze({"source_sha256":"03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f","archive_sha256":"2f2517ff83865ac13021f96d9babd8407e4fbee512ff29806106844e5d7d7ed3","tables":{"Quest":{"canonical_path":"ProjectRED/Content/RED/Data/CSV/Quest.csv","sha256":"f9b941f557103b79918b362aaeec0c50796631dedf1d5b6ab4d4092651ba74c2","rows":1353},"QuestNamesRu":{"canonical_path":"ProjectRED/Content/RED/Data/CSV/L10N/ru/Quest_Name.csv","sha256":"c0215204ed57b9eec79f527a66935392a9a493cc624ad0d7aee019f1c46b5577","rows":1691}},"scope":"quest_labels_only","shared_catalog":true});
+if(!(base.count===1341&&base.metadata?.tables?.Quest?.sha256==="f9b941f557103b79918b362aaeec0c50796631dedf1d5b6ab4d4092651ba74c2"&&base.metadata?.tables?.QuestNamesRu?.sha256==="c0215204ed57b9eec79f527a66935392a9a493cc624ad0d7aee019f1c46b5577")){if(typeof module!=='undefined')module.exports=null;return;}
+const api=Object.freeze({...base,currentSourceSha256:source,metadataBySource:Object.freeze({[base.sourceSha256]:base.metadata,[source]:metadata}),
+get(id,sha=base.sourceSha256){if(sha!==source)return base.get(id,sha);return base.get(id,base.sourceSha256);}});
+root.VampirQuestNamesRu=api;if(typeof module!=='undefined')module.exports=api;})(typeof window==='undefined'?globalThis:window);

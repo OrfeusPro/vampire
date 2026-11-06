@@ -5,6 +5,7 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_quest_labels_current',
     'test_vampir_quest_observation_current',
     'test_vampir_quest_automation',
     'test_vampir_quest_automation_owner',

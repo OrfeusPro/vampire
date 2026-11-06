@@ -1637,6 +1637,25 @@
         "evidence/quests/HEADLESS-QUEST-AUTOMATION-CURRENT.md",
         "evidence/quests/QUEST-AUTOMATION-VISUAL-CHECK.json"
       ]
+    },
+    {
+      "id": "quest-labels-current",
+      "status": "open",
+      "question": "Как связать входящий квестовый ID текущего SHA с проверенными русскими таблицами и переиспользовать неизменные тексты в общем прототипе?",
+      "known": "Проверены current key forwarding prefix, именованный PAK и 1341 русское название; 12 неоднозначных ID остаются неизвестными. Общие неизменные строки используются на source03edad после нового доказательства. On_update и 65 tooling групп (2299 tests, 4 skips) прошли; неизменный повтор не создаёт процессы и не исполняет native сценарии.",
+      "unknown": "Автоперенос контекста следующего SHA, доставка каталога в работающую панель, настоящие диалоги и provider выбранного шага с подтверждением результата остаются открытыми.",
+      "next_action": "Сохранить текущую игровую сессию. Применить каталог при следующем запуске панели; продолжить source-bound диалоги и provider выбранного шага по готовым экспортам.",
+      "decision_rule": "Совпадение имени, адреса или CSV schema не даёт допуска. Нужны полный SHA, named directory identity/payload, источник входящего ID и сохранённая проверка. Диалог и выполнение квеста остаются отдельными возможностями.",
+      "do_not_repeat": "Переиспользовать готовый QuestSync export и decoded CSV. Не переподключать персонажа и не исполнять прежние native сценарии ради текстов.",
+      "addresses": [
+        "0x145d84e70",
+        "0x145d72d80"
+      ],
+      "evidence": [
+        "evidence/quests/QUEST-LABELS-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-LABELS-CURRENT-RESULT.json",
+        "evidence/quests/HEADLESS-QUEST-LABELS-CURRENT.md"
+      ]
     }
   ]
 }
