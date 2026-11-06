@@ -1,0 +1,475 @@
+{
+  "schema": 1,
+  "recipe": "sdk-fetch-current-static-v1",
+  "baseline": {
+    "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+    "source": "client-code-snapshots/98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e/ProjectRED-Win64-Shipping.exe",
+    "request": "0x1444e8890",
+    "response": "0x1444ca990",
+    "exports": [
+      {
+        "path": "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-1b2b935daa62/details.json",
+        "sha256": "fc36502fde60719b09bcbaef04f5fdb21ae45e078f6f50a906c76815896d957b"
+      },
+      {
+        "path": "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-3380a52fff6d/details.json",
+        "sha256": "7b0307a30a6cc0b33c1149c956e12a0c822fa8f54a6b4299fbd07c429ad518aa"
+      }
+    ]
+  },
+  "target": {
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "source": "client-code-snapshots/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/ProjectRED-Win64-Shipping.exe",
+    "request": "0x1444e7b80",
+    "response": "0x1444c9c80",
+    "exports": [
+      {
+        "path": "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-74606681db58/details.json",
+        "sha256": "e81bbb5d28ebd4a416c8d936d9cf3642e23241cf5e6ad43dc398dfd43501b926"
+      }
+    ]
+  },
+  "scope_initializer": {
+    "entry": "0x1411b0620",
+    "literal": "0x14952e0d0",
+    "constructor": "0x141426b90",
+    "cleanup": "0x1487ec32c",
+    "bytes": "4883ec28488d15a5da3708488d0dde453b0ae859652700488d0db2de75074883c428e9e5bc6307",
+    "global": "0x14b564c10"
+  },
+  "contract": {
+    "endpoint": "v1/fetch-player",
+    "scope": "channel",
+    "endpoint_literal": "0x1495320b0",
+    "channel_literal": "0x1495320a0",
+    "auth_literal": "0x149531c80",
+    "credential_global": "0x14b564ba0",
+    "scope_global": "0x14b564c10",
+    "error_global": "0x14b564c20",
+    "result_global": "0x14b564c70",
+    "callback": "0x1444deed0",
+    "transport": "0x144522df0",
+    "object_builder": "0x1444c2530",
+    "serializer": "0x144488fb0",
+    "auth_getter": "0x14455a200",
+    "presence_getter": "0x14447de00",
+    "text_getter": "0x14447d750",
+    "object_getter": "0x14447d070",
+    "dispatcher": "0x1444e4bf0",
+    "instruction_windows": {
+      "credential-virtual8-body-pairs": {
+        "root": "0x1444e7b80",
+        "instructions": [
+          {
+            "offset": 912,
+            "bytes": "488b01"
+          },
+          {
+            "offset": 915,
+            "bytes": "488d95e0000000"
+          },
+          {
+            "offset": 922,
+            "bytes": "ff5008"
+          },
+          {
+            "offset": 925,
+            "bytes": "488bd0"
+          },
+          {
+            "offset": 928,
+            "bytes": "488d4df0"
+          },
+          {
+            "offset": 932,
+            "bytes": "e857d5f8ff"
+          },
+          {
+            "offset": 937,
+            "bytes": "488d0570cc0707"
+          },
+          {
+            "offset": 944,
+            "bytes": "48894520"
+          },
+          {
+            "offset": 948,
+            "bytes": "488d1565a10405"
+          },
+          {
+            "offset": 955,
+            "bytes": "488d45f0"
+          },
+          {
+            "offset": 959,
+            "bytes": "488d4de0"
+          },
+          {
+            "offset": 963,
+            "bytes": "48894528"
+          },
+          {
+            "offset": 967,
+            "bytes": "e8e4def8ff"
+          },
+          {
+            "offset": 972,
+            "bytes": "488d05bdcc0707"
+          },
+          {
+            "offset": 979,
+            "bytes": "48894530"
+          },
+          {
+            "offset": 983,
+            "bytes": "488d55d0"
+          },
+          {
+            "offset": 987,
+            "bytes": "488d45e0"
+          },
+          {
+            "offset": 991,
+            "bytes": "48894538"
+          },
+          {
+            "offset": 995,
+            "bytes": "488d8d50010000"
+          },
+          {
+            "offset": 1002,
+            "bytes": "488d4520"
+          },
+          {
+            "offset": 1006,
+            "bytes": "488945d0"
+          },
+          {
+            "offset": 1010,
+            "bytes": "488d4540"
+          },
+          {
+            "offset": 1014,
+            "bytes": "488945d8"
+          },
+          {
+            "offset": 1018,
+            "bytes": "e8b1a5fdff"
+          }
+        ]
+      },
+      "authurl-lookup": {
+        "root": "0x1444e7b80",
+        "instructions": [
+          {
+            "offset": 1180,
+            "bytes": "488d155d9c0405"
+          },
+          {
+            "offset": 1187,
+            "bytes": "488d8dd0000000"
+          },
+          {
+            "offset": 1194,
+            "bytes": "4c89642438"
+          },
+          {
+            "offset": 1199,
+            "bytes": "4c89642440"
+          },
+          {
+            "offset": 1204,
+            "bytes": "e877e9f3fc"
+          },
+          {
+            "offset": 1209,
+            "bytes": "488bd0"
+          },
+          {
+            "offset": 1212,
+            "bytes": "4c8d442438"
+          },
+          {
+            "offset": 1217,
+            "bytes": "488bcb"
+          },
+          {
+            "offset": 1220,
+            "bytes": "e8b7210700"
+          }
+        ]
+      },
+      "endpoint-suffix": {
+        "root": "0x1444e7b80",
+        "instructions": [
+          {
+            "offset": 1692,
+            "bytes": "e8780a3104"
+          },
+          {
+            "offset": 1697,
+            "bytes": "41b80f000000"
+          },
+          {
+            "offset": 1703,
+            "bytes": "488d15829e0405"
+          },
+          {
+            "offset": 1710,
+            "bytes": "488d4c2458"
+          },
+          {
+            "offset": 1715,
+            "bytes": "e8f8a2f4fc"
+          }
+        ]
+      },
+      "request-callback-and-transport": {
+        "root": "0x1444e7b80",
+        "instructions": [
+          {
+            "offset": 1930,
+            "bytes": "e8d1300400"
+          },
+          {
+            "offset": 1935,
+            "bytes": "4885db"
+          },
+          {
+            "offset": 1938,
+            "bytes": "7404"
+          },
+          {
+            "offset": 1940,
+            "bytes": "f0ff430c"
+          },
+          {
+            "offset": 1944,
+            "bytes": "488d0d91d36004"
+          },
+          {
+            "offset": 1951,
+            "bytes": "48c785a000000000000000"
+          },
+          {
+            "offset": 1962,
+            "bytes": "48898db0000000"
+          },
+          {
+            "offset": 1969,
+            "bytes": "4c8d4d10"
+          },
+          {
+            "offset": 1973,
+            "bytes": "488d0d946bffff"
+          },
+          {
+            "offset": 1980,
+            "bytes": "4c89bdb8000000"
+          },
+          {
+            "offset": 1987,
+            "bytes": "48898d90000000"
+          },
+          {
+            "offset": 1994,
+            "bytes": "4c8d442458"
+          },
+          {
+            "offset": 1999,
+            "bytes": "488d8d90000000"
+          },
+          {
+            "offset": 2006,
+            "bytes": "4c89a5c0000000"
+          },
+          {
+            "offset": 2013,
+            "bytes": "48894c2420"
+          },
+          {
+            "offset": 2018,
+            "bytes": "488d542448"
+          },
+          {
+            "offset": 2023,
+            "bytes": "488bc8"
+          },
+          {
+            "offset": 2026,
+            "bytes": "48899dc8000000"
+          },
+          {
+            "offset": 2033,
+            "bytes": "e87aaa0300"
+          }
+        ]
+      },
+      "errorCode-presence-text-wtoi": {
+        "root": "0x1444c9c80",
+        "instructions": [
+          {
+            "offset": 1212,
+            "bytes": "488d15ddaa0907"
+          },
+          {
+            "offset": 1219,
+            "bytes": "488d8db8000000"
+          },
+          {
+            "offset": 1226,
+            "bytes": "e8b13cfbff"
+          },
+          {
+            "offset": 1231,
+            "bytes": "84c0"
+          },
+          {
+            "offset": 1233,
+            "bytes": "0f84f5010000"
+          },
+          {
+            "offset": 1239,
+            "bytes": "4c8d05c2aa0907"
+          },
+          {
+            "offset": 1246,
+            "bytes": "488d95a8000000"
+          },
+          {
+            "offset": 1253,
+            "bytes": "488d8db8000000"
+          },
+          {
+            "offset": 1260,
+            "bytes": "e8df35fbff"
+          },
+          {
+            "offset": 1265,
+            "bytes": "488d9598000000"
+          },
+          {
+            "offset": 1272,
+            "bytes": "488bc8"
+          },
+          {
+            "offset": 1275,
+            "bytes": "e8c031fbff"
+          },
+          {
+            "offset": 1280,
+            "bytes": "44396008"
+          },
+          {
+            "offset": 1284,
+            "bytes": "7405"
+          },
+          {
+            "offset": 1286,
+            "bytes": "488b08"
+          },
+          {
+            "offset": 1289,
+            "bytes": "eb07"
+          },
+          {
+            "offset": 1291,
+            "bytes": "488d0da2aa5104"
+          },
+          {
+            "offset": 1298,
+            "bytes": "ff15184a4d04"
+          },
+          {
+            "offset": 1304,
+            "bytes": "488b8d98000000"
+          },
+          {
+            "offset": 1311,
+            "bytes": "4c63e8"
+          }
+        ]
+      },
+      "http200-206-gate": {
+        "root": "0x1444c9c80",
+        "instructions": [
+          {
+            "offset": 1736,
+            "bytes": "4c8b6da0"
+          },
+          {
+            "offset": 1740,
+            "bytes": "418d8538ffffff"
+          },
+          {
+            "offset": 1747,
+            "bytes": "83f806"
+          },
+          {
+            "offset": 1750,
+            "bytes": "0f865c010000"
+          }
+        ]
+      },
+      "resultData-optional-object": {
+        "root": "0x1444c9c80",
+        "instructions": [
+          {
+            "offset": 2104,
+            "bytes": "488d15b1a70907"
+          },
+          {
+            "offset": 2111,
+            "bytes": "4c89642440"
+          },
+          {
+            "offset": 2116,
+            "bytes": "488d8db8000000"
+          },
+          {
+            "offset": 2123,
+            "bytes": "4c89642448"
+          },
+          {
+            "offset": 2128,
+            "bytes": "e82b39fbff"
+          },
+          {
+            "offset": 2133,
+            "bytes": "84c0"
+          },
+          {
+            "offset": 2135,
+            "bytes": "0f846c010000"
+          },
+          {
+            "offset": 2141,
+            "bytes": "4c8d058ca70907"
+          },
+          {
+            "offset": 2148,
+            "bytes": "488d9528010000"
+          },
+          {
+            "offset": 2155,
+            "bytes": "488d8db8000000"
+          },
+          {
+            "offset": 2162,
+            "bytes": "e8792bfbff"
+          }
+        ]
+      }
+    }
+  },
+  "reuse": {
+    "launcher": {
+      "path": "code-clues/launcher-contract-v1/46519b66e6a5671d103e9bad1ba4b36ce9593f4339415a4fa9550ef62a353571/manifest.json",
+      "sha256": "46519b66e6a5671d103e9bad1ba4b36ce9593f4339415a4fa9550ef62a353571"
+    },
+    "sdk_native": {
+      "path": "knowledge/sdk-batch-native-v1/d73b3f0e246fb4fe5c3765698a33311a43fb9ae7c10f5155466db3cc952759ec/manifest.json",
+      "sha256": "d73b3f0e246fb4fe5c3765698a33311a43fb9ae7c10f5155466db3cc952759ec"
+    }
+  }
+}

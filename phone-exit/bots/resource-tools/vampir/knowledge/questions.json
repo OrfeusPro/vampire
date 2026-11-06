@@ -1413,9 +1413,9 @@
       "id": "sdk-launcher-runtime-current",
       "status": "bounded_answer",
       "question": "Как связать текущие SDK и Launcher proofs с ограниченной runtime composition?",
-      "known": "SDK Launcher и официальные формы подтверждены на текущем SHA. Ручной NID-вход, проверка адреса и сохранённая очередь реализованы. Для Google подключён PCV2 внешний браузер, отдельный provider 29 и общий Netmarble SDK credential 33. Google-вход, регистрация устройства и снятие защиты подтверждены онлайн с ручными кодами; очередь завершилась. Привязка новой записи создаётся из наблюдённых ключей ПК. Общие постоянные устройства на два места, три ключа и имя регистрации реализованы в хранилище и панели; новые fingerprints не наследуют прежнюю верификацию. Продолжение device-registration/workplace выделено и подключено до lobby в том же SDK контексте без второй авторизации; проверены fixtures.",
-      "unknown": "Причина HTTP 400 с признаком CAPTCHA при автоматическом почтовом NID-входе, приёмка custom-шаблонов, Google через SOCKS и игровой вход. Первый Silvercrow на новом общем устройстве вернул SDK launcher SignIn HTTP400/1203 до форм; причина не установлена, текущий Fetch контракт ещё не перенесён.",
-      "next_action": "Закрыть текущий SDK Fetch контракт по сохранённым bounded candidate roots без интерпретации SignIn1203 как разрешения SignUp; отдельно продолжить игровой admission и Viper consumer. Готовые SDK/web proofs использовать через штатный кэш.",
+      "known": "SDK Launcher и официальные формы подтверждены на текущем SHA. Ручной NID-вход, проверка адреса и сохранённая очередь реализованы. Для Google подключён PCV2 внешний браузер, отдельный provider 29 и общий Netmarble SDK credential 33. Google-вход, регистрация устройства и снятие защиты подтверждены онлайн с ручными кодами; очередь завершилась. Привязка новой записи создаётся из наблюдённых ключей ПК. Общие постоянные устройства на два места, три ключа и имя регистрации реализованы в хранилище и панели; новые fingerprints не наследуют прежнюю верификацию. Продолжение device-registration/workplace выделено и подключено до lobby в том же SDK контексте без второй авторизации; проверены fixtures. Приватная ограниченная диагностика уточнила ответ Silvercrow: launcher/token success, launcher SignIn и read-only Fetch возвращают 1203 not exist player channel.",
+      "unknown": "Причина HTTP 400 с признаком CAPTCHA при автоматическом почтовом NID-входе, приёмка custom-шаблонов, Google через SOCKS и игровой вход. Для Silvercrow установлено отсутствие записи канала SDK; корневая причина отсутствия привязки и текущая подготовка первого SDK-профиля через Terms / SignUp / SignIn остаются открытыми.",
+      "next_action": "Перенести текущую подготовку первого SDK-профиля через штатный Fetch / Terms / SignUp / SignIn. Затем продолжить первый Silvercrow до мира перед группой остальных семи.",
       "decision_rule": "Готовые SDK 3667 native и Launcher static proofs переиспользовать после проверки полных SHA. Fixture composition не выдавать за live authentication или активацию профиля. Loader должен проверять каждый input при любом обращении.",
       "do_not_repeat": "Не повторять старые или текущие standalone SDK native матрицы без изменения входов.",
       "addresses": [
@@ -1437,7 +1437,8 @@
         "evidence/auth/HEADLESS-GOOGLE-MANUAL-VERIFICATION.md",
         "evidence/auth/HEADLESS-GOOGLE-MANUAL-VERIFICATION-LIVE.json",
         "evidence/auth/HEADLESS-SHARED-DEVICE-TEMPLATES.md",
-        "evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md"
+        "evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md",
+        "evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md"
       ]
     },
     {
@@ -1472,6 +1473,65 @@
       ],
       "evidence": [
         "evidence/characters/HEADLESS-CREATE-VIPER-RESOURCES.md"
+      ]
+    },
+    {
+      "id": "sdk-fetch-current-contract",
+      "status": "bounded_answer",
+      "question": "Как выполнить только чтение Fetch игрового SDK на текущем SHA с точным payload и ограниченным ответом?",
+      "known": "Текущие whole Fetch request / response и точный 39-байтовый scope fragment проверены статически. Отдельный неизменяемый read-only профиль и один Fetch Silvercrow вернули HTTP 400 / 1203: not exist player channel. NID и launcher/token приняты.",
+      "unknown": "Корневая причина отсутствия записи канала; текущая подготовка первого SDK-профиля через Terms / SignUp / SignIn ещё не перенесена. Полный callback lifetime и native JSON implementations за границами subset.",
+      "next_action": "Перенести штатный первый SDK-вход на текущий SHA по прежней подтверждённой цепочке. Не повторять Fetch для того же неизменного отказа и не выполнять SignUp по одному коду.",
+      "decision_rule": "Обязательны точный SHA, зарегистрированный ограниченный контракт и входы базового SDK. Не превращать 1203 SignIn в автоматический SignUp.",
+      "do_not_repeat": "Готовые SDK 3667 / Launcher proofs и Fetch exports использовать после проверки SHA.",
+      "addresses": [
+        "0x1444e7b80",
+        "0x1444c9c80"
+      ],
+      "evidence": [
+        "evidence/auth/HEADLESS-SDK-FETCH-CURRENT-COLLECT.md",
+        "evidence/auth/HEADLESS-SDK-FETCH-CURRENT-CONTRACT.md",
+        "evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md"
+      ]
+    },
+    {
+      "id": "viper-native-defaults-current",
+      "status": "bounded_answer",
+      "question": "Какие native defaults Viper и связанные ClassInfo/preset consumers подтверждены на текущем EXE?",
+      "known": "Три текущих whole constructors и 17 descriptor полей проверены. В 25 native сценариях семь float=.5 и voice=0, девять integer сохраняют poison. ClassInfo / selection exports собраны, consumer пока не исполнен.",
+      "unknown": "Текущие allocation / completion / CDO property-copy, ClassInfo/preset consumer и Create103/104 ещё нужны; integer defaults из одного конструктора не следуют.",
+      "next_action": "Использовать готовые current constructor proofs и ClassInfo exports; продолжить allocation/CDO и producer/consumer отдельным пакетом без повторного экспорта.",
+      "decision_rule": "Точный SHA и native сценарии текущего конструктора обязательны. Старые zero-allocation fixtures не выдавать за текущий loaded asset.",
+      "do_not_repeat": "Сохранённые F / M resources и прежние whole exports использовать после проверки полных SHA; не повторять неизменную полную creation матрицу.",
+      "addresses": [
+        "0x1454d5020",
+        "0x143b5ef20",
+        "0x1417cbdc0",
+        "0x145895b40",
+        "0x14142e750"
+      ],
+      "evidence": [
+        "evidence/characters/HEADLESS-CREATE-VIPER-RESOURCES.md",
+        "evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md"
+      ]
+    },
+    {
+      "id": "lobby-version-layout-current",
+      "status": "bounded_answer",
+      "question": "Как декодировать текущий ID 2 лобби с добавленными FString и двумя u32 без потери полей?",
+      "known": "Current whole constructor / reader / handler и clock setter исполнены с явными archive и metadata fixtures. Проверены восемь операций, 114 prefixes, 24 read failures и шесть handler ветвей. Новый отдельный portable тип сохраняет FString и два u32.",
+      "unknown": "Полные current wire string/time primitives, metadata validate/apply consumers и весь игровой candidate остаются открыты.",
+      "next_action": "Использовать текущий reader / decoder и готовый clock package; отдельно подтвердить metadata consumers и оставшиеся CharacterList / Ping / world scopes без повторения готовой матрицы.",
+      "decision_rule": "Точный SHA и отдельный current тип; old23byte binder не должен молча принимать новые поля.",
+      "do_not_repeat": "Готовые SDK/clock/world матрицы без изменения входов не повторять.",
+      "addresses": [
+        "0x145749a50",
+        "0x14574f5d0",
+        "0x1467aeb30"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md",
+        "evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md"
       ]
     }
   ]

@@ -661,3 +661,25 @@ bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-
 bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-CURRENT-COLLECT.md text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/auth/EIGHT-ACCOUNT-ENTRY-VALIDATION.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-VIPER-RESOURCES.md text eol=lf
+
+bots/resource-tools/vampir/build-sdk-fetch-profile.py text eol=lf
+bots/resource-tools/vampir/inspect-sdk-fetch-current.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-CURRENT-CONTRACT.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/lobby-version-result-11322.json text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/preset-defaults-11322.json text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/sdk-fetch-current.json text eol=lf
+bots/resource-tools/vampir/knowledge/sdk-fetch-runtime-current.json text eol=lf
+bots/resource-tools/vampir/sdk-fetch-check-guard.py text eol=lf
+bots/resource-tools/vampir/verify-lobby-version-result-current.py text eol=lf
+bots/resource-tools/vampir/verify-preset-defaults-current.py text eol=lf
+bots/test_vampir_lobby_version_current.py text eol=lf
+bots/test_vampir_preset_defaults_current.py text eol=lf
+bots/test_vampir_sdk_fetch_admission.py text eol=lf
+bots/test_vampir_sdk_fetch_current.py text eol=lf
+bots/vampir-headless/run-account-sdk-fetch.py text eol=lf
+bots/vampir-shared/vampir_core/sdk_fetch_admission.py text eol=lf
+
+bots/resource-tools/vampir/knowledge/evidence/auth/SDK-FETCH-CURRENT-VALIDATION.json text eol=lf

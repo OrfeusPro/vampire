@@ -113,6 +113,55 @@ def decode_lobby_version_result(body):
     return LobbyVersionResultBody(code, bool(flag), (first, second), raw)
 
 
+CURRENT_LOBBY_VERSION_SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+
+
+@dataclass(frozen=True, slots=True)
+class CurrentLobbyVersionResultBody:
+    """Current ID 2 layout; the added string/u32 meanings are not inferred.
+
+    Deliberately separate from LobbyVersionResultBody: an old login binder must
+    not silently discard the current handler's additional inputs.
+    """
+    result_code: int
+    flag_14: bool
+    time_bits: tuple[int, ...] = field(repr=False)
+    raw_38: int = field(repr=False)
+    raw_40: str = field(repr=False)
+    raw_50: int = field(repr=False)
+    raw_54: int = field(repr=False)
+
+    def __post_init__(self):
+        _numbers((self.result_code, self.raw_50, self.raw_54), 3, 0xffffffff)
+        if type(self.flag_14) is not bool:
+            raise ValueError('Expected normalized lobby response bool')
+        _numbers(self.time_bits, 2, 0xffffffffffffffff)
+        _numbers((self.raw_38,), 1, 65535)
+        _utf8(self.raw_40)
+
+
+def decode_current_lobby_version_result(body, *, source_sha256):
+    """Source-bound 23-byte prefix, u16 UTF-8 byte length, text and two u32.
+
+    Exact-length/strict valid Unicode policy is narrower than native input.
+    This decoder does not grant the current lobby handler or world admission.
+    """
+    if source_sha256 != CURRENT_LOBBY_VERSION_SOURCE:
+        raise ValueError('Current lobby VersionResult source is not verified')
+    if type(body) is not bytes or not 33 <= len(body) <= 65568:
+        raise ValueError('Expected complete current lobby VersionResult body')
+    size = struct.unpack_from('<H', body, 23)[0]
+    if len(body) != 33 + size:
+        raise ValueError('Current lobby VersionResult length differs')
+    code, flag, first, second, raw = struct.unpack_from('<IBQQH', body)
+    try:
+        text = body[25:25 + size].decode('utf-8', 'strict')
+    except UnicodeError:
+        raise ValueError('Current lobby VersionResult text is not valid UTF-8') from None
+    last, final = struct.unpack_from('<II', body, 25 + size)
+    return CurrentLobbyVersionResultBody(code, bool(flag), (first, second), raw, text, last, final)
+
+
 def make_windows_lobby_login(*, version_result, kind, selected_server_id, metadata):
     """Native Windows numeric branch with Version flag +14 off.
 

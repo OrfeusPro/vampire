@@ -1,5 +1,17 @@
 # Диагностика входа и параметры устройства
 
+Для текущего SHA добавлен отдельный read-only Fetch:
+
+```powershell
+python -X utf8 phone-exit/bots/vampir-headless/run-account-sdk-fetch.py --account '<локальный UUID>' --profile '<полный SHA Fetch-профиля>'
+```
+
+SHA берётся из `sdk-fetch-runtime-current.json`. Это отдельная capability чтения;
+команда не вызывает SignUp, Terms, SignIn или игру. Флаг `--capture-sdk-http`
+явно включает ограниченную DPAPI-запись SDK HTTP. В первой проверке Silvercrow
+SDK сообщил `not exist player channel`; следующий шаг — текущий первый
+SDK-профиль. [Доказательства и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md).
+
 Шаблоны устройств уже реализованы в [панели аккаунтов](ACCOUNT-CONSOLE.md).
 Колонка «Шаблон устройства» открывает его просмотр; редактирование включается
 отдельно. Назначение выбирается в попапе аккаунта. Сохранение формы не выполняет вход.

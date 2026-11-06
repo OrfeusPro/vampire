@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "contract": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\sdk-fetch-current-static-v1\\23114d06e04c062262d66634d95e419b12d017c0da70e08133b51fdda472df46\\manifest.json",
+    "sha256": "23114d06e04c062262d66634d95e419b12d017c0da70e08133b51fdda472df46"
+  },
+  "profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\sdk-fetch-profiles\\bb486bfc13e7b2c5ac5c4067b43637390cf01f30fb844bf6ba0126e028797999\\manifest.json",
+    "sha256": "bb486bfc13e7b2c5ac5c4067b43637390cf01f30fb844bf6ba0126e028797999"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "recipe": "lobby-version-result-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "functions": {
+    "constructor": "0x145749a50",
+    "reader": "0x14574f5d0",
+    "handler": "0x1467aeb30"
+  },
+  "exports": {
+    "run-4496e2332dcf": "8a3e629ec401d80e3d5393249b3c96e21d46bc9d59ad81455b3259b2a7b34c0b"
+  },
+  "leaves": {
+    "0x1445cd520": "488b0599a3f906c3",
+    "0x1445d7d20": "0f57c9410fbfc0f20f2ac8f20f590db5044404f20f580d8df44004660f3a09c1010f57c9f2480f2acaf2480f2cc0f20f590da2f4400448890523f8f8064883792800c6413001c7413400000000f20f580d53f44004660f3a09c101f2480f2cc048894120750848894128c6413801c3"
+  },
+  "fixtures": {
+    "time_read": "0x144aad280",
+    "string_read": "0x144aad0c0",
+    "time_constructor": "0x1457a38c0",
+    "string_constructor": "0x1414269b0",
+    "ui_manager": "0x144aaf250",
+    "ui_owner": "0x145fc9170",
+    "ui_action": "0x145eff390",
+    "metadata_validate": "0x145bc9b00",
+    "metadata_apply": "0x145bc7b60",
+    "peer_manager": "0x145d507e0",
+    "peer_time": "0x145d603e0",
+    "free": "0x1414830e0"
+  },
+  "packet_table": "0x1499438e0",
+  "packet_table_bytes": "50c4744501000000103b40410100000090b6754501000000103b404101000000d0f5744501000000a0a9484101000000104abb40010000004093754501000000205675450100000080e1444101000000",
+  "clock_global": "0x14b5678c0",
+  "limits": [
+    "Source-specific packet layout only; no complete metadata consumer, archive string primitive, network or world admission"
+  ]
+}

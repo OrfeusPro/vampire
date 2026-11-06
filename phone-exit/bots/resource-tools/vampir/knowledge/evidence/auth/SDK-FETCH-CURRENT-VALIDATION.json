@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "checked_local_date": "2026-11-06",
+  "timezone": "Europe/Kiev",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source_checks": [
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09\\manifest.json",
+      "sha256": "e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09"
+    },
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\19479012f841028bd5cbd4e7f90fead0bc15b1b163e39df0e3c9ccccb5e5e172\\manifest.json",
+      "sha256": "19479012f841028bd5cbd4e7f90fead0bc15b1b163e39df0e3c9ccccb5e5e172"
+    },
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\037947b78d5cb130f0c7338e67c0b1283302c0ccd0c85e367411870e7e88f073\\manifest.json",
+      "sha256": "037947b78d5cb130f0c7338e67c0b1283302c0ccd0c85e367411870e7e88f073"
+    },
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ea662ed1d799838cd107f7bd7736c503149829197b173d33093a049f992ac96b\\manifest.json",
+      "sha256": "ea662ed1d799838cd107f7bd7736c503149829197b173d33093a049f992ac96b"
+    }
+  ],
+  "fetch_contract": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\sdk-fetch-current-static-v1\\23114d06e04c062262d66634d95e419b12d017c0da70e08133b51fdda472df46\\manifest.json",
+    "sha256": "23114d06e04c062262d66634d95e419b12d017c0da70e08133b51fdda472df46"
+  },
+  "fetch_runtime_profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\sdk-fetch-profiles\\bb486bfc13e7b2c5ac5c4067b43637390cf01f30fb844bf6ba0126e028797999\\manifest.json",
+    "sha256": "bb486bfc13e7b2c5ac5c4067b43637390cf01f30fb844bf6ba0126e028797999"
+  },
+  "native": {
+    "lobby": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\lobby-version-result-current-v1\\795668bc8592d2c8d2d36009040c8292256d8a75570cbdd2b4f383a8153014d0\\manifest.json",
+      "sha256": "795668bc8592d2c8d2d36009040c8292256d8a75570cbdd2b4f383a8153014d0"
+    },
+    "preset_defaults": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\preset-defaults-current-v1\\d38343994fb6740d7c1f562fa9b4ed5351e3f19f918aa735225948820cd8b197\\manifest.json",
+      "sha256": "d38343994fb6740d7c1f562fa9b4ed5351e3f19f918aa735225948820cd8b197"
+    },
+    "preset_constructor_cases": 25,
+    "lobby_full_cases": 3,
+    "lobby_prefixes": 114,
+    "lobby_read_failure_gates": 24,
+    "lobby_handler_cases": 6,
+    "fixtures": [
+      "Archive scalar/time/string",
+      "Metadata validate/apply and managers",
+      "UObject context/service/class service"
+    ]
+  },
+  "live": {
+    "account": "silvercrow@vampir.top",
+    "additional_launcher_attempts": 1,
+    "read_only_fetch_attempts": 1,
+    "nid_accepted": true,
+    "launcher_token_code": 0,
+    "launcher_sign_in_http": 400,
+    "fetch_http": 400,
+    "sdk_code": 1203,
+    "error_message": "not exist player channel",
+    "error_cause": "This player's channel data is not exist",
+    "other_accounts_started": 0,
+    "player_created": false,
+    "game_session_ready": false
+  },
+  "tooling": {
+    "state": "passed",
+    "report": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\40660d8d58ab429e56856bd8e4110fb06bf2c862bef1a9274e021ba8d864a620\\manifest.json",
+      "sha256": "40660d8d58ab429e56856bd8e4110fb06bf2c862bef1a9274e021ba8d864a620"
+    },
+    "executed_groups": 27,
+    "cached_groups": 5,
+    "executed_cases": 1993,
+    "cached_cases": 150,
+    "executed_skips": 3,
+    "cached_skips": 1,
+    "duration_seconds": 305.94973989995196,
+    "warm": {
+      "executed_groups": 0,
+      "cached_groups": 32,
+      "executed_cases": 0,
+      "cached_cases": 2143,
+      "cached_skips": 4,
+      "duration_seconds": 14.502837299951352
+    }
+  },
+  "complete_game_admitted": false,
+  "create_viper_admitted": false
+}

@@ -2908,6 +2908,133 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Причина Silvercrow SDK1203; текущий Fetch-only contract; игровой admission, Viper defaults/Create и приёмка сервера.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1417cbdc0",
+        "0x143b5ef20",
+        "0x1454d5020"
+      ],
+      "checks": [
+        {
+          "cache_key": "e79de875cc9675c3a15bd90217eca1d1e719b5c1d6f04abd7388f6df3773d19a",
+          "id": "preset-defaults-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09\\manifest.json",
+          "sha256": "e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "25сценариев currentpreset/DataAsset/UObjectconstructor подтвердилиfloat.5 иvoice0; integerполя сохраняютpoison. 17descriptorполей проверены поимени/flags/offset/bytes текущегоEXE.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-PRESET-DEFAULTS-CURRENT.md",
+          "sha256": "8bfef57ce0625caafc341cf1d882b157399417a3a628d76bc250730995255568"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\SDK-FETCH-CURRENT-VALIDATION.json",
+          "sha256": "5b6f15e5a7e534420eba9e9475edb03319fa86ea1b04f2a66d88543c0229ba63"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c3799fbbc85c0d9b3ffd754c75f0ca125a8293f5d482b272943ef85bcb7c0076",
+      "limits": [
+        "Context/UObject/class services — fixtures; allocation/completion/CDO property-copy не исполнены.",
+        "Нет готового Viper payload или Create103/104 admission."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать current constructor и готовые ClassInfo exports; отдельно перенести allocation/CDO/producerconsumer.",
+      "question": "viper-native-defaults-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Current allocation/CDO, ClassInfo/preset consumer и producer Create103/Result104.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x145749a50",
+        "0x14574f5d0",
+        "0x1467aeb30"
+      ],
+      "checks": [
+        {
+          "cache_key": "e6cd5d5f27934e1ce944f3e17ad17cca019692cfd5fdabbf440994abac5964a4",
+          "id": "lobby-version-layout-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\19479012f841028bd5cbd4e7f90fead0bc15b1b163e39df0e3c9ccccb5e5e172\\manifest.json",
+          "sha256": "19479012f841028bd5cbd4e7f90fead0bc15b1b163e39df0e3c9ccccb5e5e172",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole current lobby constructor/reader/handler и clock setter подтвердили8операций и новые FString/u32/u32. Отдельный portableтип сохраняет поля; старый binder их не принимает.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md",
+          "sha256": "7570a875fcd0bbec03ba9946e5f9884020a587e0f953c0a6a500c105adac93fb"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\SDK-FETCH-CURRENT-VALIDATION.json",
+          "sha256": "5b6f15e5a7e534420eba9e9475edb03319fa86ea1b04f2a66d88543c0229ba63"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "9dbcf15fb63c7ea68b7ac15535638b18abd62762b7caaefb9b26fae5cab20c06",
+      "limits": [
+        "Archive scalar/TimeBase/string и metadata consumers/managers/peer continuation — fixtures.",
+        "Точная длина/Unicode — локальная bounded policy; полный world admission не предоставлен."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать готовый reader/decoder; продолжить metadata consumers и оставшиеся current world scopes без повторения готовых сценариев.",
+      "question": "lobby-version-layout-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Current wire primitives, metadata apply consumers и оставшиеся CharacterList/clock/Ping/world scopes.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444c9c80",
+        "0x1444e7b80"
+      ],
+      "checks": [
+        {
+          "cache_key": "7a81f21b3eab29d602b7a6777bd9f50b04285ac820723382b7279201fd58da1e",
+          "id": "sdk-fetch-current-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\037947b78d5cb130f0c7338e67c0b1283302c0ccd0c85e367411870e7e88f073\\manifest.json",
+          "sha256": "037947b78d5cb130f0c7338e67c0b1283302c0ccd0c85e367411870e7e88f073",
+          "state": "passed"
+        },
+        {
+          "cache_key": "16acbb4d26050311d6e2d0b05f9b077e31e458f56e4e84df166d3409885bdeca",
+          "id": "sdk-fetch-read-runtime",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ea662ed1d799838cd107f7bd7736c503149829197b173d33093a049f992ac96b\\manifest.json",
+          "sha256": "ea662ed1d799838cd107f7bd7736c503149829197b173d33093a049f992ac96b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий read-only Fetch subset подтверждён source contract и отдельным immutable профилем. NID и launcher token приняты, но launcher SignIn и один Fetch Silvercrow вернули HTTP400/1203: not exist player channel. Общие SDK/world guards не расширены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-FETCH-CURRENT-CONTRACT.md",
+          "sha256": "eeaa34703f16afd9159c48f86a61a99363abcf0b9c7a9a746622b2837cf797b0"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-FETCH-READ-ONLINE.md",
+          "sha256": "5dab3424a433dccb280a34b8a7d44224cb283e605f7a6f9943dd0811454f6d15"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\SDK-FETCH-CURRENT-VALIDATION.json",
+          "sha256": "5b6f15e5a7e534420eba9e9475edb03319fa86ea1b04f2a66d88543c0229ba63"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "252fc932f0046a9f364b475da23614a5592963fca654cc17459e5305720c317f",
+      "limits": [
+        "Полные native JSON/provider callbacks и dispatcher не воспроизводятся локальным summary parser.",
+        "Первый профиль SDK, Terms/SignUp/SignIn, лобби и мир не предоставляются Fetch-only scope."
+      ],
+      "method": "static",
+      "next_check": "Перенести текущую цепочку первого SDK-профиля по прежнему проверенному baseline, затем продолжить первый Silvercrow перед другими семью.",
+      "question": "sdk-fetch-current-contract",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Текущая штатная подготовка первого SDK-профиля; корневая причина отсутствия канала, приёмка Viper и полный world admission.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

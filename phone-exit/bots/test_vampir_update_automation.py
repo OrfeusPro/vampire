@@ -5,6 +5,10 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_preset_defaults_current',
+    'test_vampir_lobby_version_current',
+    'test_vampir_sdk_fetch_current',
+    'test_vampir_sdk_fetch_admission',
     'test_vampir_creation_resource_selection',
     'test_vampir_account_console',
     'test_vampir_account_table',

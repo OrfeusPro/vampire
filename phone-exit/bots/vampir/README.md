@@ -49,6 +49,13 @@ custom identity сервером отдельно от локального на
 использует тот же свежий SDK контекст без второй авторизации; игровой admission
 и восстановление после отключения остаются открытыми.
 
+[Текущий Fetch-only пакет](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md)
+выполняет один запрос чтения без создания SDK-профиля. Silvercrow вернул
+`not exist player channel`; текущий первый SDK-вход ещё нужно перенести.
+Текущие [lobby reader / decoder](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md)
+и [конструкторы пресета](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md)
+подтверждены в ограниченных native сценариях; целый мир и создание Viper не допущены.
+
 [Автоматический проход и проверка повторного использования](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTOMATIC-UPDATE.md):
 реальные 222 UTF-8 сценария 20 → 22; неизменный повтор — 132 cached этапа,
 без нового Ghidra / native replay. Вход 1.13.22 пока не допущен.

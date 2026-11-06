@@ -1,11 +1,21 @@
 # Vampir — открытые пакеты
 
-- Группа восьми Viper: первый Silvercrow принят NID, SDK launcher SignIn
-  остановился на HTTP 400 / 1203 до форм и лобби. Остальные семь не запускать
+- Группа восьми Viper: первый Silvercrow принят NID и launcher/token; SDK SignIn
+  и отдельный Fetch вернули HTTP 400 / 1203: `not exist player channel`.
+  Следующий пакет — текущая подготовка первого SDK-профиля через штатные
+  Terms / SignUp / SignIn. Остальные семь не запускать
   до проверки полной цепочки на первом. Включён случайный ник; после создания
   назначать ключ / слот только из свежего списка и выводить подтверждённое имя.
-  Нужны текущий Fetch для диагностики, игровой candidate и Viper factory.
+  Fetch-only пакет готов; нужны первый SDK-профиль, игровой candidate и Viper factory.
   [Фактическая остановка и готовые материалы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md).
+  [Уточнённый серверный ответ и Fetch-only пакет](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md).
+
+- Для текущего Viper подтверждены constructor / descriptor поля: 25 сценариев,
+  integer defaults не устанавливаются конструктором. Allocation / CDO / consumer
+  и Create остаются отдельными блокерами. [Результат](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md).
+- Current lobby VersionResult получил отдельный decoder и native reader / handler
+  пакет. String/time primitives и metadata consumer остаются fixtures; весь
+  world-пакет не закрыт. [Границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md).
 
 - Общий вход будущего бота: встроить готовые device-registration / workplace
   формы в тот же свежий NID / SDK контекст без второй авторизации; IMAP либо

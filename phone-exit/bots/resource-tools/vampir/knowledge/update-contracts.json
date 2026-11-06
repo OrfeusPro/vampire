@@ -35,6 +35,12 @@
       "requires": [
         "game-ui"
       ]
+    },
+    "sdk-profile-read": {
+      "requires": [
+        "sdk-gmc2",
+        "sdk-fetch-read"
+      ]
     }
   },
   "contracts": [
@@ -718,7 +724,8 @@
         "native-login-result-handler-context",
         "native-login-result-body-handler-context",
         "native-login-post-state-context",
-        "native-login-continuation-context"
+        "native-login-continuation-context",
+        "lobby-version-layout-current"
       ],
       "recipes": [
         {
@@ -1712,6 +1719,42 @@
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
       "next_check": "Сверить затронутые UI assets, text keys, controls, anchors и scale; имя виджета само по себе не определяет координату клика."
+    },
+    {
+      "id": "sdk-fetch-read",
+      "purpose": "Одна операция чтения игрового SDK Fetch без создания профиля и мира",
+      "depends_on": [
+        "sdk-gmc2"
+      ],
+      "checks": [
+        "sdk-fetch-current-contract",
+        "sdk-fetch-read-runtime"
+      ],
+      "recipes": [
+        {
+          "key": "fetch-request",
+          "method": "reviewed"
+        },
+        {
+          "key": "fetch-response",
+          "method": "reviewed"
+        }
+      ],
+      "bindings": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": {
+          "fetch-request": "0x1444e7b80",
+          "fetch-response": "0x1444c9c80"
+        }
+      },
+      "targets": [],
+      "limits": [
+        "Только read-only Fetch и строгий локальный subset ответа. Native callback lifetime и полный dispatcher остаются за пределами.",
+        "Новый SHA требует собственного source contract и неизменяемого профиля."
+      ],
+      "next_check": "После подтверждения Fetch отдельно перенести Terms / SignUp / direct SignIn и первый профиль SDK; HTTP1203 не запускает их автоматически.",
+      "coverage": "partial",
+      "builder": null,
+      "resources": []
     }
   ]
 }
