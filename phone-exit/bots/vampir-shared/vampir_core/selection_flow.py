@@ -61,6 +61,7 @@ class CharacterSelectionFlow:
         self._raw_f0 = None
         self._deadline = None
         self._last_time = None
+        self._requested_character_key = None
         self._error = None
         self._result_code = None
         self._last_packet_id = self._last_body_size = None
@@ -111,6 +112,7 @@ class CharacterSelectionFlow:
     def _fail(self, error, code=None):
         self._state, self._error, self._result_code = SelectionState.FAILED, error, code
         self._characters = self._response = self._raw_f0 = self._deadline = None
+        self._requested_character_key = None
         # A request may still be partly queued when it expires or a malformed
         # response arrives. Never send that stale tail after local failure.
         self._outbound.close()
@@ -133,6 +135,7 @@ class CharacterSelectionFlow:
         if not math.isfinite(deadline):
             raise ValueError('Selection deadline overflow')
         self._outbound.queue_character_select(payload)
+        self._requested_character_key = payload.raw10
         self._state, self._deadline = SelectionState.SELECT_PENDING, deadline
 
     def update_raw_f0(self, value):
@@ -176,21 +179,28 @@ class CharacterSelectionFlow:
         self._expect(expected)
         self._last_packet_id = packet_id
         self._last_body_size = len(body) if type(body) is bytes else None
+        source = None
         try:
             if packet_id == 102:
                 result = decode_character_list(body, max_payload_size=self._limits.max_payload_size,
                                                max_characters=self._limits.max_characters,
                                                max_extension_items=self._limits.max_collection_items)
             else:
+                from .bounded_world_admission import permits, SOURCE as CURRENT_SOURCE
+                source = CURRENT_SOURCE if permits(CURRENT_SOURCE, 'world-selection-move-v1') else None
                 result = decode_character_select_result(body, max_payload_size=self._limits.max_payload_size,
-                                                        max_collection_items=self._limits.max_collection_items)
+                    max_collection_items=self._limits.max_collection_items, source_sha256=source)
         except (ValueError, BufferError):
             self._fail('invalid_response')
             raise ValueError('Invalid selection response') from None
         if result.result_code != 0:
             self._fail('unsupported_result_code', result.result_code)
             return True
+        if packet_id == 110 and source is not None and result.player.at(8) != self._requested_character_key:
+            self._fail('selection_identity_mismatch')
+            raise ValueError('Selected character identity differs from the request')
         self._deadline = None
+        self._requested_character_key = None
         self._result_code = 0
         if packet_id == 102:
             self._characters, self._raw_f0 = result, result.tail[3]
@@ -204,4 +214,5 @@ class CharacterSelectionFlow:
         """Disconnect/stop; do not reuse this instance after a reconnect."""
         self._outbound.close()
         self._characters = self._response = self._raw_f0 = self._deadline = None
+        self._requested_character_key = None
         self._state = SelectionState.CLOSED

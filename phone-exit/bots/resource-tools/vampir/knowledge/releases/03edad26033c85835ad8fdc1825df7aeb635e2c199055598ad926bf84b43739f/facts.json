@@ -4179,6 +4179,83 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Текущие CharacterSelectResult110 / Finish206 nested compatibility, отдельный world admission и постоянный owner.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1456f02c0",
+        "0x145786e50",
+        "0x145789880",
+        "0x145799d00",
+        "0x14584f520"
+      ],
+      "checks": [
+        {
+          "cache_key": "45bf08e2649de1e85d1c919aa916d2d5d1db7c198ba4428d2289070c3780d31c",
+          "id": "clock-world-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8ae6f0f20dc61dc3b134c0a51204fd0512b87607b76b8eb2a3fb6f6497132a9b\\manifest.json",
+          "sha256": "8ae6f0f20dc61dc3b134c0a51204fd0512b87607b76b8eb2a3fb6f6497132a9b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9080dc289b873a73d7fcb8abfb6bce7c58406f4258e746ed8fb7974c359805e0",
+          "id": "world-player-constructor-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\943dcbcd2b08dff5e10a1f679d392a201f8be869d1536e7d06400cede8c06587\\manifest.json",
+          "sha256": "943dcbcd2b08dff5e10a1f679d392a201f8be869d1536e7d06400cede8c06587",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1e96a446711ee3ba6c202d5bead7b927350485cfef90836961f399e4ad4f4366",
+          "id": "world-select-clamps-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\761e52b248a5d748d95a1a9540df45036cc41d4dd78de504c76bbbf6bcd35831\\manifest.json",
+          "sha256": "761e52b248a5d748d95a1a9540df45036cc41d4dd78de504c76bbbf6bcd35831",
+          "state": "passed"
+        },
+        {
+          "cache_key": "19d401071cacb98ed90bdda988388bc4f4a7b541eb2bea7d23677ab0e0964fae",
+          "id": "world-results-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\665223dee2e8a37de0d49a7e67c22b9864fc3f6132e900e47478428421194f51\\manifest.json",
+          "sha256": "665223dee2e8a37de0d49a7e67c22b9864fc3f6132e900e47478428421194f51",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2f0211a49a2ca48c94639dc03d62bcf6177ff180fb6d4fa91821d29cba0488d2",
+          "id": "bounded-world-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cfbc6680c105269458ddd3d2e872d8f80e9c799b30443c22605e7b3027645ae4\\manifest.json",
+          "sha256": "cfbc6680c105269458ddd3d2e872d8f80e9c799b30443c22605e7b3027645ae4",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Select110 and Finish206 reader closures were checked against separate compatible baselines. Current constructor and two changed enum clamps ran 8 and 15 bounded native cases. Portable projections reused 322 Select and 42 Finish cases. The bounded world profile reached the real Canon 1 world for Silvercrow and retained periodic Ping through a Windows task owner.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\world-player-constructor-current.json",
+          "sha256": "eab546c742f699eb74698bad1ef65b9889d2189430ed7ea54fb986b6d8b97622"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\world-select-clamps-current.json",
+          "sha256": "5f090b742f7218bbc2b1aa597b5395e936e0e75675fd31886c898917bd2fa158"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\world-results-current.json",
+          "sha256": "c4daf1d0cbb2ef37dc90a2d41afe45738d5579d79693eb236a378aeddaf0c1e6"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\SILVERCROW-WORLD-CURRENT-ONLINE.json",
+          "sha256": "c2fb7a75972d3ef36dbe04b575e164b12fdadcb9f4f1e37fd0f4384ddcb662e1"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "a6a01826d75525b0b6cc67f487eac7f008d82b6370ff279301192b9da4a4c43d",
+      "limits": [
+        "Current EXE only. Native cases use guarded synthetic inputs.",
+        "Live confirmation covers the existing character and active heartbeat."
+      ],
+      "method": "bounded_native",
+      "next_check": "Use the scoped profile only for current assigned characters. Carry forward reader and clock dependencies when the EXE changes.",
+      "question": "clock-world-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Server default flag, HP/MP, map projection, action and quest support require separate checks.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

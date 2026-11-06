@@ -16,7 +16,9 @@
 игровой Version/Login и чтение пустого списка персонажей Canon 1 / 387
 через прямое соединение. Следующая команда создала Viper Bipoberiho;
 отдельный свежий список подтвердил имя / ключ и назначил слот 0.
-Постоянная сессия требует продолжения.
+[Командный вход Bipoberiho в мир и постоянный owner](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-BOUNDED-WORLD-CURRENT.md)
+подтверждены живыми ответами Ping на этом SHA. После него одновременно вошли
+остальные семь Viper на Canon 1 и Canon 2.
 [Создание онлайн](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-CREATION-ONLINE.md).
 [Приёмка создания](../resource-tools/vampir/knowledge/evidence/updates/VIPER-CREATION-CURRENT-ACCEPTANCE.json)
 сохраняет 56 групп / 2243 теста и неизменный повтор без процессов и native-эмуляции.

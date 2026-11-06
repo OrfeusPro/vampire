@@ -66,9 +66,14 @@ def require_character_list_operation(selector, *, auth_flow, read_character_list
             creation = creation_current()
             creation_allowed = (callable(creation_factory) and read_character_list
                 and creation['entry']['selected_profile'] == selector)
+    world_allowed = False
+    from .bounded_world_admission import current as world_current, permits as world_permits
+    if world_permits(current(selector)['source_sha256'], 'game-login-world-v1'):
+        world_allowed = world_current()['entry']['selected_profile'] == selector
     if (auth_flow != 'launcher' or not (read_character_list or server_list_only)
-            or character_index is not None or (creation_factory is not None and not creation_allowed)
-            or read_world_start or read_world_finish or observe_world_seconds or world_observer is not None
+            or (character_index is not None and not world_allowed) or (creation_factory is not None and not creation_allowed)
+            or ((read_world_start or read_world_finish or observe_world_seconds or world_observer is not None
+                 or session_control is not None) and not world_allowed)
             or tutorial_observer is not None or ack_initial_tutorial or read_quest_list
-            or quest_observer is not None or quest_wire_observer is not None or session_control is not None):
+            or quest_observer is not None or quest_wire_observer is not None):
         raise ValueError('Bounded entry permits launcher login and character lists only')

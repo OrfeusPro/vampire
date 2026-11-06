@@ -77,6 +77,9 @@ def permits(source_sha256,policy):
     from .bounded_entry_admission import permits as entry_permits
     if entry_permits(source_sha256, policy):
         return True
+    from .bounded_world_admission import permits as world_permits
+    if world_permits(source_sha256, policy):
+        return True
     active=_active.get()
     return (active is not None and policy in POLICIES and type(source_sha256) is str
         and source_sha256==active.source_sha256)

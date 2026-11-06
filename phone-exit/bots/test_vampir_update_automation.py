@@ -5,6 +5,10 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_bounded_world',
+    'test_vampir_world_results_current',
+    'test_vampir_world_select_clamps_current',
+    'test_vampir_world_player_constructor_current',
     'test_vampir_lobby_results_current',
     'test_vampir_create_handler_current',
     'test_vampir_create_producer_current',

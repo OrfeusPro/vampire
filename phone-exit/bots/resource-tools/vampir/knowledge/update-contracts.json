@@ -1550,7 +1550,10 @@
       ],
       "checks": [
         "release-character-selection-probe",
-        "character-list-current"
+        "character-list-current",
+        "world-player-constructor-current",
+        "world-select-clamps-current",
+        "world-results-current"
       ],
       "recipes": [],
       "bindings": {},
@@ -1560,7 +1563,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Перенести source checks выбора существующего персонажа и разбора результата; не создавать нового при наличии персонажа."
+      "next_check": "Повторять текущую проверку Select 110 по закреплённым зависимостям. При новом SHA переносить reader и проверять привязку ключа персонажа."
     },
     {
       "id": "world-entry",
@@ -1570,7 +1573,9 @@
       ],
       "checks": [
         "release-world-completion-policy",
-        "clock-world-current"
+        "clock-world-current",
+        "world-results-current",
+        "bounded-world-current"
       ],
       "recipes": [],
       "bindings": {},
@@ -1580,7 +1585,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Сверить текущую цепочку ID 202 / 203 / 204 / 205 / 206 и условия перехода; не выводить готовность мира из одного ответа."
+      "next_check": "Вход по существующему ключу имеет отдельный ограниченный профиль для текущего SHA. Для следующего SHA нужны новый перенос и проверка входа."
     },
     {
       "id": "position",
@@ -1590,7 +1595,8 @@
       ],
       "checks": [
         "release-world-position-path",
-        "release-world-finish-collections"
+        "release-world-finish-collections",
+        "world-results-current"
       ],
       "recipes": [],
       "bindings": {},
@@ -1600,7 +1606,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Перенести reader позиции / heading / коллекций, связь world context и проекцию; сверить canaries и короткие префиксы."
+      "next_check": "Сверять reader Finish 206 по текущему SHA. Проекция карты и дальнейшее движение требуют отдельного подтверждения."
     },
     {
       "id": "heartbeat",
@@ -1611,7 +1617,8 @@
       "checks": [
         "release-ping-producer",
         "release-ping-result",
-        "clock-world-current"
+        "clock-world-current",
+        "bounded-world-current"
       ],
       "recipes": [
         {

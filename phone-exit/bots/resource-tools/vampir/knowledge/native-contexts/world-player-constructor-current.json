@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "recipe": "world-player-constructor-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+  "baseline_proof": {
+    "path": "F:/PhoneExit Resources/Vampir/code-clues/character-select-result-replay.json",
+    "sha256": "96ee6b94440c0c696ba40ea34ade66d9424621421c7ca9a76910fa4e33f6cf1d"
+  },
+  "exports": {
+    "run-9e898eaaf6ca": "42b44063a67650004ee4f621c91fa1190166b4d45013e8b9999097c7ce9db9c8",
+    "run-4b16a82b156e": "fa2447cfa04365a62c2faa5451d247fc6411d04c9956a27b640085c9caeb5b02"
+  },
+  "constructor": "0x145799d00",
+  "baseline_constructor": "0x145789c10",
+  "time_constructor": "0x1457a38c0",
+  "baseline_time_constructor": "0x1457eca60",
+  "leaves": {
+    "0x145790890": "488d057927190448890133c048894108488bc1c3",
+    "0x1457fdef0": "488d05813f120448c7410800000000488901488bc1c3"
+  }
+}

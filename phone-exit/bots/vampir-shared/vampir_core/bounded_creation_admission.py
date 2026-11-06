@@ -48,8 +48,9 @@ def scope(selector, *, root, workspace):
         yield selector
         return
     from .runtime_admission import _active as world_scope
+    from .bounded_world_admission import _active as bounded_world_scope
     from .bounded_entry_admission import scope as entry_scope
-    if world_scope.get() is not None:
+    if world_scope.get() is not None or bounded_world_scope.get() is not None:
         raise ValueError('Cannot mix world and bounded creation profiles')
     profile = _load(selector[len(PREFIX):], root, workspace)
     with entry_scope(profile['entry']['selected_profile'], root=root, workspace=workspace):

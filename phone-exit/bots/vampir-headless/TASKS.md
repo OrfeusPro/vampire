@@ -7,11 +7,11 @@
   Canon 1 / 387 вернул принятый пустой список. Producer и JSON перенесены
   по целым функциям. Viper factory и Create admission готовы к одной живой
   попытке. Silvercrow создал Bipoberiho, свежий список подтвердил key / slot 0.
-  Следом CharacterSelect / world и независимый постоянный owner.
-  Остальные семь не запускать
-  до проверки полной цепочки на первом. Включён случайный ник; после создания
-  назначать ключ / слот только из свежего списка и выводить подтверждённое имя.
-  Viper Bipoberiho создан, мир ещё не открыт.
+  CharacterSelect, вход в мир и независимый owner подтверждены на Bipoberiho.
+  Все восемь Viper вошли в мир с ключами, подтверждёнными свежими списками.
+  Серверный флаг персонажа по умолчанию проверить отдельно. Для live UI
+  остаются проекция позиции, витальные параметры и сводка по владельцам.
+  [Мир и удержание соединения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-BOUNDED-WORLD-CURRENT.md).
   [Создание онлайн](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-CREATION-ONLINE.md).
   [Текущий игровой вход и исправление ответа](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-BOUNDED-ENTRY-CURRENT.md).
   [Фактическая остановка и готовые материалы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md).

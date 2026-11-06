@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "selected_profile": "bounded-world:1cd3d6b34a3a4775dceb0c30bb3cb5939a12731488d91eea4d46650aa312d115",
+  "world_results_sha256": "c559321a18e1b1d99502a6a027a1f66953d8d4d8551067d650f7c7978f354b9f",
+  "account": "silvercrow@vampir.top",
+  "region": "EU",
+  "server": "Canon 1",
+  "server_id": 387,
+  "character": {"key": "649946739230497792", "name": "Bipoberiho", "class": "Viper", "world_id": 10010},
+  "route": "direct",
+  "online_verified": true,
+  "observed_utc": "2026-11-06T12:44:58.5277265Z",
+  "owner": {"launcher": "windows_interactive_task", "keep_online": true, "max_runtime_seconds": null},
+  "heartbeat": {"sent": 18, "received": 18},
+  "position": {"x": 132167.0, "y": 81284.0, "z": -11010.0, "semantics": "server_target_before_engine_correction"},
+  "limits": ["One accepted character and actual periodic Ping on the current source.", "Map projection, vitals, default character server flag and gameplay commands require separate verification."]
+}

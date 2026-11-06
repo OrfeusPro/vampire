@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "checked_utc": "2026-11-06T13:00:32.589544+00:00",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "checks": [
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\f9f99f380f7bdab5be851b5da53ac3040faef8d6f022fa6cd00ea73f2c62a50f\\manifest.json",
+      "sha256": "f9f99f380f7bdab5be851b5da53ac3040faef8d6f022fa6cd00ea73f2c62a50f",
+      "cache_key": "d3adb6b5d18856e55bbcb7a8b1c32d666e15213082834a01169ef8252584e06b",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    {
+      "id": "world-player-constructor-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\943dcbcd2b08dff5e10a1f679d392a201f8be869d1536e7d06400cede8c06587\\manifest.json",
+      "sha256": "943dcbcd2b08dff5e10a1f679d392a201f8be869d1536e7d06400cede8c06587",
+      "cache_key": "9080dc289b873a73d7fcb8abfb6bce7c58406f4258e746ed8fb7974c359805e0"
+    },
+    {
+      "id": "world-select-clamps-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\761e52b248a5d748d95a1a9540df45036cc41d4dd78de504c76bbbf6bcd35831\\manifest.json",
+      "sha256": "761e52b248a5d748d95a1a9540df45036cc41d4dd78de504c76bbbf6bcd35831",
+      "cache_key": "1e96a446711ee3ba6c202d5bead7b927350485cfef90836961f399e4ad4f4366"
+    },
+    {
+      "id": "world-results-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\665223dee2e8a37de0d49a7e67c22b9864fc3f6132e900e47478428421194f51\\manifest.json",
+      "sha256": "665223dee2e8a37de0d49a7e67c22b9864fc3f6132e900e47478428421194f51",
+      "cache_key": "19d401071cacb98ed90bdda988388bc4f4a7b541eb2bea7d23677ab0e0964fae"
+    },
+    {
+      "id": "bounded-world-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ee0f7edb39ea71b84784b8a1fab30011c9976486f549f65b8e8cdd628f287b41\\manifest.json",
+      "sha256": "ee0f7edb39ea71b84784b8a1fab30011c9976486f549f65b8e8cdd628f287b41",
+      "cache_key": "b14e4385c30ea6bd0314a088f62e68e52fcd1d35378a0306bf01b9240d90605f"
+    }
+  ],
+  "tooling": {
+    "groups": 60,
+    "counts": {
+      "discovered_cases": 2255,
+      "errors": 0,
+      "expected_failures": 0,
+      "failures": 0,
+      "skipped": 4,
+      "tests_run": 2255,
+      "unexpected_successes": 0
+    },
+    "aggregate": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\37a160303d5d37b57b90b8a4007e4093cb59091d92a03bd6d5f4b3c69e7a6663\\manifest.json",
+      "sha256": "37a160303d5d37b57b90b8a4007e4093cb59091d92a03bd6d5f4b3c69e7a6663"
+    }
+  },
+  "warm": {
+    "receipt": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\bounded-world-current-acceptance-run.json",
+      "sha256": "83321919d57b98cfa2a3ef1f7a7660cbb540ed4e5d70b216862bb8cc7859907a"
+    },
+    "seconds": 65.404,
+    "attempted_execution": {
+      "native": 0,
+      "subprocess": 0
+    }
+  },
+  "scoped_first_admission": {
+    "completion": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\57e91cceae824c6b2efeab4d84324b876dd5a4d4c4f42e7a7903e5283d64332a\\manifest.json",
+      "sha256": "57e91cceae824c6b2efeab4d84324b876dd5a4d4c4f42e7a7903e5283d64332a"
+    },
+    "fact_id": "a6a01826d75525b0b6cc67f487eac7f008d82b6370ff279301192b9da4a4c43d",
+    "new_jvm": 0
+  },
+  "online": {
+    "file": "EIGHT-VIPER-WORLD-CURRENT-ONLINE.json",
+    "sha256": "1a265002c199e54a4867ae0d4cd45b9ff50e31404e518a773c160c280757cac5",
+    "online_characters": 8
+  }
+}

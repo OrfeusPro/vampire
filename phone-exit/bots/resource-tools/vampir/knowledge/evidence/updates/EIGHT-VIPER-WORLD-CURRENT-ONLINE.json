@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "observed_utc": "2026-11-06T13:00:32.589544+00:00",
+  "route": "direct",
+  "owner_profiles": {
+    "17947": "bounded-world:1cd3d6b34a3a4775dceb0c30bb3cb5939a12731488d91eea4d46650aa312d115",
+    "17948": "bounded-world:0271e347b24be05bd9b81bd7e0365bbb181f5a3d8d6073988dfd2fea05b0be80",
+    "17950": "bounded-world:0271e347b24be05bd9b81bd7e0365bbb181f5a3d8d6073988dfd2fea05b0be80"
+  },
+  "launcher": "windows_interactive_task",
+  "keep_online": true,
+  "max_runtime_seconds": null,
+  "accounts": [
+    {
+      "account": "silvercrow@vampir.top",
+      "region": "EU",
+      "server_id": 387,
+      "character": "Bipoberiho",
+      "class_name": "Viper",
+      "character_key": "649946739230497792",
+      "slot": 0,
+      "world_id": 10010,
+      "state": "connected",
+      "port": 17947,
+      "heartbeat": {
+        "sent": 204,
+        "received": 204
+      },
+      "create_attempts": 1
+    },
+    {
+      "account": "moonraven@vampir.top",
+      "region": "EU",
+      "server_id": 387,
+      "character": "Moonraven",
+      "class_name": "Viper",
+      "character_key": "649991280859929856",
+      "slot": 0,
+      "world_id": 10010,
+      "state": "connected",
+      "port": 17948,
+      "heartbeat": {
+        "sent": 62,
+        "received": 62
+      },
+      "create_attempts": 1
+    },
+    {
+      "account": "shadowfox@vampir.top",
+      "region": "EU",
+      "server_id": 387,
+      "character": "Shadowfox",
+      "class_name": "Viper",
+      "character_key": "649992117321586560",
+      "slot": 0,
+      "world_id": 10010,
+      "state": "connected",
+      "port": 17948,
+      "heartbeat": {
+        "sent": 62,
+        "received": 62
+      },
+      "create_attempts": 1
+    },
+    {
+      "account": "stormcrow@vampir.top",
+      "region": "EU",
+      "server_id": 387,
+      "character": "Stormcrow",
+      "class_name": "Viper",
+      "character_key": "649992993226471168",
+      "slot": 0,
+      "world_id": 10010,
+      "state": "connected",
+      "port": 17948,
+      "heartbeat": {
+        "sent": 54,
+        "received": 54
+      },
+      "create_attempts": 1
+    },
+    {
+      "account": "frostwolf@vampir.top",
+      "region": "EU",
+      "server_id": 388,
+      "character": "Frostwolf",
+      "class_name": "Viper",
+      "character_key": "649993873191483648",
+      "slot": 0,
+      "world_id": 10010,
+      "state": "connected",
+      "port": 17948,
+      "heartbeat": {
+        "sent": 54,
+        "received": 54
+      },
+      "create_attempts": 1
+    },
+    {
+      "account": "ironraven@vampir.top",
+      "region": "EU",
+      "server_id": 388,
+      "character": "Ironraven",
+      "class_name": "Viper",
+      "character_key": "649994737805316864",
+      "slot": 0,
+      "world_id": 10010,
+      "state": "connected",
+      "port": 17948,
+      "heartbeat": {
+        "sent": 58,
+        "received": 58
+      },
+      "create_attempts": 1
+    },
+    {
+      "account": "emberhawk@vampir.top",
+      "region": "EU",
+      "server_id": 388,
+      "character": "Emberhawk",
+      "class_name": "Viper",
+      "character_key": "649995617199856384",
+      "slot": 0,
+      "world_id": 10010,
+      "state": "connected",
+      "port": 17948,
+      "heartbeat": {
+        "sent": 58,
+        "received": 58
+      },
+      "create_attempts": 1
+    },
+    {
+      "account": "crimsonfang@vampir.top",
+      "region": "EU",
+      "server_id": 388,
+      "character": "Zeramugonu",
+      "class_name": "Viper",
+      "character_key": "650001470837642368",
+      "slot": 0,
+      "world_id": 10010,
+      "state": "connected",
+      "port": 17950,
+      "heartbeat": {
+        "sent": 8,
+        "received": 8
+      },
+      "create_attempts": 2
+    }
+  ],
+  "rejected_name": {
+    "account": "crimsonfang@vampir.top",
+    "name": "Crimsonfang",
+    "result_code": 107,
+    "label": "AlreadyUsingName",
+    "fresh_list_empty": true,
+    "mapper": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\crimsonfang-result107-current.json",
+      "sha256": "20fce1fe729bab2783e15ee037cb4b41f226e295fcb7e5fcaa0307228394f05f"
+    }
+  },
+  "limits": [
+    "Runtime uses verified existing character keys from fresh lists.",
+    "Game server default-character flag, vitals and quest actions have separate admission."
+  ]
+}

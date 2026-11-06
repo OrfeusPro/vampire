@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "recipe": "world-select-clamps-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-50e1f31d0893": "32a6501b629ac099133ab8e8b1143668bbaf33a435faf2fe6affc57ad3ed9d0f"
+  }
+}

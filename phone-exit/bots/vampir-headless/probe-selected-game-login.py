@@ -73,8 +73,13 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
             raise ValueError('Explicit persistent world session required')
     if type(read_world_finish) is not bool or (read_world_finish and not read_world_start):
         raise ValueError('World finish requires explicit world start')
+    from vampir_core.bounded_world_admission import (permits as current_world_permits,
+        current as current_world, SOURCE as CURRENT_WORLD_SOURCE)
+    current_world_allowed = (current_world_permits(CURRENT_WORLD_SOURCE, 'game-login-world-v1')
+        and current_world()['entry']['selected_profile'] == selected_profile)
     if type(read_world_start) is not bool or (read_world_start and (character_index is None or
-            (selected_profile not in ('recovered-release','candidate-11316','candidate-11318') and not is_prepared(selected_profile)))):
+            (selected_profile not in ('recovered-release','candidate-11316','candidate-11318')
+             and not is_prepared(selected_profile) and not current_world_allowed))):
         raise ValueError('World start requires explicit selection and release profile')
     if type(ack_initial_tutorial) is not bool or (ack_initial_tutorial and not observe_world_seconds):
         raise ValueError('Initial tutorial ack requires bounded world observation')
@@ -163,9 +168,11 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
             raise ValueError('Current candidate has no verified quest or tutorial capability')
     if getattr(source, 'live_probe_only', False):
         from vampir_core.bounded_creation_admission import permits as creation_permits
+        from vampir_core.bounded_world_admission import permits as current_world_permits
         if ((creation_factory is not None and not creation_permits(source.source_exe_sha256))
                 or ((character_index is not None or read_world_start
-                or read_world_finish or observe_world_seconds) and not getattr(source,'bounded_world_probe',False))):
+                or read_world_finish or observe_world_seconds) and not getattr(source,'bounded_world_probe',False)
+                and not current_world_permits(source.source_exe_sha256, 'game-login-world-v1'))):
             raise ValueError('Candidate requires separately verified bounded world capability')
     auth = {}
     selection_proof = {}

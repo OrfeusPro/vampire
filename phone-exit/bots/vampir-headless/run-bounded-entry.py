@@ -24,7 +24,7 @@ def load(name, path):
     return module
 
 
-def run(account_id, selector, *, progress=lambda stage: None, _creation_factory=None):
+def run(account_id, selector, *, progress=lambda stage: None, _creation_factory=None, _world_session=None):
     store = AccountStore(HERE / '.local/console.sqlite3')
     account = next((row for row in store.accounts() if row['id'] == account_id), None)
     if account is None or account['enabled'] is not True or account['device_type'] == 'Не использовать':
@@ -41,6 +41,14 @@ def run(account_id, selector, *, progress=lambda stage: None, _creation_factory=
             creation = creation_current()
             if creation['entry']['selected_profile'] != selector or not callable(_creation_factory):
                 raise ValueError('Current creation requires its exact entry parent and explicit factory')
+        if _world_session is not None:
+            from vampir_core.bounded_world_admission import current as world_current
+            from vampir_core.live_session import LiveSession
+            world = world_current()
+            if (world['entry']['selected_profile'] != selector or not isinstance(_world_session, LiveSession)
+                    or _creation_factory is not None or settings['character_key'] is None
+                    or settings['character_index'] is None):
+                raise ValueError('Current world requires its exact entry parent and saved character identity')
         progress('cdn')
         cdn = load('bounded_public_cdn', HERE.parent / 'resource-tools/vampir/fetch-public-cdn-config.py')
         provenance = cdn.profile(selector)
@@ -63,13 +71,17 @@ def run(account_id, selector, *, progress=lambda stage: None, _creation_factory=
                 raise tool.VerificationStopped(status)
             return status
         tool = load('bounded_selected_game_login', HERE / 'probe-selected-game-login.py')
-        tool.exchange_game_login = partial(tool.exchange_game_login, expose_character_labels=True)
+        tool.exchange_game_login = partial(tool.exchange_game_login, expose_character_labels=True,
+            expected_character_key=int(settings['character_key']) if _world_session is not None else None)
         result = tool.run(email, selected_profile=selector, manifest_path=manifest, socks_port=port,
             server_policy_byte=0, extra_number=revision, context='windows-sdk-initial-reset',
             region=settings['region'], server_id=settings['server_id'], password=password,
             auth_flow='launcher', language_code=1, lobby_context='sdk-with-partial-metadata',
             read_character_list=True, device_settings=device, _progress=progress, _verification=verify,
-            creation_factory=_creation_factory)
+            creation_factory=_creation_factory,
+            character_index=settings['character_index'] if _world_session is not None else None,
+            read_world_start=_world_session is not None, read_world_finish=_world_session is not None,
+            observe_world_seconds=300 if _world_session is not None else 0, session_control=_world_session)
         password = None
         game = result.get('game', {})
         if (_creation_factory is None and game.get('character_list_received') is True and game.get('character_list_result_code') == 0

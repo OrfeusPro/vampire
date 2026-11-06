@@ -6,6 +6,7 @@ import struct
 from .login_result import _text
 
 SOURCE_SHA256='c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
+CURRENT_SOURCE_SHA256='03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 
 
 @dataclass(frozen=True,slots=True)
@@ -50,7 +51,7 @@ class CharacterSelectResultBody:
     def player(self):return self.data.at(0x18)
 
 
-def decode_character_select_result(body,*,max_payload_size,max_collection_items):
+def decode_character_select_result(body,*,max_payload_size,max_collection_items,source_sha256=None):
     """Consume one complete ID110 body with an aggregate wire-entry budget.
 
     Every array/map entry consumes budget, including entries overwritten by a
@@ -58,6 +59,12 @@ def decode_character_select_result(body,*,max_payload_size,max_collection_items)
     pairs, or None when absent; present-empty maps return (). Strings use the
     same strict local UTF-8 policy as the existing login/list codecs.
     """
+    bounds = (91, 7)
+    if source_sha256 is not None:
+        from .bounded_world_admission import permits
+        if source_sha256 != CURRENT_SOURCE_SHA256 or not permits(source_sha256, 'world-selection-move-v1'):
+            raise ValueError('Current selection layout requires its verified world scope')
+        bounds = (97, 8)
     if type(max_payload_size) is not int or not 203<=max_payload_size<=0xffffff:
         raise ValueError('Selection result byte budget must be 203..16777215')
     if type(max_collection_items) is not int or not 0<=max_collection_items<=65535:
@@ -132,7 +139,7 @@ def decode_character_select_result(body,*,max_payload_size,max_collection_items)
             (48,flag()),(50,u16()),(56,byte()),(57,flag())))
 
     def item1c8():return record(((8,u32()),(16,u64())))
-    def item1d8():return record(((8,min(byte(),91)),(16,u64())))
+    def item1d8():return record(((8,min(byte(),bounds[0])),(16,u64())))
 
     def item1f8():
         fields=[(8,u64()),(16,u32()),(20,u32()),(24,u16()),(26,u16()),(28,u16()),
@@ -142,7 +149,7 @@ def decode_character_select_result(body,*,max_payload_size,max_collection_items)
         fields.extend(zip((88,92,96),bits));fields.append((104,flag()))
         return record(fields)
 
-    def item250():return record(((8,byte()),(9,min(byte(),7)),(10,byte())))
+    def item250():return record(((8,byte()),(9,min(byte(),bounds[1])),(10,byte())))
     def item290():return record(((8,u32()),(12,u32()),(16,u32()),(20,min(byte(),3))))
 
     code=u32()

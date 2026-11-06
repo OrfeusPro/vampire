@@ -177,7 +177,8 @@
         "phone-exit/bots/resource-tools/vampir/replay-tutorial-update-11316.py",
         "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
         "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/tutorial-update-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/tutorial-update-11316.json",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-e6ab6fd97914/details.json",
@@ -231,7 +232,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
         "phone-exit/bots/vampir-shared/vampir_core/stat_names.py",
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py"
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-5e7bbc8a0f43/details.json",
@@ -277,7 +279,8 @@
         "phone-exit/bots/resource-tools/vampir/inspect-sight-bindings-11316.py",
         "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
         "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "runtime_distributions": [
         "capstone"
@@ -331,7 +334,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/npc_move_event.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-96408f02c1d2/details.json",
@@ -413,7 +417,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py",
         "phone-exit/bots/test_vampir_sight_character_lifecycle_11316.py",
         "phone-exit/bots/resource-tools/vampir/replay-sight-character-other-lifecycle-11316.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sight-character-other-lifecycle-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sight-character-other-lifecycle-11316.json",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-96408f02c1d2/details.json",
@@ -511,7 +516,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/npc_move_event.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -551,7 +557,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/sight_effect_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/sight_gadget_record.py",
-        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py"
+        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-96408f02c1d2/details.json",
@@ -611,7 +618,8 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sight-gadget-11316.json",
         "phone-exit/bots/vampir-shared/vampir_core/sight_gadget_record.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6c5bd9da86eb/details.json",
@@ -659,7 +667,8 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sight-social-11316.json",
         "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6c5bd9da86eb/details.json",
@@ -703,7 +712,8 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sight-projectiles-11316.json",
         "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6c5bd9da86eb/details.json",
@@ -749,7 +759,8 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sight-effects-11316.json",
         "phone-exit/bots/vampir-shared/vampir_core/sight_effect_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6a3c2fd0e46f/details.json",
@@ -834,7 +845,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
         "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "runtime_distributions": [
         "capstone"
@@ -876,7 +888,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/current_record_reader.py",
         "phone-exit/bots/vampir-shared/vampir_core/sight_effect_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/sight_gadget_record.py",
-        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py"
+        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-0b2ae7adfcf9/details.json",
@@ -996,7 +1009,8 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-notify-11316.json",
         "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-e6ab6fd97914/details.json",
@@ -1035,7 +1049,8 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-initial-11316.json",
         "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-e6ab6fd97914/details.json",
@@ -1545,7 +1560,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/heartbeat.py",
         "phone-exit/bots/vampir-shared/vampir_core/ping.py",
         "phone-exit/bots/vampir-shared/vampir_core/map_session.py",
-        "phone-exit/bots/vampir-shared/vampir_core/map_position.py"
+        "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "on_update": true
     },
@@ -1580,7 +1596,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
-        "phone-exit/bots/fixtures/vampir-selection-flow.json"
+        "phone-exit/bots/fixtures/vampir-selection-flow.json",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -1616,7 +1633,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
         "phone-exit/bots/fixtures/vampir-selection-flow.json",
         "phone-exit/bots/resource-tools/vampir/replay-release-world-reserve-prefix.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -1653,7 +1671,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
         "phone-exit/bots/fixtures/vampir-selection-flow.json",
         "phone-exit/bots/resource-tools/vampir/replay-release-world-start-result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -1759,7 +1778,8 @@
         "phone-exit/bots/resource-tools/vampir/run-ghidra-release-math.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -1803,7 +1823,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
-        "phone-exit/bots/resource-tools/vampir/replay-release-world-finish-collections.py"
+        "phone-exit/bots/resource-tools/vampir/replay-release-world-finish-collections.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -1848,7 +1869,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
         "phone-exit/bots/test_vampir_world_entry_flow.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
-        "phone-exit/bots/test_vampir_world_completion_flow.py"
+        "phone-exit/bots/test_vampir_world_completion_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "on_update": true
     },
@@ -2066,7 +2088,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/heartbeat.py",
         "phone-exit/bots/vampir-shared/vampir_core/ping.py",
-        "phone-exit/bots/test_vampir_periodic_ping.py"
+        "phone-exit/bots/test_vampir_periodic_ping.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "on_update": true,
       "runtime_distributions": [
@@ -2149,7 +2172,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_entry_flow.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -2203,7 +2227,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/character_target.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_move_event.py",
         "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
-        "phone-exit/bots/vampir-headless/probe-selected-game-login.py"
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -2237,7 +2262,8 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/vampir-shared/vampir_core/character_move_event.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
-        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -2292,7 +2318,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/character_move_event.py",
         "phone-exit/bots/test_vampir_game_login_probe.py",
         "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
-        "phone-exit/bots/vampir-headless/probe-selected-game-login.py"
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -2348,7 +2375,8 @@
         "phone-exit/bots/test_vampir_game_login_probe.py",
         "phone-exit/bots/test_vampir_character_target.py",
         "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
-        "phone-exit/bots/vampir-headless/probe-selected-game-login.py"
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -2439,7 +2467,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/character_move_event.py",
         "phone-exit/bots/test_vampir_game_login_probe.py",
         "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
-        "phone-exit/bots/vampir-headless/probe-selected-game-login.py"
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -3834,7 +3863,8 @@
         "phone-exit/bots/test_vampir_game_connection.py",
         "phone-exit/bots/test_vampir_receive_stream.py",
         "phone-exit/bots/fixtures/vampir-selection-flow.json",
-        "phone-exit/bots/fixtures/vampir-login-flow.json"
+        "phone-exit/bots/fixtures/vampir-login-flow.json",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -3921,7 +3951,8 @@
         "phone-exit/bots/vampir-headless/console/console.js",
         "phone-exit/bots/vampir-shared/vampir_core/device_templates.py",
         "phone-exit/bots/vampir-headless/verify-account.py",
-        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py"
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -4008,7 +4039,8 @@
         "phone-exit/bots/vampir-headless/console/console.js",
         "phone-exit/bots/vampir-shared/vampir_core/device_templates.py",
         "phone-exit/bots/vampir-headless/verify-account.py",
-        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py"
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -8838,7 +8870,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
         "phone-exit/bots/vampir-shared/vampir_core/stat_names.py",
         "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ]
     },
     {
@@ -10061,7 +10094,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_entry_flow.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_entry_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6ba3bac90477/details.json",
@@ -11105,7 +11139,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-0cc591b779fd/details.json",
@@ -11208,7 +11243,8 @@
         "phone-exit/bots/test_vampir_stat_batch_alignment_11318.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
-        "phone-exit/bots/vampir-shared/vampir_core/stat_change_11318.py"
+        "phone-exit/bots/vampir-shared/vampir_core/stat_change_11318.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-450b89173dc1/details.json",
@@ -11271,7 +11307,8 @@
         "phone-exit/bots/vampir/ui-prototype/prototype-live-model.js",
         "phone-exit/bots/vampir/ui-prototype/prototype-live-model.test.cjs",
         "phone-exit/bots/vampir/ui-prototype/prototype-live.js",
-        "phone-exit/bots/vampir/ui-prototype/quest-names-ru.js"
+        "phone-exit/bots/vampir/ui-prototype/quest-names-ru.js",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-450b89173dc1/details.json",
@@ -12627,7 +12664,21 @@
         "phone-exit/bots/test_vampir_viper_creation_current.py",
         "phone-exit/bots/vampir-headless/bounded-creation-profile.py",
         "phone-exit/bots/vampir-headless/run-bounded-create.py",
-        "phone-exit/bots/vampir-shared/vampir_core/bounded_creation_admission.py"
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_creation_admission.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-player-constructor-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-results-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-select-clamps-current.json",
+        "phone-exit/bots/resource-tools/vampir/verify-world-player-constructor-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-results-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-select-clamps-current.py",
+        "phone-exit/bots/test_vampir_bounded_world.py",
+        "phone-exit/bots/test_vampir_world_player_constructor_current.py",
+        "phone-exit/bots/test_vampir_world_results_current.py",
+        "phone-exit/bots/test_vampir_world_select_clamps_current.py",
+        "phone-exit/bots/vampir-headless/bounded-world-profile.py",
+        "phone-exit/bots/vampir-headless/run-bounded-world.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/live_session_server.py"
       ],
       "artifact_dependencies": []
     },
@@ -14761,7 +14812,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-007b340017c0/details.json",
@@ -15199,7 +15251,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-0c1dd33076e2/details.json",
@@ -15214,6 +15267,648 @@
       ],
       "entry_current_contexts": {
         "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "native-contexts/create-handler-current.json"
+      }
+    },
+    {
+      "id": "world-player-constructor-current",
+      "questions": [
+        "clock-world-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_world_player_constructor_current.py",
+      "timeout_seconds": 240,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/entry-package-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-player-constructor-current.json",
+        "phone-exit/bots/resource-tools/vampir/native-publication-v2.py",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-player-constructor-current.py",
+        "phone-exit/bots/test_vampir_world_player_constructor_current.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-4b16a82b156e/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-9e898eaaf6ca/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "bounded_entry_sources": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "entry_current_contexts": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "native-contexts/world-player-constructor-current.json"
+      }
+    },
+    {
+      "id": "world-select-clamps-current",
+      "questions": [
+        "clock-world-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_world_select_clamps_current.py",
+      "timeout_seconds": 240,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/entry-package-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-select-clamps-current.json",
+        "phone-exit/bots/resource-tools/vampir/native-publication-v2.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-select-clamps-current.py",
+        "phone-exit/bots/test_vampir_world_select_clamps_current.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-50e1f31d0893/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "bounded_entry_sources": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "entry_current_contexts": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "native-contexts/world-select-clamps-current.json"
+      }
+    },
+    {
+      "id": "world-results-current",
+      "questions": [
+        "clock-world-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_world_results_current.py",
+      "timeout_seconds": 240,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/entry-package-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/generate-clock-world-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/clock-world-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/clock-world-native-input-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-player-constructor-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-results-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-select-clamps-current.json",
+        "phone-exit/bots/resource-tools/vampir/native-publication-v2.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-clock-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-clock-current.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-ping-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-ping-current.py",
+        "phone-exit/bots/resource-tools/vampir/replay-ping-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-ping-result-current.py",
+        "phone-exit/bots/resource-tools/vampir/replay-world-entry-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-world-entry-current.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/run-clock-world-current.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-contexts.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-clock-replay-source-11318.py",
+        "phone-exit/bots/resource-tools/vampir/verify-clock-replay-source-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-ping-world-source-11318.py",
+        "phone-exit/bots/resource-tools/vampir/verify-ping-world-source-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-player-constructor-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-results-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-select-clamps-current.py",
+        "phone-exit/bots/test_vampir_world_results_current.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/world-finish-collections-replay/c6202db3216ae532b1f8ab13e1c5cea23835b43b6a17ae9b3cd3ae74a6afe92d/manifest.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/world-finish-reader-replay/f4124bed1e2df7a8472cf561d473834f0dfeed0418dd78b073ef196432592901/manifest.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-4496e2332dcf/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-4b16a82b156e/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-50e1f31d0893/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-7047b821ac37/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-761b5bc2280d/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-9e898eaaf6ca/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "system_runtime_files": [
+        "ucrtbase.dll"
+      ],
+      "bounded_entry_sources": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "entry_current_contexts": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "native-contexts/world-results-current.json"
+      }
+    },
+    {
+      "id": "bounded-world-current",
+      "questions": [
+        "clock-world-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_bounded_world.py",
+      "timeout_seconds": 240,
+      "dependencies": [
+        "phone-exit/bots/fixtures/vampir-login-flow.json",
+        "phone-exit/bots/fixtures/vampir-selection-flow.json",
+        "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+        "phone-exit/bots/resource-tools/vampir/align-wire-contexts-11320.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-contract.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/audit-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-bounded-entry-current.py",
+        "phone-exit/bots/resource-tools/vampir/build-bounded-world-current.py",
+        "phone-exit/bots/resource-tools/vampir/build-game-candidate-current.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-launcher-profile.py",
+        "phone-exit/bots/resource-tools/vampir/character-list-storage-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/contract-projections-v1.py",
+        "phone-exit/bots/resource-tools/vampir/contract-writer-inheritance-v1.py",
+        "phone-exit/bots/resource-tools/vampir/entry-current-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/entry-package-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/fetch-public-cdn-config.py",
+        "phone-exit/bots/resource-tools/vampir/function-reuse-plan.py",
+        "phone-exit/bots/resource-tools/vampir/generate-character-list-current.py",
+        "phone-exit/bots/resource-tools/vampir/generate-clock-world-current.py",
+        "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+        "phone-exit/bots/resource-tools/vampir/generate-sdk-batch.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/contract-projections.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/entry-extensions-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/entry-native-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/game-candidate-current-inputs.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/archive-wire-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/candidate-proof-bridges-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-extensions-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-list-envelope-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-list-handler-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-list-records-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-record-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/clock-world-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/clock-world-native-input-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/frame-integrity-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/launcher-contract-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/lobby-login-prepare-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/lobby-metadata-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/lobby-results-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/lobby-sender-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/lobby-wire-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-container-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-continuation-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-dispatch-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-full-handler-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-handler-early-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-nested-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-post-state-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-registration-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-response-composition-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-handler-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-registration-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-state-flow-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-strings-buffer-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/result-gate-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sdk-batch-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/string-writer-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/utf8-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-flow-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/waiting-end-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-player-constructor-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-results-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/world-select-clamps-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-release-registry.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/releases/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/facts.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-batch-rules.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-launcher-runtime-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/update-contracts.json",
+        "phone-exit/bots/resource-tools/vampir/login-composition-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-composition-handler-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-composition-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-container-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-container-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/login-container-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-dispatch-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-dispatch-handler-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-dispatch-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/login-dispatch-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-full-handler-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-full-handler-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-handler-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-handler-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-input-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-input-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-metadata-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-metadata-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-registration-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-registration-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-result-string-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-diagnostics.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-handler-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-native-providers.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-rules.py",
+        "phone-exit/bots/resource-tools/vampir/native-publication-v2.py",
+        "phone-exit/bots/resource-tools/vampir/native-publication-v3.py",
+        "phone-exit/bots/resource-tools/vampir/native-release-registry.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/portable-native-family.py",
+        "phone-exit/bots/resource-tools/vampir/post-state-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/post-state-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-base-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-geo-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-headers-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-url-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-clock-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-clock-current.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-ping-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-ping-current.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-context-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-ping-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-ping-result-current.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-defaults-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-overrides-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-platform-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-world-entry-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-world-entry-current.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/result-gate-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/result-gate-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/run-clock-world-current.py",
+        "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/sdk-batch-runner.py",
+        "phone-exit/bots/resource-tools/vampir/sdk-batch-transfer.py",
+        "phone-exit/bots/resource-tools/vampir/tooling-check-dispatch-v1.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-archive-wire.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-contexts.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-drivers-v2.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-drivers-v3.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-composition.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-container.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-dispatch.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-full.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-handler.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-input.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-metadata.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-prepare.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-registration.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-sdk.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-state-flow.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-response.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-string-writer.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-version-helpers.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-version-prepare.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-version-result.py",
+        "phone-exit/bots/resource-tools/vampir/update-profile.py",
+        "phone-exit/bots/resource-tools/vampir/verify-archive-wire-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-extensions-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-list-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-list-envelope-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-list-handler-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-list-records-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-record-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-clock-replay-source-11318.py",
+        "phone-exit/bots/resource-tools/vampir/verify-clock-replay-source-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-entry-contracts-11320.py",
+        "phone-exit/bots/resource-tools/vampir/verify-lobby-login-prepare-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-lobby-metadata-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-lobby-results-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-lobby-sender-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-lobby-wire-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-composition-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-composition-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-container-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-container-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-continuation-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-continuation-portable.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-dispatch-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-dispatch-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-full-handler-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-handler-early-11320.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-handler-early-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-input-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-input-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-nested-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-registration-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-registration-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-state-flow-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-state-flow-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-packet-writer-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-ping-world-source-11318.py",
+        "phone-exit/bots/resource-tools/vampir/verify-ping-world-source-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-post-state-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-result-gate-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-string-writer-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-utf8-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-login-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-flow.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-waiting-end-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-player-constructor-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-results-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-world-select-clamps-current.py",
+        "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/version-helper-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/version-result-flow-guard.py",
+        "phone-exit/bots/resource-tools/vampir/version-string-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/version-system-transfer-rules.py",
+        "phone-exit/bots/test_vampir_bounded_entry.py",
+        "phone-exit/bots/test_vampir_bounded_world.py",
+        "phone-exit/bots/test_vampir_game_login_probe.py",
+        "phone-exit/bots/test_vampir_login_flow.py",
+        "phone-exit/bots/test_vampir_selection_flow.py",
+        "phone-exit/bots/test_vampir_update_contracts.py",
+        "phone-exit/bots/test_vampir_version_probe.py",
+        "phone-exit/bots/test_vampir_version_result_flow.py",
+        "phone-exit/bots/test_vampir_world_entry_flow.py",
+        "phone-exit/bots/vampir-headless/bounded-entry-profile.py",
+        "phone-exit/bots/vampir-headless/bounded-world-profile.py",
+        "phone-exit/bots/vampir-headless/game-source-profile.py",
+        "phone-exit/bots/vampir-headless/probe-game-version.py",
+        "phone-exit/bots/vampir-headless/probe-lobby-connection.py",
+        "phone-exit/bots/vampir-headless/probe-lobby-sdk-login.py",
+        "phone-exit/bots/vampir-headless/probe-lobby-version.py",
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
+        "phone-exit/bots/vampir-headless/probe-selected-game-version.py",
+        "phone-exit/bots/vampir-headless/run-bounded-entry.py",
+        "phone-exit/bots/vampir-headless/run-bounded-world.py",
+        "phone-exit/bots/vampir-headless/run-nid-sdk-sign-in.py",
+        "phone-exit/bots/vampir-headless/sdk-launcher-profile.py",
+        "phone-exit/bots/vampir-headless/verify-account.py",
+        "phone-exit/bots/vampir-headless/windows-system-inputs.py",
+        "phone-exit/bots/vampir-shared/vampir_core/account_store.py",
+        "phone-exit/bots/vampir-shared/vampir_core/action_queue.py",
+        "phone-exit/bots/vampir-shared/vampir_core/auth_request.py",
+        "phone-exit/bots/vampir-shared/vampir_core/block_decode.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bot_device_settings.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_creation_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_entry_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bounded_world_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/cdn_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/cdn_fallback.py",
+        "phone-exit/bots/vampir-shared/vampir_core/cdn_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/cdn_servers.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_create.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_create_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_creation_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_creation_plan.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_list.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_move_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_target.py",
+        "phone-exit/bots/vampir-shared/vampir_core/creation_journal.py",
+        "phone-exit/bots/vampir-shared/vampir_core/current_record_reader.py",
+        "phone-exit/bots/vampir-shared/vampir_core/detached_worker.py",
+        "phone-exit/bots/vampir-shared/vampir_core/device_registry.py",
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py",
+        "phone-exit/bots/vampir-shared/vampir_core/direct_route.py",
+        "phone-exit/bots/vampir-shared/vampir_core/environment.py",
+        "phone-exit/bots/vampir-shared/vampir_core/frame_primitives.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_connection.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_login_error.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_login_probe.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_server_target.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_decode.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_http.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_request.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/heartbeat.py",
+        "phone-exit/bots/vampir-shared/vampir_core/initial_tutorial_ack.py",
+        "phone-exit/bots/vampir-shared/vampir_core/key_change.py",
+        "phone-exit/bots/vampir-shared/vampir_core/live_diagnostics.py",
+        "phone-exit/bots/vampir-shared/vampir_core/live_session.py",
+        "phone-exit/bots/vampir-shared/vampir_core/live_session_server.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_current.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_login_error.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_login_probe.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_packets.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_server_list.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_version_probe.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_packet.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result_current.py",
+        "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
+        "phone-exit/bots/vampir-shared/vampir_core/metadata_tid.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_google.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_metadata.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_sdk_credential.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_web_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_web_url.py",
+        "phone-exit/bots/vampir-shared/vampir_core/npc_create_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/npc_move_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/outbound.py",
+        "phone-exit/bots/vampir-shared/vampir_core/patch_revision.py",
+        "phone-exit/bots/vampir-shared/vampir_core/ping.py",
+        "phone-exit/bots/vampir-shared/vampir_core/quest_list.py",
+        "phone-exit/bots/vampir-shared/vampir_core/quest_list_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/quest_record.py",
+        "phone-exit/bots/vampir-shared/vampir_core/quest_request.py",
+        "phone-exit/bots/vampir-shared/vampir_core/quest_sync.py",
+        "phone-exit/bots/vampir-shared/vampir_core/quest_update.py",
+        "phone-exit/bots/vampir-shared/vampir_core/quest_update_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/receive_frame.py",
+        "phone-exit/bots/vampir-shared/vampir_core/receive_stream.py",
+        "phone-exit/bots/vampir-shared/vampir_core/release_bundle.py",
+        "phone-exit/bots/vampir-shared/vampir_core/runtime_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/scheduled_worker.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_constants.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_fetch.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_first_login.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_auth.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_percent.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_secret.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in_http.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_up_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_terms.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_terms_http.py",
+        "phone-exit/bots/vampir-shared/vampir_core/selection_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/send_frame.py",
+        "phone-exit/bots/vampir-shared/vampir_core/session_clock.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_effect_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_enter_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_gadget_record.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_leave_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/socket_send.py",
+        "phone-exit/bots/vampir-shared/vampir_core/socks_route.py",
+        "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
+        "phone-exit/bots/vampir-shared/vampir_core/stat_names.py",
+        "phone-exit/bots/vampir-shared/vampir_core/transport_header.py",
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_request.py",
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
+        "phone-exit/bots/vampir-shared/vampir_core/version_cpu.py",
+        "phone-exit/bots/vampir-shared/vampir_core/version_inputs.py",
+        "phone-exit/bots/vampir-shared/vampir_core/version_packet.py",
+        "phone-exit/bots/vampir-shared/vampir_core/version_probe.py",
+        "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/windows_cpu.py",
+        "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
+        "phone-exit/bots/vampir-shared/vampir_core/windows_version.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_entry_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/world-finish-collections-replay/c6202db3216ae532b1f8ab13e1c5cea23835b43b6a17ae9b3cd3ae74a6afe92d/manifest.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/world-finish-reader-replay/f4124bed1e2df7a8472cf561d473834f0dfeed0418dd78b073ef196432592901/manifest.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-007b340017c0/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-038273faea42/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-2af588b5fc98/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-4496e2332dcf/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-4b16a82b156e/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-4b16a82b156e/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-50e1f31d0893/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-6204f055a2a7/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-7047b821ac37/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-7047b821ac37/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-748a854efcce/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-761b5bc2280d/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-761b5bc2280d/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-841159b0b6c4/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-8e5827ba43aa/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-8eb39d51b84a/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-8fd9778dd444/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-947804c8e3e6/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-947804c8e3e6/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-9e898eaaf6ca/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-9f0a37b3ed68/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-9f0a37b3ed68/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-a8254882183e/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-acc24c5196b9/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-acc24c5196b9/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-b62a15b48b49/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-b62a15b48b49/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-bc98b31b7196/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-c48d61557879/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-c48d61557879/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-c5a775460bb6/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-c9f35d32258c/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-c9f35d32258c/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-cd2fee6014d7/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-e1e179d90d4c/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-e73ad608b83e/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-e73ad608b83e/provenance.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-ff9992487494/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-ff9992487494/provenance.json",
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json",
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-af05ed4ef63f/details.json",
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cc90e4f503ac/details.json",
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-1a7e48a82067/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-450b89173dc1/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-5e88e50e265d/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-652644c53992/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-896228001291/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-8b262adbaa98/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-934cf393e845/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-9e79cd7f7832/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-bd63520caaaf/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-d6af42842586/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-e3abc26162e7/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-ed5c8eee70bc/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "system_runtime_files": [
+        "ucrtbase.dll"
+      ],
+      "bounded_entry_sources": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "entry_current_contexts": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "native-contexts/world-results-current.json"
       }
     }
   ]
