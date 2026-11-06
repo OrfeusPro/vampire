@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "recipe": "lobby-sender-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "functions": {
+    "wrapper": "0x144aaf380",
+    "sender": "0x144ab0310",
+    "version": "0x14575b5d0",
+    "login": "0x14575afc0",
+    "list": "0x14575b3a0"
+  },
+  "exports": {
+    "run-6204f055a2a7": "bb0d85490b88f350308a8725abb70a2c7a77aa2bd50411b02c276e1f6adc415d",
+    "run-c5a775460bb6": "e7d41197175801a14d29ad7884962002b3fdb7816a9de8329e44ccd519caed1c"
+  },
+  "tables": {
+    "version": {"address": "0x149943880", "id_getter": "0x14144e160"},
+    "login": {"address": "0x1499437b8", "id_getter": "0x14144c140"},
+    "list": {"address": "0x1499443b8", "id_getter": "0x1456e4c90"}
+  },
+  "leaves": {
+    "0x14144e160": "b801000000c3",
+    "0x1456e4c90": "b867000000c3",
+    "0x144210d10": "8b8108010000c3"
+  },
+  "queue": {
+    "notify": "0x144aafa20",
+    "append": "0x1445eb0b0"
+  },
+  "reuse": {
+    "reference_context_sha256": "2010d183938f32be9a4926b3f79a4935ec6b331985aaa5d2c927849cf26bea7a",
+    "integrity": {
+      "path": "knowledge/native-frame-integrity-proofs/eb2a95a59ea2672feb540d4bc399148d6bf8c6d659af776308ba97875ed14c8b/manifest.json",
+      "sha256": "eb2a95a59ea2672feb540d4bc399148d6bf8c6d659af776308ba97875ed14c8b"
+    },
+    "integrity_result": {
+      "path": "knowledge/native-adapter-checks/a4f2895a2d88d8eaa40690afe567d522c79582c943074ba590c5ca23ccb344d9/manifest.json",
+      "sha256": "a4f2895a2d88d8eaa40690afe567d522c79582c943074ba590c5ca23ccb344d9"
+    }
+  }
+}

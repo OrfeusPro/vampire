@@ -158,6 +158,8 @@ def runtime_inputs(index, root, report, identifier):
 
 
 def run(index, workflow, args, sha, definition):
+    if sha in definition.get('bounded_entry_sources', []):
+        return index.extension('entry-package-check-guard').run(index, workflow, args, sha, definition)
     if definition['id'] not in CHECKS or workflow.source_scope(definition) != 'client':
         raise ValueError('Current entry requires its registered client check')
     material, pointer = retained(index, args.root, args.knowledge, definition, sha)

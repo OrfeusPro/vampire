@@ -3507,6 +3507,178 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Композиция LoginPrepare, writer, sender и runtime.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x144aaf380",
+        "0x144ab0310",
+        "0x14575afc0",
+        "0x14575b3a0",
+        "0x14575b5d0",
+        "0x1467d1200"
+      ],
+      "checks": [
+        {
+          "cache_key": "d344a06d8ca3f117be8ba683abbef07d3bae0ccc96569313a885004b3ae08b86",
+          "id": "lobby-wire-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d282e4cfd2b13b4e87d44737fe6311336e2b3397da39890277aa95b45e8325f7\\manifest.json",
+          "sha256": "d282e4cfd2b13b4e87d44737fe6311336e2b3397da39890277aa95b45e8325f7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7969a4aec0d910b7e57c947ba3dad99d92f9386721526b50c80ef53150395b75",
+          "id": "game-candidate-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c301210fce6a381f01e386fe53e6b7f674cb0adab28306f9ab49de35e6dbb933\\manifest.json",
+          "sha256": "c301210fce6a381f01e386fe53e6b7f674cb0adab28306f9ab49de35e6dbb933",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bc3cff70558f181eb54340543e77cc6f7e52289d3988ed63568364603d786680",
+          "id": "lobby-login-prepare-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f1b9a525dce601ff714c46d05b49b583a2f623d98b5c7b7063efd60c6149d732\\manifest.json",
+          "sha256": "f1b9a525dce601ff714c46d05b49b583a2f623d98b5c7b7063efd60c6149d732",
+          "state": "passed"
+        },
+        {
+          "cache_key": "77d3a8df38d8e168bbf03ff43999ed3a351fa3c20778acfae4b6a3ea0d258e4f",
+          "id": "lobby-sender-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\92cc73f965785ae9a83f183314f4be2b1f5972e8c4b7a9639837b2a4598c5529\\manifest.json",
+          "sha256": "92cc73f965785ae9a83f183314f4be2b1f5972e8c4b7a9639837b2a4598c5529",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Восемь текущих LoginPrepare сценариев переданы native sender. Восемь самостоятельных sender сценариев покрывают три writers лобби, OUTPUT, CRC и XOR с совпадением переносимому codec.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOBBY-LOGIN-PREPARE-CURRENT.md",
+          "sha256": "0886ccd1afd6d6db39146575cfdb80727980d13a8e1df6bf2ccfb03e5e394b56"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\ENTRY-PACKAGE-CURRENT-VALIDATION.json",
+          "sha256": "711e98ccd3e4fe3df7fb32bb82224b9874fd97655238fac2eeeb329dbd077aea"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c8a497ff7ed9584f34fe01264e7850f94a23594d672e74e2bbffc3e88353e616",
+      "limits": [
+        "Точный EXE и явно ограниченные native сценарии.",
+        "Данные providers, память и внешние engine/transport операции ограничены fixtures. Нет сетевых действий и допуска runtime."
+      ],
+      "method": "bounded_native",
+      "next_check": "Current runtime scope, фактический ответ сервера и сохранение игровой сессии.",
+      "question": "game-candidate-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Current runtime scope, фактический ответ сервера и сохранение игровой сессии.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x144aac390",
+        "0x144aacc30",
+        "0x1456b7780",
+        "0x1456d6ea0",
+        "0x145783c00",
+        "0x1457888c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "af35890b98fa724497c244c51b355edb565fa686fbfd564ae331bb50b5143322",
+          "id": "create-packets-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27\\manifest.json",
+          "sha256": "04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27",
+          "state": "passed"
+        },
+        {
+          "cache_key": "513cd04fc4748398fcb4ba1d49603876bd8933ea6de5d84df74b565dbe31b66f",
+          "id": "create-result-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5de6f780d8a55eb0d9e6be6496239b1f3bd91a0b1d4150055f58511efbb99225\\manifest.json",
+          "sha256": "5de6f780d8a55eb0d9e6be6496239b1f3bd91a0b1d4150055f58511efbb99225",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Полное текущее тело Create104 исполнено с native INPUT и вложенными readers. 6 полных тел, 7 коротких, 3 отказа и хвост проверены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-RESULT-CURRENT.md",
+          "sha256": "32bedcf292a31dc373e42a74d4d278925780d148c874a4cff6b27622cf6ba1a6"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\ENTRY-PACKAGE-CURRENT-VALIDATION.json",
+          "sha256": "711e98ccd3e4fe3df7fb32bb82224b9874fd97655238fac2eeeb329dbd077aea"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "16cf307fbf929a38487f733024c64ecd14059e7aeedc85318bd1a4aae593f812",
+      "limits": [
+        "Точный EXE и явно ограниченные native сценарии.",
+        "Данные providers, память и внешние engine/transport операции ограничены fixtures. Нет сетевых действий и допуска runtime."
+      ],
+      "method": "bounded_native",
+      "next_check": "Create producer, Result104 handler и загруженный пресет Viper.",
+      "question": "create-packets-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Create producer, Result104 handler и загруженный пресет Viper.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1416a4980",
+        "0x1417ca930",
+        "0x1454ceec0"
+      ],
+      "checks": [
+        {
+          "cache_key": "e79de875cc9675c3a15bd90217eca1d1e719b5c1d6f04abd7388f6df3773d19a",
+          "id": "preset-defaults-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09\\manifest.json",
+          "sha256": "e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f1e6cc7ea205e59c325a7128758e876720ac906b3241ac3810229a4645060f54",
+          "id": "viper-class-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\58a63097acefe9b577f16dd7724369b6eec6e9b46a47a7ebdbfcf4fc18a88075\\manifest.json",
+          "sha256": "58a63097acefe9b577f16dd7724369b6eec6e9b46a47a7ebdbfcf4fc18a88075",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3e145a20190114bf884f85fcd5b9fb025320a6645fa6d131dd5cc56a9e47f329",
+          "id": "viper-cdo-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1d550fa16c70a5c7e3e6c407a3f798482fa89049fce0b6482a49a28c10778a2b\\manifest.json",
+          "sha256": "1d550fa16c70a5c7e3e6c407a3f798482fa89049fce0b6482a49a28c10778a2b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9408273dc4a0ddd12ee7f1077a01c10fdc300b5351b7704a97c537385d53612d",
+          "id": "viper-cold-cdo-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9e47b97525e2c822d9fdef9c536bc4890354e833363c433016b3f4147eff4989\\manifest.json",
+          "sha256": "9e47b97525e2c822d9fdef9c536bc4890354e833363c433016b3f4147eff4989",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "В трёх начальных состояниях памяти текущий cold CDO owner исполняет allocator, initializer, constructors и completion. Warm owner переиспользует CDO без allocation.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-VIPER-COLD-CDO-CURRENT.md",
+          "sha256": "edbc4702966d33f25d77a145eeb9836eedb7e8dbf313fa50fc3187a9845007ac"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\ENTRY-PACKAGE-CURRENT-VALIDATION.json",
+          "sha256": "711e98ccd3e4fe3df7fb32bb82224b9874fd97655238fac2eeeb329dbd077aea"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "f402ba4092a5aab6a826161699689308854172250a57070ae4e6a0d3a0f86f12",
+      "limits": [
+        "Точный EXE и явно ограниченные native сценарии.",
+        "Данные providers, память и внешние engine/transport операции ограничены fixtures. Нет сетевых действий и допуска runtime."
+      ],
+      "method": "bounded_native",
+      "next_check": "Фактические loaded preset values, engine callback effects, PostInitProperties и cooked asset loading.",
+      "question": "viper-native-defaults-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Фактические loaded preset values, engine callback effects, PostInitProperties и cooked asset loading.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

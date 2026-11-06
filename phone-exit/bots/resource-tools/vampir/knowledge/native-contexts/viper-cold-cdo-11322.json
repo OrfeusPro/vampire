@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "recipe": "viper-cold-cdo-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-ea90b06e1993": "8a896dbaf2df253383f49851c3972b221eb094e59b1caea9b932556b115573cc",
+    "run-49796294d192": "4dfa63039a61442d4a64458e9aa356660924420fa8de3b3ca2cc5df9febbf5ce"
+  },
+  "functions": {
+    "class_getter": "0x1454ceec0",
+    "cold_cdo": "0x1416a4980",
+    "build_initializer": "0x1417ca930"
+  },
+  "anchors": {
+    "class_package": "0x149846ac0",
+    "class_name": "0x1498b65ca",
+    "class_global": "0x14b5e5208",
+    "class_register": "0x1416abc00",
+    "finish_cdo_slot": "0x149852088",
+    "initializer_delegate_slot": "0x1489e7558"
+  },
+  "fixtures": {
+    "post_properties": "0x1417ddbb0",
+    "initializer_cleanup": "0x14142a640",
+    "post_initialize": "0x14174fee0",
+    "stack_probe": "0x1487ebe60",
+    "parent_lookup": "0x1417eb250",
+    "class_property_iterator": "0x1416b0ba0",
+    "feature_setting": "0x14154afa0",
+    "cdo_fname": "0x1416a9c10",
+    "object_lookup": "0x1417fc190",
+    "outer_package": "0x1417d7ae0",
+    "initializer_delegate_cleanup": "0x141421bd0"
+  }
+}

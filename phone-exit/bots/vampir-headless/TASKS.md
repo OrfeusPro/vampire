@@ -18,7 +18,11 @@
   integer defaults не устанавливаются конструктором. [ClassInfo consumers](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-CLASS-CONSUMERS-CURRENT.md)
   теперь проверены в 49 случаях. Свежая allocation / CDO ветвь и внешние
   Create 103/104 проверены в ограниченных сценариях. Остаются загруженные
-  defaults Viper, producer и полный Result 104. [Результат](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md).
+  defaults Viper и producer. Полное тело Result 104 с вложенной записью
+  исполнено, остаётся его handler.
+  [Create Result](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-CURRENT.md).
+  Холодный CDO owner проверен в трёх сценариях с явными engine fixtures.
+  [Границы defaults](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-COLD-CDO-CURRENT.md).
 - Current lobby VersionResult получил отдельный decoder и native reader / handler
   пакет. String/TimeBase и INPUT исполнены в текущей композиции reader.
   Metadata consumers проверены с синтетическими системными providers.
@@ -71,9 +75,12 @@ SDK → Launcher composition прошла семь fixture сценариев. �
 проверяют 1554 CharacterList, 297 clock / Ping / world + 12 short INPUT,
 а также 362 validation / 48 apply metadata случаев. Текущий lobby codec готов.
 Офлайн-кандидат текущей версии собран с отдельным source tag и базовым CDN.
-Пять функций подготовки и записи пакетов лобби сверены статически. Дальше
-исполнить LoginPrepare и проверить границу отправки, затем подключить текущий
-runtime scope. [Кандидат и конкретные блокеры](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md).
+LoginPrepare исполнен, подготовленные поля переданы текущему native sender.
+Восемь кадров совпали с portable codec. Три writers лобби и ветви sender
+проверены отдельно. Дальше подключить текущий runtime scope и выполнить
+свежий вход Silvercrow до списка персонажей.
+[Подготовка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-LOGIN-PREPARE-CURRENT.md),
+[отправка и квитанция](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-SENDER-CURRENT.md).
 Создание и stats имеют отдельный допуск.
 [Матрица повторного использования и текущий Launcher](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-CONTRACT-CURRENT.md).
 [16 сценариев VersionResult, подключение к on_update и кэш](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-RESULT-FLOW-CURRENT.md).

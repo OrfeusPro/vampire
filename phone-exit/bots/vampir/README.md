@@ -33,7 +33,13 @@ character / world flow. [VersionResult reader → handler → gate](../resource-
 проверены [следующим пакетом](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md).
 Офлайн-кандидат 1.13.22 собран из сохранённых проверок. Отдельно подтверждены
 ветка выделения и копирования CDO и внешние пакеты Create. Для живого запуска
-остаётся связать текущую подготовку лобби с отправкой и допуском.
+остаётся подключить текущий runtime scope и проверить серверный ответ.
+[LoginPrepare и native sender](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-LOGIN-PREPARE-CURRENT.md)
+уже связаны через перенос подготовленных полей между стендами. Восемь кадров
+совпали с codec. Полное тело
+[Create Result 104](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-CURRENT.md)
+исполнено с вложенной записью и INPUT. Его handler, producer и загруженный
+пресет Viper требуют продолжения.
 [Кандидат и проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md).
 [Приёмка и экспорт send wrapper](../resource-tools/vampir/knowledge/evidence/updates/GAME-CANDIDATE-CURRENT-ACCEPTANCE.json).
 [Проверка первого этапа](../resource-tools/vampir/knowledge/evidence/updates/AUTO-ENTRY-CURRENT-VALIDATION.json)

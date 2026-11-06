@@ -738,7 +738,9 @@
         "lobby-version-layout-current",
         "lobby-metadata-current",
         "lobby-wire-current",
-        "game-candidate-current"
+        "game-candidate-current",
+        "lobby-login-prepare-current",
+        "lobby-sender-current"
       ],
       "recipes": [
         {
@@ -1846,7 +1848,9 @@
         "preset-defaults-current",
         "viper-class-current",
         "viper-cdo-current",
-        "create-packets-current"
+        "create-packets-current",
+        "create-result-current",
+        "viper-cold-cdo-current"
       ],
       "recipes": [
         {

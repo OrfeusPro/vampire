@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source_checks": [
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\7556c074ff5a8129814fda0d5b9960af8cae92a4d2e5541a8f3310e622fd3186\\manifest.json",
+      "sha256": "7556c074ff5a8129814fda0d5b9960af8cae92a4d2e5541a8f3310e622fd3186",
+      "cache_key": "6fec1e608f8eef328d6f594a7c7c5c454049916f0d7408230e76116a5df26874",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    {
+      "id": "lobby-login-prepare-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f1b9a525dce601ff714c46d05b49b583a2f623d98b5c7b7063efd60c6149d732\\manifest.json",
+      "sha256": "f1b9a525dce601ff714c46d05b49b583a2f623d98b5c7b7063efd60c6149d732",
+      "cache_key": "bc3cff70558f181eb54340543e77cc6f7e52289d3988ed63568364603d786680"
+    },
+    {
+      "id": "lobby-sender-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\92cc73f965785ae9a83f183314f4be2b1f5972e8c4b7a9639837b2a4598c5529\\manifest.json",
+      "sha256": "92cc73f965785ae9a83f183314f4be2b1f5972e8c4b7a9639837b2a4598c5529",
+      "cache_key": "77d3a8df38d8e168bbf03ff43999ed3a351fa3c20778acfae4b6a3ea0d258e4f"
+    },
+    {
+      "id": "create-result-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5de6f780d8a55eb0d9e6be6496239b1f3bd91a0b1d4150055f58511efbb99225\\manifest.json",
+      "sha256": "5de6f780d8a55eb0d9e6be6496239b1f3bd91a0b1d4150055f58511efbb99225",
+      "cache_key": "513cd04fc4748398fcb4ba1d49603876bd8933ea6de5d84df74b565dbe31b66f"
+    },
+    {
+      "id": "viper-cold-cdo-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9e47b97525e2c822d9fdef9c536bc4890354e833363c433016b3f4147eff4989\\manifest.json",
+      "sha256": "9e47b97525e2c822d9fdef9c536bc4890354e833363c433016b3f4147eff4989",
+      "cache_key": "9408273dc4a0ddd12ee7f1077a01c10fdc300b5351b7704a97c537385d53612d"
+    }
+  ],
+  "completions": [
+    {
+      "name": "lobby-entry",
+      "fact_id": "c8a497ff7ed9584f34fe01264e7850f94a23594d672e74e2bbffc3e88353e616",
+      "completion": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\ef497167cdfc9f3ff362885fab1229054773661f2a76785d9771511b823e02b1\\manifest.json",
+      "checked": "passed"
+    },
+    {
+      "name": "create-result",
+      "fact_id": "16cf307fbf929a38487f733024c64ecd14059e7aeedc85318bd1a4aae593f812",
+      "completion": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\e19f31cc2c9826c6bccb22f97a181c155e1ca16c026eafbdbabbc8bb0f092e26\\manifest.json",
+      "checked": "passed"
+    },
+    {
+      "name": "cold-cdo",
+      "fact_id": "f402ba4092a5aab6a826161699689308854172250a57070ae4e6a0d3a0f86f12",
+      "completion": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\00a878a621933fd95978be0b3898e53c7e7e512c697bc6ab32e4a1745242682e\\manifest.json",
+      "checked": "passed"
+    }
+  ],
+  "tooling": {
+    "aggregate": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\a5236ec78c706fabcd264f9c8d5671c2d78d628a1e4567c8b6c49c159500cbd1\\manifest.json",
+      "sha256": "a5236ec78c706fabcd264f9c8d5671c2d78d628a1e4567c8b6c49c159500cbd1"
+    },
+    "groups": 48,
+    "counts": {
+      "discovered_cases": 2215,
+      "errors": 0,
+      "expected_failures": 0,
+      "failures": 0,
+      "skipped": 4,
+      "tests_run": 2215,
+      "unexpected_successes": 0
+    }
+  },
+  "unchanged_repeat": {
+    "seconds": 19.103756199940108,
+    "subprocess_creation_forbidden": true,
+    "all_checks_passed": true,
+    "all_receipts_equal": true
+  },
+  "network_used": false,
+  "runtime_admitted": false,
+  "live_verified": false
+}

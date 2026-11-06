@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proofs": {
+    "lobby-login-prepare-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\lobby-login-prepare-current-v1\\8fea4eae55d507d75726643c5befb2f0ca298cceda2bec94d0def59a002f791a\\manifest.json",
+      "sha256": "8fea4eae55d507d75726643c5befb2f0ca298cceda2bec94d0def59a002f791a",
+      "retained_inputs": 26,
+      "reused": true
+    },
+    "lobby-sender-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\lobby-sender-current-v1\\73daba1eaedc9b816252c4079bbd44562e6046db00ffb140dd2d652ba4eba387\\manifest.json",
+      "sha256": "73daba1eaedc9b816252c4079bbd44562e6046db00ffb140dd2d652ba4eba387",
+      "retained_inputs": 23,
+      "reused": true
+    },
+    "create-result-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\create-result-current-v1\\0efcd501467955de81810608a3661b51b7b3cbd6985c512d1f0f3314bd8f04ca\\manifest.json",
+      "sha256": "0efcd501467955de81810608a3661b51b7b3cbd6985c512d1f0f3314bd8f04ca",
+      "retained_inputs": 89,
+      "reused": true
+    },
+    "viper-cold-cdo-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\viper-cold-cdo-current-v1\\08fd0f53cf79598a5b273d3e56ec22c71d82b5c05737e5737fdf83901316483d\\manifest.json",
+      "sha256": "08fd0f53cf79598a5b273d3e56ec22c71d82b5c05737e5737fdf83901316483d",
+      "retained_inputs": 19,
+      "reused": true
+    }
+  },
+  "coverage": {
+    "login_prepare_to_sender": 8,
+    "lobby_sender": 8,
+    "create_result_full": 6,
+    "create_result_short": 7,
+    "create_result_failures": 3,
+    "create_result_tail": 1,
+    "cold_cdo": 3,
+    "warm_cdo_reuses": 3
+  },
+  "network_used": false,
+  "runtime_admitted": false,
+  "live_verified": false,
+  "remaining": [
+    "current bounded runtime scope and live response",
+    "Create producer and Result104 handler",
+    "loaded Viper preset and engine callback effects"
+  ]
+}

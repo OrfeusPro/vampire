@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "recipe": "create-result-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "runtime_admitted": false,
+  "packet_proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\create-packets-current-v1\\c0dc0cbe528c3b02b3808eeff78f3cbc1a1b5c70f4bccee4a54fbbf71d43f2a3\\manifest.json",
+    "sha256": "c0dc0cbe528c3b02b3808eeff78f3cbc1a1b5c70f4bccee4a54fbbf71d43f2a3"
+  }
+}

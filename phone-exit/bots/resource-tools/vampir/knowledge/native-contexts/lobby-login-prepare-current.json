@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "recipe": "lobby-login-prepare-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/ProjectRED-Win64-Shipping.exe",
+  "verify_whole_exports": true,
+  "functions": {
+    "prepare": "0x1467d1200"
+  },
+  "exports": {
+    "run-6204f055a2a7": "bb0d85490b88f350308a8725abb70a2c7a77aa2bd50411b02c276e1f6adc415d"
+  },
+  "helpers": {
+    "memcpy": "0x1487f8c99"
+  },
+  "leaves": {
+    "0x145749670": "488d0541a11f04c681800000000748890133c0488941104889411848894120488941284889413048894138488941404889414848894150488941584889416048894168488941704889417888410a488bc1c3",
+    "0x144ab0d30": "488b054942ae06c3",
+    "0x144ab0d70": "488b41108b8070020000c3"
+  }
+}
