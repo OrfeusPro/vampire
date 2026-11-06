@@ -1661,9 +1661,9 @@
       "id": "quest-dialogue-current",
       "status": "open",
       "question": "Как активный сценарий задания выбирает группу диалога, строки, варианты ответа и допустимость пропуска на текущем SHA?",
-      "known": "Восемь экспортов сверены с текущим EXE. 26 сценариев подтвердили прямой dialogGroupId и выбор ветки через fixtures. Граф именованных ресурсов, on_update и неизменный повтор проверены.",
-      "unknown": "Открыты binding выбранной задачи к проигрывателю диалога, строковый classInfoId, смена активной реплики и серверное подтверждение ответа или пропуска.",
-      "next_action": "Переиспользовать готовые 145566ad0, 1455d2620 и 1445cd610. Одним missing-only пакетом разобрать общий dispatcher 1445d3a50, scalar reader 1415eb520 и callbacks 1455642a0 / 1455b5820. Затем связать активный task, допустимое действие и достоверный результат.",
+      "known": "Именованные русские ресурсы и 26 сценариев выбора группы сохранены. 126 новых сценариев подтвердили передачу параметров, 436 — числовой доступ и cleanup. On_update и неизменный повтор прошли; активный шаг и строковый provider не допускаются.",
+      "unknown": "Открыты конкретный строковый TryGetNumber, выбор активного task и current provider действия с индексом, TargetId, readiness, позицией и подтверждённым переходом. Проигрыватель диалога, выбор ответа, пропуск и работа онлайн не подтверждены.",
+      "next_action": "Переиспользовать current 1810/1811 и 324 matching-state сценария. Собрать общий пакет projection 145de7870 и factory/model candidates 1455b8fe0 / 1455b4d30; из closure установить текущую task lookup. Затем доказать ordered task/progress, provider и отдельный current action admission. Сессию сохранять.",
       "decision_rule": "Каталог или найденная строка не являются полученной репликой. Нужны exact source bytes, native binding от активного сценария, порядок/варианты и flags; unsupported actions не отправлять. Данные ресурсов, bounded native fixtures и онлайн доказывать отдельно.",
       "do_not_repeat": "Не повторять готовые QuestSync/Tutorial native matrices и русский каталог. Не разрывать текущую игровую сессию; collect только missing roots.",
       "addresses": [
@@ -1679,7 +1679,10 @@
       "evidence": [
         "evidence/quests/HEADLESS-QUEST-DIALOGUE-CURRENT.md",
         "evidence/quests/QUEST-DIALOGUE-CURRENT-VALIDATION.json",
-        "evidence/quests/QUEST-DIALOGUE-CURRENT-RESULT.json"
+        "evidence/quests/QUEST-DIALOGUE-CURRENT-RESULT.json",
+        "evidence/quests/HEADLESS-QUEST-PARAMETERS-CURRENT.md",
+        "evidence/quests/QUEST-PARAMETERS-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-PARAMETERS-CURRENT-RESULT.json"
       ]
     },
     {

@@ -22,10 +22,10 @@ TABLES={
 }
 SHA=re.compile('[a-f0-9]{64}')
 LIMITS=[
-    'Native execution selects a parameter group only; JSON values and class/actor providers are explicit fixtures.',
-    'The parameter parser is not yet bound to the active quest task or dialogue player.',
+    'Native execution covers parameter selection, task adapters, dispatcher and numeric projection with explicit providers.',
+    'Structural task parameter binding does not establish the selected live quest task or dialogue player.',
     'Resource membership, field masks and skip flags are data; display order, playback, selection and skip effects are unverified.',
-    'Class strings remain raw until the native scalar conversion is qualified; non-null shared controls are not executed.',
+    'Class strings remain raw; group selection uses null shared controls, while scalar cleanup executes bounded non-null controls.',
     'Current source/archive context only; automatic discovery of a later source context remains open.',
     'No received prompt, game command, live dialogue or runtime action admission is established.',
 ]
@@ -163,6 +163,11 @@ def validate(report,definition):
         and report.get('limits')==LIMITS and report.get('native_execution') is True,
         'cached proof scope differs')
     load('dialogue-parameter-cases-v1').validate(report.get('native_parameter',{}))
+    child=report.get('parameter_binding',{})
+    load('verify-quest-parameters-current').validate(child,child.get('definition',{}))
+    require(child['source_sha256']==definition['source_sha256']
+        and all(definition['inputs'].get(name)==expected for name,expected in child['definition']['inputs'].items()),
+        'parameter binding inputs differ')
 
 
 def checked_receipt(labels,owner,pointer,recipe):
@@ -198,6 +203,11 @@ def verify(*,root=ROOT,context_path=CONTEXT):
             owner.expect(value['file'],value['sha256']);tables[role]=value
         source_path=owner.root/'client-code-snapshots'/context['source_sha256']/'ProjectRED-Win64-Shipping.exe'
         owner.expect(source_path,context['source_sha256'])
+        parameter_tool=load('verify-quest-parameters-current')
+        binding_pointer=parameter_tool.verify(root=root)
+        binding_pointer=dict(path=binding_pointer['report'],sha256=binding_pointer['sha256'])
+        binding=checked_receipt(labels,owner,binding_pointer,parameter_tool.RECIPE)
+        for name,expected in binding['definition']['inputs'].items():owner.expect(name,expected)
         for file in (Path(__file__),HERE/'dialogue-parameter-cases-v1.py',HERE/'quest-tutorial-state-harness-v1.py',
                 HERE/'update-bindings.py',HERE/'login-input-transfer-rules.py',HERE/'build-native-entry-code.py',
                 HERE/'extract-native-enums.py',HERE/'audit-client-release.py',HERE/'research-workflow.py'):
@@ -209,6 +219,8 @@ def verify(*,root=ROOT,context_path=CONTEXT):
         cache=Path(root)/'knowledge'/(RECIPE+'-cache')/(key+'.json')
         if cache.is_file():
             pointer=json.loads(cache.read_bytes());report=checked_receipt(labels,owner,pointer,RECIPE);validate(report,definition)
+            require(report['parameter_binding']==binding and report['parameter_binding_proof']==binding_pointer,
+                'parameter binding child differs')
             parameter=checked_receipt(labels,owner,report['native_parameter_proof'],'dialogue-parameter-native-v1')
             require(parameter.get('schema')==1 and parameter.get('recipe')=='dialogue-parameter-native-v1'
                 and parameter.get('result')==report['native_parameter']
@@ -240,6 +252,7 @@ def verify(*,root=ROOT,context_path=CONTEXT):
         graph_pointer=dict(path=str(graph_path),sha256=labels.digest(graph_path));owner.expect(graph_path,graph_pointer['sha256'])
         report=dict(schema=1,recipe=RECIPE,source_sha256=context['source_sha256'],definition=definition,
             graph=graph_pointer,native_parameter=parameter,native_parameter_proof=parameter_proof,
+            parameter_binding=binding,parameter_binding_proof=binding_pointer,
             native_execution=True,whole_exports_verified=len(export['functions']),
             counts=dict(dialogue_groups=len(value['groups']),choice_groups=len(value['choice_groups']),
                 scripted_dialogue_tasks=len(value['tasks']),lines=sum(map(len,value['groups'].values())),

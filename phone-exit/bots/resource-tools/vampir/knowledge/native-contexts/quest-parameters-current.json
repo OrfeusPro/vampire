@@ -1,0 +1,161 @@
+{
+  "schema": 1,
+  "recipe": "quest-parameters-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-618f50000dc0": "524affdab92e8be19a0408b9d157d99093411cd4246509d6c4ed7faceba121c8",
+    "run-ee2685d287dd": "9df9c6fb376b2608b3fa7e482163ce23b113e207f9499080d90a8817fb29342a"
+  },
+  "binding": {
+    "native": {
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+      "functions": {
+        "factory": "0x145566ad0",
+        "task_adapter": "0x1455d2620",
+        "dispatcher": "0x1445d3a50"
+      },
+      "leaves": {
+        "0x1455642a0": "e9cb9affff",
+        "0x1455b5820": "e91ba8ffff",
+        "0x14140e350": "488d4108c3"
+      },
+      "fixtures": {
+        "allocate": "0x14690be10",
+        "reader_constructor": "0x1415f94c0",
+        "deserialize": "0x1415e35e0",
+        "task_reset": "0x1445d7c10",
+        "cookie": "0x1487ebec0",
+        "factory_consumer": "0x14555dd70",
+        "task_consumer": "0x1455b0040",
+        "factory_destroy": "0x141c9ee20",
+        "reader_destroy": "0x14147f270",
+        "control_delete": "0x141409210",
+        "lambda_cleanup": "0x141421bd0",
+        "provider_and_json_control": "0x2803e000"
+      },
+      "indirect_fixtures": [
+        [
+          "0x145566bbd",
+          "qword ptr [rax + 8]",
+          "0x141409210"
+        ],
+        [
+          "0x145566bdb",
+          "qword ptr [rax]",
+          "0x141c9ee20"
+        ],
+        [
+          "0x145566bef",
+          "qword ptr [rax + 8]",
+          "0x141409210"
+        ],
+        [
+          "0x145566c4b",
+          "qword ptr [rdx + 0x10]",
+          "0x141421bd0"
+        ],
+        [
+          "0x145566c7a",
+          "qword ptr [rax]",
+          "0x141c9ee20"
+        ],
+        [
+          "0x145566c8e",
+          "qword ptr [rax + 8]",
+          "0x141409210"
+        ],
+        [
+          "0x1455d2676",
+          "qword ptr [rax + 0x38]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455d26a2",
+          "qword ptr [rax + 0x10]",
+          "0x141421bd0"
+        ],
+        [
+          "0x1445d3ae9",
+          "qword ptr [rax]",
+          "0x14147f270"
+        ],
+        [
+          "0x1445d3b00",
+          "qword ptr [rax + 8]",
+          "0x141409210"
+        ],
+        [
+          "0x1445d3b74",
+          "qword ptr [rax]",
+          "0x2803e000"
+        ],
+        [
+          "0x1445d3b8d",
+          "qword ptr [rax + 8]",
+          "0x2803e000"
+        ],
+        [
+          "0x1445d3bac",
+          "qword ptr [r8]",
+          "0x14147f270"
+        ],
+        [
+          "0x1445d3bc1",
+          "qword ptr [r8 + 8]",
+          "0x141409210"
+        ]
+      ],
+      "readonly_globals": {
+        "0x14b274600": "32a2df2d992b0000"
+      }
+    },
+    "tables": {
+      "0x148af9360": "20eec941010000001092404101000000",
+      "0x148a22d68": "c0385b410100000050e3404101000000d01b424101000000",
+      "0x1489fee88": "e0a147410100000050e3404101000000d01b424101000000",
+      "0x1489fee48": "70f24741010000001092404101000000"
+    }
+  },
+  "scalar": {
+    "error_literal": "0x148a01300",
+    "literals": {
+      "0x148a01300": "4e0075006d006200650072000000"
+    },
+    "native": {
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+      "functions": {
+        "accessor": "0x1445cd610",
+        "scalar": "0x1415eb520"
+      },
+      "leaves": {},
+      "fixtures": {
+        "hash": "0x141425dc0",
+        "lookup": "0x141590480",
+        "virtual": "0x2803e000",
+        "error": "0x141426b90",
+        "free": "0x1414830e0",
+        "allocate": "0x14690be10"
+      },
+      "indirect_fixtures": [
+        [
+          "0x1415eb636",
+          "qword ptr [rax + 0x50]",
+          "0x2803e000"
+        ],
+        [
+          "0x1415eb679",
+          "qword ptr [rax]",
+          "0x2803e000"
+        ],
+        [
+          "0x1415eb68d",
+          "qword ptr [rax + 8]",
+          "0x2803e000"
+        ]
+      ],
+      "readonly_globals": {}
+    }
+  }
+}

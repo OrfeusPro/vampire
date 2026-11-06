@@ -41,6 +41,10 @@ class DialogueResourcesCurrentTests(unittest.TestCase):
         self.assertEqual(r['native_parameter']['metrics']['call_counts'],26)
         self.assertFalse(r['runtime_admitted']);self.assertFalse(r['received_prompts_verified'])
         self.assertFalse(r['active_task_verified']);self.assertFalse(r['skip_behavior_verified'])
+        child=r['parameter_binding']
+        self.assertEqual(len(child['results']['binding']['cases']),126)
+        self.assertEqual(len(child['results']['scalar']['cases']),436)
+        self.assertFalse(child['active_task_verified']);self.assertFalse(child['class_string_conversion_verified'])
         self.assertEqual(len(self.graph['groups']['11012002']),6)
         self.assertFalse(self.graph['order_admitted']);self.assertFalse(self.graph['active'])
 
@@ -84,6 +88,9 @@ class DialogueResourcesCurrentTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'scope differs'):self.tool.validate(forged,self.report['definition'])
         forged=copy.deepcopy(self.report);forged['native_parameter']['cases'][0]['group']='99'
         with self.assertRaisesRegex(ValueError,'native parameter proof scope differs'):
+            self.tool.validate(forged,self.report['definition'])
+        forged=copy.deepcopy(self.report);forged['parameter_binding']['results']['binding']['cases']=[]
+        with self.assertRaisesRegex(ValueError,'binding proof scope or matrix differs'):
             self.tool.validate(forged,self.report['definition'])
 
     def test_native_parameter_cache_excludes_resource_text_changes(self):

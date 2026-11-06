@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "scope": "parameter_binding_and_scalar_access",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\dialogue-resources-current-v1\\54f2af4234213dee05a0655bf4ae485fb4f2b01bc5585dcc805afc30a34d207a\\manifest.json",
+    "sha256": "54f2af4234213dee05a0655bf4ae485fb4f2b01bc5585dcc805afc30a34d207a"
+  },
+  "parameter_proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-parameters-current-v1\\d99743c2ec77dac0c95e5f4a54b6352ce481159f536e7fdb14bbc72e604d8c99\\manifest.json",
+    "sha256": "d99743c2ec77dac0c95e5f4a54b6352ce481159f536e7fdb14bbc72e604d8c99"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\49abdd61eb1170846b49b57e16dbd3ba36250e40d85f3fa77fa2280dae403721\\manifest.json",
+    "sha256": "49abdd61eb1170846b49b57e16dbd3ba36250e40d85f3fa77fa2280dae403721"
+  },
+  "final_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\1811c39a5a03bc7e8889568f864f5d4cac78d95f969407b2b86174db100fbd70\\manifest.json",
+    "sha256": "1811c39a5a03bc7e8889568f864f5d4cac78d95f969407b2b86174db100fbd70"
+  },
+  "final_collection_new_jvm": 0,
+  "first_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\6bf8ad58342f9e22448cade99e05afc7ffa23bf1d114fec89f36a970b801e7e1\\manifest.json",
+    "sha256": "6bf8ad58342f9e22448cade99e05afc7ffa23bf1d114fec89f36a970b801e7e1"
+  },
+  "newly_exported_roots": [
+    "0x1445d3a50",
+    "0x1415eb520"
+  ],
+  "tail_leaves": {
+    "0x1455642a0": "e9cb9affff",
+    "0x1455b5820": "e91ba8ffff"
+  },
+  "binding_cases": 126,
+  "scalar_cases": 436,
+  "abi_checks": 562,
+  "component_tests": 5,
+  "existing_dialogue_component_tests": 7,
+  "tooling_environment_change_from_previous": [
+    "PATH"
+  ],
+  "source_check": {
+    "id": "quest-dialogue-current",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8052b0958f3359e1a5ab8f34bd3898a5b18a01310c169e79d318a412b6b00eaa\\manifest.json",
+    "sha256": "8052b0958f3359e1a5ab8f34bd3898a5b18a01310c169e79d318a412b6b00eaa",
+    "cache_key": "2f837a616d2fbb90d6edd3c65d27209ae2d73c86dd6a04bb4c33dd33bc76d5e8"
+  },
+  "ordinary_update_warm": {
+    "checks": [
+      {
+        "id": "automatic-update-tooling",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\e49da8c378076f3353609fc06bc3627875ab38953b4e32a7d1c72e9f956f4c9b\\manifest.json",
+        "sha256": "e49da8c378076f3353609fc06bc3627875ab38953b4e32a7d1c72e9f956f4c9b",
+        "cache_key": "882c6da1aee9cc46bd07fdcecc900beb9b9923fbf86ada61390f078f00fb9d0c",
+        "source_scope": "tooling",
+        "proves_client_compatibility": false
+      },
+      {
+        "id": "quest-dialogue-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8052b0958f3359e1a5ab8f34bd3898a5b18a01310c169e79d318a412b6b00eaa\\manifest.json",
+        "sha256": "8052b0958f3359e1a5ab8f34bd3898a5b18a01310c169e79d318a412b6b00eaa",
+        "cache_key": "2f837a616d2fbb90d6edd3c65d27209ae2d73c86dd6a04bb4c33dd33bc76d5e8"
+      }
+    ],
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "warm_seconds": 27.943,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\667a014f8a05a557fbcc2b7aca2a3a2d7432a212f2377393b73925c61a50dfd5\\manifest.json",
+    "sha256": "667a014f8a05a557fbcc2b7aca2a3a2d7432a212f2377393b73925c61a50dfd5",
+    "groups": 69,
+    "tests": 2325,
+    "skips": 4,
+    "metrics": {
+      "executed_groups": 36,
+      "cached_groups": 33,
+      "executed_cases": 1341,
+      "cached_cases": 984,
+      "executed_discovered_cases": 1341,
+      "cached_discovered_cases": 984,
+      "executed_skips": 4,
+      "cached_skips": 0,
+      "incomplete_groups": 0,
+      "duration_seconds": 1037.2763251999859
+    }
+  },
+  "reused_parameter_selection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\dialogue-parameter-native-v1\\cdade424fdcb97f3369094a7ab75f6808a3124d2f695cf73d85544ddcf4d6cd3\\manifest.json",
+    "sha256": "cdade424fdcb97f3369094a7ab75f6808a3124d2f695cf73d85544ddcf4d6cd3"
+  },
+  "reused_resource_graph": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\dialogue-resource-graphs-v1\\317809aaad27c01c726ad8760f1e1477594699d7f4363c00d37872410d89ebe4\\manifest.json",
+    "sha256": "317809aaad27c01c726ad8760f1e1477594699d7f4363c00d37872410d89ebe4"
+  },
+  "runtime_admitted": false,
+  "active_task_verified": false,
+  "class_string_conversion_verified": false,
+  "new_entry_tested_online": false,
+  "online": {
+    "character": "Bipoberiho",
+    "state": "connected",
+    "same_session": true,
+    "session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+    "game_commands_sent": false,
+    "owner_replaced": false
+  },
+  "limits": [
+    "Task parameter adapters and dispatcher execute with bounded allocation, JSON and callback fixtures.",
+    "The final dialogue/task parser callbacks are boundaries, not an executed dialogue player.",
+    "Numeric projection executes the native accessor and scalar reader; virtual TryGetNumber remains a fixture.",
+    "String-to-number implementation, default scalar allocation and active task selection remain unverified.",
+    "No current quest action provider, runtime action admission, received prompt or online result is established."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "question": "quest-dialogue-current",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "addresses": [
+    "0x145566ad0",
+    "0x1455d2620",
+    "0x1445d3a50",
+    "0x1445cd610",
+    "0x1415eb520"
+  ],
+  "method": "bounded_native",
+  "conclusion": "Проверены 126 сценариев передачи параметров через factory/task adapter/dispatcher и 436 сценариев числового accessor/scalar reader. Подтверждены capture и callback-аргументы, native refcount cleanup и AL как признак наличия поля. Новый child proof подключён к штатному quest-dialogue-current и кэшу, прежние native selection и граф ресурсов переиспользованы.",
+  "limits": [
+    "Task parameter adapters and dispatcher execute with bounded allocation, JSON and callback fixtures.",
+    "The final dialogue/task parser callbacks are boundaries, not an executed dialogue player.",
+    "Numeric projection executes the native accessor and scalar reader; virtual TryGetNumber remains a fixture.",
+    "String-to-number implementation, default scalar allocation and active task selection remain unverified.",
+    "No current quest action provider, runtime action admission, received prompt or online result is established."
+  ],
+  "unknown": "Открыты конкретный строковый TryGetNumber, выбор активного task и current provider действия с индексом, TargetId, readiness, позицией и подтверждённым переходом. Проигрыватель диалога, выбор ответа, пропуск и работа онлайн не подтверждены.",
+  "next_check": "Переиспользовать current 1810/1811 и 324 matching-state сценария. Собрать общий пакет projection 145de7870 и factory/model candidates 1455b8fe0 / 1455b4d30; из closure установить текущую task lookup. Затем доказать ordered task/progress, provider и отдельный current action admission. Сессию сохранять.",
+  "evidence": [
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-PARAMETERS-CURRENT-VALIDATION.json",
+      "sha256": "5c97d463e764ea1ebc1c7f0eb2923b906dd799a264dbadd4786828f56cfe89cd"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-PARAMETERS-CURRENT.md",
+      "sha256": "6854a226672f0964a4b168e4d872598e6a92d04b04779380710dc4a9a4e2fff5"
+    }
+  ]
+}
