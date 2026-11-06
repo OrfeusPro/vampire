@@ -5,7 +5,7 @@
     snapshot = root.VampirLiveState?.displaySnapshot(snapshot) ?? snapshot;
     const person = snapshot?.state === 'connected' ? snapshot.character : null;
     const stats = Array.isArray(person?.stats) ? person.stats : [];
-    const raw = id => stats.find(row => row.id === id)?.value ?? null;
+    const raw = id => { const row=stats.find(row => row.id === id); return row?.name===null?null:row?.value??null; };
     const position = snapshot?.position;
     const verifiedPosition = person && /^\d{1,20}$/.test(String(person.world_id)) && position && position.world_id === person.world_id && ['10','11'].includes(position.map_id)
       && [position.x,position.y,position.z,position.pixel_x,position.pixel_y].every(Number.isFinite)

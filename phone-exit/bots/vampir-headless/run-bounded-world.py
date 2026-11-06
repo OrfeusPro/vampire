@@ -13,6 +13,7 @@ from threading import BoundedSemaphore
 
 HERE = Path(__file__).resolve().parent
 ROOT = Path('F:/PhoneExit Resources/Vampir')
+STORE = HERE / '.local/console.sqlite3'
 sys.path.insert(0, str(HERE.parent / 'vampir-shared'))
 from vampir_core.account_store import AccountStore
 from vampir_core.bounded_world_admission import scope, current
@@ -65,10 +66,10 @@ def existing_owner(identifiers, port):
     return dict(status='existing_owner', port=port, sessions=rows)
 
 
-def run(identifiers, selector, *, port=17947, ready_callback=lambda value: None):
+def run(identifiers, selector, *, port=17947, store_path=STORE, ready_callback=lambda value: None):
     if type(port) is not int or not 1024 <= port <= 65535:
         raise ValueError('Explicit loopback port required')
-    store = AccountStore(HERE / '.local/console.sqlite3')
+    store = AccountStore(store_path)
     validate_accounts(identifiers, store)
     with scope(selector, root=ROOT, workspace=HERE.parents[2]):
         profile = current(selector)
@@ -96,7 +97,7 @@ def run(identifiers, selector, *, port=17947, ready_callback=lambda value: None)
             # Every worker validates and enters its own immutable context.
             with scope(selector, root=ROOT, workspace=HERE.parents[2]):
                 result = load_entry().run(identifier, profile['entry']['selected_profile'],
-                    _world_session=session, progress=progress)['result']
+                    _world_session=session, progress=progress, _store=store)['result']
                 game = result.get('game', {})
                 if result.get('status') == 'selected_game_login_not_completed' and not session.stop_requested:
                     session.close(result.get('verification_status') or result.get('stage') or 'world_entry_not_completed')
@@ -133,6 +134,7 @@ def main():
     parser.add_argument('--account', action='append')
     parser.add_argument('--profile')
     parser.add_argument('--port', type=int, default=17947)
+    parser.add_argument('--store', type=Path, default=STORE)
     parser.add_argument('--output', type=Path)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--detached', action='store_true')
@@ -144,15 +146,18 @@ def main():
             from vampir_core.detached_worker import ready_channel, receive_handoff
             readiness = ready_channel()
             options = receive_handoff(sys.stdin.buffer)
-            if not isinstance(options, dict) or set(options) != {'accounts', 'profile', 'port', 'output'}:
+            if not isinstance(options, dict) or set(options) != {'accounts', 'profile', 'port', 'output', 'store'}:
                 raise ValueError('Invalid current world owner handoff')
         else:
             if args.account is None or args.profile is None:
                 parser.error('Нужны --account и --profile')
-            options = dict(accounts=args.account, profile=args.profile, port=args.port,
+            store = args.store.resolve(strict=True)
+            if not store.is_file():
+                raise ValueError('Expected the saved console database')
+            options = dict(accounts=args.account, profile=args.profile, port=args.port, store=str(store),
                            output=str(args.output.resolve()) if args.output else None)
             with scope(args.profile, root=ROOT, workspace=HERE.parents[2]):
-                validate_accounts(args.account, AccountStore(HERE / '.local/console.sqlite3'))
+                validate_accounts(args.account, AccountStore(store))
             existing = existing_owner(args.account, args.port)
             if existing is not None:
                 print(json.dumps(existing, ensure_ascii=False), flush=True)
@@ -174,7 +179,8 @@ def main():
             path = Path(options['output'])
             if path.exists() or not path.parent.is_dir():
                 raise ValueError('Expected a new result file in an existing directory')
-        result = run(options['accounts'], options['profile'], port=options['port'], ready_callback=ready)
+        result = run(options['accounts'], options['profile'], port=options['port'],
+                     store_path=options['store'], ready_callback=ready)
         if options['output'] is not None:
             path = Path(options['output'])
             with path.open('x', encoding='utf-8') as stream:

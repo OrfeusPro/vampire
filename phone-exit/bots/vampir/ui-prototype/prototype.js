@@ -2,7 +2,8 @@
 (() => {
   'use strict';
   const M = VampirDemo, app = document.getElementById('app'), windows = document.getElementById('windows');
-  const liveMode = new URLSearchParams(location.search).get('mode') === 'live' || new URLSearchParams(location.search).has('session');
+  const groupMode = new URLSearchParams(location.search).get('mode') === 'group';
+  const liveMode = groupMode || new URLSearchParams(location.search).get('mode') === 'live' || new URLSearchParams(location.search).has('session');
   let liveController;
   const requestedProfile = new URLSearchParams(location.search).get('bot') || 'demo-01';
   const profile = /^[a-zA-Z0-9_-]{1,48}$/.test(requestedProfile) ? requestedProfile : 'demo-01';
@@ -930,7 +931,8 @@
     document.getElementById('inspector').onclick = () => openInspector();
     resourcesReady = true;
     if (liveMode) {
-      liveController = VampirPrototypeLive.mount({ app, windows, components, el, append, image, icon, button, profile:requestedProfile });
+      const args={app,windows,components,el,append,image,icon,button,profile:requestedProfile};
+      liveController = groupMode ? VampirPrototypeGroup.mount(args) : VampirPrototypeLive.mount(args);
       if (!pageActive) liveController.dispose();
       return;
     }

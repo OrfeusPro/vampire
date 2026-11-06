@@ -33,7 +33,9 @@ def decode_character_level_up(body,*,source_sha256,max_records=1024):
 
 
 def _decode(body,source_sha256,max_records,*,tail):
-    if source_sha256!=SOURCE_SHA256:raise ValueError('Unverified stat source')
+    from .bounded_world_admission import permits
+    if source_sha256!=SOURCE_SHA256 and not permits(source_sha256,'character-stat-notifications-v1'):
+        raise ValueError('Unverified stat source')
     if type(max_records) is not int or not 0<=max_records<=4096:raise ValueError('Stat record limit must be 0..4096')
     if type(body) is not bytes:raise TypeError('Immutable stat body required')
     if len(body)>65536:raise BufferError('Stat notification exceeds byte limit')
@@ -50,7 +52,9 @@ def _decode(body,source_sha256,max_records,*,tail):
 def initial_stat_values(records,*,source_sha256):
     """PktStat pairs from the verified PktCharacter +1c8 collection."""
     from .character_select_result import SelectionRecord
-    if source_sha256!=SOURCE_SHA256:raise ValueError('Unverified initial stat source')
+    from .bounded_world_admission import permits
+    if source_sha256!=SOURCE_SHA256 and not permits(source_sha256,'initial-character-stats-v1'):
+        raise ValueError('Unverified initial stat source')
     if type(records) is not tuple or len(records)>1024:raise ValueError('Invalid initial stat collection')
     values=[]
     for record in records:

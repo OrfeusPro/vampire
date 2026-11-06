@@ -1,6 +1,7 @@
 """Retain current entry native proofs on cold and cached source checks."""
 import copy
 import hashlib
+import json
 from pathlib import Path
 import sys
 
@@ -9,6 +10,32 @@ EXTRA_IDS = {'create-packets-current', 'viper-cdo-current', 'lobby-wire-current'
 CANDIDATE = 'game-candidate-current'
 CHECKS = IDS | EXTRA_IDS | {CANDIDATE}
 RECIPE = 'entry-current-check-guard-v1'
+
+
+def runtime_alias(current, retained):
+    if current == retained:
+        return current
+    before, after = dict(retained), dict(current)
+    old, new = before.pop('executable', None), after.pop('executable', None)
+    if (before != after or not isinstance(old,str) or not isinstance(new,str)
+            or not Path(old).is_file() or not Path(new).is_file() or not Path(old).samefile(new)):
+        raise ValueError('Current proof runtime changed')
+    return retained
+
+
+def character_report(api, path, root):
+    """Retain the historical producer, allowing only the same interpreter file."""
+    report = api.checked(dict(path=str(path),sha256=api.digest(path)),root,'character-list-current-bounded')
+    if (report.get('recipe')!=api.RECIPE or report.get('source_sha256')!=api.SOURCE
+            or report.get('method')!='bounded_native' or report.get('semantic_verification') is not True
+            or any(report.get(key) is not False for key in ('network_used','runtime_admitted','profile_activated','live_verified'))
+            or set(report.get('reports',{}))!=set(api.NAMES) or not report.get('limits')):
+        raise ValueError('Current CharacterList report boundary differs')
+    _, expected = api.materials(report['definition']['generated']['path'],root)
+    runtime_alias(expected,report['definition'])
+    for name, component in report['reports'].items():
+        api.validate_report(name,component)
+    return report
 
 
 def candidate_material(proof, pointer, installed):
@@ -54,7 +81,7 @@ def retained(index, root, knowledge, definition, sha):
 
     if definition['id'] == 'character-list-current':
         api = index.extension('verify-character-list-current')
-        proof = api.verify_report(path, root=root, workspace=workspace)
+        proof = character_report(api, path, root)
         native_definition = proof['definition']
         merge(native_definition['inputs'])
         merge(native_definition['files'])
@@ -65,6 +92,7 @@ def retained(index, root, knowledge, definition, sha):
     elif definition['id'] == 'clock-world-current':
         api = index.extension('run-clock-world-current')
         _, native_definition = api.inputs(root)
+        native_definition = runtime_alias(native_definition,json.loads(path.read_bytes())['definition'])
         proof = api.verify_report(path, pointer['sha256'], native_definition, root)
         merge(native_definition['files'])
         merge(native_definition['exports'])

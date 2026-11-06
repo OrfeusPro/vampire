@@ -1,8 +1,9 @@
 /* Main prototype live controller. One session adapter feeds passive components. */
 (function(root) {
   'use strict';
-  function mount({app, windows, components, el, append, icon, button, profile}) {
-    const params = new URLSearchParams(location.search), sessionId = params.get('session');
+  function mount({app, windows, components, el, append, icon, button, profile, group}) {
+    const params = new URLSearchParams(location.search);
+    let sessionId = group?.sessionId ?? params.get('session');
     const validId = value => typeof value === 'string' && /^[a-zA-Z0-9_-]{1,48}$/.test(value);
     const model = root.VampirPrototypeLiveModel;
     let snapshot = null, value = model.project(null), localProjection = null, adapter, statusView, disposed = false, dialog, refreshDialog;
@@ -18,7 +19,7 @@
     screen.dataset.mode = 'live'; screen.dataset.geometryState = 'temporary-live-shell';
     const mapHolder = el('div', undefined, 'map-holder'), map = el('iframe');
     map.title = 'Карта персонажа · справочный атлас';
-    map.src = 'map.html?mode=live&bot=' + encodeURIComponent(profile) + '&session=' + encodeURIComponent(sessionId);
+    map.src = group ? 'group-map.html' : 'map.html?mode=live&bot=' + encodeURIComponent(profile) + '&session=' + encodeURIComponent(sessionId);
     mapHolder.append(map);
     const hud = el('div', undefined, 'live-hud'), identity = el('strong', profile), connection = el('span', 'Ожидание данных…');
     connection.setAttribute('role', 'status');
@@ -29,7 +30,8 @@
     append(hud, append(el('header', undefined, 'live-player'), identity, statusHolder, summary, connection));
     const toolbar = el('nav', undefined, 'live-toolbar'); toolbar.setAttribute('aria-label', 'Меню персонажа');
     const diagnostic = el('a', 'Диагностика');
-    diagnostic.href = 'live.html?bot=' + encodeURIComponent(profile) + '&session=' + encodeURIComponent(sessionId);
+    diagnostic.href = group ? '/' : 'live.html?bot=' + encodeURIComponent(profile) + '&session=' + encodeURIComponent(sessionId);
+    if(group)diagnostic.textContent='Аккаунты';
     diagnostic.title = 'Открыть подробный журнал и управление сессией';
     const environmentButton = button('Окружение', () => openEnvironment(), 'live-log-button', true);
     append(toolbar, environmentButton, button('Журнал', () => openLog(), 'live-log-button'), icon('IMG_Flat_Menu', 'Меню', () => openMenu()));
@@ -51,9 +53,15 @@
     append(screen, mapHolder, hud, reference); app.replaceChildren(screen);
     function sendMap(type = 'state') {
       map.contentWindow?.postMessage({source:'vampir-live-prototype', bot_id:profile, session_id:sessionId, type,
-        payload:{position:value.position, world_id:value.person?.world_id ?? null, map_id:value.mapId, follow, labels:true}}, location.origin);
+        payload:{position:value.position, world_id:value.person?.world_id ?? null, map_id:value.mapId, follow, labels:true,
+          ...(group ? {sessions:group.sessions(),atlas:localProjection} : {})}}, location.origin);
     }
     function mapReady(event) {
+      if(group&&event.origin===location.origin&&event.source===map.contentWindow&&event.data?.source==='vampir-group-map'){
+        if(event.data.type==='ready')sendMap();
+        if(event.data.type==='select')group.select(event.data.bot_id);
+        return;
+      }
       if (event.origin === location.origin && event.source === map.contentWindow
         && event.data?.source === 'vampir-live-map' && event.data.bot_id === profile
         && event.data.session_id === sessionId && event.data.type === 'ready') sendMap();
@@ -140,7 +148,7 @@
       if(!interaction)return;
       const view=interaction.view,policy=interaction.policy;
       skipCheck.checked=policy.skip_dialogues;autoCheck.checked=policy.auto_quests;
-      skipCheck.disabled=interaction.policyBusy;autoCheck.disabled=interaction.policyBusy;
+      skipCheck.disabled=interaction.policyBusy||!!group&&!view.ready;autoCheck.disabled=interaction.policyBusy||!!group&&!view.ready;
       actionStatus.textContent=interaction.status;
       const automation=view.automation;
       questNotice.textContent=automation?.state==='waiting_npc'?'Подойдите к NPC'+(automation.npc_label?': '+automation.npc_label:'')
@@ -214,7 +222,8 @@
       interaction?.observe(next);
       identity.textContent = value.person?.name || profile;
       level.textContent = 'Уровень ' + (value.person?.level ?? '—');
-      statObservation.textContent = value.statsObservation ? 'Характеристики: наблюдение новых сообщений' : '';
+      statObservation.textContent = next?.coverage?.stats_observation==='world_entry_snapshot' ? 'Характеристики при входе'
+        : next?.coverage?.stats_observation==='notifications_received'||value.statsObservation ? 'Характеристики: наблюдение новых сообщений' : '';
       power.textContent = 'БМ ' + (value.power ?? '—'); experience.textContent = 'Опыт ' + (value.experience ?? '—');
       connection.textContent = next?.mode === 'fixture' ? 'Тестовые данные · без игрового соединения' : next?.state === 'connected'
         ? 'Онлайн · ' + profile : next?.state === 'connecting' ? 'Вход в игру…' : 'Нет текущих данных сессии';
@@ -246,13 +255,20 @@
       disposed = false; statusView = components.playerStatus({state:{}, character:null,
         onOpen:() => openSection('ButtonCharacter', 'Персонаж')});
       statusHolder.replaceChildren(statusView.node); update(null);
-      adapter = root.VampirLiveState.create({botId:profile, sessionId, onChange:update});
+      adapter = group ? group.adapter(profile,sessionId,update)
+        : root.VampirLiveState.create({botId:profile, sessionId, onChange:update});
     }
     connect();
     root.VampirLocalMapProjection?.load().then(metadata => {
       if (!disposed) { localProjection = metadata; update(snapshot); }
     });
-    return {dispose() {
+    return {select(botId,nextSession) {
+      if(!group||!validId(botId)||!validId(nextSession))return;
+      if(profile===botId&&sessionId===nextSession)return;
+      close();interaction?.dispose();adapter?.dispose();statusView?.dispose();
+      profile=botId;sessionId=nextSession;rows.length=0;cursor=0;gap=false;questKey=undefined;
+      connect();
+    }, refreshGroup() {if(group)sendMap();}, dispose() {
       if (disposed) return; disposed = true; close(); interaction?.dispose(); adapter?.dispose(); statusView?.dispose();
       removeEventListener('resize', resize); removeEventListener('message', mapReady);
     }, resume() {

@@ -24,8 +24,8 @@ def load(name, path):
     return module
 
 
-def run(account_id, selector, *, progress=lambda stage: None, _creation_factory=None, _world_session=None):
-    store = AccountStore(HERE / '.local/console.sqlite3')
+def run(account_id, selector, *, progress=lambda stage: None, _creation_factory=None, _world_session=None, _store=None):
+    store = _store if _store is not None else AccountStore(HERE / '.local/console.sqlite3')
     account = next((row for row in store.accounts() if row['id'] == account_id), None)
     if account is None or account['enabled'] is not True or account['device_type'] == 'Не использовать':
         raise ValueError('Expected an enabled account')

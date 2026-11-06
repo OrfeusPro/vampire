@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Карта группы Vampir</title>
+ <link rel="stylesheet" href="prototype-live.css">
+ <script src="local-map-projection.js" defer></script>
+ <script src="prototype-live-model.js" defer></script>
+ <script src="group-map.js" defer></script>
+</head>
+<body class="group-map">
+ <canvas id="group-canvas" aria-label="Персонажи онлайн на карте"></canvas>
+ <div class="group-map-controls"><span id="map-world">Ожидание персонажей</span>
+  <button id="map-fit" type="button">Все на карте</button>
+  <button id="map-in" type="button" aria-label="Увеличить">+</button>
+  <button id="map-out" type="button" aria-label="Уменьшить">−</button>
+ </div>
+</body>
+</html>

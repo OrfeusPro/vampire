@@ -27,6 +27,39 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_prototype_assets_check_each_retained_file_and_bound_shared_cache(self):
+        sys.path.insert(0,str(HERE / 'vampir-headless'))
+        import prototype_assets
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder).resolve();snapshot=root/'maps/ui-prototype/snapshots/fixture'
+            snapshot.mkdir(parents=True);source=root/'source';source.mkdir();generated={}
+            for name,data in (('a.png',b'aaa'),('b.png',b'bbb'),('c.png',b'ccc')):
+                (snapshot/name).write_bytes(data)
+                generated[name]=hashlib.sha256(data).hexdigest()
+            (snapshot/'assets').mkdir();(snapshot/'assets/portrait.png').write_bytes(b'img')
+            textures=json.dumps({'portrait':dict(url='assets/portrait.png',sha256=hashlib.sha256(b'img').hexdigest())}).encode()
+            (snapshot/'textures.json').write_bytes(textures)
+            generated['textures.json']=hashlib.sha256(textures).hexdigest()
+            manifest=json.dumps(dict(generated_files=generated)).encode()
+            (snapshot/'manifest.json').write_bytes(manifest)
+            selector=root/'selector.json'
+            selector.write_text(json.dumps(dict(snapshot='maps/ui-prototype/snapshots/fixture',
+                manifest_sha256=hashlib.sha256(manifest).hexdigest())),encoding='utf-8')
+            with patch.object(prototype_assets,'SOURCE',source),patch.object(prototype_assets,'SELECTOR',selector):
+                view=prototype_assets.PrototypeAssets(root,'fixture-token')
+            self.assertEqual(view.get('/prototype/manifest.json')[0],manifest)
+            self.assertEqual(view.get('/prototype/assets/portrait.png')[0],b'img')
+            view.cache.clear();view.cache_bytes=0;view.CACHE_BUDGET=6
+            view.get('/prototype/a.png');view.get('/prototype/b.png')
+            view.get('/prototype/a.png');view.get('/prototype/c.png')
+            self.assertEqual(list(view.cache),['a.png','c.png'])
+            self.assertEqual(view.cache_bytes,6)
+            (view.snapshot/'b.png').write_bytes(b'bad')
+            with self.assertRaisesRegex(ValueError,'ресурс'):
+                view.get('/prototype/b.png')
+            self.assertIsNone(view.get('/prototype/../a.png'))
+            self.assertIsNone(view.get('/prototype/unknown.png'))
+
     def test_first_verification_records_existing_pc_keys_without_replacing_a_complete_binding(self):
         spec = importlib.util.spec_from_file_location('verify_binding_fixture', HERE / 'vampir-headless/verify-account.py')
         tool = importlib.util.module_from_spec(spec)
@@ -883,6 +916,66 @@ try {
                 self.assertNotIn('password', data['accounts'][0])
             finally:
                 jobs.close(); http.shutdown(); http.server_close(); worker.join(3)
+
+    def test_world_console_joins_two_owners_and_stops_only_the_selected_session(self):
+        from vampir_core.live_session import LiveSession
+        from vampir_core.live_session_server import LiveSessionServer
+        spec = importlib.util.spec_from_file_location('console_world_fixture', HERE / 'vampir-headless/account-manager.py')
+        tool = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tool)
+        import account_world
+
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'accounts.sqlite3', FixtureVault())
+            assignment = dict(region='EU', server_id=387, character_index=0, character_key='42', auth_flow='launcher')
+            first, second = [LiveSession(bot_id=store.save(email, password='fixture', assignment=assignment))
+                             for email in ('first@unit.invalid', 'second@unit.invalid')]
+            first._snapshot.update(state='connected', character=dict(key='42', name='Fixture', level=27),
+                                   heartbeat=dict(sent=3, received=3))
+            with LiveSessionServer(first, port=0) as owner, LiveSessionServer(second, port=0) as other, \
+                    patch.object(account_world, 'BUILTIN_PORTS', (owner.server.server_port, other.server.server_port)):
+                world = account_world.WorldControl(store)
+                http, jobs = tool.server(store, port=0, world=world)
+                worker = threading.Thread(target=http.serve_forever, daemon=True)
+                worker.start()
+                base = 'http://127.0.0.1:' + str(http.server_port)
+                try:
+                    with urlopen(base + '/world-map?bot=' + first.bot_id) as response:
+                        page = response.read().decode()
+                    self.assertIn('prototype-group.js', page)
+                    token = re.search(r'name="console-token" content="([^"]+)"', page)[1]
+                    headers = {'X-Console-Token': token, 'Content-Type': 'application/json'}
+                    with urlopen(Request(base + '/api/world', headers=headers)) as response:
+                        sessions = json.load(response)['sessions']
+                    self.assertEqual(sessions[first.bot_id]['character']['level'], 27)
+                    self.assertEqual(sessions[second.bot_id]['state'], 'connecting')
+                    self.assertFalse(sessions[first.bot_id]['can_start'])
+                    def stop(session_id):
+                        body = dict(action='stop', id=first.bot_id, session_id=session_id)
+                        return urlopen(Request(base + '/api/world', json.dumps(body).encode(), headers))
+                    with self.assertRaises(HTTPError) as stale:
+                        stop(second.session_id)
+                    stale.exception.close()
+                    self.assertFalse(first.stop_requested)
+                    with stop(first.session_id) as response:
+                        self.assertEqual(response.status, 202)
+                    self.assertTrue(first.stop_requested)
+                    self.assertFalse(second.stop_requested)
+
+                    first.close()
+                    called = threading.Event()
+                    with patch.object(world, 'launch', side_effect=lambda *_: called.set()) as launch:
+                        body = dict(action='start', id=first.bot_id)
+                        with urlopen(Request(base + '/api/world', json.dumps(body).encode(), headers)) as response:
+                            self.assertEqual(response.status, 202)
+                        self.assertTrue(called.wait(2))
+                        launch.assert_called_once()
+                        with self.assertRaises(HTTPError) as duplicate:
+                            urlopen(Request(base + '/api/world', json.dumps(body).encode(), headers))
+                        duplicate.exception.close()
+                    self.assertEqual(account_world.WorldControl(store).owners()[first.bot_id], launch.call_args.args[1])
+                finally:
+                    jobs.close(); http.shutdown(); http.server_close(); worker.join(3)
 
 
 if __name__ == '__main__':

@@ -22,6 +22,8 @@ PACKAGES = {
     'world-select-clamps-current': 'verify-world-select-clamps-current',
     'world-results-current': 'verify-world-results-current',
     'bounded-world-current': 'build-bounded-world-current',
+    'initial-stats-current': 'verify-initial-stats-current',
+    'stat-notifications-current': 'verify-stat-notifications-current',
 }
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 PROFILE_SCOPES = {
@@ -59,7 +61,8 @@ def material(index, root, sha, identifier):
         raise ValueError('Entry package receipt path or hash differs')
     report = index.read_json(path)
     derived = identifier in ('lobby-results-current', 'viper-appearance-current', 'create-producer-current',
-                             'viper-creation-current', 'world-results-current')
+                             'viper-creation-current', 'world-results-current',
+                             'initial-stats-current', 'stat-notifications-current')
     if (report.get('recipe') != verifier.RECIPE or report.get('source_sha256') != sha
             or report.get('native_execution') is not (not derived)
             or (derived and report.get('native_proofs_reused') is not True)

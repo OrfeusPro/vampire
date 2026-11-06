@@ -23,6 +23,7 @@ import test_vampir_game_login_probe as probe_tests
 from test_vampir_login_flow import FIXTURE
 from test_vampir_selection_flow import connection, list_body, FIXTURE as SELECTION
 from test_vampir_world_entry_flow import reserve_body, finish_body
+from test_vampir_live_session import owner as fixture_owner
 
 SELECTOR = 'bounded-world:' + '1' * 64
 ENTRY = 'bounded-entry:' + '2' * 64
@@ -55,6 +56,32 @@ def admitted():
 
 
 class BoundedWorldTests(unittest.TestCase):
+    def test_current_initial_vitals_require_scope_and_keep_account_identity(self):
+        from vampir_core.stat_change import initial_stat_values
+        from vampir_core.character_select_result import SelectionRecord
+        stats=tuple(SelectionRecord(((8,kind),(16,value))) for kind,value in ((3,1),(4,2700),(5,2700),(9,2000),(10,2000)))
+        with self.assertRaisesRegex(ValueError,'Unverified'):
+            initial_stat_values(stats,source_sha256=admission.SOURCE)
+        with admitted():
+            session=LiveSession(bot_id='current-initial')
+            session.bind_source(admission.SOURCE)
+            session.publish(fixture_owner(stats=stats))
+            state=session.snapshot()
+            self.assertEqual([state['character'][field] for field in ('level','hp','max_hp','mp','max_mp')],[1,2700,2700,2000,2000])
+            self.assertEqual(state['coverage']['stats_observation'],'world_entry_snapshot')
+            key=int(state['character']['key'])
+            foreign=struct.pack('<QHiqqBH',key+1,1,4,9000,1200,0,0)
+            session.packet(322,foreign,character_key=key)
+            self.assertEqual(session.snapshot()['character']['hp'],2700)
+            body=struct.pack('<QHiqqBH',key,1,4,9000,1200,0,0)
+            session.packet(322,body,character_key=key)
+            self.assertEqual(session.snapshot()['character']['hp'],1200)
+            self.assertEqual(session.snapshot()['coverage']['stats_observation'],'notifications_received')
+            session.packet(321,struct.pack('<QHiqq',key,1,3,1,2),character_key=key)
+            self.assertEqual(session.snapshot()['character']['level'],2)
+            session.close()
+            self.assertIsNone(session.snapshot()['character'])
+
     def test_owner_enters_scope_per_worker_and_keeps_handoff_free_of_credentials(self):
         owner = load('current_world_owner_test', HERE / 'vampir-headless/run-bounded-world.py')
         rows = [dict(id='fixture-account', enabled=True, device_type='Бот', server_id=387,

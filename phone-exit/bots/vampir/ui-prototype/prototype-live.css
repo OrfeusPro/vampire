@@ -4,6 +4,17 @@
 .live-prototype .map-holder iframe{width:100%;height:100%;border:0}
 .live-hud{position:absolute;inset:0;pointer-events:none}
 .live-hud button,.live-hud a,.live-hud aside{pointer-events:auto}
+.live-group{display:grid;grid-template-columns:minmax(0,1fr) 260px;height:100dvh;background:#0c1714}
+.group-viewport{position:relative;min-width:0;height:100%;overflow:hidden}.group-viewport>.live-prototype{width:100%;height:100%;min-height:0}
+.group-panel{padding:14px;background:#101d18;border-left:1px solid #536246;overflow:auto;color:#e0decf;font:13px system-ui}.group-panel h2{font-size:18px;margin:4px 0 12px}
+.group-panel select{width:100%;padding:8px;color:#f4efdb;background:#1c2a23;border:1px solid #536246}.group-controls{display:flex;gap:6px;margin:12px 0}.group-control{padding:7px 10px;color:#e4dfc9;background:#24332a;border:1px solid #536246;cursor:pointer}
+.group-roster{display:grid;gap:6px;margin-bottom:12px}.group-member{display:flex;gap:6px;align-items:center}.group-member input{accent-color:#d9c27f}
+.group-roster h3{font-size:12px;margin:12px 0 4px;color:#b3c0a5}
+.group-member-select{flex:1;text-align:left;padding:9px;color:#d5d8c9;background:#18261e;border:1px solid #3b4b39;cursor:pointer}.group-member-select[aria-pressed=true]{background:#344a31;border-color:#beaa6c}.group-member-select small{display:block;margin-top:5px;font-size:10px;color:#b5bbae}
+.group-panel>span{display:block;margin:8px 0}.group-empty{padding:40px;color:#c1c9b9}.group-message{font-size:12px;line-height:1.5}
+body.group-map{margin:0;overflow:hidden;background:#10251e}#group-canvas{display:block;width:100vw;height:100vh;touch-action:none;cursor:grab}
+.group-map-controls{position:absolute;right:20px;bottom:22px;display:flex;gap:8px;align-items:center;color:#ddd6bc;font:12px system-ui}.group-map-controls button{border:1px solid #667361;background:#101d18df;color:#eee6ca;padding:8px 12px;cursor:pointer}
+@media(max-width:1000px){.live-group{grid-template-columns:minmax(0,1fr) 200px}.group-panel{padding:10px}.live-group .live-quests{width:200px;right:12px}}
 .live-player{position:absolute;left:22px;top:18px;display:flex;flex-direction:column;gap:5px;padding:12px 18px;background:linear-gradient(110deg,#07130feb,#07130f70);border-left:2px solid #9b8455;max-width:42vw}
 .live-player strong{font-size:1.05rem;color:#e5d8b5}
 .live-status-holder{margin:4px 0}

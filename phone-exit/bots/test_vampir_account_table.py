@@ -109,7 +109,16 @@ vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
  context.fixtureState=state;
  vm.runInContext('snapshot=fixtureState;renderRoster();',context);
  const [ordinary,active]=nodes.get('roster-body').children;
- assert.equal(ordinary.children.length,10);assert.equal(ordinary.children[2].textContent,'Confirmed');assert.equal(ordinary.children[4].textContent,'EU · Prelude 2');
+ assert.equal(ordinary.children.length,12);assert.equal(ordinary.children[2].textContent,'Confirmed');assert.equal(ordinary.children[4].textContent,'EU · Prelude 2');
+ state.world={fixture:{state:'connected',session_id:'fixture-session',character:{name:'Confirmed',level:23}},second:{state:'disconnected',can_start:true}};
+ vm.runInContext('renderRoster();',context);
+ const [online,offline]=nodes.get('roster-body').children;
+ assert.equal(online.children[2].children[0].href,'/world-map?bot=fixture');
+ assert.equal(online.children[9].textContent,'Онлайн');assert.equal(online.children[10].textContent,'23');
+ assert.equal(offline.children[9].textContent,'Офлайн');assert.equal(offline.children[10].textContent,'—');
+ assert.equal(online.children[11].children[0].children[0].textContent,'Выйти');
+ assert.equal(offline.children[11].children[0].children[0].textContent,'В игру');
+ delete state.world;vm.runInContext('renderRoster();',context);
  assert.match(active.className,/active-game-account.*device-type-ugphone/);assert.equal(active.children[2].textContent,'Reported');assert.equal(active.children[5].textContent,'UgPhone');
  const writesBefore=calls.filter(x=>x.request.method==='POST').length;
  ordinary.children[6].children[0].children[0].onclick();
@@ -179,6 +188,109 @@ vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
  const dangerous=calls.filter(c=>['/api/save','/api/device-template','/api/assign-device','/api/generate-devices','/api/job','/api/verification-queue'].includes(c.path));assert.equal(dangerous.length,0);
  process.stdout.write('passed');
 })().catch(error=>{process.stderr.write(error.stack);process.exitCode=1;});
+'''
+        result = subprocess.run(['node', '-e', fixture, str(source.resolve())], capture_output=True, text=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, 'passed')
+    def test_group_selection_reuses_the_map_and_isolates_live_character_state(self):
+        folder = Path(__file__).parent / 'vampir/ui-prototype'
+        fixture = r'''
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const elements=[],events=new Map(),timers=new Map(),requests=[],messages=[],statuses=[];let nextTimer=1;
+class Element {
+ constructor(tag='div',text,cls=''){this.tagName=tag.toUpperCase();this.children=[];this.dataset={};this.listeners={};this.attributes={};this.className=cls;this._text=text??'';this.value='';this.style={setProperty(){}};elements.push(this);
+  if(tag==='iframe')this.contentWindow={postMessage:(message,origin)=>messages.push({message,origin})};}
+ append(...items){this.children.push(...items);for(const item of items)item.parentElement=this;}
+ replaceChildren(...items){this.children=[];this._text='';this.append(...items);}
+ setAttribute(key,value){this.attributes[key]=value;}
+ addEventListener(name,fn){this.listeners[name]=fn;}
+ removeEventListener(name,fn){if(this.listeners[name]===fn)delete this.listeners[name];}
+ get textContent(){return String(this._text)+this.children.map(item=>item.textContent).join('');}
+ set textContent(value){this._text=value;this.children=[];}
+}
+const el=(tag,text,cls)=>new Element(tag,text,cls),append=(parent,...items)=>{parent.append(...items);return parent;};
+const button=(text,onclick,cls,disabled=false)=>Object.assign(el('button',text,cls),{onclick,disabled});
+const add=(name,fn)=>{if(!events.has(name))events.set(name,new Set());events.get(name).add(fn);};
+const remove=(name,fn)=>events.get(name)?.delete(fn);
+const document={hidden:false,title:'',activeElement:null,querySelector:()=>({content:'fixture-token'}),getElementById:()=>({}),
+ documentElement:{style:{setProperty(){}}},addEventListener:add,removeEventListener:remove};
+const row=(bot,name,hp,session='session-'+bot)=>({state:'connected',bot_id:bot,session_id:session,region:'EU',server_id:bot==='third'?2:1,
+ character:{name,hp,level:hp,world_id:'10010'},journal:[{seq:1,kind:'fixture',bot_id:bot,time_ms:1}]});
+let sessions={first:row('first','Первый',17),second:row('second','Второй',29),third:row('third','Третий',41)};
+const root={VampirPrototypeLiveModel:{project(snapshot){return {person:snapshot?.state==='connected'?snapshot.character:null,stats:[],
+ questsKnown:false,questsObserved:false,quests:[],entitiesKnown:false,entitiesPartial:false,position:null,entityRows:[],entityPage:0};},availability:()=>({enabled:false})},
+ VampirLiveInteraction:{create:()=>({view:{messages:[],actions:[],known:false,messagesKnown:false},policy:{skip_dialogues:true,auto_quests:false},observe(){},dispose(){}})},
+ VampirLocalMapProjection:{load:async()=>null}};
+const components={playerStatus:()=>{const status={node:el('div'),updateLive:snapshot=>statuses.push(snapshot?.state==='connected'?snapshot.character?.name:null),dispose(){}};return status;}};
+const context=vm.createContext({window:root,document,location:{origin:'http://fixture.invalid',search:''},URLSearchParams,AbortController,
+ addEventListener:add,removeEventListener:remove,innerWidth:1600,innerHeight:900,
+ Option:function(text,value){return Object.assign(el('option',text),{value});},
+ setTimeout:(fn,delay)=>{const id=nextTimer++;timers.set(id,{fn,delay});return id;},clearTimeout:id=>timers.delete(id),
+ fetch:async(path,request)=>{requests.push({path,request});assert.equal(request.method,'GET');return {ok:true,json:async()=>({sessions})};}});
+for(const file of ['prototype-live.js','prototype-group.js'])vm.runInContext(fs.readFileSync(process.argv[1]+'/'+file,'utf8'),context);
+const app=el('main'),windows=el('div');
+const controller=root.VampirPrototypeGroup.mount({app,windows,components,el,append,button,icon:()=>el('button'),profile:'first'});
+const flush=()=>new Promise(resolve=>setImmediate(resolve));
+const select=name=>elements.filter(e=>e.className==='group-member-select'&&e.textContent.startsWith(name)).at(-1).onclick();
+const poll=async()=>{const pending=[...timers].find(([,entry])=>entry.delay===2000);assert.ok(pending);timers.delete(pending[0]);pending[1].fn();await flush();};
+(async()=>{
+ await flush();
+ const frame=elements.find(e=>e.tagName==='IFRAME'),identity=elements.find(e=>e.tagName==='STRONG'&&e.parentElement?.className==='live-player');
+ assert.ok(frame);assert.equal(identity.textContent,'Первый');assert.equal(statuses.at(-1),'Первый');
+ const initialRequests=requests.length;
+ select('Второй');assert.equal(identity.textContent,'Второй');assert.equal(statuses.at(-1),'Второй');
+ assert.equal(messages.at(-1).message.bot_id,'second');assert.equal(messages.at(-1).message.session_id,'session-second');
+ assert.equal(elements.filter(e=>e.tagName==='IFRAME').length,1);assert.equal(frame.src,'group-map.html');assert.equal(requests.length,initialRequests);
+ const filter=elements.find(e=>e.attributes['aria-label']==='Сервер группы');filter.value='EU · 2';filter.onchange();
+ const roster=elements.find(e=>e.className==='group-roster');assert.equal(roster.children.filter(e=>e.className==='group-member').length,1);assert.match(roster.textContent,/Третий/);
+ assert.equal(identity.textContent,'Второй'); // Filtering the roster never silently selects a different account.
+ filter.value='';filter.onchange();select('Первый');select('Второй');
+ sessions={first:row('first','Первый новый',18),second:row('second','Второй новый',30,'second-reconnected'),third:sessions.third};
+ await poll();assert.equal(identity.textContent,'Второй новый');assert.equal(statuses.at(-1),'Второй новый');
+ assert.equal(messages.at(-1).message.session_id,'second-reconnected');assert.equal(elements.filter(e=>e.tagName==='IFRAME').length,1);
+ sessions={first:sessions.first,second:{...sessions.second,state:'disconnected'},third:sessions.third};await poll();
+ assert.equal(identity.textContent,'second');assert.equal(statuses.at(-1),null); // First account data must not fill a disconnected second view.
+ const goodEvent={origin:'http://fixture.invalid',source:frame.contentWindow,data:{source:'vampir-group-map',type:'select',bot_id:'first'}};
+ for(const fn of events.get('message'))fn({...goodEvent,origin:'https://foreign.invalid'});assert.equal(identity.textContent,'second');
+ for(const fn of events.get('message'))fn({...goodEvent,source:{}});assert.equal(identity.textContent,'second');
+ for(const fn of events.get('message'))fn(goodEvent);assert.equal(identity.textContent,'Первый новый');
+ controller.dispose();assert.equal(timers.size,0);assert.equal(events.get('message').size,0);assert.equal(events.get('resize').size,0);assert.equal(events.get('visibilitychange').size,0);
+ controller.resume();await flush();assert.equal(events.get('message').size,1);assert.equal(events.get('resize').size,1);assert.equal(events.get('visibilitychange').size,1);
+ assert.equal([...timers.values()].filter(e=>e.delay===2000).length,1);controller.dispose();assert.equal(timers.size,0);
+ process.stdout.write('passed');
+})().catch(error=>{process.stderr.write(error.stack);process.exitCode=1;});
+'''
+        result = subprocess.run(['node', '-e', fixture, str(folder.resolve())], capture_output=True, text=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, 'passed')
+
+    def test_group_map_messages_are_same_origin_and_never_reuse_disconnected_markers(self):
+        source = Path(__file__).parent / 'vampir/ui-prototype/group-map.js'
+        fixture = r'''
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const events={},sent=[],drawn=[];
+const ctx={setTransform(){},drawImage(){},beginPath(){},moveTo(){},lineTo(){},stroke(){},arc(){},fill(){},fillText:text=>drawn.push(text)};
+const canvas={getContext:()=>ctx,getBoundingClientRect:()=>({width:1000,height:1000,left:0,top:0}),addEventListener(){},setPointerCapture(){}};
+const label={},nodes={'group-canvas':canvas,'map-world':label,'map-fit':{},'map-in':{},'map-out':{}};
+const parent={postMessage:(message,origin)=>sent.push({message,origin})},origin='http://fixture.invalid';
+const context=vm.createContext({document:{getElementById:id=>nodes[id]},location:{origin},parent,devicePixelRatio:1,
+ Image:class {naturalWidth=0;},addEventListener:(name,fn)=>events[name]=fn,
+ VampirPrototypeLiveModel:{project:row=>({positionOrigin:row.position?'owner_projection':null})},
+ VampirLocalMapProjection:{valid:atlas=>atlas?.schema===1,project:()=>null}});
+vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
+const row=(name,x)=>({state:'connected',character:{name,world_id:'10010'},position:{inside:true,map_id:'10',pixel_x:x,pixel_y:5000}});
+let sessions={first:row('Первый',5000),second:row('Второй',5100)};
+function message(bot='first',extra={}){return {origin,source:parent,data:{source:'vampir-live-prototype',type:'state',bot_id:bot,payload:{sessions,atlas:{schema:1,size:[10000,10000]},follow:false}},...extra};}
+assert.equal(sent[0].message.type,'ready');assert.equal(sent[0].origin,origin);
+events.message(message('first',{origin:'https://foreign.invalid'}));assert.equal(drawn.length,0);
+events.message(message('first',{source:{}}));assert.equal(drawn.length,0);
+events.message(message());assert.ok(drawn.includes('Первый'));assert.ok(drawn.includes('Второй'));assert.match(label.textContent,/Карта 10/);
+drawn.length=0;events.message(message('second'));assert.ok(drawn.includes('Первый'));assert.ok(drawn.includes('Второй'));
+sessions={first:sessions.first,second:{...sessions.second,state:'disconnected'}};drawn.length=0;events.message(message('second'));
+assert.equal(drawn.length,0);assert.match(label.textContent,/Карта ещё не подключена/);
+sessions={first:{...sessions.first,position:null}};drawn.length=0;events.message(message('first'));
+assert.equal(drawn.length,0); // A prior projected position cannot survive an unavailable current position.
+process.stdout.write('passed');
 '''
         result = subprocess.run(['node', '-e', fixture, str(source.resolve())], capture_output=True, text=True, timeout=10)
         self.assertEqual(result.returncode, 0, result.stderr)

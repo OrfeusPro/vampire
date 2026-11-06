@@ -45,7 +45,7 @@ def definition(context_path, root):
     paths = [context_path, Path(__file__).resolve()]
     paths += [HERE / (name + '.py') for name in ('build-native-entry-code', 'update-bindings',
         'update-native-contexts', 'build-object-zero-init-code', 'audit-client-release', 'research-workflow',
-        'audit-launcher-shape-11318', 'extract-native-enums', 'native-publication-v2', 'run-clock-world-current')]
+        'audit-launcher-shape-11318', 'extract-native-enums', 'native-publication-v2', 'run-clock-world-current', 'entry-current-check-guard')]
     paths += [HERE.parents[1] / 'vampir-shared/vampir_core' / (name + '.py') for name in
         ('character_select_result', 'world_move_finish_result', 'login_result', 'bounded_world_admission')]
     inputs = {str(path): digest(path) for path in paths}
@@ -100,6 +100,8 @@ def definition(context_path, root):
     pointer = context['clock_proof']
     clock = load('run-clock-world-current')
     _, clock_definition = clock.inputs(root)
+    retained = json.loads(Path(pointer['path']).read_bytes())['definition']
+    clock_definition = clock_runtime_alias(clock_definition, retained)
     report = clock.verify_report(pointer['path'], pointer['sha256'], clock_definition, root)
     retain({pointer['path']: pointer['sha256']})
     retain(clock_definition['files'])
@@ -111,6 +113,11 @@ def definition(context_path, root):
         inputs[str(path.resolve())] = digest(path)
     barrier(inputs)
     return context, parents, dict(recipe=RECIPE, source_sha256=SOURCE, inputs=inputs)
+
+
+def clock_runtime_alias(current, retained):
+    """Windows drive-letter spelling is not a different interpreter or proof."""
+    return load('entry-current-check-guard').runtime_alias(current,retained)
 
 
 def source(image, at, size):

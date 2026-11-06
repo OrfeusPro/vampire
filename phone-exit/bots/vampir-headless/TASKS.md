@@ -9,8 +9,11 @@
   попытке. Silvercrow создал Bipoberiho, свежий список подтвердил key / slot 0.
   CharacterSelect, вход в мир и независимый owner подтверждены на Bipoberiho.
   Все восемь Viper вошли в мир с ключами, подтверждёнными свежими списками.
-  Серверный флаг персонажа по умолчанию проверить отдельно. Для live UI
-  остаются проекция позиции, витальные параметры и сводка по владельцам.
+  Серверный флаг персонажа по умолчанию проверить отдельно. Панель подключает
+  сводку владельцев и общую карту прототипа с выбранным HP/MP / уровнем.
+  Для карты остаются текущие проекции остальных миров и native UI текущего PAK;
+  для квестов / обучения — отдельный текущий admission и онлайн-проверка действий.
+  [Группа и границы данных](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-GROUP-CONSOLE-CURRENT.md).
   [Мир и удержание соединения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-BOUNDED-WORLD-CURRENT.md).
   [Создание онлайн](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-CREATION-ONLINE.md).
   [Текущий игровой вход и исправление ответа](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-BOUNDED-ENTRY-CURRENT.md).

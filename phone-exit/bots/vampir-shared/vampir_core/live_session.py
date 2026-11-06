@@ -55,6 +55,7 @@ class LiveSession:
         self._stats_applied=-1
         self._stats_limit=False
         self._initial_stats_seeded=False
+        self._stat_notifications_received=False
         self._diagnostics=LiveDiagnostics()
         self._environment=ObservedEnvironment()
         self._environment_applied=-1
@@ -102,15 +103,21 @@ class LiveSession:
             if current!=character[name]:changed[name]=current
             character[name]=current
         if changed:self._diagnostics.event('vitals_changed',values=changed)
-        character['stats']=[dict(id=stat,name=STAT_NAMES.get(stat),value=str(value['number']),source=value['source']) for stat,value in sorted(self._stats.items())]
+        character['stats']=[dict(id=stat,name=STAT_NAMES.get(stat) if self._source==STAT_SOURCE_SHA256 else STAT_FIELDS.get(stat),
+            value=str(value['number']),source=value['source']) for stat,value in sorted(self._stats.items())]
         character['stat_unit']='native_integer'
         character['stats_semantics']='wire_stat_i64'
         coverage=self._snapshot['coverage']
-        if self._source==STAT_SOURCE_SHA256:
+        from .bounded_world_admission import permits
+        initial_current=permits(self._source,'initial-character-stats-v1')
+        if self._source==STAT_SOURCE_SHA256 or initial_current:
             known=sum(character[name] is not None for name in ('hp','max_hp','mp','max_mp'))
             coverage['vitals']='received' if known==4 else 'partial' if known else 'not_received'
             coverage['level']='received' if character['level'] is not None else 'not_received'
             coverage['stats']='partial' if self._stats_limit else 'received' if self._stats else 'decode_error' if self._stat_errors else 'not_received'
+            if initial_current:
+                observation='notifications_received' if self._stat_notifications_received else 'world_entry_snapshot'
+                coverage.update(vitals_observation=observation,stats_observation=observation)
         self._snapshot['stat_decode_errors']=self._stat_errors
         self._stats_applied=self._stats_revision
 
@@ -150,7 +157,9 @@ class LiveSession:
                 event=self._environment.receive(packet_id,body,source_sha256=self._source,world_id=world_id,character_key=character_key)
                 if event:self._diagnostics.event(event,packet_id=packet_id)
                 self._apply_environment()
-            if packet_id not in (321,322) or self._source!=STAT_SOURCE_SHA256 or character_key is None:return
+            from .bounded_world_admission import permits
+            if (packet_id not in (321,322) or character_key is None
+                    or self._source!=STAT_SOURCE_SHA256 and not permits(self._source,'character-stat-notifications-v1')):return
             if len(body)>=8 and struct.unpack_from('<Q',body)[0]!=character_key:return
             decoder=decode_stat_change if packet_id==322 else decode_character_level_up
             try:change=decoder(body,source_sha256=self._source)
@@ -159,6 +168,7 @@ class LiveSession:
                 self._diagnostics.event('stat_decode_error',packet_id=packet_id)
                 self._stats.clear();self._stats_revision+=1;self._apply_stats();return
             if change.entity_key!=character_key:return
+            self._stat_notifications_received=True
             self._diagnostics.event('stats_received',packet_id=packet_id,records=len(change.values))
             if self._stats_key not in (None,character_key):raise RuntimeError('Character identity changed')
             self._stats_key=character_key
@@ -303,7 +313,8 @@ class LiveSession:
             self._environment.world(position.world_id);self._apply_environment()
             if self._stats_key not in (None,key):raise RuntimeError('Character identity changed')
             self._stats_key=key
-            if not self._initial_stats_seeded and self._source==STAT_SOURCE_SHA256:
+            from .bounded_world_admission import permits
+            if not self._initial_stats_seeded and (self._source==STAT_SOURCE_SHA256 or permits(self._source,'initial-character-stats-v1')):
                 self._initial_stats_seeded=True
                 try:
                     initial=initial_stat_values(selection.response.player.at(0x1c8),source_sha256=self._source)

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "snapshot": "maps/ui-prototype/snapshots/1eb4a416e8fb4e5d258c1c76efb0f3c327a246a56c68b9124692e77edf69b3eb",
+  "manifest_sha256": "e307487af1bbc774c6b1690648def5b7f512dad2a8dc4b01bdc35947fb1343b6",
+  "projection": {
+    "file": "maps/ui-prototype/snapshots/db886ae57459177e0ee98e8253e1ad700168efe8e5419e1412077a047944372f/local-map-projection.json",
+    "sha256": "10fd688cc997f0559b23ca9556b51c8845c6a5153dffdc1f4d891fe37ab59b50"
+  },
+  "atlas": {
+    "file": "maps/nocturne-preview.jpg",
+    "sha256": "ad0b11364574457ca8591201493ef64b86aadda2fffe566cdd36945264876950"
+  },
+  "scope": "Saved prototype presentation and reference atlas. Current game telemetry has separate source admission."
+}

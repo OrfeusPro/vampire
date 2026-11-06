@@ -4256,6 +4256,85 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Server default flag, HP/MP, map projection, action and quest support require separate checks.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1456f02c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "3d2512ba69658cc55fec007a27594a00e1db5bd1726906722740d1eb931de2be",
+          "id": "clock-world-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27596a9066c37e2f6a0d40864c8aaaaa0e0c991b0264d26736c3526eb7c7a9ab\\manifest.json",
+          "sha256": "27596a9066c37e2f6a0d40864c8aaaaa0e0c991b0264d26736c3526eb7c7a9ab",
+          "state": "passed"
+        },
+        {
+          "cache_key": "28e5413007fe1a4f55a6c96c87548eb43bf49aa741bb5c1a11d125711bbdee84",
+          "id": "world-player-constructor-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8f2abe80cd8a544a98b3980ed813dae8a3bd7dbdac252ab0fe144003748b505b\\manifest.json",
+          "sha256": "8f2abe80cd8a544a98b3980ed813dae8a3bd7dbdac252ab0fe144003748b505b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6c84f5140fd86045c45b6ac736fc141b913b60732321d015b2e039f56642f316",
+          "id": "world-select-clamps-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e6b277917539e4895686df8a9ef1a54cb9bed043e05572a366718fbdb1e9466a\\manifest.json",
+          "sha256": "e6b277917539e4895686df8a9ef1a54cb9bed043e05572a366718fbdb1e9466a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3aea72c766d2750fdc117a92155d8236b5c3eb188eba19ebbb038132956bf4c5",
+          "id": "world-results-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d6cc5d0a7f3c2bf4f1bf01ba839adfdd1c6936d026d60864c12a35b3e026cfe4\\manifest.json",
+          "sha256": "d6cc5d0a7f3c2bf4f1bf01ba839adfdd1c6936d026d60864c12a35b3e026cfe4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b9d8382e89090094b691734bb8b4f2e63d794b739935533e55feaffd35ade4ca",
+          "id": "bounded-world-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d3a59bd3d7c65702b92b149835de1f130894de8f9f3e009e3a8acceca76457c5\\manifest.json",
+          "sha256": "d3a59bd3d7c65702b92b149835de1f130894de8f9f3e009e3a8acceca76457c5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "90bb825654138d948c2d9135928eec8b69af63ebde269360cdc4f99f1230e8f8",
+          "id": "initial-stats-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cd28376f5e6a8299cc967da64ccdbab12b23509e2557ae9a24905c3921a01a77\\manifest.json",
+          "sha256": "cd28376f5e6a8299cc967da64ccdbab12b23509e2557ae9a24905c3921a01a77",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d854cfc4c5ec3bf273db175c65f9d9adcb6c9db8398b9ebadce9a28c72a61600",
+          "id": "stat-notifications-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1d26e15749767327dcc7ca912982889562a2e22a4c48c5423d0f2b78287f5c37\\manifest.json",
+          "sha256": "1d26e15749767327dcc7ca912982889562a2e22a4c48c5423d0f2b78287f5c37",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Select110 nested initial stat pairs and current EStat projection are connected to bounded world admission together with separately source-verified keyed321/322 notifications. Existing group prototype consumes isolated owner snapshots. Eight online observations are recorded separately from source/native proof scope.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-GROUP-CONSOLE-CURRENT.md",
+          "sha256": "8f6ce4dc3ebd3d31fd4a1eb250016a98dac710bae9f486aab9142b307ed4c46a"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\GROUP-CONSOLE-CURRENT-ONLINE.json",
+          "sha256": "62525b2c81f8ca441ac87aeefde3fba3c6d9808d77252fdbebb6e46dbf5588db"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "717650e6d09ba16943d6e602683861fc0b84bd76fade56718dab20418ce33dcf",
+      "limits": [
+        "Current whole-reader transfer reuses retained native evidence; current native model service effects and moving character coordinates are not established by this fact.",
+        "Map10/11 is a retained reference atlas, not current native UI proof."
+      ],
+      "method": "static",
+      "next_check": "Qualify the shared current quest/tutorial or movement blocker before enabling corresponding group actions; reuse this source-bound stat proof when dependencies remain unchanged.",
+      "question": "clock-world-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Current quest/tutorial action admission, movement tracking and other world atlas projections remain separate.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

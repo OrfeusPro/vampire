@@ -4,6 +4,15 @@ const el=id=>document.getElementById(id);
 let snapshot={accounts:[],jobs:{},catalogs:{}}, selected=null, initial=true, currentPc=null, accountDevice={device_profile:'current-pc',device_settings:{}};
 const labels={active:'В мире',connecting:'Подключение',stopped:'Остановлен',error:'Ошибка',needs_character:'Нужен персонаж',disabled:'Отключён'};
 const stages={sdk_fetch_player:'Проверка игрового профиля',sdk_basic_terms:'Чтение основных условий',sdk_individual_terms:'Чтение индивидуальных условий',sdk_first_profile:'Первое создание профиля SDK',registration_form:'Регистрация · отдельное окно Netmarble',registration_code:'Ожидание нового письма с кодом',configuration:'Загрузка конфигурации',source_validation:'Проверка версии',lobby_preparation:'Подготовка лобби',nid_browser:'Вход Netmarble · отдельное окно',sdk_sign_in:'Авторизация SDK',sdk_launcher_token:'Получение SDK token',sdk_launcher_sign_in:'Вход SDK',lobby_connect:'Подключение к лобби',lobby_exchange:'Обмен с лобби',game_target_selection:'Проверка сервера',selected_lobby_login:'Вход в выбранное лобби',game_system_inputs:'Подготовка клиента',game_connect:'Подключение к игре',game_login_preparation:'Подготовка входа',game_login_exchange:'Вход и получение персонажей',character_creation:'Создание персонажа'};
+const worldLabels={connected:'Онлайн',connecting:'Подключение',disconnected:'Офлайн',conflict:'Две сессии',unreachable:'Связь с владельцем потеряна'};
+const worldStages={world_profile_prepare:'Подготовка пакета',world_owner_launch:'Запуск сессии',
+ world_profile_prepare_failed:'Не удалось подготовить пакет',world_profile_prepare_timeout:'Истекло время подготовки пакета',
+ world_owner_launch_failed:'Владелец сессии не запустился',world_owner_launch_timeout:'Истекло время запуска владельца'};
+const worldPending=new Set();
+const worldOf=account=>snapshot.world?.[account?.id];
+const worldBusy=account=>worldOf(account)&&worldOf(account).state!=='disconnected';
+const levelOf=account=>worldOf(account)?.state==='connected'?worldOf(account)?.character?.level??'—':'—';
+const worldLabel=account=>{const row=worldOf(account);return worldStages[row?.launch]||worldLabels[row?.state]||'—';};
 async function api(path,body){const response=await fetch(path,{method:body?'POST':'GET',headers:{'X-Console-Token':token,...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})});const data=await response.json();if(!response.ok)throw Error(data.error||'Операция не выполнена');return data;}
 function notice(text){el('notice').textContent=text;el('toast').textContent=text;}
 function option(value,text){const node=document.createElement('option');node.value=value;node.textContent=text;return node;}
@@ -23,6 +32,8 @@ const typeClass={'Телефон':'phone','ПК':'pc','UgPhone':'ugphone','LdClo
 function accountNumber(account){return snapshot.accounts.findIndex(a=>a.id===account.id)+1;}
 function onDevice(account){return ['Телефон','ПК','UgPhone','LdCloud'].includes(deviceType(account));}
 function characterLabel(account){
+ const live=worldOf(account);
+ if(live?.state==='connected'&&live.character?.name)return live.character.name;
  const list=snapshot.character_lists?.[account.id+'|'+account.region+'|'+account.server_id]?.characters||[];
  const character=account.character_key?list.find(c=>c.key===account.character_key):(list.length===1?list[0]:null);
  return character?.name||account.reported_character_name||(account.create_nickname?account.create_nickname+' · план':'—');
@@ -104,7 +115,7 @@ function passwordCell(account,kind){
 }
 function canVerify(account){
  const queue=snapshot.verification;
- return queue?.state!=='running'&&queue?.state!=='cancelling'&&account.enabled!==false&&deviceType(account)!=='Не использовать'&&!snapshot.jobs[account.id]?.running&&
+ return queue?.state!=='running'&&queue?.state!=='cancelling'&&account.enabled!==false&&deviceType(account)!=='Не использовать'&&!snapshot.jobs[account.id]?.running&&!worldBusy(account)&&
   (isGoogle(account)?account.socks_port==null:(account.email.endsWith('@vampir.top')&&account.mail_password_saved));
 }
 function accountStatus(account){
@@ -124,15 +135,30 @@ function accountStatus(account){
 function cellLink(text,handler,title=''){
  const node=document.createElement('button');node.type='button';node.className='cell-link';node.textContent=text;node.onclick=handler;node.title=title;return node;
 }
+function mapLink(account){
+ const link=document.createElement('a');link.className='cell-link';link.textContent=characterLabel(account);
+ link.href='/world-map?bot='+encodeURIComponent(account.id);link.target='_blank';link.rel='noopener';
+ link.title='Показать персонажа на общей карте';return link;
+}
+async function worldAction(account,action){
+ if(worldPending.has(account.id))return;
+ const live=worldOf(account);worldPending.add(account.id);renderRoster();
+ try{
+  const body={id:account.id,action};if(action==='stop')body.session_id=live?.session_id;
+  await api('/api/world',body);await refresh();
+  notice(action==='start'?'Вход в игру запущен.':'Запрошен выход из игры.');
+ }catch(error){notice(error.message);}
+ finally{worldPending.delete(account.id);renderRoster();}
+}
 let rosterSort={key:null,direction:1};
 const collator=new Intl.Collator('ru',{numeric:true,sensitivity:'base'});
 function sortValue(account,key){
  return ({number:accountNumber(account),account:account.email,character:characterLabel(account),class:snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,server:account.region+' · '+(snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id)?.name||account.server_id||''),device:deviceType(account),template:account.device_template_name||'',
-  'device-name':account.device_name||'',status:accountStatus(account).text})[key]||'';
+  'device-name':account.device_name||'',status:accountStatus(account).text,online:worldLabel(account),level:levelOf(account)})[key]||'';
 }
-for(const key of ['number','account','character','class','server','device','template','device-name','status'])el('sort-'+key).onclick=()=>{rosterSort={key,direction:rosterSort.key===key?-rosterSort.direction:1};renderRoster();};
-const columnKeys=['number','account','character','class','server','device','template','device-name','status'];
-const selectColumnKeys=['class','server','device','template','status'];
+const columnKeys=['number','account','character','class','server','device','template','device-name','status','online','level'];
+const selectColumnKeys=['class','server','device','template','status','online','level'];
+for(const key of columnKeys)el('sort-'+key).onclick=()=>{rosterSort={key,direction:rosterSort.key===key?-rosterSort.direction:1};renderRoster();};
 function columnValue(account,key){return String(sortValue(account,key)||'—');}
 function renderColumnFilters(){
  for(const key of selectColumnKeys){
@@ -162,7 +188,7 @@ function renderRoster(){
  renderColumnFilters();
  for(const identifier of verificationSelection){const account=snapshot.accounts.find(a=>a.id===identifier);if(!account||!canVerify(account))verificationSelection.delete(identifier);}
  const body=el('roster-body');body.replaceChildren();
- for(const key of ['number','account','character','class','server','device','template','device-name','status']){
+ for(const key of columnKeys){
   const button=el('sort-'+key),active=rosterSort.key===key;
   button.parentElement.setAttribute('aria-sort',active?(rosterSort.direction===1?'ascending':'descending'):'none');
   button.querySelector('span').textContent=active?(rosterSort.direction===1?'↑':'↓'):'↕';
@@ -177,7 +203,9 @@ function renderRoster(){
   const identity=document.createElement('div'),link=cellLink(account.email,()=>openAccount(account));link.className='email-link';
   const provider=document.createElement('small');provider.textContent=isGoogle(account)?'Google':'Netmarble';identity.append(link,provider);wrap.append(checkbox,identity);email.append(wrap);row.append(email);
   const server=snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id);
-  for(const value of [characterLabel(account),snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,account.region+' · '+(server?.name||account.server_id||'Не выбран')]){
+  const live=worldOf(account),character=document.createElement('td');
+  character.append(live?.state==='connected'?mapLink(account):cellLink(characterLabel(account),()=>openAccount(account,'character')));row.append(character);
+  for(const value of [snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,account.region+' · '+(server?.name||account.server_id||'Не выбран')]){
    const cell=document.createElement('td');cell.append(cellLink(value,()=>openAccount(account,'character')));row.append(cell);
   }
   const reported=document.createElement('td');reported.append(cellLink(deviceType(account),()=>openAccount(account,'device')));row.append(reported);
@@ -187,11 +215,21 @@ function renderRoster(){
   row.append(templateCell);
   const name=document.createElement('td');name.append(cellLink(account.device_name||'Не задано',()=>template?openTemplate(template.id):openAccount(account,'device'),'Имя для следующей регистрации устройства'));row.append(name);
   const state=document.createElement('td'),status=accountStatus(account),pill=cellLink(status.text,()=>openAccount(account,'session'));pill.className='status-pill '+status.kind;state.append(pill);row.append(state);
-  const actions=document.createElement('td'),settings=cellLink('···',()=>openAccount(account),'Настройки аккаунта');settings.className='row-settings';actions.append(settings);row.append(actions);body.append(row);
+  const online=document.createElement('td'),badge=document.createElement('span');
+  badge.className='online-state '+(live?.state||'');badge.textContent=worldLabel(account);
+  if(live?.error){badge.title=worldStages[live.error]||stages[live.error]||'Вход не завершился';
+   badge.textContent=badge.title+(live.sdk_error_code!=null?' · SDK '+live.sdk_error_code:live.login_result_code!=null?' · код '+live.login_result_code:'');}
+  online.append(badge);row.append(online);
+  const level=document.createElement('td');level.textContent=levelOf(account);row.append(level);
+  const actions=document.createElement('td'),controls=document.createElement('div');controls.className='world-actions';
+  const inGame=!!live?.session_id&&['connected','connecting'].includes(live.state);
+  const action=inGame?'stop':'start',control=cellLink(inGame?'Выйти':'В игру',()=>worldAction(account,action));
+  control.className='world-action '+action;control.disabled=worldPending.has(account.id)||(!inGame&&(!live?.can_start||snapshot.jobs[account.id]?.running));
+  const settings=cellLink('···',()=>openAccount(account),'Настройки аккаунта');settings.className='row-settings';controls.append(control,settings);actions.append(controls);row.append(actions);body.append(row);
  }
  el('account-count').textContent=snapshot.accounts.length;
  el('device-count').textContent=(snapshot.device_templates||[]).length;
- el('online-count').textContent=Object.values(snapshot.jobs).filter(j=>j.running).length;
+ el('online-count').textContent=snapshot.world?Object.values(snapshot.world).filter(s=>s.state==='connected').length:'—';
  renderVerification();renderAccountSecrets();renderDeviceList();
 }
 function renderAccountSecrets(){
@@ -228,8 +266,26 @@ function renderReadiness(){
  const limits=document.createElement('small');limits.textContent='Показаны сохранённые наблюдения. Доступность серверов и совместимость текущей сборки проверяются отдельно. Изменения формы учитываются после сохранения.';
  box.append(list,route,next,limits);
 }
-function render(){renderReadiness();renderRoster();const job=snapshot.jobs[selected],status=job?.status||'stopped';el('badge').className='badge '+status;el('badge').textContent=labels[status]||status;el('message').textContent=job?.message||'Сохраните настройки и выберите действие';el('stage').textContent=job?.running?(job.manual_sign_in&&job.stage==='nid_browser'?'Введите логин и пароль в отдельном окне Netmarble':(stages[job.stage]||job.stage)):'';el('stop').disabled=!job?.running;el('start-all').disabled=runnableAccounts().length<2||Object.values(snapshot.jobs).some(j=>j.running);for(const node of el('settings').elements)node.disabled=!!job?.running;el('password').disabled=!!job?.running;for(const id of ['start','servers','characters'])el(id).disabled=!selected||current()?.enabled===false||!!job?.running;el('prepare-sdk').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.registration_status==='sdk_created'||current()?.character_index!==null||current()?.character_key!==null;el('create').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.create_class!=='Gunner'||!current()?.server_id||current()?.character_index!==null;const registration=current()?.registration_status||'unknown';el('registration-state').textContent=({unknown:'Регистрация не проверялась',in_progress:'Регистрация выполняется',unconfirmed:'Предыдущая попытка не подтверждена. Проверьте окно или попробуйте обычный вход; автоматического повтора нет.',registered:'Регистрация Netmarble подтверждена',sdk_created:'Игровой профиль SDK создан. Можно перейти к выбору сервера и персонажа.',nid_verified:'Ранее вход Netmarble был подтверждён. Результат текущей попытки показан ниже, в состоянии сессии.',email_in_use:'Netmarble: почта уже используется. Повторная регистрация не нужна; вход ещё не проверен.'})[registration];el('register').disabled=!selected||current()?.enabled===false||!!job?.running||(!current()?.mail_password_saved&&!el('manual-mail-code').checked)||!el('terms').checked||registration==='registered'||registration==='in_progress'||registration==='email_in_use'||registration==='nid_verified'||registration==='sdk_created';el('code-entry').hidden=!(job?.running&&job.manual_mail_code&&job.stage==='registration_code'&&!job.code_sent);renderAvailability();renderProvider();renderTemplateSelection();renderAccountSecrets();}
-async function refresh(){const wasRunning=snapshot.jobs[selected]?.running;const catalogStamp=snapshot.catalogs[el('region').value]?.observed_utc;snapshot=await api('/api/state');if(initial){initial=false;edit(snapshot.accounts[0]);}else{if(catalogStamp!==snapshot.catalogs[el('region').value]?.observed_utc)servers(el('server').value);if(wasRunning&&!snapshot.jobs[selected]?.running){el('nickname').value=current()?.create_nickname||'';servers(el('server').value);characters(el('character').value===''?null:Number(el('character').value));}render();}}
+function render(){renderReadiness();renderRoster();const job=snapshot.jobs[selected],status=job?.status||'stopped';el('badge').className='badge '+status;el('badge').textContent=labels[status]||status;el('message').textContent=job?.message||'Сохраните настройки и выберите действие';el('stage').textContent=job?.running?(job.manual_sign_in&&job.stage==='nid_browser'?'Введите логин и пароль в отдельном окне Netmarble':(stages[job.stage]||job.stage)):'';el('stop').disabled=!job?.running;el('start-all').disabled=runnableAccounts().length<2||Object.values(snapshot.jobs).some(j=>j.running);for(const node of el('settings').elements)node.disabled=!!job?.running;el('password').disabled=!!job?.running;for(const id of ['start','servers','characters'])el(id).disabled=!selected||current()?.enabled===false||!!job?.running;el('prepare-sdk').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.registration_status==='sdk_created'||current()?.character_index!==null||current()?.character_key!==null;el('create').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.create_class!=='Gunner'||!current()?.server_id||current()?.character_index!==null;const registration=current()?.registration_status||'unknown';el('registration-state').textContent=({unknown:'Регистрация не проверялась',in_progress:'Регистрация выполняется',unconfirmed:'Предыдущая попытка не подтверждена. Проверьте окно или попробуйте обычный вход; автоматического повтора нет.',registered:'Регистрация Netmarble подтверждена',sdk_created:'Игровой профиль SDK создан. Можно перейти к выбору сервера и персонажа.',nid_verified:'Ранее вход Netmarble был подтверждён. Результат текущей попытки показан ниже, в состоянии сессии.',email_in_use:'Netmarble: почта уже используется. Повторная регистрация не нужна; вход ещё не проверен.'})[registration];el('register').disabled=!selected||current()?.enabled===false||!!job?.running||(!current()?.mail_password_saved&&!el('manual-mail-code').checked)||!el('terms').checked||registration==='registered'||registration==='in_progress'||registration==='email_in_use'||registration==='nid_verified'||registration==='sdk_created';el('code-entry').hidden=!(job?.running&&job.manual_mail_code&&job.stage==='registration_code'&&!job.code_sent);renderAvailability();renderProvider();renderTemplateSelection();renderAccountSecrets();renderWorldControls();}
+function renderWorldControls(){
+ if(!snapshot.world)return;
+ const account=current(),live=worldOf(account);
+ el('start-all').disabled=runnableAccounts().filter(a=>worldOf(a)?.can_start).length<2;
+ el('start').disabled=!live?.can_start||!!snapshot.jobs[selected]?.running||worldPending.has(selected);
+ if(!live)return;
+ if(worldBusy(account)){
+  for(const id of ['servers','characters','create','prepare-sdk','register'])el(id).disabled=true;
+  el('stop').disabled=!live.session_id||!['connected','connecting'].includes(live.state)||worldPending.has(selected);
+  el('badge').className='badge '+(live.state==='connected'?'active':live.state);
+  el('badge').textContent=worldLabel(account);
+ }
+}
+let refreshInFlight;
+function refresh(){
+ if(!refreshInFlight)refreshInFlight=refreshState().finally(()=>{refreshInFlight=null;});
+ return refreshInFlight;
+}
+async function refreshState(){const wasRunning=snapshot.jobs[selected]?.running;const catalogStamp=snapshot.catalogs[el('region').value]?.observed_utc;const [data,live]=await Promise.all([api('/api/state'),api('/api/world').catch(()=>null)]);snapshot={...data,world:live?.sessions};if(initial){initial=false;edit(snapshot.accounts[0]);}else{if(catalogStamp!==snapshot.catalogs[el('region').value]?.observed_utc)servers(el('server').value);if(wasRunning&&!snapshot.jobs[selected]?.running){el('nickname').value=current()?.create_nickname||'';servers(el('server').value);characters(el('character').value===''?null:Number(el('character').value));}render();}}
 el('generate-nickname').onclick=async()=>{try{const data=await api('/api/nickname',{});el('nickname').value=data.nickname;notice('Новый ник в форме. Нажмите «Сохранить настройки», чтобы использовать его.');}catch(error){notice(error.message);}};
 el('terms').onchange=()=>render();
 el('manual-mail-code').onchange=()=>render();
@@ -240,8 +296,14 @@ el('server').onchange=()=>{characters(null);restoreCharacterConnection();};
 el('character').onchange=()=>restoreCharacterConnection();
 el('settings').onsubmit=async event=>{event.preventDefault();try{const assignment={enabled:el('enabled').checked,label:el('label').value,device_profile:accountDevice.device_profile,device_settings:accountDevice.device_settings,socks_port:el('socks-port').value?Number(el('socks-port').value):null,region:el('region').value,server_id:el('server').value?Number(el('server').value):null,character_index:el('character').value===''?null:Number(el('character').value),character_key:el('character').selectedOptions[0]?.dataset.key||null,create_nickname:el('nickname').value,create_class:el('create-class').value,create_random_nickname:el('random-nickname').checked,auth_flow:el('auth-flow').value,login_provider:el('login-provider').value,device_template_id:el('account-template').value||null,device_name:accountDevice.device_name||'',device_type:el('account-device-type').value};const result=await api('/api/save',{email:el('email').value,password:el('password').value,mail_password:el('mail-password').value,assignment});await refresh();edit(snapshot.accounts.find(a=>a.id===result.id));notice('Настройки сохранены. Пароль скрыт.');}catch(error){notice(error.message);}};
 async function job(operation){try{if(!selected)return;activateTab('session');await api('/api/job',{id:selected,operation,...(operation==='register'?{accept_required_terms:el('terms').checked,manual_mail_code:el('manual-mail-code').checked}:operation==='stop'?{}:{manual_sign_in:el('manual-sign-in').checked,...(operation==='prepare-sdk'?{terms_country:el('sdk-country').value,terms_locale:el('sdk-locale').value,basic_terms_mode:el('sdk-terms-mode').value}:{})})});if(operation==='register')el('terms').checked=false;else if(operation!=='stop')el('manual-sign-in').checked=false;await refresh();notice(operation==='stop'?'Бот остановлен.':'Операция запущена. Для входа может открыться отдельное окно Netmarble.');}catch(error){notice(error.message);}}
-for(const operation of ['start','stop','servers','characters','register','create','prepare-sdk'])el(operation).onclick=()=>job(operation);
-el('start-all').onclick=async()=>{try{for(const account of runnableAccounts().slice(0,2))await api('/api/job',{id:account.id,operation:'start'});await refresh();notice('Два независимых запуска начаты.');}catch(error){notice(error.message);}};
+for(const operation of ['servers','characters','register','create','prepare-sdk'])el(operation).onclick=()=>job(operation);
+el('start').onclick=()=>snapshot.world&&current()?worldAction(current(),'start'):job('start');
+el('stop').onclick=()=>worldBusy(current())?worldAction(current(),'stop'):job('stop');
+el('start-all').onclick=async()=>{try{
+ const rows=runnableAccounts().filter(account=>!snapshot.world||worldOf(account)?.can_start).slice(0,2);
+ for(const account of rows)await (snapshot.world?api('/api/world',{id:account.id,action:'start'}):api('/api/job',{id:account.id,operation:'start'}));
+ await refresh();notice('Независимые запуски начаты.');
+}catch(error){notice(error.message);}};
 
 const deviceFields=[
  ['device_key','SDK deviceKey','identity'],['nm_device_key','SDK nmDeviceKey','identity'],['nid_device_key','NID deviceKey','identity'],

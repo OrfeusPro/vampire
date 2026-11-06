@@ -7,6 +7,8 @@ const snapshot = {state:'connected', character:{world_id:'10012', position:{x:12
 const known = model.project(snapshot);
 assert.equal(known.power,'123');
 assert.equal(known.experience,'9007199254740993'); // Do not lose wire integer precision.
+const unnamed=model.project({...snapshot,character:{...snapshot.character,stats:[{id:1,name:null,value:'25'},{id:134,name:null,value:'99999'}]}});
+assert.equal(unnamed.power,null);assert.equal(unnamed.experience,null); // Unverified current stat names are not historical UI bindings.
 assert.deepEqual(known.position,{x:12,y:34});
 assert.equal(known.entities,0);
 assert.equal(known.questsKnown,true);

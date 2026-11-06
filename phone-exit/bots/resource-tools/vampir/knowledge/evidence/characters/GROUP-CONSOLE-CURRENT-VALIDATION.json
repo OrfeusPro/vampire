@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\bounded-world-profiles\\85ea30a22a202b50d4a1487a9ee6e6ed04967b8be756b91f57946b66630a9c89\\manifest.json",
+    "sha256": "85ea30a22a202b50d4a1487a9ee6e6ed04967b8be756b91f57946b66630a9c89"
+  },
+  "proofs": {
+    "clock-world-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\clock-world-current-verified\\e727dd7005f0b2679414a2590e4af5f3688b727521e1c8262d381d47df576b10\\manifest.json",
+      "sha256": "e727dd7005f0b2679414a2590e4af5f3688b727521e1c8262d381d47df576b10"
+    },
+    "initial-stats-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\initial-stats-current-v1\\cb0869311dcc855ce63fba78f68a04a1a54c8b22a67eafa0d44fe95371dfe3d9\\manifest.json",
+      "sha256": "cb0869311dcc855ce63fba78f68a04a1a54c8b22a67eafa0d44fe95371dfe3d9"
+    },
+    "stat-notifications-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\stat-notifications-current-v1\\1f21748da3a7182f0aa10920dab21b47112cb5d9f0dd9dc7a086a46b881d7a5d\\manifest.json",
+      "sha256": "1f21748da3a7182f0aa10920dab21b47112cb5d9f0dd9dc7a086a46b881d7a5d"
+    },
+    "world-results-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\world-results-current-v1\\9a0f0fe4167dba15d204a999fc119372d254153213a3d7878a1feecd5736094d\\manifest.json",
+      "sha256": "9a0f0fe4167dba15d204a999fc119372d254153213a3d7878a1feecd5736094d"
+    }
+  },
+  "source_checks": [
+    {
+      "cache_key": "3d2512ba69658cc55fec007a27594a00e1db5bd1726906722740d1eb931de2be",
+      "id": "clock-world-current",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27596a9066c37e2f6a0d40864c8aaaaa0e0c991b0264d26736c3526eb7c7a9ab\\manifest.json",
+      "sha256": "27596a9066c37e2f6a0d40864c8aaaaa0e0c991b0264d26736c3526eb7c7a9ab",
+      "state": "passed"
+    },
+    {
+      "cache_key": "28e5413007fe1a4f55a6c96c87548eb43bf49aa741bb5c1a11d125711bbdee84",
+      "id": "world-player-constructor-current",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8f2abe80cd8a544a98b3980ed813dae8a3bd7dbdac252ab0fe144003748b505b\\manifest.json",
+      "sha256": "8f2abe80cd8a544a98b3980ed813dae8a3bd7dbdac252ab0fe144003748b505b",
+      "state": "passed"
+    },
+    {
+      "cache_key": "6c84f5140fd86045c45b6ac736fc141b913b60732321d015b2e039f56642f316",
+      "id": "world-select-clamps-current",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e6b277917539e4895686df8a9ef1a54cb9bed043e05572a366718fbdb1e9466a\\manifest.json",
+      "sha256": "e6b277917539e4895686df8a9ef1a54cb9bed043e05572a366718fbdb1e9466a",
+      "state": "passed"
+    },
+    {
+      "cache_key": "3aea72c766d2750fdc117a92155d8236b5c3eb188eba19ebbb038132956bf4c5",
+      "id": "world-results-current",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d6cc5d0a7f3c2bf4f1bf01ba839adfdd1c6936d026d60864c12a35b3e026cfe4\\manifest.json",
+      "sha256": "d6cc5d0a7f3c2bf4f1bf01ba839adfdd1c6936d026d60864c12a35b3e026cfe4",
+      "state": "passed"
+    },
+    {
+      "cache_key": "b9d8382e89090094b691734bb8b4f2e63d794b739935533e55feaffd35ade4ca",
+      "id": "bounded-world-current",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d3a59bd3d7c65702b92b149835de1f130894de8f9f3e009e3a8acceca76457c5\\manifest.json",
+      "sha256": "d3a59bd3d7c65702b92b149835de1f130894de8f9f3e009e3a8acceca76457c5",
+      "state": "passed"
+    },
+    {
+      "cache_key": "90bb825654138d948c2d9135928eec8b69af63ebde269360cdc4f99f1230e8f8",
+      "id": "initial-stats-current",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cd28376f5e6a8299cc967da64ccdbab12b23509e2557ae9a24905c3921a01a77\\manifest.json",
+      "sha256": "cd28376f5e6a8299cc967da64ccdbab12b23509e2557ae9a24905c3921a01a77",
+      "state": "passed"
+    },
+    {
+      "cache_key": "d854cfc4c5ec3bf273db175c65f9d9adcb6c9db8398b9ebadce9a28c72a61600",
+      "id": "stat-notifications-current",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1d26e15749767327dcc7ca912982889562a2e22a4c48c5423d0f2b78287f5c37\\manifest.json",
+      "sha256": "1d26e15749767327dcc7ca912982889562a2e22a4c48c5423d0f2b78287f5c37",
+      "state": "passed"
+    }
+  ],
+  "targeted_tests": {
+    "passed": 57,
+    "scope": "account console/table, bounded world, current result/initial stats/notifications",
+    "supplemental_asset_integrity_cache_test": 1
+  },
+  "scoped_request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\58f867dc36f8d18a7acc3d59a821e05d3baffc9536d330dce102e6d67f28b127\\manifest.json",
+    "sha256": "58f867dc36f8d18a7acc3d59a821e05d3baffc9536d330dce102e6d67f28b127"
+  },
+  "collection": {
+    "path": "F:/PhoneExit Resources/Vampir/knowledge/research-scoped-v2-collections/586a0c09ec242707e740a2d153bd00a733fcf78713d1ad7dfe8b51686b3ea047/manifest.json",
+    "new_jvm": 0,
+    "sha256": "586a0c09ec242707e740a2d153bd00a733fcf78713d1ad7dfe8b51686b3ea047"
+  },
+  "online": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\GROUP-CONSOLE-CURRENT-ONLINE.json",
+    "sha256": "62525b2c81f8ca441ac87aeefde3fba3c6d9808d77252fdbebb6e46dbf5588db"
+  },
+  "scoped_completion": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\356b56c6c0ccd4d51cd30d29682a882ebdb3b376af037eee33cf290bda027f82\\manifest.json",
+    "sha256": "356b56c6c0ccd4d51cd30d29682a882ebdb3b376af037eee33cf290bda027f82",
+    "fact_id": "717650e6d09ba16943d6e602683861fc0b84bd76fade56718dab20418ce33dcf"
+  },
+  "tooling": {
+    "state": "passed",
+    "groups": 62,
+    "total_cases": 2267,
+    "skipped": 4,
+    "aggregate": {
+      "path": "F:/PhoneExit Resources/Vampir/knowledge/tooling-groups-v1/aggregate-results/b44f39f5a780256d8cd22945929c87ddbc81d35aaf93d2ac90d0593c5b79ac09/manifest.json",
+      "sha256": "b44f39f5a780256d8cd22945929c87ddbc81d35aaf93d2ac90d0593c5b79ac09"
+    },
+    "warm": {
+      "seconds": 17.98910020000767,
+      "executed_groups": 0,
+      "cached_groups": 62,
+      "executed_cases": 0,
+      "cached_cases": 2267
+    }
+  },
+  "same_eight_sessions_after_console_restart": true
+}

@@ -2,6 +2,8 @@
 import copy
 import importlib.util
 import json
+import sys
+import tempfile
 from pathlib import Path
 import unittest
 from unittest.mock import patch
@@ -32,6 +34,19 @@ class WorldResultsCurrentTests(unittest.TestCase):
             {'player+0x1d8 item+8': (91, 97), 'player+0x250 item+9': (7, 8)})
         self.assertEqual((select['roots'], finish['roots'], finish['math_ranges']), (56, 29, 9))
         self.assertFalse(self.report['runtime_admitted'])
+
+    def test_interpreter_alias_preserves_proof_but_other_runtime_changes_fail(self):
+        executable=Path(sys.executable)
+        current=dict(executable=str(executable.parent/'.'/executable.name),python='fixture',files={'a':'sha'})
+        retained=dict(current,executable=str(executable.parent/'..'/executable.parent.name/executable.name))
+        self.assertEqual(self.tool.clock_runtime_alias(current,retained),retained)
+        with self.assertRaisesRegex(ValueError,'runtime changed'):
+            self.tool.clock_runtime_alias(dict(current,python='changed'),retained)
+        with tempfile.TemporaryDirectory() as directory:
+            other=Path(directory)/'python.exe'
+            other.write_bytes(b'different runtime')
+            with self.assertRaisesRegex(ValueError,'runtime changed'):
+                self.tool.clock_runtime_alias(dict(current,executable=str(other)),retained)
 
     def test_cache_reuses_transfer_and_rejects_changed_boundary(self):
         with patch.object(self.tool, 'transfer', side_effect=AssertionError('world source transfer repeated')):

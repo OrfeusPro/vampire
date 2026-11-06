@@ -1,5 +1,6 @@
 """Local account console, owns at most two independent bot worker processes."""
 import argparse
+from http.client import HTTPException
 import importlib.util
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -10,6 +11,7 @@ import sys
 import threading
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / 'vampir-shared'))
 from vampir_core.account_store import AccountStore
 from vampir_core.character_creation_plan import CLASS_CHOICES, random_nickname
@@ -17,11 +19,17 @@ from vampir_core.account_sdk_preparation import validate_sdk_preparation
 from vampir_core.account_readiness import account_readiness
 from vampir_core.bot_device_settings import connection_presets, new_identity
 from vampir_core.device_templates import new_windows_device_name
+from account_world import ID as WORLD_ID, WorldControl
+from prototype_assets import PrototypeAssets
+
+PROTOTYPE = HERE.parent / 'vampir/ui-prototype'
+RESOURCES = Path('F:/PhoneExit Resources/Vampir')
 
 
 class Jobs:
-    def __init__(self, store):
+    def __init__(self, store, *, world_busy=lambda identifier: False):
         self.store, self.lock, self.jobs = store, threading.RLock(), {}
+        self.world_busy = world_busy
         self.verification = store.load_verification_checkpoint()
         if self.verification and self.verification['state'] in ('running', 'cancelling'):
             self.verification.update(state='stopped', failed=self.verification['active'], active=None,
@@ -46,6 +54,7 @@ class Jobs:
             row = accounts.get(identifier)
             google = row and row.get('login_provider') == 'google'
             if (not row or not row['enabled'] or row.get('device_type') == 'Не использовать' or self.jobs.get(identifier, {}).get('running')
+                    or self.world_busy(identifier)
                     or (google and row['socks_port'] is not None)
                     or (not google and (not row['mail_password_saved'] or not row['email'].endswith('@vampir.top')))):
                 raise ValueError('Выберите свободные включённые аккаунты: Google с прямым выходом либо Netmarble с паролем почты @vampir.top.')
@@ -138,6 +147,8 @@ class Jobs:
             account = next((a for a in self.store.accounts() if a['id'] == identifier), None)
             if account is None:
                 raise ValueError('Unknown account')
+            if self.world_busy(identifier):
+                raise ValueError('Сначала выйдите из мира выбранным персонажем')
             if account.get('device_type') == 'Не использовать':
                 raise ValueError('Аккаунт отмечен «Не использовать». Сначала измените его режим в настройках.')
             if account.get('login_provider', 'email') == 'google':
@@ -308,10 +319,26 @@ class Jobs:
             self.stop(identifier)
 
 
-def server(store, *, port=17949):
-    jobs, token = Jobs(store), secrets.token_urlsafe(32)
+def server(store, *, port=17949, world=None):
+    world = world if world is not None else WorldControl(store)
+    jobs, token = Jobs(store, world_busy=world.busy), secrets.token_urlsafe(32)
     # One server generation owns matching UI/API versions until its next launch.
-    assets = {name: (HERE / 'console' / name).read_bytes() for name in ('index.html', 'console.js', 'console.css')}
+    assets = {}
+    for route, directory, filename, mime in (
+        ('/', HERE / 'console', 'index.html', 'text/html'),
+        ('/console.js', HERE / 'console', 'console.js', 'text/javascript'),
+        ('/console.css', HERE / 'console', 'console.css', 'text/css'),
+        ('/local-map-projection.js', PROTOTYPE, 'local-map-projection.js', 'text/javascript'),
+        ('/prototype-live-model.js', PROTOTYPE, 'prototype-live-model.js', 'text/javascript'),
+    ):
+        data = (directory / filename).read_bytes()
+        if mime == 'text/html':
+            data = data.replace(b'__CONSOLE_TOKEN__', token.encode('ascii'))
+        assets[route] = data, mime + '; charset=utf-8'
+    try:
+        prototype = PrototypeAssets(RESOURCES, token)
+    except (OSError, ValueError):
+        prototype = None
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args):
             pass
@@ -325,7 +352,8 @@ def server(store, *, port=17949):
             self.send_response(status)
             for name, content in (('Content-Type', mime), ('Content-Length', str(len(data))),
                 ('Cache-Control', 'no-store'), ('X-Content-Type-Options', 'nosniff'),
-                ('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'")):
+                ('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors "
+                    + ("'self'" if self.path.startswith('/prototype/') else "'none'") + "; base-uri 'none'")):
                 self.send_header(name, content)
             self.end_headers()
             self.wfile.write(data)
@@ -339,12 +367,25 @@ def server(store, *, port=17949):
         def do_GET(self):
             if not self.trusted():
                 return self.response(403, dict(error='Forbidden'))
-            if self.path in ('/', '/console.js', '/console.css'):
-                filename = {'/': 'index.html', '/console.js': 'console.js', '/console.css': 'console.css'}[self.path]
-                data = assets[filename]
-                if filename == 'index.html':
-                    data = data.replace(b'__CONSOLE_TOKEN__', token.encode('ascii'))
-                return self.response(200, data, {'/': 'text/html; charset=utf-8', '/console.js': 'text/javascript; charset=utf-8', '/console.css': 'text/css; charset=utf-8'}[self.path])
+            route = self.path.partition('?')[0]
+            if route == '/world-map':
+                self.send_response(302)
+                self.send_header('Location', '/prototype/index.html?mode=group' + ('&' + self.path.partition('?')[2] if '?' in self.path else ''))
+                self.end_headers()
+                return
+            if route.startswith('/prototype/'):
+                try:
+                    content = prototype.get(route) if prototype else None
+                    return self.response(200, *content) if content else self.response(404, dict(error='Ресурс не найден'))
+                except (OSError, ValueError):
+                    return self.response(503, dict(error='Ресурсы прототипа недоступны'))
+            if route in assets:
+                return self.response(200, *assets[route])
+            if self.path == '/api/world' and self.trusted(True):
+                try:
+                    return self.response(200, dict(sessions=world.snapshot()))
+                except (ValueError, OSError):
+                    return self.response(503, dict(error='Состояние игровых сессий недоступно'))
             if self.path != '/api/state' or not self.trusted(True):
                 return self.response(403, dict(error='Forbidden'))
             accounts, catalogs, lists = store.accounts(), store.catalogs(), store.character_lists()
@@ -370,10 +411,24 @@ def server(store, *, port=17949):
                 body = json.loads(self.rfile.read(size))
                 if type(body) is not dict:
                     raise ValueError('Invalid request')
+                if self.path == '/api/world':
+                    identifier, action = body.get('id'), body.get('action')
+                    if not isinstance(identifier, str) or not WORLD_ID.fullmatch(identifier):
+                        raise ValueError('Invalid account')
+                    if action == 'start' and set(body) == {'id', 'action'}:
+                        with jobs.lock:
+                            if jobs.jobs.get(identifier, {}).get('running') or jobs.is_reserved(identifier):
+                                raise ValueError('Аккаунт занят другой операцией')
+                            world.start(identifier)
+                    elif action == 'stop' and set(body) == {'id', 'action', 'session_id'}:
+                        world.stop(identifier, body['session_id'])
+                    else:
+                        raise ValueError('Invalid world action')
+                    return self.response(202, dict(ok=True))
                 if self.path == '/api/save':
                     with jobs.lock:
                         existing = next((a for a in store.accounts() if a['email'] == body['email'].strip().lower()), None)
-                        if existing and (jobs.jobs.get(existing['id'], {}).get('running') or jobs.is_reserved(existing['id'])):
+                        if existing and (jobs.jobs.get(existing['id'], {}).get('running') or jobs.is_reserved(existing['id']) or world.busy(existing['id'])):
                             raise ValueError('Stop this bot before editing')
                         identifier = store.save(body['email'], password=body.get('password') or None,
                             mail_password=body.get('mail_password') or None, assignment=body['assignment'])
@@ -441,7 +496,7 @@ def server(store, *, port=17949):
                         raise ValueError('Invalid verification action')
                     return self.response(200, dict(ok=True))
                 return self.response(404, dict(error='Unknown action'))
-            except (ValueError, KeyError, TypeError, RuntimeError, OSError):
+            except (ValueError, KeyError, TypeError, RuntimeError, OSError, HTTPException):
                 return self.response(400, dict(error='Проверьте данные, пароль и состояние бота. Перед изменением остановите его.'))
     http = ThreadingHTTPServer(('127.0.0.1', port), Handler)
     http.daemon_threads = True

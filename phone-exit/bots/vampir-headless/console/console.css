@@ -20,3 +20,11 @@ dialog{padding:0;border:1px solid #35455c;border-radius:15px;color:#e5ecf4;backg
 .type-legend .reserve:before{background:#d5bb7a}.type-legend .excluded:before{background:#d698a6}
 #roster thead tr:first-child{height:44px}#roster .column-filters th{top:44px;padding:6px 8px;background:#121d2c;letter-spacing:normal;text-transform:none}
 .column-filters input,.column-filters select{font-size:11px;padding:6px 7px;min-width:90px;max-width:200px}.column-filters th:first-child input{min-width:48px;width:52px}.column-filters button{font-size:11px;padding:6px 8px}
+
+.world-actions{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.world-action{padding:5px 9px;border:1px solid #376150;border-radius:6px;background:#17382e;color:#a8edce}
+.world-action.stop{border-color:#63454f;background:#392933;color:#ffd3da}
+.world-action:disabled{opacity:.45;cursor:default}
+.online-state{display:inline-block;white-space:nowrap;color:#a6b4c7}
+.online-state.connected{color:#a1eac5}.online-state.connecting{color:#ffd18a}
+.online-state.conflict,.online-state.unreachable{color:#ffbac2}

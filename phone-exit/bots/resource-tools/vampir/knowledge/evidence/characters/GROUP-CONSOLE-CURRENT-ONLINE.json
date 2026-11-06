@@ -1,0 +1,303 @@
+{
+  "schema": 1,
+  "checked_utc": "2026-11-06T15:12:30.587498+00:00",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "online_characters": 8,
+  "sessions": [
+    {
+      "bot_id": "5296c70c-80b3-4ea8-bfec-aba67a946607",
+      "session_id": "aeef7a6b85192dd6fd65a9726b83c3a4",
+      "state": "connected",
+      "server": "Canon 1",
+      "port": 49152,
+      "character": {
+        "name": "Bipoberiho",
+        "level": 1,
+        "hp": 2700,
+        "max_hp": 2700,
+        "mp": 2000,
+        "max_mp": 2000,
+        "world_id": 10010,
+        "position": {
+          "x": 132167.0,
+          "y": 81284.0,
+          "z": -11010.0,
+          "semantics": "server_target_before_engine_correction"
+        }
+      },
+      "stats_count": 207,
+      "stat_notifications_observed": "notifications_received",
+      "heartbeat": {
+        "sent": 72,
+        "received": 72
+      }
+    },
+    {
+      "bot_id": "00b91ca9-6ae3-47f6-b3ac-b42ba7a82552",
+      "session_id": "d2af9b54777eea56bdd4696b8dfe51fa",
+      "state": "connected",
+      "server": "Canon 1",
+      "port": 49153,
+      "character": {
+        "name": "Moonraven",
+        "level": 1,
+        "hp": 2700,
+        "max_hp": 2700,
+        "mp": 2000,
+        "max_mp": 2000,
+        "world_id": 10010,
+        "position": {
+          "x": 132167.0,
+          "y": 81284.0,
+          "z": -11010.0,
+          "semantics": "server_target_before_engine_correction"
+        }
+      },
+      "stats_count": 207,
+      "stat_notifications_observed": "notifications_received",
+      "heartbeat": {
+        "sent": 72,
+        "received": 72
+      }
+    },
+    {
+      "bot_id": "78dfdaea-3e8d-4583-9654-2fe15b15101c",
+      "session_id": "392169fa05b9cc1185d42653d6b69a2b",
+      "state": "connected",
+      "server": "Canon 1",
+      "port": 49154,
+      "character": {
+        "name": "Shadowfox",
+        "level": 1,
+        "hp": 2700,
+        "max_hp": 2700,
+        "mp": 2000,
+        "max_mp": 2000,
+        "world_id": 10010,
+        "position": {
+          "x": 132167.0,
+          "y": 81284.0,
+          "z": -11010.0,
+          "semantics": "server_target_before_engine_correction"
+        }
+      },
+      "stats_count": 207,
+      "stat_notifications_observed": "notifications_received",
+      "heartbeat": {
+        "sent": 51,
+        "received": 51
+      }
+    },
+    {
+      "bot_id": "9c0b3a3b-71ca-4d27-9526-dd5c6f3efb0e",
+      "session_id": "90a9b9596d6ecd3e2ff13fff323d5505",
+      "state": "connected",
+      "server": "Canon 1",
+      "port": 49155,
+      "character": {
+        "name": "Stormcrow",
+        "level": 1,
+        "hp": 2700,
+        "max_hp": 2700,
+        "mp": 2000,
+        "max_mp": 2000,
+        "world_id": 10010,
+        "position": {
+          "x": 132167.0,
+          "y": 81284.0,
+          "z": -11010.0,
+          "semantics": "server_target_before_engine_correction"
+        }
+      },
+      "stats_count": 207,
+      "stat_notifications_observed": "notifications_received",
+      "heartbeat": {
+        "sent": 51,
+        "received": 51
+      }
+    },
+    {
+      "bot_id": "5e12507a-17bb-492c-b1eb-efe77c4325e2",
+      "session_id": "af7327896617b97984562e9f136103fa",
+      "state": "connected",
+      "server": "Canon 2",
+      "port": 49156,
+      "character": {
+        "name": "Frostwolf",
+        "level": 1,
+        "hp": 2700,
+        "max_hp": 2700,
+        "mp": 2000,
+        "max_mp": 2000,
+        "world_id": 10010,
+        "position": {
+          "x": 132167.0,
+          "y": 81284.0,
+          "z": -11010.0,
+          "semantics": "server_target_before_engine_correction"
+        }
+      },
+      "stats_count": 207,
+      "stat_notifications_observed": "notifications_received",
+      "heartbeat": {
+        "sent": 36,
+        "received": 36
+      }
+    },
+    {
+      "bot_id": "e8194b81-b419-4dbd-a8d0-bb1f76970f9c",
+      "session_id": "f47b5ad819f5df965aa0a41c97ab8c95",
+      "state": "connected",
+      "server": "Canon 2",
+      "port": 49157,
+      "character": {
+        "name": "Ironraven",
+        "level": 1,
+        "hp": 2700,
+        "max_hp": 2700,
+        "mp": 2000,
+        "max_mp": 2000,
+        "world_id": 10010,
+        "position": {
+          "x": 132167.0,
+          "y": 81284.0,
+          "z": -11010.0,
+          "semantics": "server_target_before_engine_correction"
+        }
+      },
+      "stats_count": 207,
+      "stat_notifications_observed": "notifications_received",
+      "heartbeat": {
+        "sent": 35,
+        "received": 35
+      }
+    },
+    {
+      "bot_id": "674b359b-bfe7-4fea-8640-4da299c94572",
+      "session_id": "d3ba8d958dd60709424cc5c49a9b2dfb",
+      "state": "connected",
+      "server": "Canon 2",
+      "port": 49158,
+      "character": {
+        "name": "Emberhawk",
+        "level": 1,
+        "hp": 2700,
+        "max_hp": 2700,
+        "mp": 2000,
+        "max_mp": 2000,
+        "world_id": 10010,
+        "position": {
+          "x": 132167.0,
+          "y": 81284.0,
+          "z": -11010.0,
+          "semantics": "server_target_before_engine_correction"
+        }
+      },
+      "stats_count": 207,
+      "stat_notifications_observed": "notifications_received",
+      "heartbeat": {
+        "sent": 20,
+        "received": 20
+      }
+    },
+    {
+      "bot_id": "d54c9293-42e7-44fa-8a0a-7bc9e9fbc9a1",
+      "session_id": "3a2994f928e40518d89869c1053507c3",
+      "state": "connected",
+      "server": "Canon 2",
+      "port": 49159,
+      "character": {
+        "name": "Zeramugonu",
+        "level": 1,
+        "hp": 2700,
+        "max_hp": 2700,
+        "mp": 2000,
+        "max_mp": 2000,
+        "world_id": 10010,
+        "position": {
+          "x": 132167.0,
+          "y": 81284.0,
+          "z": -11010.0,
+          "semantics": "server_target_before_engine_correction"
+        }
+      },
+      "stats_count": 207,
+      "stat_notifications_observed": "notifications_received",
+      "heartbeat": {
+        "sent": 18,
+        "received": 18
+      }
+    }
+  ],
+  "resources": {
+    "checked_utc": "2026-11-06T15:11:20.4380958Z",
+    "sample_seconds": 15.044,
+    "processor": "AMD Ryzen 5 3600",
+    "logical_processors": 12,
+    "ram_gib": 63.9,
+    "owners": [
+      {
+        "pid": 43568,
+        "private_mib": 30.3,
+        "working_set_mib": 47.77,
+        "threads": 10,
+        "cpu_machine_percent": 0.026
+      },
+      {
+        "pid": 25568,
+        "private_mib": 30.55,
+        "working_set_mib": 47.84,
+        "threads": 10,
+        "cpu_machine_percent": 0.026
+      },
+      {
+        "pid": 44592,
+        "private_mib": 30.45,
+        "working_set_mib": 47.75,
+        "threads": 7,
+        "cpu_machine_percent": 0.026
+      },
+      {
+        "pid": 40336,
+        "private_mib": 30.44,
+        "working_set_mib": 47.8,
+        "threads": 5,
+        "cpu_machine_percent": 0.043
+      },
+      {
+        "pid": 3876,
+        "private_mib": 30.11,
+        "working_set_mib": 47.71,
+        "threads": 5,
+        "cpu_machine_percent": 0.026
+      },
+      {
+        "pid": 33764,
+        "private_mib": 30.27,
+        "working_set_mib": 47.81,
+        "threads": 5,
+        "cpu_machine_percent": 0.017
+      },
+      {
+        "pid": 16008,
+        "private_mib": 30.19,
+        "working_set_mib": 47.64,
+        "threads": 7,
+        "cpu_machine_percent": 0.026
+      },
+      {
+        "pid": 21412,
+        "private_mib": 30.27,
+        "working_set_mib": 47.9,
+        "threads": 7,
+        "cpu_machine_percent": 0.043
+      }
+    ],
+    "limits": "Idle keepalive and snapshot polling only; no quest/combat load test."
+  },
+  "limits": [
+    "Server target position before engine correction; atlas is a retained reference.",
+    "Idle keepalive resource sample, not a quest or combat capacity test.",
+    "Live sessions remain independent of the console and Codex."
+  ]
+}

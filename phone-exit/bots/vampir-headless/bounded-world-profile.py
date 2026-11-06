@@ -10,9 +10,9 @@ WORKSPACE = Path(__file__).resolve().parents[3]
 INSTALLED = Path('C:/Program Files/Netmarble/Netmarble Game/VAMPIR/ProjectRED/Binaries/Win64/ProjectRED-Win64-Shipping.exe')
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 RECIPE = 'bounded-world-profile-v1'
-POLICIES = ['game-login-world-v1', 'world-selection-move-v1', 'periodic-ping-v1']
+POLICIES = ['game-login-world-v1', 'world-selection-move-v1', 'periodic-ping-v1', 'initial-character-stats-v1', 'character-stat-notifications-v1']
 OPERATIONS = ['character-select', 'world-entry', 'keep-online']
-PROOFS = {'clock-world-current', 'world-results-current'}
+PROOFS = {'clock-world-current', 'world-results-current', 'initial-stats-current', 'stat-notifications-current'}
 SHA = re.compile('[0-9a-f]{64}')
 CONSUMERS = (
     'vampir-headless/bounded-world-profile.py',
@@ -39,6 +39,7 @@ CONSUMERS = (
     'vampir-shared/vampir_core/game_login_probe.py',
     'vampir-shared/vampir_core/game_connection.py',
     'vampir-shared/vampir_core/live_session.py',
+    'vampir-shared/vampir_core/stat_change.py',
     'vampir-shared/vampir_core/live_session_server.py',
     'vampir-shared/vampir_core/detached_worker.py',
     'vampir-shared/vampir_core/scheduled_worker.py',
@@ -178,4 +179,21 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     nested = _pointer(profile['proofs']['world-results-current'], root / 'code-clues/world-results-current-v1', inputs)
     _clock_world(clock, root, inputs)
     _world_results(nested, inputs)
+    stats = _pointer(profile['proofs']['initial-stats-current'],root/'code-clues/initial-stats-current-v1',inputs)
+    if (stats.get('source_sha256')!=SOURCE or stats.get('recipe')!='initial-stats-current-v1'
+            or stats.get('initial_projection_verified') is not True or stats.get('known_vital_ids_match') is not True
+            or stats.get('runtime_admitted') is not False or stats.get('network_used') is not False
+            or stats.get('vital_ids')!={'Level':3,'Hp':4,'MaxHp':5,'Mp':9,'MaxMp':10}):
+        raise ValueError('Initial stat proof scope differs')
+    _retained(inputs,stats.get('definition',{}).get('inputs'))
+    changes = _pointer(profile['proofs']['stat-notifications-current'],root/'code-clues/stat-notifications-current-v1',inputs)
+    if (changes.get('source_sha256')!=SOURCE or changes.get('recipe')!='stat-notifications-current-v1'
+            or changes.get('notifications_projection_verified') is not True or changes.get('apply_uses_second_value') is not True
+            or changes.get('runtime_admitted') is not False or changes.get('network_used') is not False
+            or changes.get('vital_ids')!={'Level':3,'Hp':4,'MaxHp':5,'Mp':9,'MaxMp':10}
+            or set(changes.get('packet_bindings',{}))!={'321','322'}
+            or any(item.get('binding_verified') is not True or item.get('packet_id')!=int(key)
+                   for key,item in changes.get('packet_bindings',{}).items())):
+        raise ValueError('Stat notification proof scope differs')
+    _retained(inputs,changes.get('definition',{}).get('inputs'))
     return dict(profile, selected_profile='bounded-world:' + selector_sha, manifest_sha256=selector_sha)

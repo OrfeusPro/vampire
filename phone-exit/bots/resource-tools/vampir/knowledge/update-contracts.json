@@ -1553,7 +1553,9 @@
         "character-list-current",
         "world-player-constructor-current",
         "world-select-clamps-current",
-        "world-results-current"
+        "world-results-current",
+        "initial-stats-current",
+        "stat-notifications-current"
       ],
       "recipes": [],
       "bindings": {},
@@ -1563,7 +1565,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Повторять текущую проверку Select 110 по закреплённым зависимостям. При новом SHA переносить reader и проверять привязку ключа персонажа."
+      "next_check": "Повторять Select 110 и начальные stat pairs по закреплённой closure. Уровень / HP / MP требуют текущего EStat; уведомления 321 / 322 проверяются отдельно."
     },
     {
       "id": "world-entry",
@@ -1575,7 +1577,9 @@
         "release-world-completion-policy",
         "clock-world-current",
         "world-results-current",
-        "bounded-world-current"
+        "bounded-world-current",
+        "initial-stats-current",
+        "stat-notifications-current"
       ],
       "recipes": [],
       "bindings": {},
@@ -1585,7 +1589,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Вход по существующему ключу имеет отдельный ограниченный профиль для текущего SHA. Для следующего SHA нужны новый перенос и проверка входа."
+      "next_check": "Текущий вход по сохранённому ключу включает отдельные proofs начальных stats и уведомлений 321 / 322. Для нового SHA переносить их зависимости и проверять фактический вход."
     },
     {
       "id": "position",

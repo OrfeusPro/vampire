@@ -5,6 +5,8 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_initial_stats_current',
+    'test_vampir_stat_notifications_current',
     'test_vampir_bounded_world',
     'test_vampir_world_results_current',
     'test_vampir_world_select_clamps_current',

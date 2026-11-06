@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "recipe": "initial-stats-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "world_results_recipe": "world-results-current-v1",
+  "player_reader": "0x145787a00",
+  "collection_reader": "0x145734fd0",
+  "callback": "0x14573d440",
+  "record_reader": "0x1457a8330",
+  "collection_table": "0x1499424a8",
+  "record_table": "0x1499246e0",
+  "collection_field": 456,
+  "enum_members": 208,
+  "vital_ids": {
+    "Level": 3,
+    "Hp": 4,
+    "MaxHp": 5,
+    "Mp": 9,
+    "MaxMp": 10
+  }
+}
