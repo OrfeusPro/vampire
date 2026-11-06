@@ -1634,7 +1634,8 @@
       "evidence": [
         "evidence/quests/QUEST-AUTOMATION-CURRENT-VALIDATION.json",
         "evidence/quests/QUEST-OBSERVATION-CURRENT-RESULT.json",
-        "evidence/quests/HEADLESS-QUEST-AUTOMATION-CURRENT.md"
+        "evidence/quests/HEADLESS-QUEST-AUTOMATION-CURRENT.md",
+        "evidence/quests/QUEST-AUTOMATION-VISUAL-CHECK.json"
       ]
     }
   ]

@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "scope": "readonly_ui_after_codex_restart",
+  "reference_source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "browser": "Chrome",
+  "url": "http://127.0.0.1:17949/prototype/index.html?mode=group",
+  "owner": {
+    "character": "Bipoberiho",
+    "session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+    "state": "connected",
+    "same_session": true,
+    "reconnected": false,
+    "observer_replaced": false
+  },
+  "observed": {
+    "online_count": 1,
+    "hp": "2700/2700",
+    "mp": "2000/2000",
+    "level": 1,
+    "world_id": 10010,
+    "server": "EU · Canon 1",
+    "marker_visible": true,
+    "position_semantics": "server_target_before_engine_correction",
+    "journal_opened": true,
+    "journal_displays_packet_metadata": true,
+    "journal_early_events_warning": true,
+    "quest_data_visible": false,
+    "quest_controls_disabled": true,
+    "skip_dialogues_checked": true,
+    "auto_quests_checked": false,
+    "dialogue_data_visible": false
+  },
+  "game_commands_sent": false,
+  "existing_functional_tests_repeated": false,
+  "screenshot": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\vampir-headless\\.local\\quest-ui-after-restart.png",
+    "sha256": "129ea10ed27a5b4d2f63f91b4c2f974f91971c559e5041d553bfd0d7fe8669b6",
+    "retention": "private_outside_git"
+  },
+  "limits": [
+    "Проверены отображение текущего owner и открытие / закрытие журнала; игровые команды не отправлялись.",
+    "В этой сессии работает прежний обработчик. Начальные квестовые тела не сохранены; данных в правой панели нет.",
+    "Клик по реальному квесту, остановка при смерти и автоматическое продолжение на сервере здесь не проверялись.",
+    "Маркер использует цель входа и справочный атлас; движение и native-карта текущего клиента не подтверждаются."
+  ]
+}

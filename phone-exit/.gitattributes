@@ -896,3 +896,4 @@ bots/vampir/ui-prototype/live-state.js text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-AUTOMATION-CURRENT-VALIDATION.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-OBSERVATION-CURRENT-RESULT.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-AUTOMATION-CURRENT.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-AUTOMATION-VISUAL-CHECK.json text eol=lf
