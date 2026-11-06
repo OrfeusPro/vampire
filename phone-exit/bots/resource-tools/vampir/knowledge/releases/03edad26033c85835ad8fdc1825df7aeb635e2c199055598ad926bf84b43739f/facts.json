@@ -4604,6 +4604,63 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты конкретный строковый TryGetNumber, выбор активного task и current provider действия с индексом, TargetId, readiness, позицией и подтверждённым переходом. Проигрыватель диалога, выбор ответа, пропуск и работа онлайн не подтверждены.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1455b4d30",
+        "0x1455b8fe0",
+        "0x145b4c280",
+        "0x145de7870"
+      ],
+      "checks": [
+        {
+          "cache_key": "2cd7802e1a8ff2a8a6859db56eff16aafe0bc1fdc8747b97789c7bc902b45611",
+          "id": "bounded-world-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\71ca21150b9ffb959287bff9ef519a026e94266b27579873429053866010bc57\\manifest.json",
+          "sha256": "71ca21150b9ffb959287bff9ef519a026e94266b27579873429053866010bc57",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7beb6166e9b621cb3eeec48b64963ac974d031ac2110843e1fc602eba92b471e",
+          "id": "quest-reply-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5aa2701b501e30ddad20d112310caaa1edbd3247e901d44fc7904f84bc8e453f\\manifest.json",
+          "sha256": "5aa2701b501e30ddad20d112310caaa1edbd3247e901d44fc7904f84bc8e453f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5678266de9dbcdd6381efc8e3b9339de17fd5e9ece30212438e29cb9a1936d19",
+          "id": "quest-model-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e867ab53d148f2c8d94e29a10d1708b2ef2576f7f80d81a07617203488483740\\manifest.json",
+          "sha256": "e867ab53d148f2c8d94e29a10d1708b2ef2576f7f80d81a07617203488483740",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current lookup/projection исполнены в 79 сценариях, wrapper существующей модели — в 20 сценариях с 32 ABI-вызовами. Готовые 324 matching-task сценария переиспользованы после проверки матрицы и входов. Factory flow/switch/copy проверены статически. Отдельный quest-model-current подключён к on_update и кэшу без допуска активной задачи и действий.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-MODEL-CURRENT-VALIDATION.json",
+          "sha256": "f121b58dfb77c8fdfc6a75baf4168841477f99efafca4af08e82c10eb804b4e4"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-MODEL-CURRENT.md",
+          "sha256": "7322074598c3b3f0572bf5eb547c0f3e5d1666f11b4097ff52a796c2fec333e4"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "98d86cbc8458f52ad70b7706d96566cd53ba736af0a9318bfa0cecf32e48adc6",
+      "limits": [
+        "Projection and hash-collision lookup execute on a synthetic manager and task array; population, CSV order and active task remain unverified.",
+        "Model wrapper executes with native existing-task state/progress and copy; map, notification, setter and lifecycle effects are explicit fixtures.",
+        "Factory switch, case-6 dependencies and copy anchors are static source evidence; factory/replacement execution remains open.",
+        "The existing 324-case current matching-task proof is reused after exact matrix and retained-input checks, without replay.",
+        "No corrected actor position, current action provider, action admission, live quest mutation or network command is established."
+      ],
+      "method": "bounded_native",
+      "next_check": "Переиспользовать принятые lookup/projection/wrapper и 324 matching cases. Закрыть whole factory case-6 constructor 1455ab5c0, control constructor 1455a9330, shared move 141473540 и data/lifecycle providers либо перенести loader/order цепочку для актуального CSV. После них связать конкретный task и допустимый provider; текущую сессию сохранять.",
+      "question": "quest-reply-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты загрузка, фильтрация и порядок актуального QuestTask каталога, factory/replacement closure, реальные callbacks/setter и выбор активной задачи. TargetId, readiness, актуальная позиция, provider, подтверждённый переход и current action admission остаются отдельными проверками.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

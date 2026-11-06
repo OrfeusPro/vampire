@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "scope": "native_lookup_projection_and_existing_model_wrapper",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-model-current-v1\\69cbdf717bac9600ad9cf5eef807171791c985530db7048aef48a01b26d91bfe\\manifest.json",
+    "sha256": "69cbdf717bac9600ad9cf5eef807171791c985530db7048aef48a01b26d91bfe"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\42d28f0cccadc8d25797c5be0556c7eaab9c698214701908cbd6365dee3dd3b0\\manifest.json",
+    "sha256": "42d28f0cccadc8d25797c5be0556c7eaab9c698214701908cbd6365dee3dd3b0"
+  },
+  "first_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\349980e2de7deffa990c8f5bda774bc843b952e846d3e6ba5dd0899bcc6b4403\\manifest.json",
+    "sha256": "349980e2de7deffa990c8f5bda774bc843b952e846d3e6ba5dd0899bcc6b4403"
+  },
+  "lookup_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\12bb477648ac479c0c013ea353bc7db1d48eda0bf7626340ffdb7d905b520a54\\manifest.json",
+    "sha256": "12bb477648ac479c0c013ea353bc7db1d48eda0bf7626340ffdb7d905b520a54"
+  },
+  "final_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\156dc5ca64dd45b813262482f90ff91b24708e2d7189b6a939e9fe544c035fec\\manifest.json",
+    "sha256": "156dc5ca64dd45b813262482f90ff91b24708e2d7189b6a939e9fe544c035fec"
+  },
+  "final_collection_new_jvm": 0,
+  "matching_proof_reused": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-matching-state-checks-v1\\5ce3a5c8f2cba87bcc401ba8ea8d794c23daba0856937b36d4b6fe14604e62fe\\manifest.json",
+    "sha256": "5ce3a5c8f2cba87bcc401ba8ea8d794c23daba0856937b36d4b6fe14604e62fe"
+  },
+  "matching_cases_reused": 324,
+  "projection_cases": 79,
+  "wrapper_cases": 20,
+  "abi_calls": 111,
+  "factory_static": {
+    "active_task_verified": false,
+    "case6_constructor": "0x1455ab5c0",
+    "case6_entry": "0x1455b9781",
+    "case6_table": "0x149907e00",
+    "control_constructor": "0x1455a9330",
+    "copy_leaf": "0x1455cec10",
+    "exported_blocks_covered": true,
+    "fallthroughs": 1024,
+    "helper_exports_verified": false,
+    "helper_source_checks": {
+      "case6_constructor": {
+        "address": "0x1455ab5c0",
+        "instruction_sha256": "f7d5e141a072ce05c8256fd90fefd3ad7944b72b1450192b24e778d7ea4879c3"
+      },
+      "control_constructor": {
+        "address": "0x1455a9330",
+        "instruction_sha256": "347d8cdab4ef98c6e3d243c626de1aec683418c01b6eccbf07b2f1653d7a696c"
+      },
+      "shared_move_release": {
+        "address": "0x141473540",
+        "instruction_sha256": "8c28569ca35e106d285f78adb6b0df3f97eeff8ed9c5eabb265a64eb6124b7ac"
+      }
+    },
+    "instruction_bytes": 5147,
+    "instruction_count": 1078,
+    "instruction_sha256": "ab4b3321695b63845d3d856b109ea178255af55f92cd3a6f38d10aeb7d402939",
+    "internal_direct_branches": 108,
+    "native_execution": false,
+    "network_used": false,
+    "progress_copy32_bytes": "410f1007410f104f100f1146200f114e30",
+    "progress_copy32_start": "0x1455b9fdc",
+    "runtime_admitted": false,
+    "scope": "exported_factory_flow_and_source_switch",
+    "shared_move_release": "0x141473540",
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "switch_entries": 31,
+    "switch_sha256": "f7ad7aea05cb550bdbd0922ebf86660690953da1386079865f9236c62fef5bff",
+    "task_table_copy_slots": 23
+  },
+  "component_tests": 6,
+  "source_checks": [
+    {
+      "id": "bounded-world-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\71ca21150b9ffb959287bff9ef519a026e94266b27579873429053866010bc57\\manifest.json",
+      "sha256": "71ca21150b9ffb959287bff9ef519a026e94266b27579873429053866010bc57",
+      "cache_key": "2cd7802e1a8ff2a8a6859db56eff16aafe0bc1fdc8747b97789c7bc902b45611"
+    },
+    {
+      "id": "quest-reply-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5aa2701b501e30ddad20d112310caaa1edbd3247e901d44fc7904f84bc8e453f\\manifest.json",
+      "sha256": "5aa2701b501e30ddad20d112310caaa1edbd3247e901d44fc7904f84bc8e453f",
+      "cache_key": "7beb6166e9b621cb3eeec48b64963ac974d031ac2110843e1fc602eba92b471e"
+    },
+    {
+      "id": "quest-model-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e867ab53d148f2c8d94e29a10d1708b2ef2576f7f80d81a07617203488483740\\manifest.json",
+      "sha256": "e867ab53d148f2c8d94e29a10d1708b2ef2576f7f80d81a07617203488483740",
+      "cache_key": "5678266de9dbcdd6381efc8e3b9339de17fd5e9ece30212438e29cb9a1936d19"
+    }
+  ],
+  "ordinary_update_warm": {
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "checks": [
+      {
+        "id": "automatic-update-tooling",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\3b6ab83b1fcb8dce10749bc4e2c650f67508dae6e660c7f6d007c5b4b51b0aa0\\manifest.json",
+        "sha256": "3b6ab83b1fcb8dce10749bc4e2c650f67508dae6e660c7f6d007c5b4b51b0aa0",
+        "cache_key": "36c8f569d3f762d59b9e593d116b397144f3d22ff8cdab7ca745eaa28fb969c3",
+        "source_scope": "tooling",
+        "proves_client_compatibility": false
+      },
+      {
+        "id": "bounded-world-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\71ca21150b9ffb959287bff9ef519a026e94266b27579873429053866010bc57\\manifest.json",
+        "sha256": "71ca21150b9ffb959287bff9ef519a026e94266b27579873429053866010bc57",
+        "cache_key": "2cd7802e1a8ff2a8a6859db56eff16aafe0bc1fdc8747b97789c7bc902b45611"
+      },
+      {
+        "id": "quest-reply-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5aa2701b501e30ddad20d112310caaa1edbd3247e901d44fc7904f84bc8e453f\\manifest.json",
+        "sha256": "5aa2701b501e30ddad20d112310caaa1edbd3247e901d44fc7904f84bc8e453f",
+        "cache_key": "7beb6166e9b621cb3eeec48b64963ac974d031ac2110843e1fc602eba92b471e"
+      },
+      {
+        "id": "quest-model-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e867ab53d148f2c8d94e29a10d1708b2ef2576f7f80d81a07617203488483740\\manifest.json",
+        "sha256": "e867ab53d148f2c8d94e29a10d1708b2ef2576f7f80d81a07617203488483740",
+        "cache_key": "5678266de9dbcdd6381efc8e3b9339de17fd5e9ece30212438e29cb9a1936d19"
+      }
+    ],
+    "warm_seconds": 72.567,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\22da133db915966c210624fb5a0bdc80ab572d444bd864dc44e891edfe923664\\manifest.json",
+    "sha256": "22da133db915966c210624fb5a0bdc80ab572d444bd864dc44e891edfe923664",
+    "groups": 70,
+    "tests": 2331,
+    "skips": 4,
+    "metrics": {
+      "executed_groups": 37,
+      "cached_groups": 33,
+      "executed_cases": 1347,
+      "cached_cases": 984,
+      "executed_discovered_cases": 1347,
+      "cached_discovered_cases": 984,
+      "executed_skips": 4,
+      "cached_skips": 0,
+      "incomplete_groups": 0,
+      "duration_seconds": 447.31315649999306
+    }
+  },
+  "runtime_admitted": false,
+  "active_task_verified": false,
+  "ordered_catalog_verified": false,
+  "factory_executed": false,
+  "action_admitted": false,
+  "new_entry_tested_online": false,
+  "online": {
+    "character": "Bipoberiho",
+    "state": "connected",
+    "same_session": true,
+    "session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+    "game_commands_sent": false,
+    "owner_replaced": false
+  },
+  "limits": [
+    "Projection and hash-collision lookup execute on a synthetic manager and task array; population, CSV order and active task remain unverified.",
+    "Model wrapper executes with native existing-task state/progress and copy; map, notification, setter and lifecycle effects are explicit fixtures.",
+    "Factory switch, case-6 dependencies and copy anchors are static source evidence; factory/replacement execution remains open.",
+    "The existing 324-case current matching-task proof is reused after exact matrix and retained-input checks, without replay.",
+    "No corrected actor position, current action provider, action admission, live quest mutation or network command is established."
+  ]
+}

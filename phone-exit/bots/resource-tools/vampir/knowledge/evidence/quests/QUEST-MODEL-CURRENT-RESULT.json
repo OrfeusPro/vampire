@@ -1,0 +1,31 @@
+{
+  "question": "quest-reply-current",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "addresses": [
+    "0x145de7870",
+    "0x145b4c280",
+    "0x1455b4d30",
+    "0x1455b8fe0"
+  ],
+  "method": "bounded_native",
+  "conclusion": "Current lookup/projection исполнены в 79 сценариях, wrapper существующей модели — в 20 сценариях с 32 ABI-вызовами. Готовые 324 matching-task сценария переиспользованы после проверки матрицы и входов. Factory flow/switch/copy проверены статически. Отдельный quest-model-current подключён к on_update и кэшу без допуска активной задачи и действий.",
+  "limits": [
+    "Projection and hash-collision lookup execute on a synthetic manager and task array; population, CSV order and active task remain unverified.",
+    "Model wrapper executes with native existing-task state/progress and copy; map, notification, setter and lifecycle effects are explicit fixtures.",
+    "Factory switch, case-6 dependencies and copy anchors are static source evidence; factory/replacement execution remains open.",
+    "The existing 324-case current matching-task proof is reused after exact matrix and retained-input checks, without replay.",
+    "No corrected actor position, current action provider, action admission, live quest mutation or network command is established."
+  ],
+  "unknown": "Открыты загрузка, фильтрация и порядок актуального QuestTask каталога, factory/replacement closure, реальные callbacks/setter и выбор активной задачи. TargetId, readiness, актуальная позиция, provider, подтверждённый переход и current action admission остаются отдельными проверками.",
+  "next_check": "Переиспользовать принятые lookup/projection/wrapper и 324 matching cases. Закрыть whole factory case-6 constructor 1455ab5c0, control constructor 1455a9330, shared move 141473540 и data/lifecycle providers либо перенести loader/order цепочку для актуального CSV. После них связать конкретный task и допустимый provider; текущую сессию сохранять.",
+  "evidence": [
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-MODEL-CURRENT-VALIDATION.json",
+      "sha256": "f121b58dfb77c8fdfc6a75baf4168841477f99efafca4af08e82c10eb804b4e4"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-MODEL-CURRENT.md",
+      "sha256": "7322074598c3b3f0572bf5eb547c0f3e5d1666f11b4097ff52a796c2fec333e4"
+    }
+  ]
+}

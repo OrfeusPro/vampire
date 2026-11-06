@@ -1,0 +1,695 @@
+{
+  "schema": 1,
+  "recipe": "quest-model-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-ccbedd93cf3b": "73d25d522c42ddde2e947469c107dbef412d1b69f1cab76ea26fe242564c17f3",
+    "run-e4617369e09f": "4fb044048ddc2333d16ca759862779f5af209c44f22b686115d5e729af9ffc6e",
+    "run-8d53f402cdb0": "fb63839b8ef5d55bf1b0fcd9a2bda89107f36cc936a110d1dd2bdf41de11ee78"
+  },
+  "projection": {
+    "native": {
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+      "functions": {
+        "projection": "0x145de7870",
+        "lookup": "0x145b4c280"
+      },
+      "leaves": {
+        "0x141500740": "488b01c3"
+      },
+      "handler_global": "0x14b0c5b00",
+      "fixtures": {
+        "manager": "0x145b54bb0",
+        "shared": "0x2803e000",
+        "format": "0x1414333a0",
+        "wrap": "0x1414c33a0",
+        "emit": "0x141584450",
+        "free": "0x1414830e0"
+      },
+      "indirect_fixtures": [
+        [
+          "0x145b4c2ba",
+          "qword ptr [rip + 0x5579840]",
+          "0x2803e000"
+        ],
+        [
+          "0x145de7942",
+          "qword ptr [rax + 0x30]",
+          "0x2803e000"
+        ],
+        [
+          "0x145de7913",
+          "qword ptr [rax + 0x10]",
+          "0x2803e000"
+        ]
+      ],
+      "readonly_globals": {}
+    },
+    "diagnostic_literal": "0x149a44640",
+    "tables": {
+      "0x149a44640": "4600610069006c0065006400200074006f0020006300720065006100740065002000510075006500730074005400610073006b004400610074006100210021002100200050006c007300200063006800650063006b00200078006c0073007800200064006100740061002e0020005100750065007300740049006e0066006f00490064002000690073002000250064000000"
+    },
+    "hash_binding": {
+      "slot": "0x14b0c5b00",
+      "fixture": "0x2803e000",
+      "scope": "explicit_function_pointer_fixture_shadow"
+    }
+  },
+  "wrapper": {
+    "setter_static": {
+      "address": "0x1455e7560",
+      "bytes": "440fb6c284d274274183e801741a4183e801740d4183f801751c488b0148ff6030488b0148ff6028488b0148ff6020488b0148ff6018c3",
+      "virtual_tails": [
+        {
+          "address": "0x1455e757d",
+          "slot": "0x30"
+        },
+        {
+          "address": "0x1455e7584",
+          "slot": "0x28"
+        },
+        {
+          "address": "0x1455e758b",
+          "slot": "0x20"
+        },
+        {
+          "address": "0x1455e7592",
+          "slot": "0x18"
+        }
+      ],
+      "return_address": "0x1455e7596"
+    },
+    "native": {
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+      "functions": {
+        "wrapper": "0x1455b4d30",
+        "state": "0x1455f4a70",
+        "progress": "0x1455fd340"
+      },
+      "leaves": {
+        "0x1455cec10": "0f10020f1141200f104a100f114930c3",
+        "0x1455e7500": "488b41304885c07503b0ffc30fb64029c3"
+      },
+      "fixtures": {
+        "remove_map": "0x1455d3d90",
+        "insert_map": "0x145581540",
+        "notify": "0x144a6ad80",
+        "setter": "0x1455e7560",
+        "virtual": "0x2803e000",
+        "factory": "0x1455b8fe0",
+        "bind_owner": "0x1455b5440",
+        "shared_move_release": "0x141473540"
+      },
+      "indirect_fixtures": [
+        [
+          "0x1455b4e01",
+          "qword ptr [rax]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455b4e15",
+          "qword ptr [rax + 8]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd388",
+          "qword ptr [rax + 0x28]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd3a3",
+          "qword ptr [rax + 0x30]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd3bd",
+          "qword ptr [rax + 0x38]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd41e",
+          "qword ptr [rax]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd437",
+          "qword ptr [rax + 8]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd4b9",
+          "qword ptr [rax]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd4d4",
+          "qword ptr [rax + 8]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd4e4",
+          "qword ptr [rax + 0x28]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd503",
+          "qword ptr [rax]",
+          "0x2803e000"
+        ],
+        [
+          "0x1455fd517",
+          "qword ptr [rax + 8]",
+          "0x2803e000"
+        ]
+      ],
+      "readonly_globals": {}
+    }
+  },
+  "factory_static": {
+    "schema": 1,
+    "recipe": "quest-model-factory-static-v1",
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "source": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+      "sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+    },
+    "export": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-ccbedd93cf3b\\details.json",
+      "sha256": "73d25d522c42ddde2e947469c107dbef412d1b69f1cab76ea26fe242564c17f3"
+    },
+    "factory": {
+      "address": "0x1455b8fe0",
+      "unwind_ranges": [
+        {
+          "begin": "0x1455b8fe0",
+          "end": "0x1455ba478"
+        }
+      ],
+      "instruction_count": 1078,
+      "instruction_bytes": 5147,
+      "instruction_sha256": "ab4b3321695b63845d3d856b109ea178255af55f92cd3a6f38d10aeb7d402939",
+      "direct_flow_coverage_complete": true,
+      "exported_blocks_covered": true,
+      "checked_internal_direct_branches": 108,
+      "checked_fallthroughs": 1024,
+      "native_executed": false
+    },
+    "switch": {
+      "start": "0x1455ba3fc",
+      "count": 31,
+      "bytes": "35915b056c925b0532935b0509945b05b9955b05ac965b0581975b059b945b050c925b0539985b0507a25b0507a25b0507a25b0507a25b0543905b05cb975b0507a25b0507a25b0507a25b0507a25b0507a25b0527995b05979a5b05ab9b5b05999c5b056b9d5b05e29d5b05349e5b05919e5b05e39e5b052f9f5b05",
+      "index_byte_offset": "0x08",
+      "unsigned_max": 30,
+      "default_target": "0x1455ba207",
+      "anchors": [
+        {
+          "address": "0x1455b900c",
+          "text": "MOVZX EAX,byte ptr [RDX + 0x8]",
+          "bytes": "0fb64208",
+          "references": []
+        },
+        {
+          "address": "0x1455b9027",
+          "text": "CMP EAX,0x1e",
+          "bytes": "83f81e",
+          "references": []
+        },
+        {
+          "address": "0x1455b902a",
+          "text": "JA 0x1455ba207",
+          "bytes": "0f87d7110000",
+          "references": [
+            "0x1455ba207"
+          ]
+        },
+        {
+          "address": "0x1455b9030",
+          "text": "LEA RDX,[0x140000000]",
+          "bytes": "488d15c96fa4fa",
+          "references": []
+        },
+        {
+          "address": "0x1455b9037",
+          "text": "MOV ECX,dword ptr [RDX + RAX*0x4 + 0x55ba3fc]",
+          "bytes": "8b8c82fca35b05",
+          "references": []
+        },
+        {
+          "address": "0x1455b903e",
+          "text": "ADD RCX,RDX",
+          "bytes": "4803ca",
+          "references": []
+        },
+        {
+          "address": "0x1455b9041",
+          "text": "JMP RCX",
+          "bytes": "ffe1",
+          "references": []
+        }
+      ],
+      "targets": [
+        {
+          "kind": 0,
+          "address": "0x1455b9135"
+        },
+        {
+          "kind": 1,
+          "address": "0x1455b926c"
+        },
+        {
+          "kind": 2,
+          "address": "0x1455b9332"
+        },
+        {
+          "kind": 3,
+          "address": "0x1455b9409"
+        },
+        {
+          "kind": 4,
+          "address": "0x1455b95b9"
+        },
+        {
+          "kind": 5,
+          "address": "0x1455b96ac"
+        },
+        {
+          "kind": 6,
+          "address": "0x1455b9781"
+        },
+        {
+          "kind": 7,
+          "address": "0x1455b949b"
+        },
+        {
+          "kind": 8,
+          "address": "0x1455b920c"
+        },
+        {
+          "kind": 9,
+          "address": "0x1455b9839"
+        },
+        {
+          "kind": 10,
+          "address": "0x1455ba207"
+        },
+        {
+          "kind": 11,
+          "address": "0x1455ba207"
+        },
+        {
+          "kind": 12,
+          "address": "0x1455ba207"
+        },
+        {
+          "kind": 13,
+          "address": "0x1455ba207"
+        },
+        {
+          "kind": 14,
+          "address": "0x1455b9043"
+        },
+        {
+          "kind": 15,
+          "address": "0x1455b97cb"
+        },
+        {
+          "kind": 16,
+          "address": "0x1455ba207"
+        },
+        {
+          "kind": 17,
+          "address": "0x1455ba207"
+        },
+        {
+          "kind": 18,
+          "address": "0x1455ba207"
+        },
+        {
+          "kind": 19,
+          "address": "0x1455ba207"
+        },
+        {
+          "kind": 20,
+          "address": "0x1455ba207"
+        },
+        {
+          "kind": 21,
+          "address": "0x1455b9927"
+        },
+        {
+          "kind": 22,
+          "address": "0x1455b9a97"
+        },
+        {
+          "kind": 23,
+          "address": "0x1455b9bab"
+        },
+        {
+          "kind": 24,
+          "address": "0x1455b9c99"
+        },
+        {
+          "kind": 25,
+          "address": "0x1455b9d6b"
+        },
+        {
+          "kind": 26,
+          "address": "0x1455b9de2"
+        },
+        {
+          "kind": 27,
+          "address": "0x1455b9e34"
+        },
+        {
+          "kind": 28,
+          "address": "0x1455b9e91"
+        },
+        {
+          "kind": 29,
+          "address": "0x1455b9ee3"
+        },
+        {
+          "kind": 30,
+          "address": "0x1455b9f2f"
+        }
+      ],
+      "all_targets_exported": true
+    },
+    "case6": {
+      "entry": "0x1455b9781",
+      "object_bytes": 688,
+      "constructor": "0x1455ab5c0",
+      "control_constructor": "0x1455a9330",
+      "constructor_call": {
+        "address": "0x1455b97a6",
+        "text": "CALL 0x1455ab5c0",
+        "bytes": "e8151effff",
+        "references": [
+          "0x1455ab5c0"
+        ]
+      },
+      "control_call": {
+        "address": "0x1455b97b1",
+        "text": "CALL 0x1455a9330",
+        "bytes": "e87afbfeff",
+        "references": [
+          "0x1455a9330"
+        ]
+      },
+      "null_control_call": {
+        "address": "0x1455b97c1",
+        "text": "CALL 0x1455a9330",
+        "bytes": "e86afbfeff",
+        "references": [
+          "0x1455a9330"
+        ]
+      },
+      "table": "0x149907e00"
+    },
+    "shared_move_release": {
+      "address": "0x141473540",
+      "call": {
+        "address": "0x1455b9f8a",
+        "text": "CALL 0x141473540",
+        "bytes": "e8b195ebfb",
+        "references": [
+          "0x141473540"
+        ]
+      }
+    },
+    "copy32": {
+      "start": "0x1455b9fdc",
+      "end": "0x1455b9fed",
+      "source_register": "r15",
+      "destination_register": "rsi",
+      "destination_offset": "0x20",
+      "bytes": "410f1007410f104f100f1146200f114e30",
+      "instructions": [
+        {
+          "address": "0x1455b9fdc",
+          "text": "MOVUPS XMM0,xmmword ptr [R15]",
+          "bytes": "410f1007",
+          "references": []
+        },
+        {
+          "address": "0x1455b9fe0",
+          "text": "MOVUPS XMM1,xmmword ptr [R15 + 0x10]",
+          "bytes": "410f104f10",
+          "references": []
+        },
+        {
+          "address": "0x1455b9fe5",
+          "text": "MOVUPS xmmword ptr [RSI + 0x20],XMM0",
+          "bytes": "0f114620",
+          "references": []
+        },
+        {
+          "address": "0x1455b9fe9",
+          "text": "MOVUPS xmmword ptr [RSI + 0x30],XMM1",
+          "bytes": "0f114e30",
+          "references": []
+        }
+      ]
+    },
+    "task_data": {
+      "call": {
+        "address": "0x1455b9ff0",
+        "text": "CALL 0x14546d9d0",
+        "bytes": "e8db39ebff",
+        "references": [
+          "0x14546d9d0"
+        ]
+      },
+      "store": {
+        "address": "0x1455b9ff5",
+        "text": "MOV qword ptr [RSI + 0x40],RAX",
+        "bytes": "48894640",
+        "references": []
+      },
+      "target": "0x14546d9d0",
+      "destination_offset": "0x40"
+    },
+    "fallback": {
+      "target": "0x1455ba207",
+      "task_table": "0x149906828",
+      "object_bytes": 256,
+      "control_table": "0x148af9360"
+    },
+    "helper_candidates": {
+      "case6_constructor": {
+        "address": "0x1455ab5c0",
+        "unwind_ranges": [
+          {
+            "begin": "0x1455ab5c0",
+            "end": "0x1455ab7ca"
+          }
+        ],
+        "linear_instruction_count": 88,
+        "source_instruction_sha256": "f7d5e141a072ce05c8256fd90fefd3ad7944b72b1450192b24e778d7ea4879c3",
+        "export_available": false,
+        "native_executed": false,
+        "vtable_store": {
+          "lea_address": "0x1455ab672",
+          "store_address": "0x1455ab680",
+          "table": "0x149907e00",
+          "lea_bytes": "488d0587c73504",
+          "store_bytes": "488907",
+          "intervening": "c6871801000003"
+        }
+      },
+      "control_constructor": {
+        "address": "0x1455a9330",
+        "unwind_ranges": [
+          {
+            "begin": "0x1455a9330",
+            "end": "0x1455a9370"
+          }
+        ],
+        "linear_instruction_count": 18,
+        "source_instruction_sha256": "347d8cdab4ef98c6e3d243c626de1aec683418c01b6eccbf07b2f1653d7a696c",
+        "export_available": false,
+        "native_executed": false
+      },
+      "shared_move_release": {
+        "address": "0x141473540",
+        "unwind_ranges": [
+          {
+            "begin": "0x141473540",
+            "end": "0x141473567"
+          },
+          {
+            "begin": "0x141473567",
+            "end": "0x1414735ad"
+          },
+          {
+            "begin": "0x1414735ad",
+            "end": "0x1414735bb"
+          }
+        ],
+        "linear_instruction_count": 39,
+        "source_instruction_sha256": "8c28569ca35e106d285f78adb6b0df3f97eeff8ed9c5eabb265a64eb6124b7ac",
+        "export_available": false,
+        "native_executed": false
+      }
+    },
+    "task_tables": [
+      {
+        "address": "0x149906828",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149906958",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x1499077c0",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907810",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907860",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x1499078b0",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907900",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907950",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x1499079a0",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x1499079f0",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907a40",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907a90",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907ae0",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907b30",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907b80",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907bd0",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907c20",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907c70",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907cc0",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907d10",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907d60",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907db0",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      },
+      {
+        "address": "0x149907e00",
+        "copy_slot": "0x10",
+        "copy_target": "0x1455cec10",
+        "copy_slot_bytes": "10ec5c4501000000"
+      }
+    ],
+    "copy_leaf": {
+      "address": "0x1455cec10",
+      "bytes": "0f10020f1141200f104a100f114930c3"
+    },
+    "runtime_admitted": false,
+    "active_task_verified": false,
+    "network_used": false,
+    "native_execution": false,
+    "limits": [
+      "Only static source bytes, exported flow, switch targets and table slots were checked.",
+      "Helper roots were linearly disassembled from the source only; they do not yet have source-bound Ghidra exports or execution proofs.",
+      "No factory branch, allocation, replacement, task-data lookup, lifecycle or game action was executed."
+    ]
+  },
+  "matching_proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-matching-state-checks-v1\\5ce3a5c8f2cba87bcc401ba8ea8d794c23daba0856937b36d4b6fe14604e62fe\\manifest.json",
+    "sha256": "5ce3a5c8f2cba87bcc401ba8ea8d794c23daba0856937b36d4b6fe14604e62fe"
+  }
+}
