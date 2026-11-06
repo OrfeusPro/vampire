@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "recipe": "dialogue-resources-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "export": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-b23ba4ebb230\\details.json",
+    "sha256": "ef9e1e3d3af1f9970b25deacd4b96ebfd223adaafd03c81613d021965af249b0"
+  },
+  "parser": "0x14555dd70",
+  "literal_roles": {
+    "group": "0x1498febd0",
+    "branches": "0x1498febf0",
+    "class": "0x1498fec08"
+  },
+  "literals": {
+    "0x1498febd0": "6400690061006c006f006700470072006f0075007000490064000000",
+    "0x1498febf0": "63006c006100730073004200720061006e00630068000000",
+    "0x1498fec08": "63006c0061007300730049006e0066006f00490064000000"
+  },
+  "native": {
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/ProjectRED-Win64-Shipping.exe",
+    "functions": {
+      "parser": "0x14555dd70"
+    },
+    "leaves": {},
+    "fixtures": {
+      "group": "0x1445cd530",
+      "branches": "0x1445cc6f0",
+      "class_key": "0x1445cd610",
+      "provider": "0x145594df0",
+      "handle": "0x1417f8370",
+      "class_id": "0x1454e7f50",
+      "cleanup": "0x1414226f0",
+      "free": "0x1414830e0",
+      "json_value": "0x2803e000"
+    },
+    "indirect_fixtures": [
+      [
+        "0x14555de20",
+        "qword ptr [rax]",
+        "0x2803e000"
+      ],
+      [
+        "0x14555de8a",
+        "qword ptr [rax]",
+        "0x2803e000"
+      ]
+    ],
+    "readonly_globals": {
+      "0x1496731e0": "00000000"
+    }
+  },
+  "roots": [
+    "0x14555dd70",
+    "0x1455b0040",
+    "0x14592b6d0",
+    "0x14592cca0",
+    "0x14593e7e0",
+    "0x14593ef30",
+    "0x145b04330",
+    "0x145b165e0"
+  ],
+  "tables": {
+    "tasks": "ProjectRED/Content/RED/Data/CSV/QuestTask.csv",
+    "lines": "ProjectRED/Content/RED/Data/CSV/Dialog.csv",
+    "choices": "ProjectRED/Content/RED/Data/CSV/DialogChoice.csv",
+    "lines_ru": "ProjectRED/Content/RED/Data/CSV/L10N/ru/Dialog_Name.csv",
+    "choices_ru": "ProjectRED/Content/RED/Data/CSV/L10N/ru/DialogChoice_Name.csv"
+  },
+  "table_sha256": {
+    "tasks": "e4aeb8e81bc7700b39b86237ffd9ab0f2af523d22be5a76d5404397fdb4b9ea0",
+    "lines": "165cf1b1b5cbc52618ad08949abb602a250666ed0a2a76c8325a1454532ef22b",
+    "choices": "a5eb1d80b9cd4c007101a7ab60b052c11cf49bc8541e1b4d4fa70d11ebe7468e",
+    "lines_ru": "f04ea06455b039caa76c6a7bafc7d4c51e7a04fe7643087944f1f47c4634601a",
+    "choices_ru": "9794f9361156f353ede50c5b837bb859f69cb311882e8759ef3900cac91e3544"
+  }
+}

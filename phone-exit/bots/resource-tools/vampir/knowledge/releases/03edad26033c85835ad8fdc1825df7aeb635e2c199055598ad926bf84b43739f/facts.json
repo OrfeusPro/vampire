@@ -4418,6 +4418,54 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Автоперенос контекста следующего SHA, доставка каталога в работающую панель, настоящие диалоги и provider выбранного шага с подтверждением результата остаются открытыми.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x14555dd70",
+        "0x1455b0040",
+        "0x14592b6d0",
+        "0x14592cca0",
+        "0x14593e7e0",
+        "0x14593ef30",
+        "0x145b04330",
+        "0x145b165e0"
+      ],
+      "checks": [
+        {
+          "cache_key": "5ee469487181281a8f12ac108f1b93033dee9a43aced9ac16264aed6f9e1b37f",
+          "id": "quest-dialogue-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3532b87da01e512ea3b477ef6a43c36d4970c3694354b48aba7f9d7502d06491\\manifest.json",
+          "sha256": "3532b87da01e512ea3b477ef6a43c36d4970c3694354b48aba7f9d7502d06491",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Проверен выбор параметра группы в 26 native сценариях. Пять именованных таблиц текущего PAK дают связи между 1049 сценариями, 8302 репликами и 241 вариантом ответа. Правило и квитанции подключены к штатному обновлению.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-DIALOGUE-CURRENT-VALIDATION.json",
+          "sha256": "5c1b83761874a5d2bb2c26bbc8a42f2a2c1a9500ee3c44c5427fe0b059629cd3"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-DIALOGUE-CURRENT.md",
+          "sha256": "f03556e5caf27c4fc2f08c0b8509c06228ccb5cf4957af28d3f84102a489f786"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "3dc4c91626cbb9263867d4f40c7f93b49619928c05b79ad34d2467c64d5d088d",
+      "limits": [
+        "Native execution selects a parameter group only; JSON values and class/actor providers are explicit fixtures.",
+        "The parameter parser is not yet bound to the active quest task or dialogue player.",
+        "Resource membership, field masks and skip flags are data; display order, playback, selection and skip effects are unverified.",
+        "Class strings remain raw until the native scalar conversion is qualified; non-null shared controls are not executed.",
+        "Current source/archive context only; automatic discovery of a later source context remains open.",
+        "No received prompt, game command, live dialogue or runtime action admission is established."
+      ],
+      "method": "bounded_native",
+      "next_check": "Разобрать ссылки 145566ad0 и 1455d2620 на переходники разборщиков и scalar reader 1445cd610. Затем связать активный шаг, допустимое действие и его результат.",
+      "question": "quest-dialogue-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты binding выбранной задачи к проигрывателю диалога, строковый classInfoId, смена активной реплики и серверное подтверждение ответа или пропуска.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

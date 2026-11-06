@@ -1656,6 +1656,31 @@
         "evidence/quests/QUEST-LABELS-CURRENT-RESULT.json",
         "evidence/quests/HEADLESS-QUEST-LABELS-CURRENT.md"
       ]
+    },
+    {
+      "id": "quest-dialogue-current",
+      "status": "open",
+      "question": "Как активный сценарий задания выбирает группу диалога, строки, варианты ответа и допустимость пропуска на текущем SHA?",
+      "known": "Восемь экспортов сверены с текущим EXE. 26 сценариев подтвердили прямой dialogGroupId и выбор ветки через fixtures. Граф именованных ресурсов, on_update и неизменный повтор проверены.",
+      "unknown": "Открыты binding выбранной задачи к проигрывателю диалога, строковый classInfoId, смена активной реплики и серверное подтверждение ответа или пропуска.",
+      "next_action": "Разобрать ссылки 145566ad0 и 1455d2620 на переходники разборщиков и scalar reader 1445cd610. Затем связать активный шаг, допустимое действие и его результат.",
+      "decision_rule": "Каталог или найденная строка не являются полученной репликой. Нужны exact source bytes, native binding от активного сценария, порядок/варианты и flags; unsupported actions не отправлять. Данные ресурсов, bounded native fixtures и онлайн доказывать отдельно.",
+      "do_not_repeat": "Не повторять готовые QuestSync/Tutorial native matrices и русский каталог. Не разрывать текущую игровую сессию; collect только missing roots.",
+      "addresses": [
+        "0x14555dd70",
+        "0x1455b0040",
+        "0x14592b6d0",
+        "0x14592cca0",
+        "0x14593e7e0",
+        "0x14593ef30",
+        "0x145b04330",
+        "0x145b165e0"
+      ],
+      "evidence": [
+        "evidence/quests/HEADLESS-QUEST-DIALOGUE-CURRENT.md",
+        "evidence/quests/QUEST-DIALOGUE-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-DIALOGUE-CURRENT-RESULT.json"
+      ]
     }
   ]
 }

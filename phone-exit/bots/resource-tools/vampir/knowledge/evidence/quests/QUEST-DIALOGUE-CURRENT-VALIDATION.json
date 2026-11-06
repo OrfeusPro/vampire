@@ -1,0 +1,198 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "scope": "dialogue_parameter_and_resource_links",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "archive": {
+    "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk1-Windows.pak",
+    "sha256": "2f2517ff83865ac13021f96d9babd8407e4fbee512ff29806106844e5d7d7ed3",
+    "size": 24551591
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\dialogue-resources-current-v1\\d73582abdd316a93a8cb078e1bdf0a8eb9231bcf4e37237a5e901e6d57d8cebf\\manifest.json",
+    "sha256": "d73582abdd316a93a8cb078e1bdf0a8eb9231bcf4e37237a5e901e6d57d8cebf"
+  },
+  "graph": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\dialogue-resource-graphs-v1\\317809aaad27c01c726ad8760f1e1477594699d7f4363c00d37872410d89ebe4\\manifest.json",
+    "sha256": "317809aaad27c01c726ad8760f1e1477594699d7f4363c00d37872410d89ebe4"
+  },
+  "native_parameter": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\dialogue-parameter-native-v1\\cdade424fdcb97f3369094a7ab75f6808a3124d2f695cf73d85544ddcf4d6cd3\\manifest.json",
+    "sha256": "cdade424fdcb97f3369094a7ab75f6808a3124d2f695cf73d85544ddcf4d6cd3"
+  },
+  "tables": {
+    "choices": {
+      "bytes": 9027,
+      "canonical_path": "ProjectRED/Content/RED/Data/CSV/DialogChoice.csv",
+      "file": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\a5eb1d80b9cd4c007101a7ab60b052c11cf49bc8541e1b4d4fa70d11ebe7468e.csv",
+      "header": [
+        "Id",
+        "GroupId",
+        "Order",
+        "DialogGroupId"
+      ],
+      "rows": 241,
+      "sha256": "a5eb1d80b9cd4c007101a7ab60b052c11cf49bc8541e1b4d4fa70d11ebe7468e"
+    },
+    "choices_ru": {
+      "bytes": 29098,
+      "canonical_path": "ProjectRED/Content/RED/Data/CSV/L10N/ru/DialogChoice_Name.csv",
+      "file": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\9794f9361156f353ede50c5b837bb859f69cb311882e8759ef3900cac91e3544.csv",
+      "header": [
+        "Id",
+        "Text",
+        "L10NOrder",
+        "L10NRegistrationDate",
+        "Untranslated"
+      ],
+      "rows": 359,
+      "sha256": "9794f9361156f353ede50c5b837bb859f69cb311882e8759ef3900cac91e3544"
+    },
+    "lines": {
+      "bytes": 385457,
+      "canonical_path": "ProjectRED/Content/RED/Data/CSV/Dialog.csv",
+      "file": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\165cf1b1b5cbc52618ad08949abb602a250666ed0a2a76c8325a1454532ef22b.csv",
+      "header": [
+        "Id",
+        "GroupId",
+        "DialogType",
+        "DialogChoiceGroupId",
+        "SpeechBallonSpawnInfoId",
+        "Delay",
+        "Duration",
+        "UnableToSkip",
+        "UnableToSkipLine",
+        "PortraitTexture",
+        "FrameId",
+        "IgnoreAutoSetting"
+      ],
+      "rows": 8302,
+      "sha256": "165cf1b1b5cbc52618ad08949abb602a250666ed0a2a76c8325a1454532ef22b"
+    },
+    "lines_ru": {
+      "bytes": 1934283,
+      "canonical_path": "ProjectRED/Content/RED/Data/CSV/L10N/ru/Dialog_Name.csv",
+      "file": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\f04ea06455b039caa76c6a7bafc7d4c51e7a04fe7643087944f1f47c4634601a.csv",
+      "header": [
+        "Id",
+        "Name",
+        "Title",
+        "Text",
+        "L10NOrder",
+        "L10NRegistrationDate",
+        "Untranslated"
+      ],
+      "rows": 10339,
+      "sha256": "f04ea06455b039caa76c6a7bafc7d4c51e7a04fe7643087944f1f47c4634601a"
+    },
+    "tasks": {
+      "bytes": 938741,
+      "canonical_path": "ProjectRED/Content/RED/Data/CSV/QuestTask.csv",
+      "file": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\e4aeb8e81bc7700b39b86237ffd9ab0f2af523d22be5a76d5404397fdb4b9ea0.csv",
+      "header": [
+        "Id",
+        "QuestInfoId",
+        "TargetSpotInfoId",
+        "AreaInfoId",
+        "AutoQuest",
+        "RunInInstance",
+        "RemainInstanceWorldEndTask",
+        "ShowInstanceEffect",
+        "Type",
+        "Param",
+        "MapIconGroupId",
+        "TaskProgressType",
+        "QuestActionPosX",
+        "QuestActionPosY",
+        "QuestActionPosZ",
+        "QuestActionRadius",
+        "ServerServiceGroupId"
+      ],
+      "rows": 5944,
+      "sha256": "e4aeb8e81bc7700b39b86237ffd9ab0f2af523d22be5a76d5404397fdb4b9ea0"
+    }
+  },
+  "counts": {
+    "choice_groups": 235,
+    "choices": 241,
+    "dialogue_groups": 3009,
+    "lines": 8302,
+    "scripted_dialogue_tasks": 1049,
+    "unresolved": 162
+  },
+  "native_cases": 26,
+  "native_metrics": {
+    "abi_checks": 26,
+    "call_counts": 26,
+    "entry_counts": {
+      "0x1414226f0": 20,
+      "0x1414830e0": 16,
+      "0x1417f8370": 24,
+      "0x1445cc6f0": 20,
+      "0x1445cd530": 44,
+      "0x1445cd610": 28,
+      "0x1454e7f50": 20,
+      "0x14555dd70": 26,
+      "0x145594df0": 52,
+      "0x2803e000": 46
+    },
+    "fixture_calls": 270,
+    "read_checks": 526,
+    "write_checks": 530
+  },
+  "whole_exports_verified": 8,
+  "first_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\ec14d1b5b85e817005fd4285f9f6b0aba2db283ab0bd90c9bcbe55d95f4f4996\\manifest.json",
+    "sha256": "ec14d1b5b85e817005fd4285f9f6b0aba2db283ab0bd90c9bcbe55d95f4f4996"
+  },
+  "newly_collected_roots": [
+    "0x14555dd70",
+    "0x1455b0040",
+    "0x14592b6d0",
+    "0x14592cca0",
+    "0x14593e7e0",
+    "0x14593ef30",
+    "0x145b04330",
+    "0x145b165e0"
+  ],
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\cde76dabd2f7877fbb525f9816ba7ac5ec8b94fff95946df09112fb4a18bf108\\manifest.json",
+    "sha256": "cde76dabd2f7877fbb525f9816ba7ac5ec8b94fff95946df09112fb4a18bf108"
+  },
+  "final_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\1d71fd211c9c39235c3b242021ada426f1c1f92bf36915d459a0c42fff17bb3a\\manifest.json",
+    "sha256": "1d71fd211c9c39235c3b242021ada426f1c1f92bf36915d459a0c42fff17bb3a"
+  },
+  "final_collection_new_jvm": 0,
+  "source_check": {
+    "id": "quest-dialogue-current",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3532b87da01e512ea3b477ef6a43c36d4970c3694354b48aba7f9d7502d06491\\manifest.json",
+    "sha256": "3532b87da01e512ea3b477ef6a43c36d4970c3694354b48aba7f9d7502d06491",
+    "cache_key": "5ee469487181281a8f12ac108f1b93033dee9a43aced9ac16264aed6f9e1b37f"
+  },
+  "component_tests": 7,
+  "ordinary_update_warm": {
+    "seconds": 4.465,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "received_prompts_verified": false,
+  "runtime_admitted": false,
+  "online": {
+    "character": "Bipoberiho",
+    "state": "connected",
+    "same_session": true,
+    "session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+    "game_commands_sent": false
+  },
+  "limits": [
+    "Native execution selects a parameter group only; JSON values and class/actor providers are explicit fixtures.",
+    "The parameter parser is not yet bound to the active quest task or dialogue player.",
+    "Resource membership, field masks and skip flags are data; display order, playback, selection and skip effects are unverified.",
+    "Class strings remain raw until the native scalar conversion is qualified; non-null shared controls are not executed.",
+    "Current source/archive context only; automatic discovery of a later source context remains open.",
+    "No received prompt, game command, live dialogue or runtime action admission is established."
+  ]
+}
