@@ -109,6 +109,8 @@ def run_checks(index, args, sha, question, *, check_ids=None, workflow=None):
             outcomes.extend(index.extension('sdk-launcher-check-guard').run(index, workflow, args, sha, definition))
         elif sha in definition.get('sdk_fetch_contexts', {}):
             outcomes.extend(index.extension('sdk-fetch-check-guard').run(index, workflow, args, sha, definition))
+        elif sha in definition.get('sdk_first_profile_contexts', {}):
+            outcomes.extend(index.extension('sdk-first-profile-check-guard').run(index, workflow, args, sha, definition))
         elif sha in definition.get('candidate_bridge_profiles', {}):
             outcomes.extend(index.extension('candidate-bridge-check-guard').run(index, workflow, args, sha, definition))
         else:

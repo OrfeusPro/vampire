@@ -51,10 +51,13 @@ custom identity сервером отдельно от локального на
 
 [Текущий Fetch-only пакет](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md)
 выполняет один запрос чтения без создания SDK-профиля. Silvercrow вернул
-`not exist player channel`; текущий первый SDK-вход ещё нужно перенести.
+`not exist player channel`; этот этап продолжен отдельной подготовкой первого SDK-профиля.
 [Общий сбор первого SDK-профиля и native continuation](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-CONTINUATION-CURRENT.md)
-дали 30 ready exports и 126 проверенных Fetch/Terms случаев; HTTP/JSON composition
-и отдельный runtime scope ещё открыты.
+дали 30 ready exports и 126 проверенных Fetch/Terms случаев.
+[Первый SDK-профиль текущей версии](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-PROFILE-CURRENT.md)
+теперь собран отдельно и принят онлайн для Silvercrow: SignUp / SignIn успешны,
+дополнительных форм нет. Персонаж и мир ещё не открыты; старые SDK-матрицы
+переиспользованы, новые Terms / auth / runtime checks включены в обновление и кэш.
 Текущие [lobby reader / decoder](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md)
 и [конструкторы пресета](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md)
 подтверждены в ограниченных native сценариях; целый мир и создание Viper не допущены.

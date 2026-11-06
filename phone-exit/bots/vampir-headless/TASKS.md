@@ -1,19 +1,18 @@
 # Vampir — открытые пакеты
 
-- Группа восьми Viper: первый Silvercrow принят NID и launcher/token; SDK SignIn
-  и отдельный Fetch вернули HTTP 400 / 1203: `not exist player channel`.
-  Следующий пакет — текущая подготовка первого SDK-профиля через штатные
-  Terms / SignUp / SignIn. Остальные семь не запускать
+- Группа восьми Viper: первый SDK-профиль Silvercrow создан через штатные
+  Fetch / два NO DATA / SignUp; последующий SignIn принят настоящим сервером.
+  Дополнительных device/workplace forms сервер не запросил. SDK-пакет и кэш готовы;
+  следующий пакет — текущий игровой candidate и Viper factory. Остальные семь не запускать
   до проверки полной цепочки на первом. Включён случайный ник; после создания
   назначать ключ / слот только из свежего списка и выводить подтверждённое имя.
-  Fetch-only пакет готов; нужны первый SDK-профиль, игровой candidate и Viper factory.
+  Игровой персонаж ещё не создан, мир не открыт.
   [Фактическая остановка и готовые материалы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md).
   [Уточнённый серверный ответ и Fetch-only пакет](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md).
-  Для первого SDK-профиля уже собраны 30 whole exports одним пакетом и проверены
-  126 native Fetch/Terms continuation случаев. Остались HTTP/JSON composition,
-  request/response SignUp / direct SignIn и ограниченный runtime scope;
-  готовые exports и continuation вручную не повторять.
-  [Материалы и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-CONTINUATION-CURRENT.md).
+  Для SDK готовы 30 общих exports плюс один отсутствовавший SignIn response,
+  126 прежних continuation и 58 новых Terms/native composition случаев.
+  Готовые exports и проверки вручную не повторять.
+  [Живой результат и отдельный first SDK scope](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-PROFILE-CURRENT.md).
 
 - Для текущего Viper подтверждены constructor / descriptor поля: 25 сценариев,
   integer defaults не устанавливаются конструктором. Allocation / CDO / consumer

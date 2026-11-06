@@ -149,6 +149,9 @@ def pin_checks(index, scope, checks):
         elif report.get('sdk_fetch_guard', {}).get('recipe') == 'sdk-fetch-check-guard-v1':
             runtime_inputs = index.extension('sdk-fetch-check-guard').runtime_inputs(
                 index, scope.root, report, outcome['id'])
+        elif report.get('sdk_first_profile_guard', {}).get('recipe') == 'sdk-first-profile-check-guard-v1':
+            runtime_inputs = index.extension('sdk-first-profile-check-guard').runtime_inputs(
+                index, scope.root, report, outcome['id'])
         elif report.get('candidate_bridge_guard', {}).get('recipe') == 'candidate-proof-bridges-v1':
             runtime_inputs = index.extension('candidate-bridge-check-guard').runtime_inputs(
                 index, scope.root, report, outcome['id'])

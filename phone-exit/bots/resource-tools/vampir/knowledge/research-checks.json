@@ -12446,7 +12446,42 @@
         "phone-exit/bots/test_vampir_preset_defaults_current.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-continuation-11322.json",
         "phone-exit/bots/resource-tools/vampir/verify-first-sdk-continuation-current.py",
-        "phone-exit/bots/test_vampir_first_sdk_continuation_current.py"
+        "phone-exit/bots/test_vampir_first_sdk_continuation_current.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-first-sdk-auth-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-auth-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-first-auth-current.json",
+        "phone-exit/bots/resource-tools/vampir/sdk-first-profile-check-guard.py",
+        "phone-exit/bots/test_vampir_first_sdk_auth_current.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-first-sdk-terms-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-terms-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-first-terms-current.json",
+        "phone-exit/bots/test_vampir_first_sdk_terms_current.py",
+        "phone-exit/.tools/vampir-analysis/capstone-5.0.6.dist-info/RECORD",
+        "phone-exit/.tools/vampir-analysis/unicorn-2.1.4.dist-info/RECORD",
+        "phone-exit/bots/resource-tools/vampir/audit-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-first-profile.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-launcher-profile.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/launcher-contract-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sdk-batch-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-batch-rules.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-first-profile-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-launcher-runtime-current.json",
+        "phone-exit/bots/resource-tools/vampir/nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-base-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-geo-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-headers-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-url-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-context-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-defaults-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-overrides-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-platform-11318.py",
+        "phone-exit/bots/test_vampir_sdk_first_profile.py",
+        "phone-exit/bots/vampir-headless/run-account-first-sdk.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_request.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_first_profile_admission.py",
+        "phone-exit/bots/vampir-headless/windows/nid-page-status.js"
       ],
       "artifact_dependencies": []
     },
@@ -12883,6 +12918,196 @@
         "capstone",
         "unicorn"
       ]
+    },
+    {
+      "id": "first-sdk-auth-current",
+      "questions": [
+        "sdk-first-profile-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_first_sdk_auth_current.py",
+      "timeout_seconds": 150,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-contract.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-first-sdk-auth-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-auth-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-first-auth-current.json",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/sdk-first-profile-check-guard.py",
+        "phone-exit/bots/test_vampir_first_sdk_auth_current.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-9e904f43767e/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-3653ffde95d7/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "sdk_first_profile_contexts": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "sdk-first-auth-current.json"
+      }
+    },
+    {
+      "id": "first-sdk-terms-current",
+      "questions": [
+        "sdk-first-profile-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_first_sdk_terms_current.py",
+      "timeout_seconds": 150,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-first-sdk-terms-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-continuation-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-terms-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-first-terms-current.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/sdk-first-profile-check-guard.py",
+        "phone-exit/bots/test_vampir_first_sdk_terms_current.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-9e904f43767e/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "sdk_first_profile_contexts": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "sdk-first-terms-current.json"
+      }
+    },
+    {
+      "id": "sdk-first-profile-runtime",
+      "questions": [
+        "sdk-first-profile-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_sdk_first_profile.py",
+      "timeout_seconds": 150,
+      "dependencies": [
+        "phone-exit/.tools/vampir-analysis/capstone-5.0.6.dist-info/RECORD",
+        "phone-exit/.tools/vampir-analysis/unicorn-2.1.4.dist-info/RECORD",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-contract.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/audit-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-fetch-profile.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-first-profile.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-launcher-profile.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/generate-sdk-batch.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-first-sdk-auth-current.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-first-sdk-terms-current.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-sdk-fetch-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-auth-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-continuation-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-terms-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/launcher-contract-11322.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sdk-batch-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sdk-fetch-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-batch-rules.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-first-profile-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-launcher-runtime-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/sdk-launcher-runtime-profile-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/verification-web-current.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-base-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-geo-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-headers-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-url-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-context-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-defaults-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-overrides-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-platform-11318.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/sdk-batch-runner.py",
+        "phone-exit/bots/resource-tools/vampir/sdk-batch-transfer.py",
+        "phone-exit/bots/resource-tools/vampir/sdk-first-profile-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/tooling-check-dispatch-v1.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-contexts.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/update-profile.py",
+        "phone-exit/bots/resource-tools/vampir/verify-first-sdk-continuation-current.py",
+        "phone-exit/bots/resource-tools/vampir/webview2.lock.json",
+        "phone-exit/bots/test_vampir_sdk_first_profile.py",
+        "phone-exit/bots/vampir-headless/nid-browser.py",
+        "phone-exit/bots/vampir-headless/nid-mail-code.py",
+        "phone-exit/bots/vampir-headless/run-account-entry-diagnostic.py",
+        "phone-exit/bots/vampir-headless/run-account-first-sdk.py",
+        "phone-exit/bots/vampir-headless/run-account-sdk-fetch.py",
+        "phone-exit/bots/vampir-headless/run-nid-sdk-sign-in.py",
+        "phone-exit/bots/vampir-headless/sdk-launcher-profile.py",
+        "phone-exit/bots/vampir-headless/verify-account.py",
+        "phone-exit/bots/vampir-headless/windows/nid-browser.cs",
+        "phone-exit/bots/vampir-headless/windows/nid-browser.ps1",
+        "phone-exit/bots/vampir-headless/windows/nid-sign-in.js",
+        "phone-exit/bots/vampir-headless/windows/verification-browser.cs",
+        "phone-exit/bots/vampir-headless/windows/verification-browser.ps1",
+        "phone-exit/bots/vampir-headless/windows/verification-form.js",
+        "phone-exit/bots/vampir-shared/vampir_core/account_store.py",
+        "phone-exit/bots/vampir-shared/vampir_core/bot_device_settings.py",
+        "phone-exit/bots/vampir-shared/vampir_core/device_registry.py",
+        "phone-exit/bots/vampir-shared/vampir_core/device_templates.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_request.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_sdk_credential.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_web_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_web_url.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_fetch.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_fetch_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_first_login.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_first_profile_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in_http.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_up_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_terms.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_terms_http.py",
+        "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
+        "phone-exit/bots/vampir-headless/windows/nid-http-diagnostics.cs",
+        "phone-exit/bots/vampir-headless/windows/nid-google-bridge.cs",
+        "phone-exit/bots/vampir-headless/windows/nid-page-status.js"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-9e904f43767e/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "sdk_first_profile_contexts": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "sdk-first-profile-current.json"
+      }
     }
   ]
 }

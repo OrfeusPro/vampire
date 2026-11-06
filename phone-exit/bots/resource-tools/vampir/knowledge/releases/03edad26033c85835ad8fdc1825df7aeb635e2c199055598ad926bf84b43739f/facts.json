@@ -3079,6 +3079,71 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Текущая HTTP/JSON композиция Fetch error -> два NO DATA, SignUp/direct SignIn contracts и immutable runtime scope. Новой живой попытки не было.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444d2ba0",
+        "0x1444d5340",
+        "0x144502200",
+        "0x144505fe0",
+        "0x144569b60",
+        "0x14456a800"
+      ],
+      "checks": [
+        {
+          "cache_key": "a37f1f95e2558668d0abf8060cab27cef601349213434cd7d5e1544c4e035998",
+          "id": "first-sdk-continuation-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3be97cf11bef3fbdcd70b82256b15480029856f096c8534a91bcb6cb7b20434b\\manifest.json",
+          "sha256": "3be97cf11bef3fbdcd70b82256b15480029856f096c8534a91bcb6cb7b20434b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4368611cabb141fce07c80975112ba0f9421eff40e63feb29b46ccf907300b34",
+          "id": "first-sdk-auth-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d05f71928c391dd85cac4ce249a5915d8185124df99aae63c2a6b50a31e525da\\manifest.json",
+          "sha256": "d05f71928c391dd85cac4ce249a5915d8185124df99aae63c2a6b50a31e525da",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9617622fc8156cfc10efd3760d74e37861f6babb64aac89f6615f2fa10795f33",
+          "id": "first-sdk-terms-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2ce7774d7c397c81fa6a2a7e3944e94893414c953ad8c830bdab985c7584d95b\\manifest.json",
+          "sha256": "2ce7774d7c397c81fa6a2a7e3944e94893414c953ad8c830bdab985c7584d95b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0b4d1352044a5b16ff9a5d84de95a3615deb4ca75e9ce4b16003bd79eaf4decc",
+          "id": "sdk-first-profile-runtime",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3f3406786a9514a937a93e13c201e1e9bdcb14b628bbfc3f0da209ae8ac6f63c\\manifest.json",
+          "sha256": "3f3406786a9514a937a93e13c201e1e9bdcb14b628bbfc3f0da209ae8ac6f63c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущие auth/Terms source contracts и отдельный immutable first SDK scope реализованы и подключены к on_update/cache. 58 новых Terms/native composition шагов используют готовые 126/3667 proofs. На Silvercrow штатные Fetch1203 -> два NO DATA -> один SDK SignUp -> SignIn приняты онлайн: player ID совпал, токен получен, дополнительные формы не запрошены. Игровой персонаж и мир не создавались.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-FIRST-SDK-PROFILE-CURRENT.md",
+          "sha256": "628a4df95a97f55f68ab9da595dc76c6165775256a6e9484559f3a6ddee0324a"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\FIRST-SDK-PROFILE-VALIDATION.json",
+          "sha256": "0655e25c6a244d1b1d6cb6d09a2ea246b80b8300debf02409f17426eb23be840"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "27d47fd66be4e6a0e9e55669923236c1f355687a8c9986c51d1dea589abddef8",
+      "limits": [
+        "Auth request/response subset проверен статически; native HTTP/JSON/getter engine шире локального строгого parser.",
+        "Native NO DATA/error/continuation использует явные fixtures HTTP/JSON primitives, allocator, strings, service/scheduler и final SDK handoff; UI consent/lifetime races не исполнены.",
+        "Live результат относится к исполненному профилю 3d5065cd...; последующее усиление diagnostics/browser retention проверено offline без новой авторизации.",
+        "Новый SHA требует собственного source contract/profile; текущие source contexts ещё не имеют автоматического переноса."
+      ],
+      "method": "bounded_native",
+      "next_check": "Закрыть current lobby metadata/clock/Ping, CharacterList/выбор и Viper creation; затем один полный игровой вход Silvercrow перед остальными семью. SDK SignUp для него повторно не нужен.",
+      "question": "sdk-first-profile-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Текущий server/character/world candidate и Viper CDO/Create. Доступные Terms требуют просмотра; автоматическая обработка content-bearing Terms/UI и широкого native SDK вне subset.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

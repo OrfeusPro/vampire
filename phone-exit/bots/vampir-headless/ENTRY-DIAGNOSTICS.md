@@ -101,6 +101,22 @@ records, трафик официальной игры или все запрос
 
 ## Официальные формы верификации
 
+Для аккаунта без профиля игрового SDK доступен отдельный текущий first SDK пакет.
+Он выполняет один Fetch, два строгих NO DATA и при необходимости один SignUp /
+SignIn. Это не повторная регистрация Netmarble и не создание персонажа.
+При существующем профиле SignUp не отправляется. Пароли берутся из локального DPAPI.
+
+```powershell
+$firstProfile = (Get-Content -Raw phone-exit/bots/resource-tools/vampir/knowledge/sdk-first-profile-current.json | ConvertFrom-Json).profile.sha256
+python -X utf8 phone-exit/bots/vampir-headless/run-account-first-sdk.py --account '<локальный UUID аккаунта>' --profile $firstProfile --terms-country observed --terms-locale ru-RU --basic-terms-mode all
+```
+
+`observed` выбирает ISO-страну из свежего GMC2; язык и ветвь запроса указаны явно,
+нативные defaults ими не объявляются. Доступные условия требуют просмотра и
+останавливают автомат. Известные device/workplace states проходят через тот же
+готовый адаптер форм; неизвестный результат завершает операцию. SDK-профиль
+Silvercrow подтверждён онлайн. [Контракт, ограничения и результат](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-PROFILE-CURRENT.md).
+
 ```powershell
 python -X utf8 phone-exit/bots/vampir-headless/verify-account.py --account '<локальный UUID аккаунта>'
 python -X utf8 phone-exit/bots/vampir-headless/verify-account.py --account '<локальный UUID аккаунта>' --manual-sign-in

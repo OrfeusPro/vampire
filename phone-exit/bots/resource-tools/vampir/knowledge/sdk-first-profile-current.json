@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "fetch_profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\sdk-fetch-profiles\\bb486bfc13e7b2c5ac5c4067b43637390cf01f30fb844bf6ba0126e028797999\\manifest.json",
+    "sha256": "bb486bfc13e7b2c5ac5c4067b43637390cf01f30fb844bf6ba0126e028797999"
+  },
+  "contracts": {
+    "auth": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\first-sdk-auth-current-v1\\f7c61755b056d6fda127ea874b6521248f0474c81fca271fe5e78cf7fa5075af\\manifest.json",
+      "sha256": "f7c61755b056d6fda127ea874b6521248f0474c81fca271fe5e78cf7fa5075af"
+    },
+    "terms": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\first-sdk-terms-current-v1\\211ef3a9f3c2a4e958d3f691531490a0d2e26794709721f9352ba03526d0ef30\\manifest.json",
+      "sha256": "211ef3a9f3c2a4e958d3f691531490a0d2e26794709721f9352ba03526d0ef30"
+    },
+    "continuation": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\first-sdk-continuation-current-v1\\a0ecb2e69e8207db86e21a9014017b8bcb49728a3f0540a270bde5366ed89272\\manifest.json",
+      "sha256": "a0ecb2e69e8207db86e21a9014017b8bcb49728a3f0540a270bde5366ed89272"
+    }
+  },
+  "profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\sdk-first-profiles\\6007d05ddfd74cff59542e4193749e8b387ab6438c38cc9ab3cf3d621d8da1b3\\manifest.json",
+    "sha256": "6007d05ddfd74cff59542e4193749e8b387ab6438c38cc9ab3cf3d621d8da1b3"
+  }
+}

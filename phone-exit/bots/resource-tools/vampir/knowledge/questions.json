@@ -1413,9 +1413,9 @@
       "id": "sdk-launcher-runtime-current",
       "status": "bounded_answer",
       "question": "Как связать текущие SDK и Launcher proofs с ограниченной runtime composition?",
-      "known": "SDK Launcher и официальные формы подтверждены на текущем SHA. Ручной NID-вход, проверка адреса и сохранённая очередь реализованы. Для Google подключён PCV2 внешний браузер, отдельный provider 29 и общий Netmarble SDK credential 33. Google-вход, регистрация устройства и снятие защиты подтверждены онлайн с ручными кодами; очередь завершилась. Привязка новой записи создаётся из наблюдённых ключей ПК. Общие постоянные устройства на два места, три ключа и имя регистрации реализованы в хранилище и панели; новые fingerprints не наследуют прежнюю верификацию. Продолжение device-registration/workplace выделено и подключено до lobby в том же SDK контексте без второй авторизации; проверены fixtures. Приватная ограниченная диагностика уточнила ответ Silvercrow: launcher/token success, launcher SignIn и read-only Fetch возвращают 1203 not exist player channel.",
-      "unknown": "Причина HTTP 400 с признаком CAPTCHA при автоматическом почтовом NID-входе, приёмка custom-шаблонов, Google через SOCKS и игровой вход. Для Silvercrow установлено отсутствие записи канала SDK; корневая причина отсутствия привязки и текущая подготовка первого SDK-профиля через Terms / SignUp / SignIn остаются открытыми.",
-      "next_action": "Перенести текущую подготовку первого SDK-профиля через штатный Fetch / Terms / SignUp / SignIn. Затем продолжить первый Silvercrow до мира перед группой остальных семи.",
+      "known": "SDK Launcher и официальные формы подтверждены на текущем SHA. Ручной NID-вход, проверка адреса и сохранённая очередь реализованы. Для Google подключён PCV2 внешний браузер, отдельный provider 29 и общий Netmarble SDK credential 33. Google-вход, регистрация устройства и снятие защиты подтверждены онлайн с ручными кодами; очередь завершилась. Привязка новой записи создаётся из наблюдённых ключей ПК. Общие постоянные устройства на два места, три ключа и имя регистрации реализованы в хранилище и панели; новые fingerprints не наследуют прежнюю верификацию. Продолжение device-registration/workplace выделено и подключено до lobby в том же SDK контексте без второй авторизации; проверены fixtures. Приватная ограниченная диагностика уточнила ответ Silvercrow: launcher/token success, launcher SignIn и read-only Fetch возвращают 1203 not exist player channel. Подготовка первого SDK-профиля на этом SHA теперь реализована и подтверждена Silvercrow: SignUp/SignIn приняты, формы не запрошены.",
+      "unknown": "Причины нестабильных автоматических NID HTTP400, приёмка остальных custom profiles, Google через SOCKS и текущий игровой вход.",
+      "next_action": "Продолжить current server/character/world candidate и Viper после подтверждённого SDK-профиля Silvercrow. Старые проверки вручную не повторять.",
       "decision_rule": "Готовые SDK 3667 native и Launcher static proofs переиспользовать после проверки полных SHA. Fixture composition не выдавать за live authentication или активацию профиля. Loader должен проверять каждый input при любом обращении.",
       "do_not_repeat": "Не повторять старые или текущие standalone SDK native матрицы без изменения входов.",
       "addresses": [
@@ -1438,7 +1438,8 @@
         "evidence/auth/HEADLESS-GOOGLE-MANUAL-VERIFICATION-LIVE.json",
         "evidence/auth/HEADLESS-SHARED-DEVICE-TEMPLATES.md",
         "evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md",
-        "evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md"
+        "evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md",
+        "evidence/auth/HEADLESS-FIRST-SDK-PROFILE-CURRENT.md"
       ]
     },
     {
@@ -1479,9 +1480,9 @@
       "id": "sdk-fetch-current-contract",
       "status": "bounded_answer",
       "question": "Как выполнить только чтение Fetch игрового SDK на текущем SHA с точным payload и ограниченным ответом?",
-      "known": "Текущие whole Fetch request / response и точный 39-байтовый scope fragment проверены статически. Отдельный неизменяемый read-only профиль и один Fetch Silvercrow вернули HTTP 400 / 1203: not exist player channel. NID и launcher/token приняты.",
-      "unknown": "Корневая причина отсутствия записи канала; текущая подготовка первого SDK-профиля через Terms / SignUp / SignIn ещё не перенесена. Полный callback lifetime и native JSON implementations за границами subset.",
-      "next_action": "Перенести штатный первый SDK-вход на текущий SHA по прежней подтверждённой цепочке. Не повторять Fetch для того же неизменного отказа и не выполнять SignUp по одному коду.",
+      "known": "Текущие whole Fetch request / response и точный 39-байтовый scope fragment проверены статически. Отдельный неизменяемый read-only профиль и один Fetch Silvercrow вернули HTTP 400 / 1203: not exist player channel. NID и launcher/token приняты. Продолжение: штатный первый SDK-профиль Silvercrow создан, последующий SignIn принят на текущем SHA.",
+      "unknown": "Полный callback lifetime/native JSON за пределами Fetch subset; отдельный текущий игровой вход и создание Viper.",
+      "next_action": "Для Silvercrow не повторять SDK SignUp: профиль уже подтверждён. Продолжить текущий server/character/world candidate.",
       "decision_rule": "Обязательны точный SHA, зарегистрированный ограниченный контракт и входы базового SDK. Не превращать 1203 SignIn в автоматический SignUp.",
       "do_not_repeat": "Готовые SDK 3667 / Launcher proofs и Fetch exports использовать после проверки SHA.",
       "addresses": [
@@ -1491,7 +1492,8 @@
       "evidence": [
         "evidence/auth/HEADLESS-SDK-FETCH-CURRENT-COLLECT.md",
         "evidence/auth/HEADLESS-SDK-FETCH-CURRENT-CONTRACT.md",
-        "evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md"
+        "evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md",
+        "evidence/auth/HEADLESS-FIRST-SDK-PROFILE-CURRENT.md"
       ]
     },
     {
@@ -1536,11 +1538,11 @@
     },
     {
       "id": "sdk-first-profile-current",
-      "status": "open",
+      "status": "bounded_answer",
       "question": "Как перенести штатную подготовку первого SDK-профиля на текущий SHA, сохранив точный Fetch gate и границы условий?",
-      "known": "Собраны 30 текущих whole exports. Fetch callback и continuation условий с двумя virtual bridges, closures, classifier и тремя result getters прошли 126 native случаев на SHA 03edad: 27 Fetch и 99 terms. Сетевые операции и UI состояния остаются fixtures; SDK-профиль не создан.",
-      "unknown": "Текущая HTTP/JSON композиция Fetch error -> Basic/Individual NO DATA -> continuation, payload/response SignUp и direct SignIn, immutable runtime scope первого профиля и живой Silvercrow.",
-      "next_action": "Использовать один готовый current export run-9e904f43767e для оставшихся request/response и constructor/key контрактов. Подготовить ограниченный первый SDK scope, затем одну живую попытку Silvercrow перед остальными семью.",
+      "known": "Текущие auth/Terms source contracts и отдельный immutable first SDK scope реализованы. 58 новых Terms/composition случаев используют прежние 126 continuation и SDK3667 proofs без повторного исполнения. Silvercrow прошёл Fetch1203 → два NO DATA → один SDK SignUp → SignIn с совпавшим player ID и токеном; сервер не запросил дополнительные формы. Сохранены sdk_created и fingerprint. Игровой персонаж и мир не открывались.",
+      "unknown": "Текущий игровой candidate server/character/world и создание Viper; content-bearing Terms/UI/consent и широкие native HTTP/JSON/lifetime эффекты за пределами. Новый SHA требует своего source contract/profile.",
+      "next_action": "Использовать подтверждённый SDK-профиль Silvercrow для следующего игрового входа после подготовки current game candidate; закрыть CharacterList/выбор, lobby metadata/clock/Ping и Viper CDO/Create. Остальные семь не запускать до полной цепочки на первом.",
       "decision_rule": "Только собственный свежий Fetch с доказанным challenge допускает проверку условий. Доступные условия требуют просмотра; raw state 2 и отказ launcher SignIn 1203 не являются согласием или разрешением SignUp. Новый SHA требует своего доказательства.",
       "do_not_repeat": "Не повторять неизменные SDK/Launcher/Fetch proofs и 126 готовых continuation сценариев вручную. Все 30 exports готовы; следующий collect нужен только для конкретного недостающего тела.",
       "addresses": [
@@ -1553,7 +1555,8 @@
         "0x144531480"
       ],
       "evidence": [
-        "evidence/auth/HEADLESS-FIRST-SDK-CONTINUATION-CURRENT.md"
+        "evidence/auth/HEADLESS-FIRST-SDK-CONTINUATION-CURRENT.md",
+        "evidence/auth/HEADLESS-FIRST-SDK-PROFILE-CURRENT.md"
       ]
     }
   ]

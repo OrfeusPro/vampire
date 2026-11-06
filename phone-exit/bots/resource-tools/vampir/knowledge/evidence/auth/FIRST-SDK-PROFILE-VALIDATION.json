@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "checked_local_date": "2026-11-06",
+  "timezone": "Europe/Kiev",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "contracts": {
+    "auth": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\first-sdk-auth-current-v1\\f7c61755b056d6fda127ea874b6521248f0474c81fca271fe5e78cf7fa5075af\\manifest.json",
+      "sha256": "f7c61755b056d6fda127ea874b6521248f0474c81fca271fe5e78cf7fa5075af"
+    },
+    "terms": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\first-sdk-terms-current-v1\\211ef3a9f3c2a4e958d3f691531490a0d2e26794709721f9352ba03526d0ef30\\manifest.json",
+      "sha256": "211ef3a9f3c2a4e958d3f691531490a0d2e26794709721f9352ba03526d0ef30"
+    },
+    "continuation": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\first-sdk-continuation-current-v1\\a0ecb2e69e8207db86e21a9014017b8bcb49728a3f0540a270bde5366ed89272\\manifest.json",
+      "sha256": "a0ecb2e69e8207db86e21a9014017b8bcb49728a3f0540a270bde5366ed89272"
+    }
+  },
+  "prepared_profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\sdk-first-profiles\\6007d05ddfd74cff59542e4193749e8b387ab6438c38cc9ab3cf3d621d8da1b3\\manifest.json",
+    "sha256": "6007d05ddfd74cff59542e4193749e8b387ab6438c38cc9ab3cf3d621d8da1b3"
+  },
+  "online": {
+    "account": "silvercrow@vampir.top",
+    "executed_profile_sha256": "3d5065cdde24a49389a5c53a9644386e53ff271027680ca56b98a0f9f99df5b8",
+    "sdk_profile_created": true,
+    "sdk_sign_in_accepted": true,
+    "signup_player_matches_signin": true,
+    "player_id_present": true,
+    "sdk_token_present": true,
+    "verification_status": "verified",
+    "verification_completed": [],
+    "game_character_created": false,
+    "world_entered": false,
+    "other_accounts_started": 0,
+    "private_attempt": "c58f21f941154740822420eae2021a27",
+    "terms_country_mode": "observed",
+    "terms_locale": "ru-RU",
+    "basic_terms_mode": "all"
+  },
+  "native": {
+    "reused_continuation_cases": 126,
+    "new_terms_cases": 56,
+    "new_composed_no_data_steps": 2,
+    "old_sdk_cases_not_rerun": 3667
+  },
+  "limits": [
+    "Online result belongs to the executed immutable profile; later logging/input-retention-only packaging was verified offline.",
+    "No server list, CharacterList, character creation or world login; other seven accounts unchanged.",
+    "Initial transient NID failure remains unexplained; subsequent NID-only and full SDK sign-in succeeded."
+  ],
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\a0de945919e7a9bc0f8eb376af536bfe73b118cb26635d04bc08d74ee9a80838\\manifest.json",
+    "sha256": "a0de945919e7a9bc0f8eb376af536bfe73b118cb26635d04bc08d74ee9a80838"
+  },
+  "source_checks": [
+    {
+      "id": "first-sdk-continuation-current",
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3be97cf11bef3fbdcd70b82256b15480029856f096c8534a91bcb6cb7b20434b\\manifest.json",
+      "sha256": "3be97cf11bef3fbdcd70b82256b15480029856f096c8534a91bcb6cb7b20434b",
+      "state": "passed"
+    },
+    {
+      "id": "first-sdk-auth-current",
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d05f71928c391dd85cac4ce249a5915d8185124df99aae63c2a6b50a31e525da\\manifest.json",
+      "sha256": "d05f71928c391dd85cac4ce249a5915d8185124df99aae63c2a6b50a31e525da",
+      "state": "passed"
+    },
+    {
+      "id": "first-sdk-terms-current",
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2ce7774d7c397c81fa6a2a7e3944e94893414c953ad8c830bdab985c7584d95b\\manifest.json",
+      "sha256": "2ce7774d7c397c81fa6a2a7e3944e94893414c953ad8c830bdab985c7584d95b",
+      "state": "passed"
+    },
+    {
+      "id": "sdk-first-profile-runtime",
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3f3406786a9514a937a93e13c201e1e9bdcb14b628bbfc3f0da209ae8ac6f63c\\manifest.json",
+      "sha256": "3f3406786a9514a937a93e13c201e1e9bdcb14b628bbfc3f0da209ae8ac6f63c",
+      "state": "passed"
+    }
+  ],
+  "tooling": {
+    "final": {
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\74bf468a373e66a4f15bbde400676a10db56765a0e982153999f71c59ff8761b\\manifest.json",
+      "sha256": "74bf468a373e66a4f15bbde400676a10db56765a0e982153999f71c59ff8761b",
+      "metrics": {
+        "executed_groups": 1,
+        "cached_groups": 35,
+        "executed_cases": 9,
+        "cached_cases": 2155,
+        "executed_discovered_cases": 9,
+        "cached_discovered_cases": 2155,
+        "executed_skips": 0,
+        "cached_skips": 4,
+        "incomplete_groups": 0,
+        "duration_seconds": 52.17611950007267
+      }
+    },
+    "warm": {
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\74bf468a373e66a4f15bbde400676a10db56765a0e982153999f71c59ff8761b\\manifest.json",
+      "sha256": "74bf468a373e66a4f15bbde400676a10db56765a0e982153999f71c59ff8761b",
+      "metrics": {
+        "executed_groups": 0,
+        "cached_groups": 36,
+        "executed_cases": 0,
+        "cached_cases": 2164,
+        "executed_discovered_cases": 0,
+        "cached_discovered_cases": 2164,
+        "executed_skips": 0,
+        "cached_skips": 4,
+        "incomplete_groups": 0,
+        "duration_seconds": 12.738274300005287
+      }
+    }
+  }
+}

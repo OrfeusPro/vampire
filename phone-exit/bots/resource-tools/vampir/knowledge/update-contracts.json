@@ -1763,7 +1763,10 @@
         "sdk-fetch-read"
       ],
       "checks": [
-        "first-sdk-continuation-current"
+        "first-sdk-continuation-current",
+        "first-sdk-auth-current",
+        "first-sdk-terms-current",
+        "sdk-first-profile-runtime"
       ],
       "recipes": [
         {
@@ -1811,10 +1814,10 @@
       "builder": null,
       "resources": [],
       "limits": [
-        "Проверена только native continuation; raw states и SDK/Terms handoffs являются fixtures/captures.",
-        "HTTP/JSON Terms и SDK request/response composition, runtime scope и online ещё открыты."
+        "Один first SDK scope и только strict NO DATA; доступные условия требуют просмотра.",
+        "Текущие HTTP/JSON ветки имеют явные fixtures; полный UI/SDK/world и автоматический перенос новых source contexts остаются за границами."
       ],
-      "next_check": "Использовать один готовый current export run-9e904f43767e для оставшихся request/response и constructor/key контрактов. Подготовить ограниченный первый SDK scope, затем одну живую попытку Silvercrow перед остальными семью."
+      "next_check": "Выполнить одну живую подготовку Silvercrow с этим профилем, обработать фактические device/workplace формы и после отдельного игрового допуска продолжить сервер/персонажа."
     }
   ]
 }

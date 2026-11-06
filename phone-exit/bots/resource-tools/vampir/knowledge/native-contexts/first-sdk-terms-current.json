@@ -1,0 +1,252 @@
+{
+  "schema": 1,
+  "recipe": "first-sdk-terms-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-9e904f43767e": "3293865aed8adb18291bddf8c441c29a49b759fdbce6bffe3b1730ca9f441f28"
+  },
+  "functions": {
+    "basic_loader": "0x14459ea60",
+    "basic_response": "0x144569b60",
+    "individual_loader": "0x14459f3f0",
+    "individual_response": "0x14456a800",
+    "dispatcher": "0x14457fc80",
+    "thunk": "0x1445735b0",
+    "result_constructor": "0x1445172c0",
+    "get_impl": "0x1445213c0",
+    "individual_constructor": "0x144561250",
+    "type_getter": "0x144585ed0",
+    "basic_game_wrapper": "0x145618f20",
+    "individual_game_wrapper": "0x145619a00",
+    "basic_game_callback": "0x145603150",
+    "individual_game_callback": "0x145603740"
+  },
+  "literal_bindings": {
+    "country": {
+      "address": "0x149548e70",
+      "text": "country",
+      "encoding": "utf-16le",
+      "roles": [
+        "basic_loader",
+        "individual_loader"
+      ]
+    },
+    "locale": {
+      "address": "0x149548140",
+      "text": "locale",
+      "encoding": "utf-16le",
+      "roles": [
+        "basic_loader",
+        "individual_loader"
+      ]
+    },
+    "platform": {
+      "address": "0x149548e80",
+      "text": "platform",
+      "encoding": "utf-16le",
+      "roles": [
+        "basic_loader",
+        "individual_loader"
+      ]
+    },
+    "termsType": {
+      "address": "0x14954ada0",
+      "text": "termsType",
+      "encoding": "utf-16le",
+      "roles": [
+        "individual_loader"
+      ]
+    },
+    "basicFormat": {
+      "address": "0x149548ef8",
+      "text": "{0}/game/v2/{1}/terms?{2}",
+      "encoding": "utf-16le",
+      "roles": [
+        "basic_loader"
+      ]
+    },
+    "filteredFormat": {
+      "address": "0x149548ea0",
+      "text": "{0}/game/v2/{1}/terms/filtered/unique?{2}",
+      "encoding": "utf-16le",
+      "roles": [
+        "basic_loader"
+      ]
+    },
+    "individualFormat": {
+      "address": "0x14954adb8",
+      "text": "{0}/game/v2/{1}/terms/{2}?{3}",
+      "encoding": "utf-16le",
+      "roles": [
+        "individual_loader"
+      ]
+    },
+    "typeI": {
+      "address": "0x148a92ab8",
+      "text": "I",
+      "encoding": "utf-16le",
+      "roles": [
+        "type_getter"
+      ]
+    },
+    "resultCode": {
+      "address": "0x14952e0f8",
+      "text": "resultCode",
+      "encoding": "utf-16le",
+      "roles": []
+    },
+    "resultData": {
+      "address": "0x14952e160",
+      "text": "resultData",
+      "encoding": "utf-16le",
+      "roles": []
+    },
+    "termsName": {
+      "address": "0x14985c498",
+      "text": "terms_of_service_ko",
+      "encoding": "utf-16le",
+      "roles": []
+    },
+    "termsUrl": {
+      "address": "0x149548e38",
+      "text": "termsUrl",
+      "encoding": "ascii",
+      "roles": [
+        "basic_loader",
+        "individual_loader"
+      ]
+    },
+    "getVerb": {
+      "address": "0x149511334",
+      "text": "GET",
+      "encoding": "ascii",
+      "roles": [
+        "get_impl"
+      ]
+    }
+  },
+  "fragments": {
+    "resultCodeInit": {
+      "address": "0x1411b73b0",
+      "bytes": "4883ec28488d153d6d3708488d0d1ef23a0ae8c9f72600488d0d82a375074883c428e9554f6307",
+      "instruction_count": 7,
+      "calls": [
+        "0x141426b90",
+        "0x1487ec32c"
+      ]
+    },
+    "resultDataInit": {
+      "address": "0x1411b73e0",
+      "bytes": "4883ec28488d15756d3708488d0d2ef23a0ae899f72600488d0d72a375074883c428e9254f6307",
+      "instruction_count": 7,
+      "calls": [
+        "0x141426b90",
+        "0x1487ec32c"
+      ]
+    },
+    "termsNameInit": {
+      "address": "0x141258ec0",
+      "bytes": "4883ec28488d15cd356008488d0d96f4380ae8b9dc1c00488d0d82946f074883c428e945345907",
+      "instruction_count": 7,
+      "calls": [
+        "0x141426b90",
+        "0x1487ec32c"
+      ]
+    },
+    "getWrapper": {
+      "address": "0x144521330",
+      "bytes": "405356574883ec70488bbc24b0000000488bf2488b09488d5f20488b4710488b17488944244033c04889471048895424300f10030f104b100f294424500f294c24604885d27403488907488d442430488bd64889442420e83400000048833f007414488b57104885d2480f45da488bcb488b13ff5210488bc64883c4705f5e5bc3",
+      "instruction_count": 39,
+      "calls": [
+        "0x1445213c0"
+      ]
+    }
+  },
+  "calls": {
+    "basic_loader": [
+      "0x144521330",
+      "0x144583500",
+      "0x143d1c910",
+      "0x14458d530"
+    ],
+    "individual_loader": [
+      "0x144521330",
+      "0x144583500",
+      "0x143d1c910",
+      "0x14458d530"
+    ],
+    "basic_response": [
+      "0x1445172c0",
+      "0x14457fc80",
+      "0x14447cc90"
+    ],
+    "individual_response": [
+      "0x1445172c0",
+      "0x14457fc80",
+      "0x14447cc90"
+    ],
+    "basic_game_wrapper": [
+      "0x1445a80e0"
+    ],
+    "individual_game_wrapper": [
+      "0x1445abbf0"
+    ]
+  },
+  "type_table": "0x14954a950",
+  "callbacks": {
+    "basic_response": {
+      "address": "0x1445737a0"
+    },
+    "individual_response": {
+      "address": "0x1445737b0"
+    }
+  },
+  "keys": {
+    "resultCode": "0x14b5665e0",
+    "resultData": "0x14b566620"
+  },
+  "logging_global": "0x14b566160",
+  "leaves": {
+    "0x144531a40": "837904000f94c0c3",
+    "0x14180e890": "488b4128c3",
+    "0x145606a10": "0fb612e938c7ffff",
+    "0x145606a40": "0fb612e9f8ccffff"
+  },
+  "fixtures": {
+    "http_body": "0x140bd6440",
+    "string_copy": "0x141426700",
+    "literal": "0x1414269b0",
+    "string_assign": "0x141441dc0",
+    "free": "0x1414830e0",
+    "json_parse": "0x1444866a0",
+    "json_valid": "0x14447ee80",
+    "json_has": "0x14447de00",
+    "json_int": "0x14447cc90",
+    "http_secondary_success": "0x141639f50",
+    "allocate": "0x14690be10",
+    "closure_allocate": "0x14148fbc0",
+    "service": "0x1444b2140",
+    "observer": "0x144526610",
+    "notify": "0x14454f570",
+    "schedule": "0x141409d90",
+    "storage": "0x2800f000",
+    "http_error_constructor": "0x1445175a0",
+    "json_error_constructor": "0x144516fb0",
+    "result_cleanup": "0x14454bb60",
+    "basic_continuation": "0x145603150",
+    "individual_continuation": "0x145603740"
+  },
+  "queries": {
+    "basic": "{termsUrl}/game/v2/{gameCode}/terms?country={country}&locale={locale}&platform={platform}",
+    "filtered": "{termsUrl}/game/v2/{gameCode}/terms/filtered/unique?country={country}&locale={locale}&platform={platform}",
+    "individual": "{termsUrl}/game/v2/{gameCode}/terms/{terms_name}?country={country}&locale={locale}&termsType=I&platform={platform}"
+  },
+  "continuation": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\first-sdk-continuation-current-v1\\a0ecb2e69e8207db86e21a9014017b8bcb49728a3f0540a270bde5366ed89272\\manifest.json",
+    "sha256": "a0ecb2e69e8207db86e21a9014017b8bcb49728a3f0540a270bde5366ed89272"
+  },
+  "continuation_adapters": {
+    "basic_response": "0x145606a10",
+    "individual_response": "0x145606a40"
+  }
+}

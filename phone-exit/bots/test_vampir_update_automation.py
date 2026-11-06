@@ -5,6 +5,9 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_first_sdk_auth_current',
+    'test_vampir_first_sdk_terms_current',
+    'test_vampir_sdk_first_profile',
     'test_vampir_first_sdk_continuation_current',
     'test_vampir_preset_defaults_current',
     'test_vampir_lobby_version_current',
