@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "account_alias": "Silvercrow",
+  "server_region": "EU",
+  "server_id": 387,
+  "route": "direct",
+  "selected_profile": "bounded-create:fb504c52c7a701a9801930960eee5e8be4aa492743bb74569157c61c51f97381",
+  "creation_completed_utc": "2026-11-06T12:04:03.506612+00:00",
+  "refresh_completed_utc": "2026-11-06T12:04:17.525257+00:00",
+  "game_login_result_code": 0,
+  "pre_create_list_result_code": 0,
+  "pre_create_character_count": 0,
+  "create_packet_id": 103,
+  "create_result_packet_id": 104,
+  "create_result_code": 0,
+  "character_class": "DarkMage / Viper",
+  "character_key": "649946739230497792",
+  "character_name": "Bipoberiho",
+  "fresh_list_result_code": 0,
+  "fresh_character_count": 1,
+  "assigned_index": 0,
+  "assigned_key": "649946739230497792",
+  "journal_state": "existing_verified",
+  "create_attempts": 1,
+  "character_created": true,
+  "world_entered": false,
+  "session_kept_online": false,
+  "server_default_flag_confirmed": false,
+  "previous_local_stop": {
+    "before_sdk_auth": true,
+    "before_game_connection": true,
+    "before_create": true,
+    "cause": "Legacy top-level selected profile guard did not admit the separate current creation capability",
+    "regression": "test_real_entrypoint_requires_create_capability_before_authentication"
+  },
+  "limits": [
+    "One accepted Create and a separate accepted fresh list for Silvercrow Canon 1 only.",
+    "Appearance is an explicit model candidate; actual loaded screen and other accounts are unverified.",
+    "World entry, persistent owner and server default-character flag remain separate."
+  ]
+}

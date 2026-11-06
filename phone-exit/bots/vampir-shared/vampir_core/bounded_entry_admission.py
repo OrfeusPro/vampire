@@ -58,8 +58,16 @@ def require_character_list_operation(selector, *, auth_flow, read_character_list
         world_observer, tutorial_observer, ack_initial_tutorial, read_quest_list, quest_observer,
         quest_wire_observer, session_control):
     current(selector)
+    creation_allowed = False
+    if creation_factory is not None:
+        from .bounded_creation_admission import current as creation_current, permits as creation_permits
+        parent = current(selector)
+        if creation_permits(parent['source_sha256']):
+            creation = creation_current()
+            creation_allowed = (callable(creation_factory) and read_character_list
+                and creation['entry']['selected_profile'] == selector)
     if (auth_flow != 'launcher' or not (read_character_list or server_list_only)
-            or character_index is not None or creation_factory is not None
+            or character_index is not None or (creation_factory is not None and not creation_allowed)
             or read_world_start or read_world_finish or observe_world_seconds or world_observer is not None
             or tutorial_observer is not None or ack_initial_tutorial or read_quest_list
             or quest_observer is not None or quest_wire_observer is not None or session_control is not None):

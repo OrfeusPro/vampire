@@ -12,6 +12,7 @@ from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256, WORLD_PROBE_
 from .character_target import CharacterTargetTracker
 from .tutorial_update import decode_tutorial_update
 from .runtime_admission import permits
+from .bounded_creation_admission import permits as creation_permits
 
 
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
@@ -29,7 +30,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         raise ValueError('Creation factory must be explicit and exclusive with payload')
     if creation_enabled:
         from .character_create import encode_character_create
-        if not read_character_list or character_index is not None or source_sha256 != WORLD_SOURCE_SHA256:
+        if (not read_character_list or character_index is not None
+                or (source_sha256 != WORLD_SOURCE_SHA256 and not creation_permits(source_sha256))):
             raise ValueError('Creation requires current source and explicit list operation without selection')
         if creation_payload is not None: encode_character_create(creation_payload, source_sha256=source_sha256)
     if expected_character_key is not None and (type(expected_character_key) is not int or

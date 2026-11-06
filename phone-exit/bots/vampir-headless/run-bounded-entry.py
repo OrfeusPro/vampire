@@ -24,7 +24,7 @@ def load(name, path):
     return module
 
 
-def run(account_id, selector, *, progress=lambda stage: None):
+def run(account_id, selector, *, progress=lambda stage: None, _creation_factory=None):
     store = AccountStore(HERE / '.local/console.sqlite3')
     account = next((row for row in store.accounts() if row['id'] == account_id), None)
     if account is None or account['enabled'] is not True or account['device_type'] == 'Не использовать':
@@ -36,6 +36,11 @@ def run(account_id, selector, *, progress=lambda stage: None):
     port = route_port(settings['socks_port'])
     with scope(selector, root=ROOT, workspace=HERE.parents[2]):
         profile = current(selector)
+        if _creation_factory is not None:
+            from vampir_core.bounded_creation_admission import current as creation_current
+            creation = creation_current()
+            if creation['entry']['selected_profile'] != selector or not callable(_creation_factory):
+                raise ValueError('Current creation requires its exact entry parent and explicit factory')
         progress('cdn')
         cdn = load('bounded_public_cdn', HERE.parent / 'resource-tools/vampir/fetch-public-cdn-config.py')
         provenance = cdn.profile(selector)
@@ -63,10 +68,11 @@ def run(account_id, selector, *, progress=lambda stage: None):
             server_policy_byte=0, extra_number=revision, context='windows-sdk-initial-reset',
             region=settings['region'], server_id=settings['server_id'], password=password,
             auth_flow='launcher', language_code=1, lobby_context='sdk-with-partial-metadata',
-            read_character_list=True, device_settings=device, _progress=progress, _verification=verify)
+            read_character_list=True, device_settings=device, _progress=progress, _verification=verify,
+            creation_factory=_creation_factory)
         password = None
         game = result.get('game', {})
-        if (game.get('character_list_received') is True and game.get('character_list_result_code') == 0
+        if (_creation_factory is None and game.get('character_list_received') is True and game.get('character_list_result_code') == 0
                 and type(game.get('characters')) is list):
             store.save_characters(account_id, region=settings['region'], server_id=settings['server_id'],
                 characters=game['characters'], observed_utc=datetime.now(timezone.utc).isoformat())

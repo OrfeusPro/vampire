@@ -1854,7 +1854,10 @@
         "create-result-current",
         "viper-cold-cdo-current",
         "create-handler-current",
-        "viper-appearance-current"
+        "viper-appearance-current",
+        "create-producer-current",
+        "viper-creation-current",
+        "bounded-creation-current"
       ],
       "recipes": [
         {

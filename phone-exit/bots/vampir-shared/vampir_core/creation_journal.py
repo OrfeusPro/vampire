@@ -4,13 +4,15 @@ import json
 import uuid
 
 from .world_move_start import SOURCE_SHA256
+from .bounded_creation_admission import permits as creation_permits
 
 
 def now(): return datetime.now(timezone.utc).isoformat()
 
 
 def begin(store, identifier, region, server_id, nickname, source_sha256):
-    if source_sha256 != SOURCE_SHA256 or type(nickname) is not str or not nickname or len(nickname) > 40:
+    current_create = creation_permits(source_sha256)
+    if (source_sha256 != SOURCE_SHA256 and not current_create) or type(nickname) is not str or not nickname or len(nickname) > 40:
         raise ValueError('Invalid creation journal request')
     with store._db() as db:
         db.execute('BEGIN IMMEDIATE')
@@ -18,7 +20,7 @@ def begin(store, identifier, region, server_id, nickname, source_sha256):
         if row is None: raise KeyError('Unknown account')
         assignment = store.assignment(json.loads(row[0]))
         if (not assignment['enabled'] or (assignment['region'], assignment['server_id']) != (region, server_id)
-                or server_id is None or assignment['create_class'] != 'Gunner'
+                or server_id is None or assignment['create_class'] != ('DarkMage' if current_create else 'Gunner')
                 or assignment['create_nickname'] != nickname or assignment['character_index'] is not None
                 or assignment['character_key'] is not None):
             raise ValueError('Creation assignment changed or is unsupported')

@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import struct
 
 from .world_move_start import SOURCE_SHA256
+from .bounded_creation_admission import permits as creation_permits
 
 
 @dataclass(frozen=True)
@@ -16,7 +17,7 @@ class CharacterCreatePayload:
 
 
 def encode_character_create(value, *, source_sha256):
-    if source_sha256 != SOURCE_SHA256 or not isinstance(value, CharacterCreatePayload):
+    if (source_sha256 != SOURCE_SHA256 and not creation_permits(source_sha256)) or not isinstance(value, CharacterCreatePayload):
         raise ValueError('Unsupported character creation source or payload')
     def integer(number, maximum):
         if type(number) is not int or not 0 <= number <= maximum:

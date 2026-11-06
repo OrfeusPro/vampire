@@ -7,6 +7,10 @@ import unittest
 MODULES = (
     'test_vampir_lobby_results_current',
     'test_vampir_create_handler_current',
+    'test_vampir_create_producer_current',
+    'test_vampir_viper_creation_current',
+    'test_vampir_creation_admission',
+    'test_vampir_bounded_creation',
     'test_vampir_viper_appearance_current',
     'test_vampir_bounded_entry',
     'test_vampir_lobby_login_prepare_current',

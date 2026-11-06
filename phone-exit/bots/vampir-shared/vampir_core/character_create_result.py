@@ -4,6 +4,7 @@ import struct
 
 from .character_list import CharacterRecord, decode_character_list
 from .world_move_start import SOURCE_SHA256
+from .bounded_creation_admission import permits as creation_permits
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,7 +29,7 @@ def character_creation_outcome(result, *, source_sha256, requested_name):
     Native code zero accepts the returned record even when names differ. Missing
     identity requires a fresh list rather than another creation request.
     """
-    if source_sha256 != SOURCE_SHA256 or not isinstance(result, CharacterCreateResult):
+    if (source_sha256 != SOURCE_SHA256 and not creation_permits(source_sha256)) or not isinstance(result, CharacterCreateResult):
         raise ValueError('Unsupported creation result source or type')
     if type(requested_name) is not str or not requested_name or '\0' in requested_name:
         raise ValueError('Expected requested character name')
@@ -50,7 +51,7 @@ def character_creation_outcome(result, *, source_sha256, requested_name):
 
 
 def decode_character_create_result(body, *, source_sha256, max_payload_size, max_extension_items):
-    if source_sha256 != SOURCE_SHA256:
+    if source_sha256 != SOURCE_SHA256 and not creation_permits(source_sha256):
         raise ValueError('Unsupported character creation result source')
     if type(body) is not bytes:
         raise ValueError('Character creation result requires immutable bytes')

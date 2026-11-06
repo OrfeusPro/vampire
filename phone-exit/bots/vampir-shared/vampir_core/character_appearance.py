@@ -4,6 +4,7 @@ import math
 import struct
 
 from .world_move_start import SOURCE_SHA256
+from .bounded_creation_admission import permits as creation_permits
 
 GROUP_IDS = {'Height': 1, 'Chest': 2, 'Pelvis': 3, 'Shape': 4,
              'Waist': 5, 'Thigh': 6, 'Head': 7}
@@ -15,7 +16,7 @@ def encode_character_appearance(settings, voice, *, source_sha256, key_profile):
     No range or server-acceptance claim: the caller supplies selected settings.
     Latin keys are an explicit client policy; live engine culture is not inferred.
     """
-    if source_sha256 != SOURCE_SHA256 or key_profile != 'latin':
+    if (source_sha256 != SOURCE_SHA256 and not creation_permits(source_sha256)) or key_profile != 'latin':
         raise ValueError('Unsupported appearance source or numeric key profile')
     if type(settings) is not dict or len(settings) > 7:
         raise ValueError('Invalid appearance settings')

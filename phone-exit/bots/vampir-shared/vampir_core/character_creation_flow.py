@@ -4,11 +4,12 @@ import math
 from .character_create import encode_character_create
 from .character_create_result import decode_character_create_result, character_creation_outcome, SOURCE_SHA256
 from .selection_flow import SelectionState
+from .bounded_creation_admission import permits as creation_permits
 
 
 class CharacterCreationFlow:
     def __init__(self, outbound, *, source_sha256, timeout):
-        if source_sha256 != SOURCE_SHA256:
+        if source_sha256 != SOURCE_SHA256 and not creation_permits(source_sha256):
             raise ValueError('Unsupported creation source')
         if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
             raise ValueError('Invalid creation timeout')

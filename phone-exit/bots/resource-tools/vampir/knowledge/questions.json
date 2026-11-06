@@ -1571,9 +1571,9 @@
       "id": "create-packets-current",
       "status": "open",
       "question": "Какие текущие Create 103 / Result 104 wire contracts можно подтвердить без повторения исторической creation матрицы?",
-      "known": "Предыдущие 18 ID103 / 18 writer failures / 12 outer104 случаев переиспользованы. Полное current тело ID104 исполнено с native INPUT и вложенным record/appearance/optional reader: 6 полных тел, 7 коротких, 3 отказа и хвост. Полный reader/handler исполнен в одной памяти: шесть случаев, callback вставки и выбранный ключ подтверждены. Producer 14644bc30 собран в run-0c1dd33076e2.",
-      "unknown": "Producer и отправка полного current Viper payload, current tag/gender mapping, создание и default selection онлайн.",
-      "next_action": "Исполнить готовый producer с явным appearance candidate, связать writer и отдельный Create admission.",
+      "known": "Предыдущие 18 ID103 / 18 writer failures / 12 outer104 случаев переиспользованы. Полное current тело ID104 исполнено с native INPUT и вложенным record/appearance/optional reader: 6 полных тел, 7 коротких, 3 отказа и хвост. Полный reader/handler исполнен в одной памяти: шесть случаев, callback вставки и выбранный ключ подтверждены. Producer 14644bc30 собран в run-0c1dd33076e2. Текущий producer/JSON/owner constructor/getter перенесён по 15 whole roots и 82 согласованным связям, с четырьмя numeric methods и source tables. Переиспользованы 37 producer, 36 JSON и 144 class-source случая. Viper factory связывает шесть proofs и текущую Class CSV; отдельный bounded-create admission и команда сохраняют журнал попытки, затем читают список отдельно. Проверены 4 factory, 4 admission и 3 profile/runner случая без сети. Silvercrow через прямой выход создал Viper Bipoberiho на Canon 1/387: Create104 code0, затем отдельный принятый свежий список подтвердил key649946739230497792 и slot0, journal existing_verified.",
+      "unknown": "CharacterSelect/world finish на текущем SHA, независимый постоянный owner, подтверждённый серверный default flag и остальные семь аккаунтов.",
+      "next_action": "Проверить текущие nested readers ID110/206 по готовым exports, добавить отдельный world admission и постоянный owner с проверкой saved key по свежему списку.",
       "decision_rule": "Точный current source SHA, whole source ranges и явные fixture границы; class ID не заменяет current factory/CDO/producer доказательство.",
       "do_not_repeat": "Не повторять historical 98802d creation suite и готовые current 25 ctor / 49 ClassInfo / 1554 CharacterList случаи.",
       "addresses": [
@@ -1587,16 +1587,19 @@
         "evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md",
         "evidence/characters/HEADLESS-CREATE-RESULT-CURRENT.md",
         "evidence/characters/HEADLESS-CREATE-HANDLER-CURRENT.md",
-        "evidence/characters/HEADLESS-VIPER-APPEARANCE-CURRENT.md"
+        "evidence/characters/HEADLESS-VIPER-APPEARANCE-CURRENT.md",
+        "evidence/characters/HEADLESS-CREATE-PRODUCER-CURRENT.md",
+        "evidence/characters/HEADLESS-VIPER-CREATION-CURRENT.md",
+        "evidence/characters/HEADLESS-VIPER-CREATION-ONLINE.md"
       ]
     },
     {
       "id": "game-candidate-current",
       "status": "open",
       "question": "Как собрать текущий ограниченный игровой candidate из сохранённых source proofs без старого source SHA и повторного native разбора?",
-      "known": "Bounded-entry scope подключён к обычным entrypoints. Перенесены 14 lobby4/104 roots, 10 таблиц и 71 связь. Текущий игровой LoginResult удерживает +140/+150/+154. Silvercrow онлайн прошёл SDK, лобби Canon1/387, game Version0/Login0 и принятый пустой CharacterList. Четыре новых пакета связаны с on_update.",
-      "unknown": "Текущие создание Viper и CharacterSelect/world session. Полный prepared world-session имеет отдельные обязательства.",
-      "next_action": "На принятом пустом списке подтвердить Create producer, current ClassInfo tag/gender mapping и фабрику явного кандидата внешности, затем создать Silvercrow Viper со случайным ником.",
+      "known": "Bounded-entry scope подключён к обычным entrypoints. Перенесены 14 lobby4/104 roots, 10 таблиц и 71 связь. Текущий игровой LoginResult удерживает +140/+150/+154. Silvercrow онлайн прошёл SDK, лобби Canon1/387, game Version0/Login0 и принятый пустой CharacterList. Четыре новых пакета связаны с on_update. Отдельная текущая Viper factory и Create admission подготовлены без допуска мира. Silvercrow через прямой выход создал Viper Bipoberiho на Canon 1/387: Create104 code0, затем отдельный принятый свежий список подтвердил key649946739230497792 и slot0, journal existing_verified.",
+      "unknown": "CharacterSelect/world finish на текущем SHA, независимый постоянный owner, подтверждённый серверный default flag и остальные семь аккаунтов.",
+      "next_action": "Проверить текущие nested readers ID110/206 по готовым exports, добавить отдельный world admission и постоянный owner с проверкой saved key по свежему списку.",
       "decision_rule": "Последняя база каждой роли отдельно, фактический installed SHA и все retained inputs; не повышать partial contracts до полной world-session и creation.",
       "do_not_repeat": "Готовые native suites использовать после проверки целостности; не запускать Ghidra или сетевой вход ради повторного подтверждения тех же inputs.",
       "addresses": [
@@ -1610,7 +1613,9 @@
         "evidence/updates/HEADLESS-LOBBY-LOGIN-PREPARE-CURRENT.md",
         "evidence/updates/HEADLESS-LOBBY-SENDER-CURRENT.md",
         "evidence/updates/HEADLESS-BOUNDED-ENTRY-CURRENT.md",
-        "evidence/updates/SILVERCROW-BOUNDED-ENTRY-CURRENT.json"
+        "evidence/updates/SILVERCROW-BOUNDED-ENTRY-CURRENT.json",
+        "evidence/characters/HEADLESS-VIPER-CREATION-CURRENT.md",
+        "evidence/characters/HEADLESS-VIPER-CREATION-ONLINE.md"
       ]
     }
   ]

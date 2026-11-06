@@ -14,7 +14,12 @@
 
 Текущий выпуск исследования — 1.13.22. Silvercrow прошёл SDK, лобби,
 игровой Version/Login и чтение пустого списка персонажей Canon 1 / 387
-через прямое соединение. Постоянная сессия и создание Viper требуют продолжения.
+через прямое соединение. Следующая команда создала Viper Bipoberiho;
+отдельный свежий список подтвердил имя / ключ и назначил слот 0.
+Постоянная сессия требует продолжения.
+[Создание онлайн](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-CREATION-ONLINE.md).
+[Приёмка создания](../resource-tools/vampir/knowledge/evidence/updates/VIPER-CREATION-CURRENT-ACCEPTANCE.json)
+сохраняет 56 групп / 2243 теста и неизменный повтор без процессов и native-эмуляции.
 [Результат и команды](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-BOUNDED-ENTRY-CURRENT.md).
 [Приёмка](../resource-tools/vampir/knowledge/evidence/updates/BOUNDED-ENTRY-CURRENT-ACCEPTANCE.json)
 закрепляет 52 группы / 2229 тестов, четыре пропуска и неизменный повтор
@@ -44,8 +49,13 @@ character / world flow. [VersionResult reader → handler → gate](../resource-
 уже связаны через перенос подготовленных полей между стендами. Восемь кадров
 совпали с codec. Полное тело
 [Create Result 104](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-CURRENT.md)
-исполнено с вложенной записью, INPUT и handler. Producer и текущая привязка
-класса / пола Viper требуют продолжения. Явные candidates внешности F/M
+исполнено с вложенной записью, INPUT и handler.
+[Producer, JSON и class/gender owner](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRODUCER-CURRENT.md)
+перенесены по целым функциям.
+[Viper factory и отдельный Create admission](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-CREATION-CURRENT.md)
+подготовлены с постоянным журналом и отдельным чтением списка после попытки.
+Создание Silvercrow подтверждено онлайн отдельно от входа в мир.
+Явные candidates внешности F/M
 подготовлены отдельно с происхождением полей и ограничением loaded asset.
 Текущая Class CSV уже есть в готовом resource baseline нового pakchunk1;
 повторное извлечение архива не требуется.
@@ -77,11 +87,13 @@ custom identity сервером отдельно от локального на
 дали 30 ready exports и 126 проверенных Fetch/Terms случаев.
 [Первый SDK-профиль текущей версии](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-PROFILE-CURRENT.md)
 теперь собран отдельно и принят онлайн для Silvercrow: SignUp / SignIn успешны,
-дополнительных форм нет. Персонаж и мир ещё не открыты; старые SDK-матрицы
+дополнительных форм нет. Создание персонажа продолжено отдельным пакетом выше;
+старые SDK-матрицы
 переиспользованы, новые Terms / auth / runtime checks включены в обновление и кэш.
 Текущие [lobby reader / decoder](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md)
 и [конструкторы пресета](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md)
-подтверждены в ограниченных native сценариях; целый мир и создание Viper не допущены.
+подтверждены в ограниченных native сценариях; создание Viper допущено отдельным
+пакетом, целый мир требует продолжения.
 
 [Автоматический проход и проверка повторного использования](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTOMATIC-UPDATE.md):
 реальные 222 UTF-8 сценария 20 → 22; неизменный повтор — 132 cached этапа,

@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "checked_utc": "2026-11-06T12:13:24.042494+00:00",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "checks": [
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\37d6ab74ff613615cdd7e4ebd37aba24b8a841b8ac4e1701173e53418d098562\\manifest.json",
+      "sha256": "37d6ab74ff613615cdd7e4ebd37aba24b8a841b8ac4e1701173e53418d098562",
+      "cache_key": "457e6938b6a6478788557a41f97ec0c91a3598df1f02c5b62aafe3905da27e33",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    {
+      "id": "create-producer-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\549ce464b53aa4c13078b29e057b5ad8212a0f152d296f5c159cadc2134bfb30\\manifest.json",
+      "sha256": "549ce464b53aa4c13078b29e057b5ad8212a0f152d296f5c159cadc2134bfb30",
+      "cache_key": "c380850fe699ac112d0a5a419d623568c5d688a323b05308943bcd314c1963dd"
+    },
+    {
+      "id": "viper-creation-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\463f805e6b9ed00f752b2bbf9938b80eda994cd785c6bbcb9d2ae98009a04f3f\\manifest.json",
+      "sha256": "463f805e6b9ed00f752b2bbf9938b80eda994cd785c6bbcb9d2ae98009a04f3f",
+      "cache_key": "d919659de7c9ff1eb2ae3a9cc11aa6785076dc86c7e8603f06bfec7ad99c1739"
+    },
+    {
+      "id": "bounded-creation-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e73ef942a1719fe6fbfdbb59811876a6049987ee0048c4d7244c5b5b12327244\\manifest.json",
+      "sha256": "e73ef942a1719fe6fbfdbb59811876a6049987ee0048c4d7244c5b5b12327244",
+      "cache_key": "408ce0a835b7174c53927b77b5ddbffb694e3f96ef4e2a52ce2c3b7d77265ad2"
+    }
+  ],
+  "tooling": {
+    "aggregate": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\c310c22c3a36a2a44f7e4db07f6bdf7d9fcf3296e57e0079c1be8c4770d608bb\\manifest.json",
+      "sha256": "c310c22c3a36a2a44f7e4db07f6bdf7d9fcf3296e57e0079c1be8c4770d608bb"
+    },
+    "groups": 56,
+    "counts": {
+      "tests_run": 2243,
+      "skipped": 4,
+      "failures": 0,
+      "errors": 0
+    },
+    "proves_client_compatibility": false
+  },
+  "unchanged_repeat": {
+    "receipt": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\viper-creation-final-warm.json",
+      "sha256": "5cb6f9a763ecbdf64b21239aa37c10495a7649b1cbb0e34991eac57c430e4bd6"
+    },
+    "seconds": 87.87465790007263,
+    "native_execution_forbidden": true,
+    "subprocess_creation_forbidden": true,
+    "attempted_execution": {
+      "native": 0,
+      "subprocess": 0
+    }
+  },
+  "scoped_completion": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\7bdf291d2fbdd89d87c4cddacb42471fe70a070641faec67cd07e49728c7818d\\manifest.json",
+    "sha256": "7bdf291d2fbdd89d87c4cddacb42471fe70a070641faec67cd07e49728c7818d"
+  },
+  "fact_id": "64ad85034cb6bf34bccef320e81d914e982f86ece8982a0d7b747dd2019c9ee2",
+  "scoped_check": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\creation-online-final-check.json",
+    "sha256": "1fbfbf6c87cb6fdc56388ff096b5b081cd2ecd50a6ff163221e27afeb45c345f"
+  },
+  "new_jvm": 0,
+  "online": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\SILVERCROW-CREATE-CURRENT-ONLINE.json",
+    "sha256": "8e010d99998110be07f8c945b0018e871273222a8dcc4f8f06de5b9e2c8f7fc2"
+  },
+  "character_created": true,
+  "world_entered": false,
+  "limits": [
+    "Creation and fresh identity confirmation cover Silvercrow Canon 1 only.",
+    "Other accounts, current world nested compatibility, permanent owner and server default-character flag remain open.",
+    "Appearance is an explicit model candidate; native JSON byte formatting and loaded screen remain outside proof."
+  ]
+}

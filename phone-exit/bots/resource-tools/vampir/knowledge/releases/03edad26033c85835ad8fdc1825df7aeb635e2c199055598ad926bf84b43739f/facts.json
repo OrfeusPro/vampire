@@ -3984,6 +3984,201 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Class tag/gender byte, producer, loaded engine effects и online Create.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x146449d10",
+        "0x14644bc30"
+      ],
+      "checks": [
+        {
+          "cache_key": "af35890b98fa724497c244c51b355edb565fa686fbfd564ae331bb50b5143322",
+          "id": "create-packets-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27\\manifest.json",
+          "sha256": "04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27",
+          "state": "passed"
+        },
+        {
+          "cache_key": "46354c6010f409c1b14e9ac661d0d27f316050968434d9d624000ad86d987090",
+          "id": "create-result-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4db60cd405258ff14515ef12471818d7c46d647a471c73f3994953315f048b59\\manifest.json",
+          "sha256": "4db60cd405258ff14515ef12471818d7c46d647a471c73f3994953315f048b59",
+          "state": "passed"
+        },
+        {
+          "cache_key": "06e911860a7dca83ed3d2b2e2ac888152afd4cd45394ba07fe5dd7486026b051",
+          "id": "create-handler-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6eb74f29436a2c1d607f1e21a3f7b34784489dddfde85691f212aa1b4efdf431\\manifest.json",
+          "sha256": "6eb74f29436a2c1d607f1e21a3f7b34784489dddfde85691f212aa1b4efdf431",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8ce05c51b89a65265d86ccd8f5a64fffcfe5dc6a428d8fbdd17f06ce70e00dc1",
+          "id": "create-producer-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2cf904980093d1374a0dfc4f3af8d21290887e6ea17d321352c2c850740be175\\manifest.json",
+          "sha256": "2cf904980093d1374a0dfc4f3af8d21290887e6ea17d321352c2c850740be175",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущие producer/JSON/owner constructor/getter и formatter цепочка перенесены по целым телам 15 roots и 82 согласованным зависимостям. Четыре numeric methods, три table области, четыре leaf и constants проверены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-PRODUCER-CURRENT.md",
+          "sha256": "ebdf97408fe85889fe7ccb6a9e5fd165e4c330e64969781970af96a8cb8b8f8f"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "d13bed16572bdd79ac5de76fc4280bb14283ebc4e60c5259f7947a3eecc54133",
+      "limits": [
+        "Переиспользованы 37 producer, 36JSON, 144class-source fixtures. Native JSON bytes, cold formatters, loaded assets и онлайн Create не подтверждены."
+      ],
+      "method": "static",
+      "next_check": "Собрать factory из Class CSV/appearance и проверить одну разрешённую попытку Silvercrow.",
+      "question": "create-packets-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Текущая Viper factory, отдельный Create admission, журнал unknown и серверное создание.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x146449d10",
+        "0x14644bc30"
+      ],
+      "checks": [
+        {
+          "cache_key": "af35890b98fa724497c244c51b355edb565fa686fbfd564ae331bb50b5143322",
+          "id": "create-packets-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27\\manifest.json",
+          "sha256": "04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27",
+          "state": "passed"
+        },
+        {
+          "cache_key": "26bfbe1e23c6dad86d626ca0828aee090556a1bc523828ce2681e62bfe23604f",
+          "id": "create-result-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bf9a09f399651a366e7bb56e46c59ba4443efdf4879d92f2f521f1708c49a641\\manifest.json",
+          "sha256": "bf9a09f399651a366e7bb56e46c59ba4443efdf4879d92f2f521f1708c49a641",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7f21b4fb36eeaa221645230d44184eec58ea77e76e2fddb420bc370d36477bad",
+          "id": "create-handler-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a19a3e6098eb0da6cf2db954a78e78780233791a968bdaa66784c52d1bf013c4\\manifest.json",
+          "sha256": "a19a3e6098eb0da6cf2db954a78e78780233791a968bdaa66784c52d1bf013c4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c380850fe699ac112d0a5a419d623568c5d688a323b05308943bcd314c1963dd",
+          "id": "create-producer-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\549ce464b53aa4c13078b29e057b5ad8212a0f152d296f5c159cadc2134bfb30\\manifest.json",
+          "sha256": "549ce464b53aa4c13078b29e057b5ad8212a0f152d296f5c159cadc2134bfb30",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d919659de7c9ff1eb2ae3a9cc11aa6785076dc86c7e8603f06bfec7ad99c1739",
+          "id": "viper-creation-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\463f805e6b9ed00f752b2bbf9938b80eda994cd785c6bbcb9d2ae98009a04f3f\\manifest.json",
+          "sha256": "463f805e6b9ed00f752b2bbf9938b80eda994cd785c6bbcb9d2ae98009a04f3f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "38980675ddef474c30d8f67dcb058f675402a1d6ea489457954248a325683085",
+          "id": "bounded-creation-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\976068e0b678324f26d36f9200e0417dbb6302ffa3fb0b9747ec89ac8ed97bd8\\manifest.json",
+          "sha256": "976068e0b678324f26d36f9200e0417dbb6302ffa3fb0b9747ec89ac8ed97bd8",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Viper factory связывает текущую Class CSV, явный appearance и шесть parent proofs. Отдельный bounded-create scope допускает одну текущую попытку после принятого пустого списка, с постоянным журналом и отдельным fresh read.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-VIPER-CREATION-CURRENT.md",
+          "sha256": "8d7a5b8edc53644927420f8c87c53b72e2bc25d8cc46cd0e4af53d9001075832"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "0382a6b641f4ec39a928cf5bf0b44463cb2a4b303882419f5b88e5dad21fadcb",
+      "limits": [
+        "Model-only appearance и явные Latin keys. 4 factory / 4 admission / 3 profile-runner случая без сети, engine storage и JSON formatting сохраняют ограничения parent proofs."
+      ],
+      "method": "static",
+      "next_check": "Одна попытка Create Silvercrow Canon 1 / 387 с последующим отдельным свежим списком.",
+      "question": "create-packets-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Онлайн Create и фактическое назначение identity, дальнейший CharacterSelect/world admission.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x146449d10",
+        "0x14644bc30"
+      ],
+      "checks": [
+        {
+          "cache_key": "af35890b98fa724497c244c51b355edb565fa686fbfd564ae331bb50b5143322",
+          "id": "create-packets-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27\\manifest.json",
+          "sha256": "04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27",
+          "state": "passed"
+        },
+        {
+          "cache_key": "26bfbe1e23c6dad86d626ca0828aee090556a1bc523828ce2681e62bfe23604f",
+          "id": "create-result-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bf9a09f399651a366e7bb56e46c59ba4443efdf4879d92f2f521f1708c49a641\\manifest.json",
+          "sha256": "bf9a09f399651a366e7bb56e46c59ba4443efdf4879d92f2f521f1708c49a641",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7f21b4fb36eeaa221645230d44184eec58ea77e76e2fddb420bc370d36477bad",
+          "id": "create-handler-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a19a3e6098eb0da6cf2db954a78e78780233791a968bdaa66784c52d1bf013c4\\manifest.json",
+          "sha256": "a19a3e6098eb0da6cf2db954a78e78780233791a968bdaa66784c52d1bf013c4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c380850fe699ac112d0a5a419d623568c5d688a323b05308943bcd314c1963dd",
+          "id": "create-producer-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\549ce464b53aa4c13078b29e057b5ad8212a0f152d296f5c159cadc2134bfb30\\manifest.json",
+          "sha256": "549ce464b53aa4c13078b29e057b5ad8212a0f152d296f5c159cadc2134bfb30",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d919659de7c9ff1eb2ae3a9cc11aa6785076dc86c7e8603f06bfec7ad99c1739",
+          "id": "viper-creation-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\463f805e6b9ed00f752b2bbf9938b80eda994cd785c6bbcb9d2ae98009a04f3f\\manifest.json",
+          "sha256": "463f805e6b9ed00f752b2bbf9938b80eda994cd785c6bbcb9d2ae98009a04f3f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "408ce0a835b7174c53927b77b5ddbffb694e3f96ef4e2a52ce2c3b7d77265ad2",
+          "id": "bounded-creation-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e73ef942a1719fe6fbfdbb59811876a6049987ee0048c4d7244c5b5b12327244\\manifest.json",
+          "sha256": "e73ef942a1719fe6fbfdbb59811876a6049987ee0048c4d7244c5b5b12327244",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Silvercrow создал Viper Bipoberiho на Canon1/387 через текущий bounded-create scope. Create104code0 и отдельный fresh CharacterList0 подтверждают key649946739230497792, slot0 назначен в панели, journalexisting_verified.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-VIPER-CREATION-ONLINE.md",
+          "sha256": "5a584efdf39d175ae44e7bd43be8795e62e483dd53766bb84151185f036ed0af"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\SILVERCROW-CREATE-CURRENT-ONLINE.json",
+          "sha256": "8e010d99998110be07f8c945b0018e871273222a8dcc4f8f06de5b9e2c8f7fc2"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "64ad85034cb6bf34bccef320e81d914e982f86ece8982a0d7b747dd2019c9ee2",
+      "limits": [
+        "Одна принятая сервером попытка Create и отдельное подтверждение identity; пакет подготовлен до входа и не менялся.",
+        "Model-only appearance, Latin keys и parent native fixture boundaries сохранены. Мир не открыт, остальные семь не запускались."
+      ],
+      "method": "static",
+      "next_check": "Закрыть current nested readers по готовым exports и запустить первый мир с проверкой сохранённого key по свежему списку.",
+      "question": "create-packets-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Текущие CharacterSelectResult110 / Finish206 nested compatibility, отдельный world admission и постоянный owner.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

@@ -44,9 +44,13 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
     device_settings = validate(device_settings)
     if _verification is not None and not callable(_verification):
         raise TypeError('Expected in-memory SDK verification continuation')
+    from vampir_core.bounded_creation_admission import (permits as creation_permits,
+        current as creation_current, SOURCE as CURRENT_CREATE_SOURCE)
+    current_create = (creation_permits(CURRENT_CREATE_SOURCE)
+        and creation_current()['entry']['selected_profile'] == selected_profile)
     if creation_factory is not None and (not callable(creation_factory) or not read_character_list
-            or character_index is not None or selected_profile != 'recovered-release'):
-        raise ValueError('Creation factory requires release profile and explicit list without selection')
+            or character_index is not None or (selected_profile != 'recovered-release' and not current_create)):
+        raise ValueError('Creation factory requires an admitted profile and explicit list without selection')
     if _server_list_observer is not None and (not callable(_server_list_observer) or server_list_only):
         raise ValueError('Server-list observer requires selected login')
     if auth_flow not in ('nid', 'launcher'): raise ValueError('Unsupported explicit SDK auth flow')
@@ -158,8 +162,10 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
                 or quest_observer is not None or quest_wire_observer is not None):
             raise ValueError('Current candidate has no verified quest or tutorial capability')
     if getattr(source, 'live_probe_only', False):
-        if creation_factory is not None or ((character_index is not None or read_world_start
-                or read_world_finish or observe_world_seconds) and not getattr(source,'bounded_world_probe',False)):
+        from vampir_core.bounded_creation_admission import permits as creation_permits
+        if ((creation_factory is not None and not creation_permits(source.source_exe_sha256))
+                or ((character_index is not None or read_world_start
+                or read_world_finish or observe_world_seconds) and not getattr(source,'bounded_world_probe',False))):
             raise ValueError('Candidate requires separately verified bounded world capability')
     auth = {}
     selection_proof = {}

@@ -15,6 +15,9 @@ PACKAGES = {
     'create-handler-current': 'verify-create-handler-current',
     'viper-appearance-current': 'build-viper-appearance-current',
     'bounded-entry-current': 'build-bounded-entry-current',
+    'create-producer-current': 'verify-create-producer-current',
+    'viper-creation-current': 'build-viper-creation-current',
+    'bounded-creation-current': 'build-bounded-creation-current',
 }
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 
@@ -23,14 +26,17 @@ def material(index, root, sha, identifier):
     if sha != SOURCE:
         raise ValueError('Entry package source differs')
     verifier = index.extension(PACKAGES[identifier])
-    if identifier == 'bounded-entry-current':
+    if identifier in ('bounded-entry-current', 'bounded-creation-current'):
         result = verifier.publish(root=root)
         path = Path(result['report']).resolve()
         profile = index.read_json(path)
-        if (path != Path(root).resolve() / 'bounded-entry-profiles' / result['sha256'] / 'manifest.json'
+        category = 'bounded-entry-profiles' if identifier == 'bounded-entry-current' else 'bounded-creation-profiles'
+        operations = ['cdn', 'lobby', 'character-list'] if identifier == 'bounded-entry-current' else ['character-create']
+        if (path != Path(root).resolve() / category / result['sha256'] / 'manifest.json'
                 or index.digest(path) != result['sha256'] or profile['source_sha256'] != sha
-                or profile.get('world_admitted') is not False or profile.get('creation_admitted') is not False
-                or profile.get('operations') != ['cdn', 'lobby', 'character-list']):
+                or profile.get('world_admitted') is not False
+                or profile.get('creation_admitted') is not (identifier == 'bounded-creation-current')
+                or profile.get('operations') != operations):
             raise ValueError('Bounded entry profile source or operation scope differs')
         # Large base PAK is streamed by the profile verifier. The scoped
         # per-file receipt budget retains its expected SHA through the manifest.
@@ -43,7 +49,7 @@ def material(index, root, sha, identifier):
             or index.digest(path) != expected):
         raise ValueError('Entry package receipt path or hash differs')
     report = index.read_json(path)
-    derived = identifier in ('lobby-results-current', 'viper-appearance-current')
+    derived = identifier in ('lobby-results-current', 'viper-appearance-current', 'create-producer-current', 'viper-creation-current')
     if (report.get('recipe') != verifier.RECIPE or report.get('source_sha256') != sha
             or report.get('native_execution') is not (not derived)
             or (derived and report.get('native_proofs_reused') is not True)
@@ -72,9 +78,10 @@ def runtime_inputs(index, root, report, identifier):
                Path(index.INSTALL).resolve(),
                Path(index.INSTALL).resolve().parents[2] /
                'Saved/PersistentDownloadDir/Patch/windows.manifestlist'}
-    if identifier == 'viper-appearance-current':
-        runtime.add(Path(index.INSTALL).resolve().parents[2] /
-                    'Saved/PersistentDownloadDir/Patch/Install/pakchunk100-Windows.pak')
+    if identifier in ('viper-appearance-current', 'create-producer-current', 'viper-creation-current'):
+        for number in ('1', '100') if identifier == 'viper-creation-current' else ('100',):
+            runtime.add(Path(index.INSTALL).resolve().parents[2] /
+                        ('Saved/PersistentDownloadDir/Patch/Install/pakchunk' + number + '-Windows.pak'))
     runtime.update(path.resolve() for path in index.extension('native-publication-v2').runtime_files())
     return {name: expected for name, expected in retained.items() if Path(name).resolve() in runtime}
 
