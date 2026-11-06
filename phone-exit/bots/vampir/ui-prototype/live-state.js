@@ -128,7 +128,7 @@
     }
     async function policy(value) {
       const ui=root.VampirLiveInteraction,view=ui?.project(snapshot,botId,sessionId);
-      if(closed||!view?.ready||!value||Object.keys(value).sort().join()!=='auto_quests,skip_dialogues'
+      if(closed||!view?.known||!view.ready&&view.automation?.supported!==true||!value||Object.keys(value).sort().join()!=='auto_quests,skip_dialogues'
         ||typeof value.auto_quests!=='boolean'||typeof value.skip_dialogues!=='boolean')throw Error('Настройки управления недоступны.');
       const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),3000);
       const read=async response=>{if(!response.ok)throw Error('Настройка не подтверждена');const raw=await response.text();
@@ -144,9 +144,28 @@
           throw Error('Настройка не подтверждена');return result;
       }finally{clearTimeout(timeout);}
     }
+    async function questAutomation(value) {
+      const view=root.VampirLiveInteraction?.project(snapshot,botId,sessionId);
+      if(closed||!view?.known||view.automation?.supported!==true||!value
+        ||Object.keys(value).sort().join()!=='enabled,quest_id'||typeof value.enabled!=='boolean'
+        ||(value.enabled?!/^(?:0|[1-9][0-9]{0,19})$/.test(value.quest_id):value.quest_id!==null))
+        throw Error('Выбор задания недоступен.');
+      const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),3000);
+      const read=async response=>{if(!response.ok)throw Error('Выбор задания не подтверждён');const raw=await response.text();
+        if(raw.length>16384)throw Error('Превышен лимит ответа');return JSON.parse(raw);};
+      try{
+        const control=await read(await fetchImpl(base+'/control',{cache:'no-store',signal:controller.signal}));
+        if(closed||control.bot_id!==botId||control.session_id!==sessionId||!/^[a-f0-9]{64}$/.test(control.token))throw Error('Сессия изменилась');
+        const result=await read(await fetchImpl(base+'/quest-automation',{method:'POST',signal:controller.signal,
+          headers:{'Content-Type':'application/json','X-Session-Token':control.token},
+          body:JSON.stringify({bot_id:botId,session_id:sessionId,...value})}));
+        if(closed||result.bot_id!==botId||result.session_id!==sessionId||result.status!=='quest_automation_updated')
+          throw Error('Выбор задания не подтверждён');return result;
+      }finally{clearTimeout(timeout);}
+    }
     documentImpl?.addEventListener('visibilitychange',visibility);
     poll(epoch);
-    return {get state(){return snapshot&&JSON.parse(JSON.stringify(snapshot));},action,policy,
+    return {get state(){return snapshot&&JSON.parse(JSON.stringify(snapshot));},action,policy,questAutomation,
       setEntityPage(page){if(![0,1].includes(page)||closed)throw Error('Неверная страница окружения.');
         if(page===entityPage)return;entityPage=page;visibility();},
       dispose(){if(closed)return;closed=true;epoch++;clearTimeout(timer);request?.abort();

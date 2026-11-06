@@ -874,3 +874,25 @@ bots/resource-tools/vampir/build-world-map.py text eol=lf
 bots/vampir-headless/atlas_assets.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/maps/HEADLESS-GROUP-MAP-LAYERS.md text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/maps/GROUP-MAP-LAYERS-VALIDATION.json text eol=lf
+
+bots/vampir-shared/vampir_core/action_queue.py text eol=lf
+bots/vampir-shared/vampir_core/live_session_server.py text eol=lf
+bots/vampir-shared/vampir_core/quest_record.py text eol=lf
+bots/vampir-shared/vampir_core/quest_sync.py text eol=lf
+bots/vampir-shared/vampir_core/tutorial_update.py text eol=lf
+bots/vampir/ui-prototype/live-interaction.js text eol=lf
+bots/vampir/ui-prototype/live-interaction.test.cjs text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/quest-observation-current.json text eol=lf
+bots/resource-tools/vampir/verify-quest-observation-current.py text eol=lf
+bots/test_vampir_quest_automation.py text eol=lf
+bots/test_vampir_quest_automation_owner.py text eol=lf
+bots/test_vampir_quest_observation_current.py text eol=lf
+bots/vampir-shared/vampir_core/quest_automation.py text eol=lf
+
+bots/resource-tools/vampir/knowledge/questions.json text eol=lf
+bots/vampir/ui-prototype/live-state.js text eol=lf
+
+.gitattributes text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-AUTOMATION-CURRENT-VALIDATION.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-OBSERVATION-CURRENT-RESULT.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-AUTOMATION-CURRENT.md text eol=lf

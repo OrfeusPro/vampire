@@ -422,6 +422,8 @@ def server(store, *, port=17949, world=None):
                             world.start(identifier)
                     elif action == 'stop' and set(body) == {'id', 'action', 'session_id'}:
                         world.stop(identifier, body['session_id'])
+                    elif action in ('actions', 'policy', 'quest-automation') and set(body) == {'id', 'action', 'session_id', 'payload'}:
+                        return self.response(202, world.command(identifier, body['session_id'], action, body['payload']))
                     else:
                         raise ValueError('Invalid world action')
                     return self.response(202, dict(ok=True))

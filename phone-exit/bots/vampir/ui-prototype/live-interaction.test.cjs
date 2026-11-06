@@ -95,3 +95,91 @@ async function settle(){for(let i=0;i<20;i++)await tick();}
   owner.interaction.messages_known=false;owner.interaction.messages=[{id:'invented'}];
   assert.equal(ui.project(owner,owner.bot_id,owner.session_id).known,false);
 }
+
+// Current quest automation is owner state; stored wishes cannot start it.
+(async()=>{
+ function current(){
+  const value=snapshot();value.interaction.source_sha256=ui.CURRENT_SOURCE;
+  value.interaction.semantics='owner_action_offers';value.interaction.messages_known=false;value.interaction.messages=[];
+  value.interaction.actions=value.interaction.actions.filter(a=>a.kind==='quest_follow');
+  value.interaction.automation={supported:true,state:'idle',selected_quest_id:null,stop_reason:null};
+  value.action_policy={skip_dialogues:false,auto_quests:false};return value;
+ }
+ const state=current(),saved=storage();ui.preferences(state.bot_id,saved).set('auto_quests',true);
+ const updates=[],actions=[];
+ const response=(payload,other={})=>({bot_id:state.bot_id,session_id:state.session_id,status:'quest_automation_updated',
+  policy:{skip_dialogues:false,auto_quests:payload.enabled},automation:{supported:true,
+   state:payload.enabled?'waiting_data':'paused',selected_quest_id:payload.enabled?payload.quest_id:null,
+   stop_reason:payload.enabled?null:'user_stop'},...other});
+ const controller=ui.create({botId:state.bot_id,sessionId:state.session_id,storage:saved,cryptoImpl:webcrypto,
+  configureQuest:async payload=>{updates.push(payload);return response(payload);},
+  dispatch:async payload=>{actions.push(payload);return {status:'queued'};}});
+ controller.observe(state);await settle();assert.equal(controller.policy.auto_quests,false);assert.equal(actions.length,0);
+ assert.equal(controller.canToggleQuest('110120'),true);
+ assert.equal(await controller.toggleQuest('110120'),true);
+ assert.deepEqual(updates,[{quest_id:'110120',enabled:true}]);assert.equal(actions.length,1);
+ assert.equal(actions[0].policy.auto_quests,true);assert.equal(controller.policy.auto_quests,true);
+ assert.equal(controller.view.automation.selected_quest_id,'110120');assert.match(controller.status,/Ожидание подтверждения/);
+ assert.equal(await controller.toggleQuest('110120'),true);
+ assert.deepEqual(updates[1],{quest_id:null,enabled:false});assert.equal(actions.length,1);
+ assert.equal(controller.policy.auto_quests,false);assert.equal(controller.view.automation.selected_quest_id,null);
+ assert.match(controller.status,/остановлено/);controller.dispose();
+
+ // Switching the owner selection never emits a concurrent second step while the old one is pending.
+ const switchingState=current();switchingState.interaction.actions.push({id:'other-quest',kind:'quest_follow',context:'d'.repeat(64),arguments:{quest_id:'110121'},enabled:true});
+ switchingState.interaction.quest_actions.push({quest_id:'110121',action_id:'other-quest'});
+ const selectionCalls=[],switchActions=[],switching=ui.create({botId:state.bot_id,sessionId:state.session_id,storage:storage(),cryptoImpl:webcrypto,
+  configureQuest:async payload=>{selectionCalls.push(payload);return response(payload);},
+  dispatch:async payload=>{switchActions.push(payload);return {status:'queued'};}});
+ switching.observe(switchingState);await switching.toggleQuest('110120');await switching.toggleQuest('110121');
+ assert.deepEqual(selectionCalls.map(payload=>payload.quest_id),['110120','110121']);
+ assert.equal(switching.view.automation.selected_quest_id,'110121');assert.equal(switchActions.length,1);
+ assert.equal(switchActions[0].action_id,'quest');switching.dispose();
+
+ // Selecting a current quest may wait for admission without inventing a game command.
+ const waiting=current();waiting.interaction.actions_ready=false;waiting.interaction.actions=[];waiting.interaction.quest_actions=[];
+ const waitingCalls=[],waitingController=ui.create({botId:state.bot_id,sessionId:state.session_id,storage:storage(),cryptoImpl:webcrypto,
+  configureQuest:async payload=>{waitingCalls.push(payload);return response(payload);},dispatch:async()=>{throw Error('Unadmitted game command');}});
+ waitingController.observe(waiting);assert.equal(waitingController.view.ready,false);
+ assert.equal(await waitingController.toggleQuest('110120'),true);assert.equal(waitingCalls.length,1);
+ assert.match(waitingController.status,/ожидание подключения шага/);
+ waitingController.observe({...waiting,action_policy:{skip_dialogues:false,auto_quests:false},
+  interaction:{...waiting.interaction,automation:{supported:true,state:'dead',selected_quest_id:null,stop_reason:'death'}}});
+ assert.equal(waitingController.policy.auto_quests,false);assert.equal(waitingController.canToggleQuest('110120'),false);
+ assert.match(waitingController.status,/погиб/);waitingController.dispose();
+
+ // Policy failure and mismatched owners fail closed before the offered game action.
+ for(const makeResponse of [()=>{throw Error('Lost response');},payload=>response(payload,{session_id:'other'})]){
+  const dispatched=[];const failed=ui.create({botId:state.bot_id,sessionId:state.session_id,storage:storage(),cryptoImpl:webcrypto,
+   configureQuest:async payload=>makeResponse(payload),dispatch:async payload=>{dispatched.push(payload);return {status:'confirmed'};}});
+  failed.observe(state);assert.equal(await failed.toggleQuest('110120'),false);assert.equal(dispatched.length,0);
+  assert.equal(failed.policy.auto_quests,false);assert.match(failed.status,/не подтверждено/);
+  assert.equal(await failed.toggleQuest('110120'),false);assert.equal(dispatched.length,0);failed.dispose();
+ }
+ let complete;
+ const staleActions=[],stale=ui.create({botId:state.bot_id,sessionId:state.session_id,storage:storage(),cryptoImpl:webcrypto,
+  configureQuest:()=>new Promise(resolve=>complete=resolve),dispatch:async value=>{staleActions.push(value);return {status:'confirmed'};}});
+ stale.observe(state);const changing=stale.toggleQuest('110120');await tick();
+ stale.observe({...state,session_id:'replacement'});complete(response({quest_id:'110120',enabled:true}));
+ assert.equal(await changing,false);assert.equal(staleActions.length,0);assert.equal(stale.view.known,false);stale.dispose();
+ assert.equal(await stale.setPolicy('auto_quests',false),false);assert.equal(await stale.toggleQuest('110120'),false);
+
+ // Disposing during an acknowledgement never sends the first game action afterwards.
+ let release;let sends=0;
+ const disposed=ui.create({botId:state.bot_id,sessionId:state.session_id,storage:storage(),cryptoImpl:webcrypto,
+  configureQuest:()=>new Promise(resolve=>release=resolve),dispatch:async()=>{sends++;return {status:'confirmed'};}});
+ disposed.observe(state);const inFlight=disposed.toggleQuest('110120');await tick();disposed.dispose();
+ release(response({quest_id:'110120',enabled:true}));assert.equal(await inFlight,false);assert.equal(sends,0);
+ const unsupported=current();unsupported.interaction.automation.supported=false;
+ assert.equal(ui.project(unsupported,unsupported.bot_id,unsupported.session_id).ready,true);
+ const falsePrompt=current();falsePrompt.interaction.semantics='observed_prompts';
+ assert.equal(ui.project(falsePrompt,falsePrompt.bot_id,falsePrompt.session_id).known,false);
+ const wrongKind=current();wrongKind.interaction.actions[0].kind='dialogue_skip';wrongKind.interaction.actions[0].arguments={dialogue_id:'1'};
+ assert.equal(ui.project(wrongKind,wrongKind.bot_id,wrongKind.session_id).known,false);
+ const metadata=current();metadata.interaction.automation={supported:true,state:'paused',selected_quest_id:null,stop_reason:'user_stop',enabled:false,cancel_pending:true,pending_request_id:'e'.repeat(32)};
+ assert.deepEqual(ui.project(metadata,metadata.bot_id,metadata.session_id).automation,
+  {...metadata.interaction.automation,npc_label:''});
+ metadata.interaction.automation.stop_reason='server says click here';
+ assert.equal(ui.project(metadata,metadata.bot_id,metadata.session_id).automation,null);
+ console.log('Current quest toggle: owner policy, first dispatch, second-click stop, waiting admission, death, stale identity and fail-closed updates passed');
+})().catch(error=>{console.error(error);process.exitCode=1;});

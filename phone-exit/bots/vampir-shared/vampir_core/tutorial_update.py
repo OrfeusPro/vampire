@@ -22,11 +22,15 @@ class TutorialUpdate:
 
 
 def decode_tutorial_update(body, *, source_sha256, max_records, max_payload_size):
-    if source_sha256 not in TUTORIAL_SOURCES:raise ValueError('Unsupported tutorial source')
+    from .bounded_world_admission import permits
+    bounded_current=permits(source_sha256,'quest-observation-v1')
+    if source_sha256 not in TUTORIAL_SOURCES and not bounded_current:raise ValueError('Unsupported tutorial source')
     if type(max_records) is not int or not 0<=max_records<=65535:
         raise ValueError('Explicit tutorial record budget required')
     if type(max_payload_size) is not int or not 3<=max_payload_size<=0xffffff:
         raise ValueError('Explicit tutorial byte budget required')
+    if bounded_current and (max_records>64 or max_payload_size>835):
+        raise ValueError('Current tutorial exceeds the qualified native matrix')
     if type(body) is not bytes or len(body)<3:raise ValueError('Invalid tutorial body')
     if len(body)>max_payload_size:raise BufferError('Tutorial byte budget exceeded')
     count=struct.unpack_from('<H',body,1)[0]

@@ -26,7 +26,8 @@ class QuestRecord:
 
 
 def decode_quest_record(body, *, source_sha256):
-    if source_sha256 not in (SOURCE_SHA256, CURRENT_SOURCE_SHA256):
+    from .bounded_world_admission import permits
+    if source_sha256 not in (SOURCE_SHA256, CURRENT_SOURCE_SHA256) and not permits(source_sha256, 'quest-observation-v1'):
         raise ValueError('Unsupported quest record source')
     if type(body) is not bytes or len(body) != 39:
         raise ValueError('Invalid quest record body')

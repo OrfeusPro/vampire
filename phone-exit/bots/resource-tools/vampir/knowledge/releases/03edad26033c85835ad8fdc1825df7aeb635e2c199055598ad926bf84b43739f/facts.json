@@ -4335,6 +4335,47 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Current quest/tutorial action admission, movement tracking and other world atlas projections remain separate.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x145828e10",
+        "0x14584c1a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "491d3bfbd4930c6c24d62b993440e231d754becb7e5d7676b8b968b8198d8cd3",
+          "id": "quest-observation-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5120767149361b12b058907bdf7df3eefb88a44c873fac125520b0fbbf42ce31\\manifest.json",
+          "sha256": "5120767149361b12b058907bdf7df3eefb88a44c873fac125520b0fbbf42ce31",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Reused qualified current native QuestSync1854/Tutorial9905 matrices and exact packet bindings in a bounded last-message observer. Owner selection, second-click stop and death fences are implemented and fixture checked; next-entry package is source-bound.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-AUTOMATION-CURRENT-VALIDATION.json",
+          "sha256": "dd37fd8ea2729ef08455b75eb433ad204789724687be3b9536825aca2ba8139a"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-AUTOMATION-CURRENT.md",
+          "sha256": "c5b090ee90f9387ab8fadc38652f991760caa4271ec604686a31167a94536f81"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "095e8011e341f59c8acca7e2835a5992338c4d747c36a9edece870f317bce568",
+      "limits": [
+        "Current online owner retains its original pinned package; initial bodies were not retained.",
+        "No current quest gameplay, dialogue, NPC interaction, equipment action or online auto-completion claim.",
+        "Fixture socket execution uses the previous admitted action contract, not the current game server.",
+        "Full knowledge check is a separate precommit gate; it is not a gameplay proof.",
+        "The composition reuses 1178 saved native cases; it does not rerun native execution."
+      ],
+      "method": "static",
+      "next_check": "Preserve the active owner. Enable browser and visually inspect the prototype after Codex restart, then finish current text/selected-step provider before a live quest action.",
+      "question": "quest-observation-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Current live observation in the new owner, current Russian text/dialogue binding and outgoing selected-step provider with authoritative result correlation remain open.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

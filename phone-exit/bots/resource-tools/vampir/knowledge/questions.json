@@ -1617,6 +1617,25 @@
         "evidence/characters/HEADLESS-VIPER-CREATION-CURRENT.md",
         "evidence/characters/HEADLESS-VIPER-CREATION-ONLINE.md"
       ]
+    },
+    {
+      "id": "quest-observation-current",
+      "status": "open",
+      "question": "Как допустить ограниченное наблюдение QuestSync1854 и Tutorial9905 текущего SHA, используя готовые native доказательства и сохраняя онлайн-сессию?",
+      "known": "Композиция 269 QuestSync и 909 Tutorial native случаев проверена без нового native исполнения. Bounded last-message observer, owner-переключатель, остановка при смерти и пакет следующего входа связаны с on_update и кэшем. 2294 tooling tests, 4 skips; неизменный компонентный проход без новых процессов.",
+      "unknown": "Current live observation in the new owner, current Russian text/dialogue binding and outgoing selected-step provider with authoritative result correlation remain open.",
+      "next_action": "Preserve the active owner. Enable browser and visually inspect the prototype after Codex restart, then finish current text/selected-step provider before a live quest action.",
+      "decision_rule": "Новый SHA требует отдельной сохранённой композиции. Наблюдение последнего сообщения не означает применение локального задания, выбор цели, передачу действия или онлайн-подтверждение.",
+      "do_not_repeat": "Не исполнять повторно неизменные native/Ghidra сценарии. Текущего персонажа не отключать ради начального списка; следующий вход должен использовать готовый пакет.",
+      "addresses": [
+        "0x145828e10",
+        "0x14584c1a0"
+      ],
+      "evidence": [
+        "evidence/quests/QUEST-AUTOMATION-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-OBSERVATION-CURRENT-RESULT.json",
+        "evidence/quests/HEADLESS-QUEST-AUTOMATION-CURRENT.md"
+      ]
     }
   ]
 }

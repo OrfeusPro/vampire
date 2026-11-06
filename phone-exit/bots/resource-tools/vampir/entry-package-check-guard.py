@@ -24,6 +24,7 @@ PACKAGES = {
     'bounded-world-current': 'build-bounded-world-current',
     'initial-stats-current': 'verify-initial-stats-current',
     'stat-notifications-current': 'verify-stat-notifications-current',
+    'quest-observation-current': 'verify-quest-observation-current',
 }
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 PROFILE_SCOPES = {
@@ -62,7 +63,7 @@ def material(index, root, sha, identifier):
     report = index.read_json(path)
     derived = identifier in ('lobby-results-current', 'viper-appearance-current', 'create-producer-current',
                              'viper-creation-current', 'world-results-current',
-                             'initial-stats-current', 'stat-notifications-current')
+                             'initial-stats-current', 'stat-notifications-current', 'quest-observation-current')
     if (report.get('recipe') != verifier.RECIPE or report.get('source_sha256') != sha
             or report.get('native_execution') is not (not derived)
             or (derived and report.get('native_proofs_reused') is not True)
@@ -96,6 +97,15 @@ def runtime_inputs(index, root, report, identifier):
             runtime.add(Path(index.INSTALL).resolve().parents[2] /
                         ('Saved/PersistentDownloadDir/Patch/Install/pakchunk' + number + '-Windows.pak'))
     runtime.update(path.resolve() for path in index.extension('native-publication-v2').runtime_files())
+    if identifier == 'quest-observation-current':
+        proof=index.read_json(pointer['path'])
+        inherited=proof['definition'].get('runtime_inputs',{})
+        if (not inherited or any(retained.get(name)!=expected for name,expected in inherited.items())
+                or any(not Path(name).resolve().is_relative_to(Path(sys.base_prefix).resolve())
+                    and not Path(name).resolve().is_relative_to(index.HERE.parents[2]/'.tools/vampir-analysis')
+                    and Path(name).resolve().parent!=Path('C:/Windows/System32') for name in inherited)):
+            raise ValueError('Quest observation inherited runtime differs')
+        runtime.update(Path(name).resolve() for name in inherited)
     return {name: expected for name, expected in retained.items() if Path(name).resolve() in runtime}
 
 

@@ -83,7 +83,8 @@ def read_owner(port, identifiers):
             detail = {}
         rows.append(dict(port=port, bot_id=bot, session_id=session, state=detail.get('state', state),
             **{key: detail.get(key) for key in ('schema', 'mode', 'character', 'position', 'heartbeat', 'coverage', 'quests',
-                'quest_snapshot', 'quest_update_result', 'tutorial', 'entities', 'environment', 'analysis', 'journal', 'error')}))
+                'quest_snapshot', 'quest_update_result', 'tutorial', 'entities', 'environment', 'analysis', 'journal', 'error',
+                'source_sha256', 'interaction', 'action_policy', 'action_queue')}))
     return rows
 
 
@@ -265,6 +266,28 @@ class WorldControl:
             with self.lock:
                 self.pending.discard(identifier)
                 self.checked_at = float('-inf')
+
+    def command(self, identifier, session_id, operation, payload):
+        """Proxy only the current owner's scoped commands; tokens stay local."""
+        if operation not in ('actions', 'policy', 'quest-automation') or type(payload) is not dict:
+            raise ValueError('Недопустимое действие сессии')
+        if set(payload) & {'bot_id', 'session_id'}:raise ValueError('Контекст сессии задаёт панель')
+        with self.lock:
+            row=self.snapshot(fresh=True).get(identifier,{})
+            if row.get('state')!='connected' or row.get('session_id')!=session_id or not session_id:
+                raise ValueError('Игровая сессия изменилась')
+            path='/bots/'+identifier
+            control=owner_request(row['port'],path+'/control')
+            token=control.get('token')
+            if (control.get('bot_id')!=identifier or control.get('session_id')!=session_id
+                    or not isinstance(token,str) or not SHA.fullmatch(token)):
+                raise ValueError('Владелец сессии изменился')
+            result=owner_request(row['port'],path+'/'+operation,
+                dict(payload,bot_id=identifier,session_id=session_id),token=token)
+            if result.get('bot_id')!=identifier or result.get('session_id')!=session_id:
+                raise ValueError('Ответ другой игровой сессии')
+            self.checked_at=float('-inf')
+            return result
 
     def stop(self, identifier, session_id):
         with self.lock:

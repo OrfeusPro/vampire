@@ -128,6 +128,7 @@
       if (!value.quests.length) return [el('p', value.questsObserved ? 'Полученное сообщение не содержит записей квестов' : 'Сервер передал пустой список заданий')];
       const nodes = value.quests.map(quest => {
         const node = button(quest.title, () => {
+          if(interaction?.canToggleQuest?.(quest.id)){void interaction.toggleQuest(quest.id);return;}
           const actionId=interaction?.questAction(quest.id);
           if(interaction?.policy.auto_quests&&actionId&&interaction.available(actionId)){void interaction.perform(actionId);return;}
           const body = open('Задание');
@@ -139,7 +140,11 @@
           if (quest.objective) append(body,el('p',quest.objective));
           if (value.questsObserved) append(body, el('p', 'Последнее сообщение сервера; активный шаг ещё не установлен.'),
             el('pre', JSON.stringify({group:quest.group,state:quest.state,progress:quest.progress},null,2), 'live-analysis'));
-        }, 'live-quest'); node.dataset.questId = quest.id; return node;
+        }, 'live-quest'); node.dataset.questId = quest.id;
+        const active=interaction?.policy.auto_quests===true&&interaction?.view.automation?.selected_quest_id===quest.id;
+        node.setAttribute('aria-pressed',String(active));
+        node.title=active?'Остановить автовыполнение этого задания':interaction?.canToggleQuest?.(quest.id)?'Выбрать задание для автовыполнения':'Открыть сведения о задании';
+        return node;
       });
       return value.questsObserved ? [el('small', 'Полученные задания. Активный этап ещё уточняется.'), ...nodes] : nodes;
     }
@@ -148,12 +153,18 @@
       if(!interaction)return;
       const view=interaction.view,policy=interaction.policy;
       skipCheck.checked=policy.skip_dialogues;autoCheck.checked=policy.auto_quests;
-      skipCheck.disabled=interaction.policyBusy||!!group&&!view.ready;autoCheck.disabled=interaction.policyBusy||!!group&&!view.ready;
+      skipCheck.disabled=interaction.policyBusy||!!group&&!view.ready&&view.automation?.supported!==true;
+      autoCheck.disabled=interaction.policyBusy||!view.ready&&view.automation?.supported!==true;
       actionStatus.textContent=interaction.status;
       const automation=view.automation;
-      questNotice.textContent=automation?.state==='waiting_npc'?'Подойдите к NPC'+(automation.npc_label?': '+automation.npc_label:'')
+      questNotice.textContent=automation?.state==='dead'||['death','dead'].includes(automation?.stop_reason)?'Персонаж погиб. Автовыполнение остановлено'
+        :automation?.state==='paused'?'Автовыполнение приостановлено'
+        :automation?.state==='waiting_npc'?'Подойдите к NPC'+(automation.npc_label?': '+automation.npc_label:'')
         :automation?.state==='running'?'Выполняется выбранное задание':!view.ready?'Управление заданиями пока недоступно'
         :policy.auto_quests?'Нажмите на квест, чтобы начать автовыполнение':'Выберите задание для ручного продолжения';
+      if(automation?.state==='waiting_data'&&automation.selected_quest_id)questNotice.textContent='Задание выбрано · ожидание подключения шага';
+      else if(automation?.supported===true&&!policy.auto_quests&&!view.ready)questNotice.textContent='Нажмите на задание для выбора. Игровой шаг ещё не подключён';
+      refreshQuestList();
       const key=JSON.stringify([view.messages,view.actions.map(a=>[a.id,interaction.available(a.id)]),view.known,view.messagesKnown]);
       if(key===interactionKey)return;interactionKey=key;
       if(!view.messages.length){messageList.replaceChildren(el('p',view.messagesKnown?'Нет новых сообщений':'Текстовые сообщения ещё не получены'));return;}
@@ -233,8 +244,7 @@
         : value.position ? 'Маркер: серверная цель до коррекции клиента' : 'Позиция на карте: проекция ещё не подтверждена';
       nearby.textContent = value.entitiesPartial ? 'Наблюдалось объектов: ' + value.entities + ' · данные неполные' : 'Объекты рядом: ' + (value.entitiesKnown ? value.entities : '—');
       environmentButton.disabled = !value.entitiesKnown; center.disabled = !value.position;
-      const nextQuestKey = JSON.stringify([value.questsKnown, value.questsObserved, value.quests]);
-      if (nextQuestKey !== questKey) { questKey = nextQuestKey; questList.replaceChildren(...questNodes()); }
+      refreshQuestList();
       if (Array.isArray(next?.journal)) {
         const fresh = next.journal.filter(row => Number.isSafeInteger(row.seq) && row.seq > cursor);
         if (fresh.length && fresh[0].seq > cursor + 1) gap = true;
@@ -242,6 +252,11 @@
         if (fresh.length) cursor = fresh[fresh.length - 1].seq;
       }
       sendMap(); refreshDialog?.();
+    }
+    function refreshQuestList(){
+      const next=JSON.stringify([value.questsKnown,value.questsObserved,value.quests,interaction?.policy.auto_quests,
+        interaction?.view.automation?.selected_quest_id,interaction?.view.automation?.state,interaction?.policyBusy]);
+      if(next!==questKey){questKey=next;questList.replaceChildren(...questNodes());}
     }
     function resize() {
       // Temporary shell scale; native runtime DPI is still unknown.
@@ -251,7 +266,7 @@
     function connect() {
       interaction?.dispose();interactionKey=undefined;
       interaction=root.VampirLiveInteraction.create({botId:profile,sessionId,dispatch:payload=>adapter.action(payload),
-        configurePolicy:policy=>adapter.policy(policy),onChange:renderInteraction});
+        configurePolicy:policy=>adapter.policy(policy),configureQuest:payload=>adapter.questAutomation(payload),onChange:renderInteraction});
       disposed = false; statusView = components.playerStatus({state:{}, character:null,
         onOpen:() => openSection('ButtonCharacter', 'Персонаж')});
       statusHolder.replaceChildren(statusView.node); update(null);

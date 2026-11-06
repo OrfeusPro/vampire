@@ -15,6 +15,7 @@ from .quest_sync import decode_quest_sync
 from .quest_update_result import decode_quest_update_result
 from .world_move_start import CURRENT_PROBE_SOURCE
 from .action_queue import ActionNotQueued,SessionActionQueue,SCHEMAS,digest,validate_policy
+from .quest_automation import QuestAutomation
 import json
 
 STAT_FIELDS={3:'level',4:'hp',5:'max_hp',9:'mp',10:'max_mp'}
@@ -47,6 +48,9 @@ class LiveSession:
         self._action_offers=[]
         self._action_scope=None
         self._policy=dict(skip_dialogues=True,auto_quests=False)
+        self._quest_automation=QuestAutomation()
+        self._auto_quest_started=False
+        self._quest_observation=False
         self._source=None
         self._stats={}
         self._stats_key=None
@@ -84,9 +88,11 @@ class LiveSession:
             if self._closed or self._source not in (None,source_sha256):raise ValueError('Session source cannot change')
             if self._source is None:self._diagnostics.event('source_bound',source_sha256=source_sha256)
             self._source=source_sha256
-            if source_sha256==CURRENT_PROBE_SOURCE and self._snapshot['coverage']['tutorial']=='not_verified':
+            from .bounded_world_admission import permits
+            self._quest_observation=source_sha256==CURRENT_PROBE_SOURCE or permits(source_sha256,'quest-observation-v1')
+            if self._quest_observation and self._snapshot['coverage']['tutorial']=='not_verified':
                 self._snapshot['coverage']['tutorial']='not_received'
-            if source_sha256==CURRENT_PROBE_SOURCE and self._snapshot['coverage']['quests']=='not_verified':
+            if self._quest_observation and self._snapshot['coverage']['quests']=='not_verified':
                 self._snapshot['coverage']['quests']='not_received'
             if source_sha256==CURRENT_PROBE_SOURCE and self._snapshot['coverage']['quest_result']=='not_verified':
                 self._snapshot['coverage']['quest_result']='not_received'
@@ -120,6 +126,7 @@ class LiveSession:
                 coverage.update(vitals_observation=observation,stats_observation=observation)
         self._snapshot['stat_decode_errors']=self._stat_errors
         self._stats_applied=self._stats_revision
+        self._update_automation()
 
     def packet(self, packet_id, body, *, character_key=None,world_id=None):
         # Unknown traffic is counted, never retained or mistaken for decoded state.
@@ -132,10 +139,15 @@ class LiveSession:
             if key in counts or len(counts)<256:counts[key]=min(counts.get(key,0)+1,2**53-1)
             if packet_id==1811 and self._source==CURRENT_PROBE_SOURCE:
                 self._receive_quest_result(body,character_key,world_id)
-            if packet_id==1854 and self._source==CURRENT_PROBE_SOURCE:
+            if packet_id==1854 and self._quest_observation:
                 if type(character_key) is int and 0<=character_key<2**64 and type(world_id) is int and 0<=world_id<2**32:
                     self._receive_quests(body,character_key,world_id)
-            if packet_id==9905 and self._source==CURRENT_PROBE_SOURCE:
+            if packet_id==9905 and self._quest_observation:
+                person=self._snapshot['character']
+                if self._source!=CURRENT_PROBE_SOURCE and (type(character_key) is not int or not 0<=character_key<2**64
+                        or type(world_id) is not int or not 0<=world_id<2**32
+                        or person is not None and (person['key'],person['world_id'])!=(str(character_key),world_id)):
+                    return
                 try:
                     update=decode_tutorial_update(body,source_sha256=self._source,max_records=64,max_payload_size=835)
                 except (ValueError,BufferError):
@@ -147,6 +159,7 @@ class LiveSession:
                     # This is an observation of one message, not the client's
                     # applied tutorial map or permission to advance a task.
                     self._snapshot['tutorial']=dict(semantics='last_received_message',applied_to_local_task=False,
+                        source_sha256=self._source,
                         flag=update.flag,records=[dict(raw08=r.raw08,raw0c=r.raw0c,raw10=r.raw10,state=r.state) for r in update.records],
                         character_key=str(character_key) if type(character_key) is int and 0<=character_key<2**64 else None,
                         world_id=world_id if type(world_id) is int and 0<=world_id<2**32 else None,
@@ -245,8 +258,10 @@ class LiveSession:
         character=self._snapshot['character']
         if character and (character['key'],character['world_id'])!=(str(character_key),world_id):return
         try:
+            current=self._source!=CURRENT_PROBE_SOURCE
             message=decode_quest_sync(body,source_sha256=self._source,
-                max_collection_items=128,max_total_items=128,max_payload_size=8192)
+                max_collection_items=8 if current else 128,max_total_items=72 if current else 128,
+                max_payload_size=2530 if current else 8192)
         except (ValueError,BufferError):
             self._snapshot.update(quests=[],quest_snapshot=None)
             self._snapshot['quest_decode_errors']=min(self._snapshot['quest_decode_errors']+1,2**53-1)
@@ -261,6 +276,7 @@ class LiveSession:
                     raw10=str(r.progress.raw10),raw18=str(r.progress.raw18)),raw38=r.raw38,
                     raw3c=r.raw3c,raw40=r.raw40,raw44=r.raw44))
         self._snapshot.update(quests=rows,quest_snapshot=dict(semantics='last_received_message',
+            source_sha256=self._source,
             applied_to_local_task=False,character_key=str(character_key),world_id=world_id,
             group_types=[g.raw08 for g in message.groups],raw18=str(message.raw18),
             received_at_ms=time.time_ns()//1000000))
@@ -357,20 +373,21 @@ class LiveSession:
             self._action_offers=[]
             if not self._closed:self._diagnostics.event('session_closed',error=error)
             self._closed=True
+            self._quest_automation.stop('connection_lost');self._policy['auto_quests']=False
             self._diagnostics.close()
             self._stats.clear();self._stats_key=None
             self._environment.world(None);self._apply_environment()
             self._snapshot.update(state='disconnected',position=None,character=None,entities=[],quest_update_result=None,tutorial=None,quests=[],quest_snapshot=None,
                 updated_at_ms=time.time_ns()//1000000,error=error or self._snapshot['error'])
-            self._snapshot['coverage']['tutorial']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
-            self._snapshot['coverage']['quests']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
+            self._snapshot['coverage']['tutorial']='not_received' if self._quest_observation else 'not_verified'
+            self._snapshot['coverage']['quests']='not_received' if self._quest_observation else 'not_verified'
             self._snapshot['coverage']['quest_result']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
 
     def _interaction_view(self,queue):
         """Publish only trusted owner offers; does not invent received prompts."""
         person=self._snapshot['character']
-        if self._source!=CURRENT_PROBE_SOURCE or self._snapshot['state']!='connected' or person is None:return None
-        ready=self._action_connection is not None and not self._stop.is_set() and not queue['closed']
+        if not self._quest_observation or self._snapshot['state']!='connected' or person is None:return None
+        ready=self._actions is not None and self._action_connection is not None and not self._stop.is_set() and not queue['closed']
         busy=queue['blocked'] or any(r['status'] in ('queued','executing','sent') for r in queue['records'])
         actions=[];quests=[];step=self._quest_step
         if step is not None:
@@ -391,11 +408,59 @@ class LiveSession:
         view['revision']=hashlib.sha256(json.dumps(view,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
         return view
 
+    def _update_automation(self,queue=None,interaction=None):
+        """Owner state only. Reads and policy changes never create game packets."""
+        if self._source is None:return None
+        queue=queue if queue is not None else (self._actions.snapshot() if self._actions else dict(closed=False,blocked=False,records=[],capabilities=[]))
+        if interaction is None:interaction=self._interaction_view(queue)
+        before=self._quest_automation.snapshot()
+        state=self._quest_automation.observe(dict(self._snapshot,source_sha256=self._source,
+            action_queue=queue,interaction=interaction))
+        if self._quest_automation.take_cancel_pending() and self._actions:
+            self._actions.cancel_pending(self._action_owner)
+        if (self._source!=CURRENT_PROBE_SOURCE or state['selected_quest_id'] is not None
+                or before['selected_quest_id'] is not None
+                or state['stop_reason'] in ('death','unknown_result','stale_context','connection_lost')):
+            self._policy['auto_quests']=state['enabled']
+        if (state['state'],state['stop_reason'])!=(before['state'],before['stop_reason']):
+            self._diagnostics.event('quest_automation_changed',state=state['state'],reason=state['stop_reason'])
+        return self._quest_automation.snapshot()
+
+    def configure_quest_automation(self,quest_id,enabled):
+        if type(enabled) is not bool:raise ValueError('Explicit quest automation setting required')
+        with self._lock:
+            if self._closed or self._stop.is_set() or not self._quest_observation or self._snapshot['state']!='connected':
+                raise RuntimeError('Quest observations unavailable')
+            self._update_automation()
+            if enabled:
+                context=self._snapshot['quest_snapshot'];person=self._snapshot['character']
+                if (context is None or self._snapshot['coverage']['quests']!='last_received_message'
+                        or (context['character_key'],context['world_id'])!=(person['key'],person['world_id'])
+                        or type(quest_id) is not str or len([r for r in self._snapshot['quests'] if r['id']==quest_id])!=1):
+                    raise ValueError('Select one currently observed quest')
+            elif quest_id is not None:raise ValueError('Stopping clears the selected quest')
+            state=self._quest_automation.toggle(quest_id,enabled=enabled)
+            if enabled and not state['enabled']:raise RuntimeError('Quest automation cannot start')
+            self._policy['auto_quests']=enabled
+            self._auto_quest_started=False
+            state=self._update_automation()
+            self._diagnostics.event('quest_automation_configured',quest_id=quest_id,enabled=enabled)
+            return dict(bot_id=self.bot_id,session_id=self.session_id,status='quest_automation_updated',
+                policy=self._policy.copy(),automation=state)
+
     def snapshot(self,*,for_api=False,entity_page=0):
         if type(entity_page) is not int or entity_page not in (0,1):raise ValueError('Invalid entity page')
         with self._lock:
             self._sync_quest_transport()
+            queue=self._actions.snapshot() if self._actions else dict(closed=False,blocked=False,records=[],capabilities=[])
+            interaction=self._interaction_view(queue)
+            automation=self._update_automation(queue,interaction)
             value=copy.deepcopy(self._snapshot)
+            value['source_sha256']=self._source
+            value['action_policy']=self._policy.copy()
+            if interaction is not None:
+                interaction['automation']=automation
+                value['interaction']=interaction
             if self._quest_transport is not None:
                 value['quest_transport']=copy.deepcopy({k:v for k,v in self._quest_transport.items() if k!='ticket' and not k.startswith('_')})
             if for_api:
@@ -409,9 +474,6 @@ class LiveSession:
             value['trace']=dict(packet_ids=list(self._diagnostics.ids),sample_bytes=self._diagnostics.sample_bytes)
             if self._actions:
                 value['action_queue']=self._actions.snapshot()
-                interaction=self._interaction_view(value['action_queue'])
-                if interaction is not None:value['interaction']=interaction
-                value['action_policy']=self._policy.copy()
         value['uptime_seconds']=round(time.monotonic()-self._started,1)
         return value
 
@@ -465,6 +527,9 @@ class LiveSession:
     def _action_ready(self):
         if self._closed or self._stop.is_set() or self._actions is None or self._snapshot['state']!='connected':
             raise RuntimeError('Action channel unavailable')
+        if (self._snapshot['coverage']['vitals'] in ('received','partial')
+                and self._snapshot['character'] and self._snapshot['character']['hp']==0):
+            raise RuntimeError('Character is dead')
 
     def _scope(self):
         person=self._snapshot['character']
@@ -527,6 +592,19 @@ class LiveSession:
             context,_=self._quest_step_context(step['payload'])
             if context!=step['context']:
                 self._quest_step=None;self._action_offers=[]
+            self._update_automation()
+            if (self._snapshot['coverage']['vitals'] in ('received','partial')
+                    and self._snapshot['character'] and self._snapshot['character']['hp']==0):return None
+            offer=self._quest_automation.next_offer() if self._auto_quest_started else None
+            if offer is not None:
+                # The first click is a manual queue operation. Continue only
+                # after its owner-confirmed receipt and a new exact offer.
+                action_id='quest-'+offer['arguments']['quest_id']+'-'+offer['context'][:24]
+                material='|'.join((self.bot_id,self.session_id,action_id,offer['context']))
+                request_id=hashlib.sha256(material.encode()).hexdigest()[:32]
+                result=self._actions.enqueue(bot_id=self.bot_id,session_id=self.session_id,
+                    request_id=request_id,**offer,policy=self._policy,origin='auto_quest')
+                if result['status']=='queued':self._quest_automation.submitted(request_id,offer['context'])
         # Claim checks queued context/scope/policy again. Stale context fails
         # before enqueue; a successfully taken step is consumed even on failure.
         intent=self.claim_action(key,context=context)
@@ -548,14 +626,27 @@ class LiveSession:
             if self._scope()!=self._action_scope or offer not in self._action_offers:raise RuntimeError('Action not currently offered')
             validate_policy(value['policy'])
             if value['origin']=='auto_skip' and not self._policy['skip_dialogues']:raise RuntimeError('Automatic skip disabled')
+            if value['origin']=='auto_quest':raise ValueError('Automatic quest continuation belongs to the owner')
+            self._update_automation()
+            automated=self._quest_automation.next_offer()
             result=self._actions.enqueue(bot_id=self.bot_id,session_id=self.session_id,**value)
+            if result['status']=='queued' and automated==offer:
+                self._quest_automation.submitted(result['request_id'],offer['context'])
+                self._auto_quest_started=True
             self._diagnostics.event('action_intent',request_id=result['request_id'],action_kind=result['kind'],status=result['status'])
             return dict(bot_id=self.bot_id,session_id=self.session_id,**result)
 
     def configure_policy(self,value):
         policy=validate_policy(value)
         with self._lock:
-            self._action_ready();self._policy=policy
+            if self._source==CURRENT_PROBE_SOURCE:
+                self._action_ready();self._policy=policy
+                self._diagnostics.event('action_policy_updated',**policy)
+                return dict(bot_id=self.bot_id,session_id=self.session_id,status='policy_updated',policy=policy.copy())
+            if self._closed or self._stop.is_set() or not self._quest_observation or self._snapshot['state']!='connected':
+                raise RuntimeError('Policy owner unavailable')
+            if policy['auto_quests']!=self._policy['auto_quests']:raise ValueError('Select or stop a quest explicitly')
+            self._policy=policy
             self._diagnostics.event('action_policy_updated',**policy)
             return dict(bot_id=self.bot_id,session_id=self.session_id,status='policy_updated',policy=policy.copy())
 
@@ -566,7 +657,10 @@ class LiveSession:
             intent=self._actions.claim(owner_key,context=context)
             if intent is None:return None
             offered={k:intent[k] for k in ('kind','context','arguments')}
-            if self._scope()!=self._action_scope or offered not in self._action_offers or (intent['origin']=='auto_skip' and not self._policy['skip_dialogues']):
+            if (self._scope()!=self._action_scope or offered not in self._action_offers
+                    or intent['origin']=='auto_skip' and not self._policy['skip_dialogues']
+                    or intent['origin']=='auto_quest' and (not self._policy['auto_quests']
+                        or self._quest_automation.snapshot()['selected_quest_id']!=intent['arguments']['quest_id'])):
                 self._actions.resolve(owner_key,intent['request_id'],status='failed');return None
             return dict(intent,current_policy=self._policy.copy())
 
@@ -584,7 +678,7 @@ class LiveSession:
                 offer={k:intent[k] for k in ('kind','context','arguments')}
                 if (self._action_connection is None or self._scope()!=self._action_scope
                         or offer not in self._action_offers or intent['kind']!='quest_follow'
-                        or intent['origin']!='manual' or type(payload) is not QuestUpdate
+                        or intent['origin'] not in ('manual','auto_quest') or type(payload) is not QuestUpdate
                         or payload.raw30!=int(intent['arguments']['quest_id'])):
                     raise ActionNotQueued()
                 connection=self._action_connection

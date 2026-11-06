@@ -29,6 +29,7 @@ body.group-map{margin:0;overflow:hidden;background:#10251e}#group-canvas{display
 .live-quests p{font-size:.75rem;line-height:1.5;margin:.5em 0}
 .live-quests small{font-size:.6rem;color:#a8ada1;display:block;margin-top:14px}
 .live-quest{display:block;width:100%;text-align:left;font-size:.8rem;padding:.7em;background:#1b2d24}
+.live-quest[aria-pressed=true]{background:#3c5133;box-shadow:inset 3px 0 #cfb56c}
 .live-policies{display:grid;gap:8px;margin-bottom:12px;font-size:.7rem}
 .live-policies input{accent-color:#bca776;width:15px;height:15px;flex-shrink:0}
 .live-messages{font-size:.75rem}.live-messages p{white-space:pre-wrap;overflow-wrap:anywhere}

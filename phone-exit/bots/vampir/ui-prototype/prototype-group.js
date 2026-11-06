@@ -31,9 +31,21 @@
    consumer={id,sessionId,onChange};
    const state=sessions[id];
    onChange(state?.session_id===sessionId?state:null);
+   const command=(action,payload)=>{
+    if(disposed||consumer?.onChange!==onChange||sessions[id]?.session_id!==sessionId||sessions[id]?.state!=='connected')
+     throw Error('Игровая сессия изменилась');
+    return api({id,session_id:sessionId,action,payload});
+   };
    return {dispose(){if(consumer?.onChange===onChange)consumer=null;},
-    action:async()=>{throw Error('Действие ещё недоступно в этой сессии');},
-    policy:async()=>{throw Error('Автоматизация ещё недоступна в этой сессии');},setEntityPage(){}};
+    action:payload=>{
+     const view=root.VampirLiveInteraction.project(sessions[id],id,sessionId);
+     const offer=view.actions.find(row=>row.id===payload?.action_id&&row.enabled);
+     if(!view.ready||!offer)throw Error('Действие больше недоступно');
+     return command('actions',{request_id:payload.request_id,kind:offer.kind,context:offer.context,
+      arguments:offer.arguments,policy:payload.policy,origin:payload.origin});
+    },
+    policy:policy=>command('policy',{policy}),
+    questAutomation:payload=>command('quest-automation',payload),setEntityPage(){}};
   }
   function render(){
    const servers=[...new Set(Object.values(sessions).filter(row=>row.state==='connected').map(server))].sort();

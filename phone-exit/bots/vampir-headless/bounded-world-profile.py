@@ -4,15 +4,16 @@ import importlib.util
 import json
 from pathlib import Path
 import re
+import sys
 
 ROOT = Path('F:/PhoneExit Resources/Vampir')
 WORKSPACE = Path(__file__).resolve().parents[3]
 INSTALLED = Path('C:/Program Files/Netmarble/Netmarble Game/VAMPIR/ProjectRED/Binaries/Win64/ProjectRED-Win64-Shipping.exe')
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 RECIPE = 'bounded-world-profile-v1'
-POLICIES = ['game-login-world-v1', 'world-selection-move-v1', 'periodic-ping-v1', 'initial-character-stats-v1', 'character-stat-notifications-v1']
+POLICIES = ['game-login-world-v1', 'world-selection-move-v1', 'periodic-ping-v1', 'initial-character-stats-v1', 'character-stat-notifications-v1', 'quest-observation-v1']
 OPERATIONS = ['character-select', 'world-entry', 'keep-online']
-PROOFS = {'clock-world-current', 'world-results-current', 'initial-stats-current', 'stat-notifications-current'}
+PROOFS = {'clock-world-current', 'world-results-current', 'initial-stats-current', 'stat-notifications-current', 'quest-observation-current'}
 SHA = re.compile('[0-9a-f]{64}')
 CONSUMERS = (
     'vampir-headless/bounded-world-profile.py',
@@ -40,6 +41,11 @@ CONSUMERS = (
     'vampir-shared/vampir_core/game_connection.py',
     'vampir-shared/vampir_core/live_session.py',
     'vampir-shared/vampir_core/stat_change.py',
+    'vampir-shared/vampir_core/quest_sync.py',
+    'vampir-shared/vampir_core/quest_record.py',
+    'vampir-shared/vampir_core/tutorial_update.py',
+    'vampir-shared/vampir_core/quest_automation.py',
+    'vampir-shared/vampir_core/action_queue.py',
     'vampir-shared/vampir_core/live_session_server.py',
     'vampir-shared/vampir_core/detached_worker.py',
     'vampir-shared/vampir_core/scheduled_worker.py',
@@ -164,11 +170,17 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
         raise ValueError('Bounded world entry pointer differs')
     loader = _entry_loader(workspace)
     entry_path = Path(entry['path']).resolve()
+    quests = _pointer(profile['proofs']['quest-observation-current'],root/'code-clues/quest-observation-current-v1',inputs)
+    quest_runtime=quests.get('definition',{}).get('runtime_inputs',{})
+    _retained(inputs,quest_runtime)
     for name, expected in inputs.items():
         dependency = Path(name).resolve()
         if not Path(name).is_absolute() or not SHA.fullmatch(str(expected)):
             raise ValueError('Bounded world dependency descriptor differs')
-        budget = 2 * 1024 * 1024 if dependency == entry_path else loader.input_budget(dependency, root, workspace, installed)
+        if name in quest_runtime and dependency.is_relative_to(Path(sys.base_prefix).resolve()) and dependency.suffix.lower() in ('.py','.pyd','.dll','.exe'):
+            budget=64*1024*1024
+        else:
+            budget = 2 * 1024 * 1024 if dependency == entry_path else loader.input_budget(dependency, root, workspace, installed)
         if digest(dependency, budget) != expected:
             raise ValueError('Bounded world dependency changed: ' + dependency.name)
     parent = loader.load_manifest(entry['sha256'], root=root, workspace=workspace, installed=installed)
@@ -196,4 +208,17 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
                    for key,item in changes.get('packet_bindings',{}).items())):
         raise ValueError('Stat notification proof scope differs')
     _retained(inputs,changes.get('definition',{}).get('inputs'))
+    if (quests.get('source_sha256')!=SOURCE or quests.get('recipe')!='quest-observation-current-v1'
+            or quests.get('observation_projection_verified') is not True
+            or quests.get('native_execution') is not False or quests.get('native_proofs_reused') is not True
+            or quests.get('runtime_admitted') is not False or quests.get('network_used') is not False
+            or quests.get('scope')!='last_received_message_only' or quests.get('inherited_native_cases')!=1178
+            or quests.get('packet_compatibility')!={'1854':True,'9905':True}
+            or quests.get('bounds')!={'1854':dict(max_groups=8,max_quests_per_group=8,max_total_items=72,max_payload_size=2530),
+                '9905':dict(max_records=64,max_payload_size=835)}
+            or set(quests.get('packet_bindings',{}))!={'1854','9905'}
+            or any(item.get('binding_verified') is not True or item.get('packet_id')!=int(key)
+                for key,item in quests.get('packet_bindings',{}).items())):
+        raise ValueError('Quest observation proof scope differs')
+    _retained(inputs,quests.get('definition',{}).get('inputs'))
     return dict(profile, selected_profile='bounded-world:' + selector_sha, manifest_sha256=selector_sha)

@@ -19,12 +19,16 @@ class QuestSync:
 
 def decode_quest_sync(body, *, source_sha256, max_collection_items,
                       max_total_items, max_payload_size):
-    if source_sha256 != CURRENT_SOURCE_SHA256:
+    from .bounded_world_admission import permits
+    bounded_current = permits(source_sha256, 'quest-observation-v1')
+    if source_sha256 != CURRENT_SOURCE_SHA256 and not bounded_current:
         raise ValueError('Unsupported quest sync source')
     for limit, maximum in ((max_collection_items, 65535),
                            (max_total_items, 1048576), (max_payload_size, 0xffffff)):
         if type(limit) is not int or not 0 <= limit <= maximum:
             raise ValueError('Explicit bounded quest sync limits required')
+    if bounded_current and (max_collection_items > 8 or max_total_items > 72 or max_payload_size > 2530):
+        raise ValueError('Current quest sync exceeds the qualified native matrix')
     if type(body) is not bytes:
         raise ValueError('Invalid quest sync body')
     if len(body) > max_payload_size:

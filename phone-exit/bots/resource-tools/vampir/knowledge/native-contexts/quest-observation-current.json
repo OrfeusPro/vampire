@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "recipe": "quest-observation-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "families": {
+    "1854": "quest-sync",
+    "9905": "tutorial-update"
+  },
+  "bounds": {
+    "1854": {"max_groups": 8, "max_quests_per_group": 8, "max_total_items": 72, "max_payload_size": 2530},
+    "9905": {"max_records": 64, "max_payload_size": 835}
+  },
+  "parents": {
+    "1854": {
+      "path": "F:/PhoneExit Resources/Vampir/knowledge/quest-packet-native-checks-v1/90eb396d3744175bf1af9a360e9fad479a89801f417ae35e245df9c20b69bd80/manifest.json",
+      "sha256": "90eb396d3744175bf1af9a360e9fad479a89801f417ae35e245df9c20b69bd80"
+    },
+    "9905": {
+      "path": "F:/PhoneExit Resources/Vampir/knowledge/quest-packet-native-checks-v1/d2ef50629f8578e5e1adf4ab6d576b6c3de2ff9bb878c264c190aa7423a1b7ec/manifest.json",
+      "sha256": "d2ef50629f8578e5e1adf4ab6d576b6c3de2ff9bb878c264c190aa7423a1b7ec"
+    }
+  }
+}

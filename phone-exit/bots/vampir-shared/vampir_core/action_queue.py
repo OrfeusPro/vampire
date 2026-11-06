@@ -85,7 +85,7 @@ class SessionActionQueue:
             raise ValueError('Bounded decimal action IDs required')
         arguments=arguments.copy()
         policy=validate_policy(policy if policy is not None else dict(skip_dialogues=True,auto_quests=False))
-        if origin not in ('manual','auto_skip') or (origin=='auto_skip' and (kind!='dialogue_skip' or not policy['skip_dialogues'])):
+        if origin not in ('manual','auto_skip','auto_quest') or (origin=='auto_skip' and (kind!='dialogue_skip' or not policy['skip_dialogues'])) or (origin=='auto_quest' and (kind!='quest_follow' or not policy['auto_quests'])):
             raise ValueError('Invalid action origin')
         fingerprint=intent_fingerprint(kind,context,arguments,policy,origin)
         with self._lock:
@@ -173,6 +173,15 @@ class SessionActionQueue:
             if row['status'] not in ('executing','sent'):raise RuntimeError('Action is already terminal')
             if status=='confirmed' and row['status']!='sent':raise RuntimeError('Unsent action cannot be confirmed')
             self._set(row,status,'outcome_unconfirmed' if status=='unknown' else None)
+
+    def cancel_pending(self,owner_key):
+        """Cancel unsent intents only; keep sent/unknown outcome fences intact."""
+        self._owner(owner_key)
+        with self._lock:
+            self._refresh()
+            for row in self._records.values():
+                if row['status']=='queued':self._set(row,'failed','cancelled_before_send')
+            self._pending.clear()
 
     def close(self,owner_key):
         self._owner(owner_key)

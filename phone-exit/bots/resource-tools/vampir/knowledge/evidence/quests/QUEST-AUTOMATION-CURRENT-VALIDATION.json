@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "scope": "bounded_observation_and_owner_selection",
+  "observation_proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-observation-current-v1\\496131426fd59ec4e30b36a04ab7c3b2bbadd45df34fb92e0a484f118dc599d2\\manifest.json",
+    "sha256": "496131426fd59ec4e30b36a04ab7c3b2bbadd45df34fb92e0a484f118dc599d2"
+  },
+  "prepared_profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\bounded-world-profiles\\0e00777b99ff4200490c5105517da8a096788916e8f11eaa6a08a8f57a44e517\\manifest.json",
+    "sha256": "0e00777b99ff4200490c5105517da8a096788916e8f11eaa6a08a8f57a44e517"
+  },
+  "selected_profile": "bounded-world:0e00777b99ff4200490c5105517da8a096788916e8f11eaa6a08a8f57a44e517",
+  "profile_inputs": 799,
+  "inherited_native_cases": 1178,
+  "new_native_execution": false,
+  "source_check": {
+    "id": "quest-observation-current",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5120767149361b12b058907bdf7df3eefb88a44c873fac125520b0fbbf42ce31\\manifest.json",
+    "sha256": "5120767149361b12b058907bdf7df3eefb88a44c873fac125520b0fbbf42ce31",
+    "cache_key": "491d3bfbd4930c6c24d62b993440e231d754becb7e5d7676b8b968b8198d8cd3"
+  },
+  "tooling_check": {
+    "id": "automatic-update-tooling",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\2edb5eb43ed8923b66ef95e9db0369be844e55229d62c6db50f1bb74513bde46\\manifest.json",
+    "sha256": "2edb5eb43ed8923b66ef95e9db0369be844e55229d62c6db50f1bb74513bde46",
+    "cache_key": "c645b2aa0189a320d922bbc8bfb79adfd889958d90e2ce5cbdefe45f56aee0c3",
+    "source_scope": "tooling",
+    "proves_client_compatibility": false
+  },
+  "aggregate": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\f1657ddb3f1f75f0137d1ee7b9380edaedaf83b79df975afc34bcc7bad82f800\\manifest.json",
+    "sha256": "f1657ddb3f1f75f0137d1ee7b9380edaedaf83b79df975afc34bcc7bad82f800"
+  },
+  "groups": 64,
+  "tests_run": 2294,
+  "skipped": 4,
+  "ordinary_update_warm": {
+    "seconds": 25.682,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\415286b32c1d8131f55113492adf74aeed45de56de5024e5cca7b732c3288bed\\manifest.json",
+    "sha256": "415286b32c1d8131f55113492adf74aeed45de56de5024e5cca7b732c3288bed"
+  },
+  "collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\996004590cf8b889624fe0663293cf5ef8cacbf29264cde6740aa51a6694a480\\manifest.json",
+    "sha256": "996004590cf8b889624fe0663293cf5ef8cacbf29264cde6740aa51a6694a480"
+  },
+  "collection_new_jvm": 0,
+  "online": {
+    "character": "Bipoberiho",
+    "state": "connected",
+    "session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+    "hp": 2700,
+    "mp": 2000,
+    "level": 1,
+    "quest_packets_seen": 1,
+    "tutorial_packets_seen": 1,
+    "new_observer_loaded": false,
+    "connection_preserved": true
+  },
+  "current_outgoing_quest_admitted": false,
+  "current_dialogue_decoder_admitted": false,
+  "runtime_ui_visual_check": "pending_browser_enabled_after_codex_restart",
+  "fixture_coverage": [
+    "first_click_selection",
+    "second_click_stop",
+    "confirmed_death_no_auto_revive",
+    "queued_only_cancellation",
+    "unknown_result_fence",
+    "scoped_loopback_and_panel_proxy",
+    "owner_continuation_requires_confirmed_receipt_and_new_offer"
+  ],
+  "limits": [
+    "Current online owner retains its original pinned package; initial bodies were not retained.",
+    "No current quest gameplay, dialogue, NPC interaction, equipment action or online auto-completion claim.",
+    "Fixture socket execution uses the previous admitted action contract, not the current game server.",
+    "Full knowledge check is a separate precommit gate; it is not a gameplay proof."
+  ]
+}

@@ -8,7 +8,7 @@ import re
 
 PREFIX = 'bounded-world:'
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
-POLICIES = frozenset(('game-login-world-v1', 'world-selection-move-v1', 'periodic-ping-v1', 'initial-character-stats-v1', 'character-stat-notifications-v1'))
+POLICIES = frozenset(('game-login-world-v1', 'world-selection-move-v1', 'periodic-ping-v1', 'initial-character-stats-v1', 'character-stat-notifications-v1', 'quest-observation-v1'))
 _active = ContextVar('vampir_bounded_world', default=None)
 
 
