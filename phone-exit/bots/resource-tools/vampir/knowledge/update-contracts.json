@@ -736,7 +736,9 @@
         "native-login-post-state-context",
         "native-login-continuation-context",
         "lobby-version-layout-current",
-        "lobby-metadata-current"
+        "lobby-metadata-current",
+        "lobby-wire-current",
+        "game-candidate-current"
       ],
       "recipes": [
         {
@@ -1842,7 +1844,9 @@
       ],
       "checks": [
         "preset-defaults-current",
-        "viper-class-current"
+        "viper-class-current",
+        "viper-cdo-current",
+        "create-packets-current"
       ],
       "recipes": [
         {
@@ -1866,14 +1870,23 @@
         }
       },
       "targets": [],
-      "resources": [],
+      "resources": [
+        {
+          "archive": "*pakchunk100-Windows.pak",
+          "path": "*Customize*"
+        },
+        {
+          "archive": "*.pak",
+          "path": "*ClassInfo*"
+        }
+      ],
       "coverage": "partial",
       "builder": null,
       "limits": [
         "ClassInfo и constructor сценарии сохраняют fixtures; loaded cache и целый payload не подтверждены.",
         "CDO/allocation/default copy, актуальные integer defaults, Viper tag и Create 103/104 не допущены."
       ],
-      "next_check": "Перенести текущую allocation/CDO цепочку по сохранённым source candidates, затем подтвердить current Create writer/result и factory."
+      "next_check": "Проверить актуальный загруженный preset/CDO, Create producer и полный Result 104 с обработчиком; затем отдельный допуск factory."
     }
   ]
 }

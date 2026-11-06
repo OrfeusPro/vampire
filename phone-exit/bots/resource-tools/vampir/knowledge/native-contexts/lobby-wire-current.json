@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "recipe": "lobby-wire-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+  "function_budget": 19,
+  "verify_whole_exports": true,
+  "functions": {
+    "bool": "0x144aac5e0",
+    "buffer_constructor": "0x144aac220",
+    "constructor": "0x145749a50",
+    "raw": "0x144aac6b0",
+    "std_string": "0x144aac480",
+    "string": "0x144aad0c0",
+    "time": "0x144aac560",
+    "u16": "0x144aac340",
+    "u32": "0x144aac390",
+    "u64": "0x144aac590",
+    "utf8_convert": "0x141446700",
+    "utf8_core": "0x14143bd90",
+    "utf8_length": "0x14144c4a0",
+    "utf8_scalar": "0x14143ba00",
+    "time_constructor": "0x1457a38c0",
+    "time_reader": "0x1457fe0e0",
+    "reader": "0x14574f5d0",
+    "input_constructor": "0x144aacc30"
+  },
+  "exports": {
+    "run-4b16a82b156e": "fa2447cfa04365a62c2faa5451d247fc6411d04c9956a27b640085c9caeb5b02",
+    "run-7047b821ac37": "675242094e1f4a7356a5f6d5437d2056f0d018656950ac98f82e9db46e34f072",
+    "run-761b5bc2280d": "5cf4a5e10d092e31119fd4f0b9cff8d0ee6ab47b7bf2feefbeeb8ab8c32b174e",
+    "run-947804c8e3e6": "b18c9a18ffa831f7086a7c69ee2112f1906e38e9a900134c7cafc55fa2eb4f33",
+    "run-acc24c5196b9": "fc8cae5bd2348ae09abc8496eb4f9d253be6c0c0edf1257071bbe5b850a1df99",
+    "run-c9f35d32258c": "5e13729b560181f6112e6a25ca0e40a9e1bcabac42ca289722ad2dea2f0c2d0a",
+    "run-4496e2332dcf": "8a3e629ec401d80e3d5393249b3c96e21d46bc9d59ad81455b3259b2a7b34c0b"
+  },
+  "helpers": {
+    "memcpy": "0x1487f8c99"
+  },
+  "leaves": {
+    "0x144aac330": "488b0141b80100000048ffa090000000",
+    "0x144aacf00": "488d051966bc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad290": "895110c3",
+    "0x144aad280": "488b024c8bc2488bd1498bc848ff6020",
+    "0x1457fdef0": "488d05813f120448c7410800000000488901488bc1c3"
+  },
+  "string_fixtures": {
+    "assign": "0x141427810",
+    "cpp_free": "0x141431fe0",
+    "free": "0x1414830e0",
+    "growth": "0x1421e7630",
+    "security": "0x1487ebec0",
+    "utf16_allocate": "0x141436d20"
+  },
+  "cookie": "0x14b274600",
+  "blocks": [
+    {
+      "address": "0x149673380",
+      "bytes": "80ccaa440100000020c7aa440100000090c7aa440100000020c6aa440100000060c5aa440100000060c5aa440100000080c4aa440100000030c4aa4401000000e0c3aa440100000090c5aa440100000090c5aa440100000090c3aa440100000090c3aa440100000040c3aa440100000040c3aa440100000030c3aa440100000030c3aa4401000000e0c5aa4401000000b0c6aa4401000000",
+      "sha256": "ad4c0009a63313e7759a4aca581a810956694006f2bfe05e9fbaac0bf8a679c4"
+    },
+    {
+      "address": "0x149921e78",
+      "bytes": "e06a6b4501000000103b40410100000070e47f4501000000103b404101000000e0e07f450100000070a36b4501000000",
+      "sha256": "a74fa9b1ce1e3083fafe63b7d54523cdf76faf65f22ca32f07e7ed4bdf556208"
+    }
+  ],
+  "input_table": "0x149673380",
+  "time_table": "0x149921e78",
+  "string_constructor": "0x1414269b0",
+  "reuse": {
+    "character_list": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\character-list-current-bounded\\f2353d6d1b1ca7006f4f26f466aca617d80ff070e4ab0895452289f1b71d66a0\\manifest.json",
+      "sha256": "f2353d6d1b1ca7006f4f26f466aca617d80ff070e4ab0895452289f1b71d66a0"
+    },
+    "record_context": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\character-list-current-code\\1c76867acd8ae6e619394a7911e177d193dec6034c5c1fc42e7f379c8d8d6bde\\character-record.json",
+      "sha256": "e4992fc02644bab8451cc228faec3e2cfcc3b37f4164608b047384b7000b3a84"
+    }
+  },
+  "limits": [
+    "Only current lobby reader with native INPUT / string / TimeBase providers; no metadata consumer, OS timezone or native LoginPrepare."
+  ]
+}

@@ -5,6 +5,11 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_viper_cdo_current',
+    'test_vampir_create_packets_current',
+    'test_vampir_lobby_wire_current',
+    'test_vampir_lobby_current_binding',
+    'test_vampir_game_candidate_current',
     'test_vampir_character_list_current',
     'test_vampir_entry_current_guard',
     'test_vampir_clock_world_current',

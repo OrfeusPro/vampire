@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "method": "static",
+  "sender": {
+    "export": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-c5a775460bb6\\details.json",
+      "sha256": "e7d41197175801a14d29ad7884962002b3fdb7816a9de8329e44ccd519caed1c"
+    },
+    "collection": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\94a4582a0fb60e47d1d32dcb0b8853da951db649a6eca35ac9d3e6470b41a7ea\\manifest.json",
+      "sha256": "94a4582a0fb60e47d1d32dcb0b8853da951db649a6eca35ac9d3e6470b41a7ea"
+    },
+    "request": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\f2ac697124df8f0f12e5c920c4aba79ebc7118928717eec88caa4e56ddcadd08\\manifest.json",
+      "sha256": "f2ac697124df8f0f12e5c920c4aba79ebc7118928717eec88caa4e56ddcadd08"
+    },
+    "roots": {
+      "0x144aaf380": 69,
+      "0x144ab0310": 110
+    },
+    "explicit_tail": {
+      "address": "0x144aaf46b",
+      "text": "JMP 0x144ab0310",
+      "bytes": "e9a00e0000",
+      "references": [
+        "0x144ab0310"
+      ]
+    },
+    "native_execution": false
+  },
+  "tooling": {
+    "executed": {
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\1b3d38e470b7534a36318c25f4a7f280f76c84d15eef1ddf1c982621c772d29a\\manifest.json",
+      "sha256": "1b3d38e470b7534a36318c25f4a7f280f76c84d15eef1ddf1c982621c772d29a",
+      "cache_key": "b4601e302ef76291429d851ef7858403506ad8113f77548333006b31febeae5b",
+      "metrics": {
+        "executed_groups": 44,
+        "cached_groups": 0,
+        "executed_cases": 2204,
+        "cached_cases": 0,
+        "executed_discovered_cases": 2204,
+        "cached_discovered_cases": 0,
+        "executed_skips": 4,
+        "cached_skips": 0,
+        "incomplete_groups": 0,
+        "duration_seconds": 346.498502500006
+      }
+    },
+    "unchanged": {
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\1b3d38e470b7534a36318c25f4a7f280f76c84d15eef1ddf1c982621c772d29a\\manifest.json",
+      "sha256": "1b3d38e470b7534a36318c25f4a7f280f76c84d15eef1ddf1c982621c772d29a",
+      "cache_key": "b4601e302ef76291429d851ef7858403506ad8113f77548333006b31febeae5b",
+      "metrics": {
+        "executed_groups": 0,
+        "cached_groups": 44,
+        "executed_cases": 0,
+        "cached_cases": 2204,
+        "executed_discovered_cases": 0,
+        "cached_discovered_cases": 2204,
+        "executed_skips": 0,
+        "cached_skips": 4,
+        "incomplete_groups": 0,
+        "duration_seconds": 13.987962299957871
+      }
+    }
+  },
+  "completions": {
+    "candidate": {
+      "fact_id": "4a81f6354f7789c4b25a0f3204793c2ddc468ece83b694faa49a8eecd8a2e59f",
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\da98ef53779784c2141ff7672f6d78475f67fd9f93788a3994a3a320c84bfa8e\\manifest.json",
+        "sha256": "da98ef53779784c2141ff7672f6d78475f67fd9f93788a3994a3a320c84bfa8e"
+      },
+      "old_facts_preserved": 85
+    },
+    "viper-cdo": {
+      "fact_id": "83eddaa55e9aed8188264ce469194320788e716a86c2caa876683902960f5e2e",
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\6550445858744e2252c950a0a3068c1f2c84d6f09529ce4fab2bcb34461d65f4\\manifest.json",
+        "sha256": "6550445858744e2252c950a0a3068c1f2c84d6f09529ce4fab2bcb34461d65f4"
+      },
+      "old_facts_preserved": 86
+    },
+    "create-packets": {
+      "fact_id": "4bd7bea857d65b58d08d2dd153b1f2e86b6651bcf7a642145035872f41017017",
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\b1bbe9780aa2e27dfbf74cfafaaaa1b17964613915f65d368116ffd2ec43ead4\\manifest.json",
+        "sha256": "b1bbe9780aa2e27dfbf74cfafaaaa1b17964613915f65d368116ffd2ec43ead4"
+      },
+      "old_facts_preserved": 87
+    }
+  },
+  "network_used": false,
+  "runtime_admitted": false
+}

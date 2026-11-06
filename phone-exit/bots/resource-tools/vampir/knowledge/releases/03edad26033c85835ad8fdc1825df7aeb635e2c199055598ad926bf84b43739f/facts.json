@@ -3317,6 +3317,196 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Сборка bounded runtime candidate, недостающая композиция и отдельные Viper creation contracts.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x14574f5d0",
+        "0x14575afc0",
+        "0x14575b3a0",
+        "0x14575b5d0",
+        "0x1467d1200",
+        "0x1467d2cf0"
+      ],
+      "checks": [
+        {
+          "cache_key": "fbd6b3e933f1bd5726b6d3e241d5e4b43489e4c4249ee76e25e12d910f3548f4",
+          "id": "lobby-wire-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7b512e2483f62e3c4d729345b41d1fb4660b4006accced92d941b6e88894cbef\\manifest.json",
+          "sha256": "7b512e2483f62e3c4d729345b41d1fb4660b4006accced92d941b6e88894cbef",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e7c085d730ad51078bfbbb92f1336b710a78d07d9e3a04aa0cc7fb6c7d93b749",
+          "id": "game-candidate-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4e17b4fe9e8183e23e41a8debe30811e13620b5790757bd28652824e79396437\\manifest.json",
+          "sha256": "4e17b4fe9e8183e23e41a8debe30811e13620b5790757bd28652824e79396437",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Офлайн-кандидат текущего SHA собран из готовых SDK, семи bridge scopes, VersionResult, CharacterList, clock и lobby. Проверены текущие compiled tag, базовый PAK/INI и полные пять lobby prepare/writer bodies. Native reader/input/time/string composition прошла 62 случая и границы.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-GAME-CANDIDATE-CURRENT.md",
+          "sha256": "05388e743fd30d3846886d7c1c21eaa8337a4250e6e2321441a6776454b9042d"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\GAME-CANDIDATE-CURRENT-VALIDATION.json",
+          "sha256": "5b23f4a1120bfb900828c0639bb566d907d940051cb1919ffb2fb70f7720f3be"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "4a81f6354f7789c4b25a0f3204793c2ddc468ece83b694faa49a8eecd8a2e59f",
+      "limits": [
+        "Границы synthetic providers и record/CDO fixtures сохранены в отдельных отчётах.",
+        "Сетевой запуск, создание персонажа и runtime admission не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Переиспользовать готовые current evidence и проверить следующий указанный runtime блокер.",
+      "question": "game-candidate-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Sender wrapper, исполняемая подготовка Login и текущая runtime композиция.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1417cc040",
+        "0x1417dabb0",
+        "0x1417dd6e0",
+        "0x1417e62c0",
+        "0x1417e6e60"
+      ],
+      "checks": [
+        {
+          "cache_key": "e79de875cc9675c3a15bd90217eca1d1e719b5c1d6f04abd7388f6df3773d19a",
+          "id": "preset-defaults-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09\\manifest.json",
+          "sha256": "e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09",
+          "state": "passed"
+        },
+        {
+          "cache_key": "01f352d86a147d93869e33f8572005ebc9525753a70614ae65ef967d046f9aae",
+          "id": "viper-class-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6a8a8bae5c32a88150cbb5c7659a321ffa9bfb2fe04dd2308f2646a2ca20f537\\manifest.json",
+          "sha256": "6a8a8bae5c32a88150cbb5c7659a321ffa9bfb2fe04dd2308f2646a2ca20f537",
+          "state": "passed"
+        },
+        {
+          "cache_key": "96386f1ceb29f10d9781594df435e783bf8c3d615370be6b64156eb86e7eedf5",
+          "id": "viper-cdo-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\48cefb7d13059c2c4eec3863e67bc52914d6b24664a02e22408960963d9781fd\\manifest.json",
+          "sha256": "48cefb7d13059c2c4eec3863e67bc52914d6b24664a02e22408960963d9781fd",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "24 bounded native случая подтверждают нулевую память свежего объекта и выборочный перенос CDO. 16-инструкционный copy wrapper исполнен по точному PE unwind.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-GAME-CANDIDATE-CURRENT.md",
+          "sha256": "05388e743fd30d3846886d7c1c21eaa8337a4250e6e2321441a6776454b9042d"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\GAME-CANDIDATE-CURRENT-VALIDATION.json",
+          "sha256": "5b23f4a1120bfb900828c0639bb566d907d940051cb1919ffb2fb70f7720f3be"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-VIPER-CDO-CURRENT.md",
+          "sha256": "bb6fa7bfa14e28df17f27a864dffe3a278bb303d1100e7f881ae0e5769f0b6bf"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "83eddaa55e9aed8188264ce469194320788e716a86c2caa876683902960f5e2e",
+      "limits": [
+        "Границы synthetic providers и record/CDO fixtures сохранены в отдельных отчётах.",
+        "Сетевой запуск, создание персонажа и runtime admission не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Переиспользовать готовые current evidence и проверить следующий указанный runtime блокер.",
+      "question": "viper-native-defaults-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Реальный загруженный CDO и поля пресета, Viper tag, Create producer и полный Result 104.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1456b7780",
+        "0x1456ba520",
+        "0x1456d6e70",
+        "0x1456d6ea0",
+        "0x14578cec0",
+        "0x14578d210"
+      ],
+      "checks": [
+        {
+          "cache_key": "d3fe83c078ea3f6ba02b2a8ed2c3db335fcdc4a85fa6d5877ea6adea03a9705f",
+          "id": "create-packets-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1e378ac4bd9b83f171c7519e4d903edcd587f818c7045315e94382303fe08299\\manifest.json",
+          "sha256": "1e378ac4bd9b83f171c7519e4d903edcd587f818c7045315e94382303fe08299",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Исполнены текущие Create writer/constructors и внешняя ветвь Result 104. 18 тел, 18 отказов поля, 12 внешних результатов. Код 104 всегда передаёт record reader после успешного чтения u32.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-GAME-CANDIDATE-CURRENT.md",
+          "sha256": "05388e743fd30d3846886d7c1c21eaa8337a4250e6e2321441a6776454b9042d"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\GAME-CANDIDATE-CURRENT-VALIDATION.json",
+          "sha256": "5b23f4a1120bfb900828c0639bb566d907d940051cb1919ffb2fb70f7720f3be"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "4bd7bea857d65b58d08d2dd153b1f2e86b6651bcf7a642145035872f41017017",
+      "limits": [
+        "Границы synthetic providers и record/CDO fixtures сохранены в отдельных отчётах.",
+        "Сетевой запуск, создание персонажа и runtime admission не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Переиспользовать готовые current evidence и проверить следующий указанный runtime блокер.",
+      "question": "create-packets-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Фактические native string/scalar output, current producer, nested Result 104 и его handler, runtime admission.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x144aaf380",
+        "0x144ab0310"
+      ],
+      "checks": [
+        {
+          "cache_key": "fbd6b3e933f1bd5726b6d3e241d5e4b43489e4c4249ee76e25e12d910f3548f4",
+          "id": "lobby-wire-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7b512e2483f62e3c4d729345b41d1fb4660b4006accced92d941b6e88894cbef\\manifest.json",
+          "sha256": "7b512e2483f62e3c4d729345b41d1fb4660b4006accced92d941b6e88894cbef",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e7c085d730ad51078bfbbb92f1336b710a78d07d9e3a04aa0cc7fb6c7d93b749",
+          "id": "game-candidate-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4e17b4fe9e8183e23e41a8debe30811e13620b5790757bd28652824e79396437\\manifest.json",
+          "sha256": "4e17b4fe9e8183e23e41a8debe30811e13620b5790757bd28652824e79396437",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Явный E9 в конце текущего send wrapper ведёт в 0x144ab0310. Оба whole тела повторно собраны в одном узком проходе и сверены с исходным EXE без ослабления unwind guard.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\GAME-CANDIDATE-CURRENT-ACCEPTANCE.json",
+          "sha256": "fe253a6fbc13167a0d718f1a019a9638cba89eec6dbe46e520fbbaaa061f90a0"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "6e814463f65e622c896ba68b5c10c3c79a958b1e5d77c0828bccd7926d4ce85e",
+      "limits": [
+        "Полные source shapes и один прямой переход. Native send и сетевой обмен не выполнялись."
+      ],
+      "method": "static",
+      "next_check": "Исполнить bounded Windows LoginPrepare до sender и проверить source handoff по готовым двум exports.",
+      "question": "game-candidate-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Композиция LoginPrepare, writer, sender и runtime.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

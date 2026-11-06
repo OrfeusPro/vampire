@@ -2,23 +2,43 @@
 import copy
 import hashlib
 from pathlib import Path
+import sys
 
 IDS = {'character-list-current', 'clock-world-current', 'viper-class-current', 'lobby-metadata-current'}
+EXTRA_IDS = {'create-packets-current', 'viper-cdo-current', 'lobby-wire-current'}
+CANDIDATE = 'game-candidate-current'
+CHECKS = IDS | EXTRA_IDS | {CANDIDATE}
 RECIPE = 'entry-current-check-guard-v1'
 
 
+def candidate_material(proof, pointer, installed):
+    # The scoped receipt has a smaller per-file budget than the installed PAK.
+    # The candidate verifier streams the PAK hash and retains it in its manifest.
+    archive = Path(installed).resolve().parents[3] / 'ProjectRED/Content/Paks/ProjectRED-Windows.pak'
+    return {**{name: sha for name, sha in proof['inputs'].items() if Path(name).resolve() != archive},
+            pointer['path']: pointer['sha256']}
+
+
 def retained(index, root, knowledge, definition, sha):
-    if definition['id'] not in IDS:
+    identifier = definition['id']
+    if identifier not in CHECKS:
         raise ValueError('Unknown current entry source check')
     workspace = index.HERE.parents[3].resolve()
     selector = index.child(knowledge, definition['entry_current_contexts'][sha])
     effective = index.extension('research-workflow').source_definition(definition, sha)
     if selector.relative_to(workspace).as_posix() not in effective['dependencies']:
         raise ValueError('Current entry selector is not a dependency')
+    if identifier == CANDIDATE:
+        api = index.extension('build-game-candidate-current')
+        path, expected, proof = api.publish(selector, root=root)
+        if proof['source_sha256'] != sha or proof['inputs'].get(str(selector.resolve())) != index.digest(selector):
+            raise ValueError('Current game candidate source or selector changed')
+        pointer = dict(path=str(path.resolve()), sha256=expected)
+        return candidate_material(proof, pointer, index.INSTALL), pointer
     raw = selector.read_bytes()
     selected = index.read_json(selector)
     if (selected.get('schema') != 1 or selected.get('source_sha256') != sha
-            or set(selected.get('proofs', {})) != IDS):
+            or set(selected.get('proofs', {})) != (IDS if identifier in IDS else EXTRA_IDS)):
         raise ValueError('Current entry selector scope differs')
     pointer = selected['proofs'][definition['id']]
     path = Path(pointer['path']).resolve()
@@ -51,6 +71,38 @@ def retained(index, root, knowledge, definition, sha):
         source = Path(root).resolve() / 'client-code-snapshots' / sha / 'ProjectRED-Win64-Shipping.exe'
         merge({str(source): sha})
         merge({row['path']: row['sha256'] for row in proof['components'].values()})
+    elif identifier in EXTRA_IDS:
+        category = identifier + '-v1'
+        if path != Path(root).resolve() / 'code-clues' / category / pointer['sha256'] / 'manifest.json':
+            raise ValueError('Current extension proof path differs')
+        proof = index.read_json(path)
+        if (proof.get('recipe') != category or proof.get('native_execution') is not True
+                or proof.get('runtime_admitted') is not False or proof.get('network_used') is not False):
+            raise ValueError('Current extension proof scope differs')
+        if identifier == 'create-packets-current':
+            api = index.extension('verify-create-packets-current')
+            api.verify_report(path, root=root)
+            merge(proof['definition']['inputs'])
+        elif identifier == 'lobby-wire-current':
+            api = index.extension('verify-lobby-wire-current')
+            context, native_definition = api.definition(api.CONTEXT, root)
+            api.validate(proof)
+            if native_definition != proof['definition']:
+                raise ValueError('Current lobby wire proof inputs differ')
+            merge(native_definition['inputs'])
+            char = index.extension('verify-character-list-current')
+            previous = char.verify_report(context['reuse']['character_list']['path'], root=root, workspace=workspace)
+            generated_pointer = previous['definition']['generated']
+            generated = char.checked(generated_pointer, root, 'character-list-current-generated')
+            merge({generated_pointer['path']: generated_pointer['sha256'],
+                   generated['scope']['path']: generated['scope']['sha256']})
+        else:
+            if (len(proof.get('allocation_cases', [])) != 6 or len(proof.get('ordinary_cases', [])) != 18
+                    or proof.get('source_CDO_is_fixture') is not True
+                    or proof.get('loaded_preset_verified') is not False
+                    or proof.get('complete_viper_payload_verified') is not False):
+                raise ValueError('Current CDO proof coverage differs')
+            merge(proof['inputs'])
     else:
         proof = index.read_json(path)
         identifier = definition['id']
@@ -80,25 +132,42 @@ def retained(index, root, knowledge, definition, sha):
 
 def runtime_inputs(index, root, report, identifier):
     definition = report['definition']['check']
-    if identifier != definition['id'] or identifier not in IDS:
+    if identifier != definition['id'] or identifier not in CHECKS:
         raise ValueError('Current entry source check identity differs')
-    material, pointer = retained(index, root, index.KNOWLEDGE, definition,
-                                 report['definition']['source_sha256'])
+    pointer = report['entry_current_guard']['pointer']
+    if identifier == CANDIDATE:
+        api = index.extension('build-game-candidate-current')
+        proof = api.verify_report(pointer['path'], pointer['sha256'], root=root, installed=index.INSTALL)
+        if proof['source_sha256'] != report['definition']['source_sha256']:
+            raise ValueError('Current candidate check source differs')
+        material = candidate_material(proof, pointer, index.INSTALL)
+    else:
+        material, pointer = retained(index, root, index.KNOWLEDGE, definition,
+                                     report['definition']['source_sha256'])
     if pointer != report['entry_current_guard']['pointer']:
         raise ValueError('Current entry proof selection changed')
     if any(report['definition']['artifacts'].get(name) != sha for name, sha in material.items()):
         raise ValueError('Current entry check lost retained inputs')
-    # All materials are explicit workspace or resource-library inputs. No external
-    # runtime path exception is needed for these offline packages.
+    if identifier == CANDIDATE:
+        python = Path(sys.executable).resolve()
+        runtime = {python, Path(index.INSTALL).resolve(),
+                   python.with_name('python3.dll'),
+                   python.with_name(f'python{sys.version_info.major}{sys.version_info.minor}.dll')}
+        return {name: expected for name, expected in material.items() if Path(name).resolve() in runtime}
     return {}
 
 
 def run(index, workflow, args, sha, definition):
-    if definition['id'] not in IDS or workflow.source_scope(definition) != 'client':
+    if definition['id'] not in CHECKS or workflow.source_scope(definition) != 'client':
         raise ValueError('Current entry requires its registered client check')
     material, pointer = retained(index, args.root, args.knowledge, definition, sha)
     outcomes = workflow.run_checks(index, args, sha, None, check_ids=[definition['id']])
-    fresh, second = retained(index, args.root, args.knowledge, definition, sha)
+    if definition['id'] == CANDIDATE:
+        api = index.extension('build-game-candidate-current')
+        proof = api.verify_report(pointer['path'], pointer['sha256'], root=args.root, installed=index.INSTALL)
+        fresh, second = candidate_material(proof, pointer, index.INSTALL), pointer
+    else:
+        fresh, second = retained(index, args.root, args.knowledge, definition, sha)
     if fresh != material or second != pointer:
         raise ValueError('Current entry materials changed during source check')
     results = []

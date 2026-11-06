@@ -31,7 +31,11 @@ character / world flow. [VersionResult reader → handler → gate](../resource-
 [Экспорты CharacterList и clock / lobby / world](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md)
 готовы; их текущие native сценарии, новый lobby decoder и metadata consumers
 проверены [следующим пакетом](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md).
-Осталась сборка runtime candidate; создание Viper имеет собственные незакрытые guards.
+Офлайн-кандидат 1.13.22 собран из сохранённых проверок. Отдельно подтверждены
+ветка выделения и копирования CDO и внешние пакеты Create. Для живого запуска
+остаётся связать текущую подготовку лобби с отправкой и допуском.
+[Кандидат и проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md).
+[Приёмка и экспорт send wrapper](../resource-tools/vampir/knowledge/evidence/updates/GAME-CANDIDATE-CURRENT-ACCEPTANCE.json).
 [Проверка первого этапа](../resource-tools/vampir/knowledge/evidence/updates/AUTO-ENTRY-CURRENT-VALIDATION.json)
 сохраняется отдельно от [текущей общей приёмки](../resource-tools/vampir/knowledge/evidence/updates/ENTRY-NATIVE-TOOLING-VALIDATION.json).
 Свежие результаты работы скрипта читать из `update-watch status` и указанного

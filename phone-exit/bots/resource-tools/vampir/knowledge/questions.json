@@ -1502,9 +1502,9 @@
       "id": "viper-native-defaults-current",
       "status": "bounded_answer",
       "question": "Какие native defaults Viper и связанные ClassInfo/preset consumers подтверждены на текущем EXE?",
-      "known": "Whole preset constructor / descriptors проверены ранее; ClassInfo lookup/iterator/selection/type добавили 49 current native случаев. Выбор сохраняет row ID и gender, не type как ID.",
-      "unknown": "Current allocation/completion/CDO copy, актуальные Class CSV/preset integer defaults, Viper tag mapping и Create103/104.",
-      "next_action": "Использовать шесть source-bound CDO candidates и собрать только отсутствующие whole roots; готовые 25 constructor/49 consumer cases не повторять.",
+      "known": "49 ClassInfo сценариев и 25 constructor случаев переиспользованы. Дополнительно 24 current native случая свежей allocation/CDO ветви с выборочным копированием.",
+      "unknown": "Фактический загруженный CDO, Class CSV/preset defaults и Viper tag mapping. Create внешние пакеты подтверждены отдельным ограниченным пакетом.",
+      "next_action": "Проверить фактический источник CDO и загруженные свойства, затем связать Create producer и Result.",
       "decision_rule": "Точный SHA и native сценарии текущего конструктора обязательны. Старые zero-allocation fixtures не выдавать за текущий loaded asset.",
       "do_not_repeat": "Сохранённые F / M resources и прежние whole exports использовать после проверки полных SHA; не повторять неизменную полную creation матрицу.",
       "addresses": [
@@ -1517,16 +1517,17 @@
       "evidence": [
         "evidence/characters/HEADLESS-CREATE-VIPER-RESOURCES.md",
         "evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md",
-        "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md"
+        "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md",
+        "evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md"
       ]
     },
     {
       "id": "lobby-version-layout-current",
       "status": "bounded_answer",
       "question": "Как декодировать текущий ID 2 лобби с добавленными FString и двумя u32 без потери полей?",
-      "known": "Current reader/decoder готов; whole metadata validate/apply consumers прошли 362+48 bounded случая после проверки unwind ranges. Schedule time zone identity, signed offsets и cache reset подтверждены с providers fixtures.",
-      "unknown": "Полные wire string/time primitives, системные timezone providers, reader→consumer композиция и runtime candidate.",
-      "next_action": "Собрать текущий binder/candidate с сохранением raw полей и fixture границ, не повторять готовые матрицы.",
+      "known": "Reader/decoder и 362+48 bounded metadata consumer случаев подтверждены. Текущие INPUT, FString и TimeBase исполнены вместе с whole reader в отдельном пакете.",
+      "unknown": "Реальные timezone providers, связывание с LoginPrepare/send и актуальный runtime candidate.",
+      "next_action": "Переиспользовать текущий reader wire proof и проверить исходящую Windows ветвь.",
       "decision_rule": "Точный SHA и отдельный current тип; old23byte binder не должен молча принимать новые поля.",
       "do_not_repeat": "Готовые SDK/clock/world матрицы без изменения входов не повторять.",
       "addresses": [
@@ -1537,7 +1538,8 @@
       "evidence": [
         "evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md",
         "evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md",
-        "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md"
+        "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md",
+        "evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md"
       ]
     },
     {
@@ -1561,6 +1563,45 @@
       "evidence": [
         "evidence/auth/HEADLESS-FIRST-SDK-CONTINUATION-CURRENT.md",
         "evidence/auth/HEADLESS-FIRST-SDK-PROFILE-CURRENT.md"
+      ]
+    },
+    {
+      "id": "create-packets-current",
+      "status": "open",
+      "question": "Какие текущие Create 103 / Result 104 wire contracts можно подтвердить без повторения исторической creation матрицы?",
+      "known": "18 текущих native тел ID 103, 18 отказов записи и 12 ветвей внешнего ID 104 прошли. Три writers, packet constructors и dispatch сверены.",
+      "unknown": "Output string/scalar и вложенный ID 104 в стенде. Create producer, handler и загрузка Viper остаются отдельными.",
+      "next_action": "Связать producer 0x14644bc30 с готовым writer и доказать полный ID 104 с record и handler.",
+      "decision_rule": "Точный current source SHA, whole source ranges и явные fixture границы; class ID не заменяет current factory/CDO/producer доказательство.",
+      "do_not_repeat": "Не повторять historical 98802d creation suite и готовые current 25 ctor / 49 ClassInfo / 1554 CharacterList случаи.",
+      "addresses": [
+        "0x1456ba520",
+        "0x1456b7780",
+        "0x1456d6e70",
+        "0x1456d6ea0"
+      ],
+      "evidence": [
+        "evidence/characters/HEADLESS-VIPER-CLASS-CONSUMERS-CURRENT.md",
+        "evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md"
+      ]
+    },
+    {
+      "id": "game-candidate-current",
+      "status": "open",
+      "question": "Как собрать текущий ограниченный игровой candidate из сохранённых source proofs без старого source SHA и повторного native разбора?",
+      "known": "Офлайн-кандидат 1.13.22 собран из 572 входов. Compiled tag, базовый CDN, текущая wire-композиция ответа и пять whole prepare/writer roots проверены. Send wrapper и цель явного E9 собраны в run-c5a775460bb6 и сверены с полными исходными ranges.",
+      "unknown": "Текущие LoginPrepare runtime composition, send wrapper, CharacterSelect/world admission и онлайн.",
+      "next_action": "Исполнить текущий LoginPrepare → writer → sender по готовым exports, затем связать ограниченный runtime scope.",
+      "decision_rule": "Последняя база каждой роли отдельно, фактический installed SHA и все retained inputs; не повышать partial contracts до полной world-session и creation.",
+      "do_not_repeat": "Готовые native suites использовать после проверки целостности; не запускать Ghidra или сетевой вход ради повторного подтверждения тех же inputs.",
+      "addresses": [
+        "0x1467a0660",
+        "0x14574f5d0"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md",
+        "evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md",
+        "evidence/updates/GAME-CANDIDATE-CURRENT-ACCEPTANCE.json"
       ]
     }
   ]

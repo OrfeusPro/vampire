@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proofs": {
+    "viper-cdo-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\viper-cdo-current-v1\\5b873c1ea661a5447a9bfbf8f4583d0356bd6765e4ac2a9c2642b1fd979d96c3\\manifest.json",
+      "sha256": "5b873c1ea661a5447a9bfbf8f4583d0356bd6765e4ac2a9c2642b1fd979d96c3"
+    },
+    "create-packets-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\create-packets-current-v1\\c0dc0cbe528c3b02b3808eeff78f3cbc1a1b5c70f4bccee4a54fbbf71d43f2a3\\manifest.json",
+      "sha256": "c0dc0cbe528c3b02b3808eeff78f3cbc1a1b5c70f4bccee4a54fbbf71d43f2a3"
+    },
+    "lobby-wire-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\lobby-wire-current-v1\\2f8842c495cabf6ba8e6561a1f31783e73721fb5fef0476f57f1856b293414d7\\manifest.json",
+      "sha256": "2f8842c495cabf6ba8e6561a1f31783e73721fb5fef0476f57f1856b293414d7"
+    }
+  }
+}

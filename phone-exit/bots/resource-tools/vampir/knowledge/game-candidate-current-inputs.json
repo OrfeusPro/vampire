@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "recipe": "game-candidate-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "bridges": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\candidate-proof-bridges-v1\\00a774a537a4e8c3d1f3b75ff25225891624549dc370e796eb54890d08b13eb1\\manifest.json",
+    "sha256": "00a774a537a4e8c3d1f3b75ff25225891624549dc370e796eb54890d08b13eb1"
+  },
+  "bridge_context_sha256": "6b5ce1ab477277f4f784fcf14a5d77c3edceb45a80c8d0a78425125482455520",
+  "sdk": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\sdk-launcher-profiles\\c3c53ee890ca3c570a22ccaaabee6db9d2cfaab4fba11fc80374b78073f24e78\\manifest.json",
+    "sha256": "c3c53ee890ca3c570a22ccaaabee6db9d2cfaab4fba11fc80374b78073f24e78"
+  },
+  "version_flow": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-result-flow-checks\\65ac145bad6e63305d27251d66e2e3347ff7a87bb4aca328c6fdf3a068df83af\\manifest.json",
+    "sha256": "65ac145bad6e63305d27251d66e2e3347ff7a87bb4aca328c6fdf3a068df83af"
+  },
+  "version_flow_check": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ca9ee0898a9b9960151219537b0ddec2edeb544d0ddeffa7b88077af120f27d5\\manifest.json",
+    "sha256": "ca9ee0898a9b9960151219537b0ddec2edeb544d0ddeffa7b88077af120f27d5"
+  },
+  "resource_config": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\resource-config-snapshots\\9785da451e122c98b4f9f444ffaf97b710382584995e01398e202566c26fae1d\\manifest.json",
+    "sha256": "9785da451e122c98b4f9f444ffaf97b710382584995e01398e202566c26fae1d"
+  },
+  "lobby_export": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-6204f055a2a7\\details.json",
+    "sha256": "bb0d85490b88f350308a8725abb70a2c7a77aa2bd50411b02c276e1f6adc415d"
+  },
+  "lobby_roles": {
+    "login_prepare": "0x1467d1200",
+    "version_prepare": "0x1467d2cf0",
+    "version_writer": "0x14575b5d0",
+    "login_writer": "0x14575afc0",
+    "server_list_writer": "0x14575b3a0"
+  },
+  "lobby_login_prepare_anchors": {
+    "0x1467d124c": "e81f84f7fe",
+    "0x1467d12e7": "443835c53bdc04",
+    "0x1467d1472": "443835403adc04",
+    "0x1467d14f7": "e884de2dfe"
+  }
+}
