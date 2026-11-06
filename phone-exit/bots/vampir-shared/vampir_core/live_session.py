@@ -12,7 +12,7 @@ from .live_diagnostics import LiveDiagnostics
 from .environment import ObservedEnvironment,SOURCE_SHA256 as ENVIRONMENT_SOURCE
 from .tutorial_update import decode_tutorial_update
 from .quest_sync import decode_quest_sync
-from .quest_update_result import decode_quest_update_result
+from .quest_update_result import decode_quest_update_result,quest_reply_observation_permitted
 from .world_move_start import CURRENT_PROBE_SOURCE
 from .action_queue import ActionNotQueued,SessionActionQueue,SCHEMAS,digest,validate_policy
 from .quest_automation import QuestAutomation
@@ -51,6 +51,7 @@ class LiveSession:
         self._quest_automation=QuestAutomation()
         self._auto_quest_started=False
         self._quest_observation=False
+        self._quest_reply_observation=False
         self._source=None
         self._stats={}
         self._stats_key=None
@@ -90,11 +91,12 @@ class LiveSession:
             self._source=source_sha256
             from .bounded_world_admission import permits
             self._quest_observation=source_sha256==CURRENT_PROBE_SOURCE or permits(source_sha256,'quest-observation-v1')
+            self._quest_reply_observation=source_sha256==CURRENT_PROBE_SOURCE or quest_reply_observation_permitted(source_sha256)
             if self._quest_observation and self._snapshot['coverage']['tutorial']=='not_verified':
                 self._snapshot['coverage']['tutorial']='not_received'
             if self._quest_observation and self._snapshot['coverage']['quests']=='not_verified':
                 self._snapshot['coverage']['quests']='not_received'
-            if source_sha256==CURRENT_PROBE_SOURCE and self._snapshot['coverage']['quest_result']=='not_verified':
+            if self._quest_reply_observation and self._snapshot['coverage']['quest_result']=='not_verified':
                 self._snapshot['coverage']['quest_result']='not_received'
             self._environment_applied=-1
 
@@ -137,7 +139,7 @@ class LiveSession:
             counts=self._snapshot['packets']
             key=str(packet_id)
             if key in counts or len(counts)<256:counts[key]=min(counts.get(key,0)+1,2**53-1)
-            if packet_id==1811 and self._source==CURRENT_PROBE_SOURCE:
+            if packet_id==1811 and self._quest_reply_observation:
                 self._receive_quest_result(body,character_key,world_id)
             if packet_id==1854 and self._quest_observation:
                 if type(character_key) is int and 0<=character_key<2**64 and type(world_id) is int and 0<=world_id<2**32:
@@ -348,7 +350,7 @@ class LiveSession:
             if character is None or character['world_id']!=position.world_id:
                 self._action_offers=[];self._action_scope=None
                 self._snapshot['quest_update_result']=None
-                self._snapshot['coverage']['quest_result']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
+                self._snapshot['coverage']['quest_result']='not_received' if self._quest_reply_observation else 'not_verified'
                 self._stats_applied=-1
                 self._diagnostics.event('world_ready',world_id=position.world_id)
                 character=dict(key=str(key),name=name,world_id=position.world_id,
@@ -381,7 +383,7 @@ class LiveSession:
                 updated_at_ms=time.time_ns()//1000000,error=error or self._snapshot['error'])
             self._snapshot['coverage']['tutorial']='not_received' if self._quest_observation else 'not_verified'
             self._snapshot['coverage']['quests']='not_received' if self._quest_observation else 'not_verified'
-            self._snapshot['coverage']['quest_result']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
+            self._snapshot['coverage']['quest_result']='not_received' if self._quest_reply_observation else 'not_verified'
 
     def _interaction_view(self,queue):
         """Publish only trusted owner offers; does not invent received prompts."""

@@ -27,6 +27,7 @@ PACKAGES = {
     'quest-observation-current': 'verify-quest-observation-current',
     'quest-labels-current': 'verify-quest-labels-current',
     'quest-dialogue-current': 'verify-dialogue-resources-current',
+    'quest-reply-current': 'verify-quest-reply-current',
 }
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 PROFILE_SCOPES = {
@@ -102,8 +103,14 @@ def runtime_inputs(index, root, report, identifier):
             runtime.add(Path(index.INSTALL).resolve().parents[2] /
                         ('Saved/PersistentDownloadDir/Patch/Install/pakchunk' + number + '-Windows.pak'))
     runtime.update(path.resolve() for path in index.extension('native-publication-v2').runtime_files())
-    if identifier in ('quest-observation-current', 'quest-labels-current', 'quest-dialogue-current'):
+    if identifier in ('quest-observation-current', 'quest-labels-current', 'quest-dialogue-current',
+                      'quest-reply-current', 'bounded-world-current'):
         proof=index.read_json(pointer['path'])
+        if identifier == 'bounded-world-current':
+            observed=proof['proofs']['quest-observation-current']
+            if retained.get(observed['path'])!=observed['sha256']:
+                raise ValueError('World observation runtime proof is not retained')
+            proof=index.read_json(observed['path'])
         inherited=proof['definition'].get('runtime_inputs',{})
         if (not inherited or any(retained.get(name)!=expected for name,expected in inherited.items())
                 or any(not Path(name).resolve().is_relative_to(Path(sys.base_prefix).resolve())

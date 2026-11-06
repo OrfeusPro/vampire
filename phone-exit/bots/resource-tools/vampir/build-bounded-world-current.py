@@ -35,6 +35,8 @@ def publish(*, root=ROOT):
     notifications_report = json.loads(Path(notifications['report']).read_bytes())
     quests = load('verify-quest-observation-current').verify(root=root)
     quests_report = json.loads(Path(quests['report']).read_bytes())
+    reply = load('verify-quest-reply-current').verify(root=root)
+    reply_report = json.loads(Path(reply['report']).read_bytes())
     entry_tool = load('build-bounded-entry-current')
     pointer = entry_tool.publish(root=root)
     entry = json.loads(Path(pointer['report']).read_bytes())
@@ -57,6 +59,7 @@ def publish(*, root=ROOT):
     merge(stats_report['definition']['inputs'])
     merge(notifications_report['definition']['inputs'])
     merge(quests_report['definition']['inputs'])
+    merge(reply_report['definition']['inputs'])
     clock_definition = clock_report.get('definition', {})
     merge(clock_definition.get('inputs', {}))
     merge(clock_definition.get('files', {}))
@@ -66,7 +69,8 @@ def publish(*, root=ROOT):
         merge({component['path']: component['sha256']})
     merge({pointer['report']: pointer['sha256'], str(nested_path): nested['sha256'],
            clock['path']: clock['sha256'], stats['report']: stats['sha256'],
-           notifications['report']: notifications['sha256'], quests['report']: quests['sha256'], str(selector): digest(selector)})
+           notifications['report']: notifications['sha256'], quests['report']: quests['sha256'],
+           reply['report']: reply['sha256'], str(selector): digest(selector)})
     loader_path = WORKSPACE / 'phone-exit/bots/vampir-headless/bounded-world-profile.py'
     loader = load('bounded_world_profile_loader', loader_path)
     files = entry_tool.consumers() | {Path(__file__).resolve(), loader_path,
@@ -77,20 +81,22 @@ def publish(*, root=ROOT):
         inputs[str(path.resolve())] = digest(path)
     if any(digest(name) != expected for name, expected in inputs.items()):
         raise ValueError('Current world profile input changed before publication')
-    profile = dict(schema=1, recipe='bounded-world-profile-v1', source_sha256=source, source=entry['source'],
+    profile = dict(schema=2, recipe='bounded-world-profile-v1', source_sha256=source, source=entry['source'],
         entry=dict(path=pointer['report'], sha256=pointer['sha256'], selected_profile=pointer['selected_profile']),
         proofs={'clock-world-current': clock,
                 'initial-stats-current': dict(path=stats['report'],sha256=stats['sha256']),
                 'stat-notifications-current': dict(path=notifications['report'],sha256=notifications['sha256']),
                 'quest-observation-current': dict(path=quests['report'],sha256=quests['sha256']),
+                'quest-reply-current': dict(path=reply['report'],sha256=reply['sha256']),
                 'world-results-current': dict(path=str(nested_path), sha256=nested['sha256'])},
         inputs=inputs, operations=['character-select', 'world-entry', 'keep-online'],
-        policies=loader.POLICIES.copy(),
+        policies=loader.POLICIES + [loader.REPLY_POLICY],
         world_admitted=True, creation_admitted=False, online_verified=False,
         limits=['Fresh accepted list resolves the saved character key before selection.',
                 'Headless completion and bounded periodic Ping reuse qualified native proofs.',
                 'Initial character stats are a world-entry snapshot; admitted 321/322 notifications update the matching owner.',
                 'QuestSync1854 and Tutorial9905 are bounded last received messages, not applied client task state.',
+                'QuestUpdateResult1811 is observed for the matching owner; action confirmation requires separate evidence.',
                 'No creation, movement, quest actions, dialogue or tutorial advance admission; explicit Stop or connection failure closes the owner.'])
     path = load('audit-client-release').save_snapshot(root / 'bounded-world-profiles', profile)
     sha = digest(path)

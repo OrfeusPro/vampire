@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "scope": "reply_receive_and_handler_arguments",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-reply-current-v1\\89c5f156792cbddb26d76f3d7cfa4e61cf3f512268b5450b7090aae605938f2b\\manifest.json",
+    "sha256": "89c5f156792cbddb26d76f3d7cfa4e61cf3f512268b5450b7090aae605938f2b"
+  },
+  "wire_cases": {
+    "total": 936,
+    "full": 900,
+    "prefixes": 30,
+    "primitive_failures": 6
+  },
+  "application_cases": {
+    "total": 192,
+    "dispatch": 72,
+    "displayed_error_then_dispatch": 24
+  },
+  "first_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\df72bd03b4b612376997d6834d1daea2cf058e48484b730b3c50585722c5591c\\manifest.json",
+    "sha256": "df72bd03b4b612376997d6834d1daea2cf058e48484b730b3c50585722c5591c"
+  },
+  "newly_collected_roots": [
+    "0x145828f50",
+    "0x14582c0e0",
+    "0x1467b5b80",
+    "0x145d84fe0",
+    "0x145d958e0"
+  ],
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\5257244d86f2f32b759556b7803acc5aeb0b22f7a80a8c5aeea10e953fa4b55d\\manifest.json",
+    "sha256": "5257244d86f2f32b759556b7803acc5aeb0b22f7a80a8c5aeea10e953fa4b55d"
+  },
+  "final_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\fc43555fdf7883084f1ed71eaee8ff318727e4d0b2b839b62278aa22cf3f7a28\\manifest.json",
+    "sha256": "fc43555fdf7883084f1ed71eaee8ff318727e4d0b2b839b62278aa22cf3f7a28"
+  },
+  "final_collection_new_jvm": 0,
+  "source_check": {
+    "id": "quest-reply-current",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1a450c951ea6c84c6e973410bce3bf47fe968fd8333743934fb40d391dbd0f97\\manifest.json",
+    "sha256": "1a450c951ea6c84c6e973410bce3bf47fe968fd8333743934fb40d391dbd0f97",
+    "cache_key": "f78a02d8a71967fe15002365a5d862e92f516143e25adb186c769fab0f183c55"
+  },
+  "component_tests": 4,
+  "ordinary_update_warm": {
+    "seconds": 2.545,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "runtime_admitted": false,
+  "action_confirmed": false,
+  "applied_to_local_task": false,
+  "online": {
+    "character": "Bipoberiho",
+    "state": "connected",
+    "same_session": true,
+    "session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+    "game_commands_sent": false
+  },
+  "limits": [
+    "Native receive executes outer/nested construction and readers. Archive primitive reads are bounded fixtures.",
+    "Registration is a static byte window. Handler, result gate, wrapper and application dispatch execute.",
+    "Settings, model record lookup, projection, key construction, virtual application and error presentation use fixtures.",
+    "No real task mutation, server correlation, network use or runtime admission is established."
+  ]
+}

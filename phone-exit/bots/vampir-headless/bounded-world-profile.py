@@ -2,6 +2,7 @@
 import hashlib
 import importlib.util
 import json
+from itertools import product
 from pathlib import Path
 import re
 import sys
@@ -14,6 +15,7 @@ RECIPE = 'bounded-world-profile-v1'
 POLICIES = ['game-login-world-v1', 'world-selection-move-v1', 'periodic-ping-v1', 'initial-character-stats-v1', 'character-stat-notifications-v1', 'quest-observation-v1']
 OPERATIONS = ['character-select', 'world-entry', 'keep-online']
 PROOFS = {'clock-world-current', 'world-results-current', 'initial-stats-current', 'stat-notifications-current', 'quest-observation-current'}
+REPLY_POLICY = 'quest-reply-observation-v1'
 SHA = re.compile('[0-9a-f]{64}')
 CONSUMERS = (
     'vampir-headless/bounded-world-profile.py',
@@ -43,6 +45,7 @@ CONSUMERS = (
     'vampir-shared/vampir_core/stat_change.py',
     'vampir-shared/vampir_core/quest_sync.py',
     'vampir-shared/vampir_core/quest_record.py',
+    'vampir-shared/vampir_core/quest_update_result.py',
     'vampir-shared/vampir_core/tutorial_update.py',
     'vampir-shared/vampir_core/quest_automation.py',
     'vampir-shared/vampir_core/action_queue.py',
@@ -139,17 +142,69 @@ def _world_results(proof, inputs):
     _retained(inputs, proof.get('definition', {}).get('inputs'))
 
 
+def _quest_reply(proof, inputs):
+    if (proof.get('schema') != 1 or proof.get('recipe') != 'quest-reply-current-v1'
+            or proof.get('source_sha256') != SOURCE or proof.get('packet_id') != 1811
+            or proof.get('wire_bytes') != 30 or proof.get('native_execution') is not True
+            or any(proof.get(key) is not False for key in ('runtime_admitted', 'network_used',
+                'action_confirmed', 'applied_to_local_task', 'registration_executed')) or not proof.get('limits')):
+        raise ValueError('Quest reply observation proof scope differs')
+    definition = proof.get('definition', {})
+    if definition.get('source_sha256') != SOURCE:
+        raise ValueError('Quest reply observation definition source differs')
+    _retained(inputs, definition.get('inputs'))
+    _retained(inputs, definition.get('runtime_inputs'))
+    result = proof.get('result', {})
+    wire = result.get('wire', [])
+    applications = result.get('applications', [])
+    if len(wire) != 936 or len(applications) != 192:
+        raise ValueError('Quest reply observation matrix is incomplete')
+    full = product((0, 10, 0xffffffff), (0, 110120, 0xffffffffffffffff),
+        (0, 2, 6, 7, 255), (0, 5, 31, 32, 255), (0, 0xffffffffffffffff), (0, 123))
+    for row, values in zip(wire[:900], full):
+        decoded = list(values)
+        decoded[2] = min(decoded[2], 6)
+        if (row != dict(input=list(values), length=30, failure=0, consumed=30,
+                        attempts=[0x58, 0x50, 0x78, 0x80, 0x50, 0x50], accepted=True, decoded=decoded)):
+            raise ValueError('Quest reply observation full matrix differs')
+    for row, length, failure in [(row, n, 0) for n, row in enumerate(wire[900:930])] + [
+            (row, 30, n) for n, row in enumerate(wire[930:], 1)]:
+        cursor, attempts = 0, []
+        for ordinal, (slot, size) in enumerate(zip((0x58, 0x50, 0x78, 0x80, 0x50, 0x50), (4, 8, 1, 1, 8, 8)), 1):
+            attempts.append(slot)
+            if ordinal == failure or cursor + size > length:
+                break
+            cursor += size
+        if row != dict(input=[0, 110120, 2, 0, 0, 0], length=length, failure=failure,
+                       consumed=cursor, attempts=attempts, accepted=False, decoded=None):
+            raise ValueError('Quest reply observation rejection matrix differs')
+    matrix = product((0, 10, 0xffffffff, 0x1197), (False, True), (False, True),
+                     (110120, 0xffffffffffffffff), (0, 2, 6), (0, 5))
+    for row, (code, special, existing, key, state, index) in zip(applications, matrix):
+        accepted = code == 0 or code == 0x1197 and not special
+        calls = ['error'] if not special and code else []
+        if accepted:
+            calls += ['project', 'lookup']
+            calls += ['apply_existing'] if existing else ['wrap_key', 'apply_new']
+        if row != dict(code=code, special=special, existing=existing, key=key, state=state,
+                       index=index, calls=calls, applies=accepted):
+            raise ValueError('Quest reply observation application matrix differs')
+
+
 def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INSTALLED):
     root, workspace, installed = (Path(value).resolve() for value in (root, workspace, installed))
     if not isinstance(selector_sha, str) or not SHA.fullmatch(selector_sha):
         raise ValueError('Bounded world requires a full manifest SHA')
     path = root / 'bounded-world-profiles' / selector_sha / 'manifest.json'
     profile = _json(path, selector_sha)
-    if (profile.get('schema') != 1 or profile.get('recipe') != RECIPE
+    reply_enabled = profile.get('schema') == 2
+    expected_policies = POLICIES + [REPLY_POLICY] if reply_enabled else POLICIES
+    expected_proofs = PROOFS | {'quest-reply-current'} if reply_enabled else PROOFS
+    if (profile.get('schema') not in (1, 2) or type(profile.get('schema')) is not int or profile.get('recipe') != RECIPE
             or profile.get('source_sha256') != SOURCE or profile.get('operations') != OPERATIONS
-            or profile.get('policies') != POLICIES or profile.get('world_admitted') is not True
+            or profile.get('policies') != expected_policies or profile.get('world_admitted') is not True
             or profile.get('creation_admitted') is not False or profile.get('online_verified') is not False
-            or set(profile.get('proofs', {})) != PROOFS or not profile.get('limits')
+            or set(profile.get('proofs', {})) != expected_proofs or not profile.get('limits')
             or Path(profile.get('source', '')).resolve() != installed):
         raise ValueError('Bounded world manifest scope differs')
     inputs = profile.get('inputs')
@@ -221,4 +276,7 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
                 for key,item in quests.get('packet_bindings',{}).items())):
         raise ValueError('Quest observation proof scope differs')
     _retained(inputs,quests.get('definition',{}).get('inputs'))
+    if reply_enabled:
+        reply = _pointer(profile['proofs']['quest-reply-current'], root/'code-clues/quest-reply-current-v1', inputs)
+        _quest_reply(reply, inputs)
     return dict(profile, selected_profile='bounded-world:' + selector_sha, manifest_sha256=selector_sha)

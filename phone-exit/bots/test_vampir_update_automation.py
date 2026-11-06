@@ -5,6 +5,9 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_quest_reply_profile',
+    'test_vampir_quest_reply_observer',
+    'test_vampir_quest_reply_current',
     'test_vampir_dialogue_resources_current',
     'test_vampir_quest_labels_current',
     'test_vampir_quest_observation_current',

@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "recipe": "quest-reply-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-0c441de9014d": "b2b0a358c6a415b10725a799eb2629a7b8a033461b63c4c397133d1baa420f04",
+    "run-947804c8e3e6": "b18c9a18ffa831f7086a7c69ee2112f1906e38e9a900134c7cafc55fa2eb4f33",
+    "run-c9f35d32258c": "5e13729b560181f6112e6a25ca0e40a9e1bcabac42ca289722ad2dea2f0c2d0a"
+  },
+  "roles": {
+    "constructor": "0x145828f50",
+    "reader": "0x14582c0e0",
+    "nested_reader": "0x1457a6b10",
+    "handler": "0x1467b5b80",
+    "gate": "0x1467d0cb0",
+    "wrapper": "0x145d84fe0",
+    "application": "0x145d958e0"
+  },
+  "tables": {
+    "outer": "0x149968248",
+    "nested": "0x14994b660",
+    "handler": "0x149dcbe98"
+  },
+  "id_getter": "0x1458348b0",
+  "leaves": {
+    "0x1457a2e50": "488d0509881a04c641080048890133c04889411048894118488bc1c3",
+    "0x1458348b0": "b813070000c3",
+    "0x144aad280": "488b024c8bc2488bd1498bc848ff6020",
+    "0x1455be4a0": "488b0539970206c3"
+  },
+  "registration": {
+    "start": "0x1467bd490",
+    "register": "0x1467cebc0",
+    "bytes": "488d0501ea6003488907eb03488bfbb948000000e867e914004885c0740a488bc8e89aba06ffeb03488bc34c8bc7488bd0488bcee8f7160100"
+  },
+  "model_global": "0x14b5e7be0",
+  "fixtures": {
+    "project": "0x145de7870",
+    "lookup": "0x1455bbca0",
+    "wrap_key": "0x145de69f0",
+    "settings": "0x145594da0",
+    "error": "0x145fd70f0",
+    "release": "0x1414830e0"
+  }
+}

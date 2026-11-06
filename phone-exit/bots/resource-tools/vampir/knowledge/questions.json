@@ -1624,7 +1624,7 @@
       "question": "Как допустить ограниченное наблюдение QuestSync1854 и Tutorial9905 текущего SHA, используя готовые native доказательства и сохраняя онлайн-сессию?",
       "known": "Композиция 269 QuestSync и 909 Tutorial native случаев проверена без нового native исполнения. Bounded last-message observer, owner-переключатель, остановка при смерти и пакет следующего входа связаны с on_update и кэшем. 2294 tooling tests, 4 skips; неизменный компонентный проход без новых процессов.",
       "unknown": "Current live observation in the new owner, current Russian text/dialogue binding and outgoing selected-step provider with authoritative result correlation remain open.",
-      "next_action": "Preserve the active owner. Enable browser and visually inspect the prototype after Codex restart, then finish current text/selected-step provider before a live quest action.",
+      "next_action": "Сохранить действующего владельца. Базовый HUD и журнал уже проверены после перезапуска Codex. Продолжить общий provider выбранного шага и активного диалога, затем живой квестовый сценарий; начальные сообщения ради проверки повторным входом не запрашивать.",
       "decision_rule": "Новый SHA требует отдельной сохранённой композиции. Наблюдение последнего сообщения не означает применение локального задания, выбор цели, передачу действия или онлайн-подтверждение.",
       "do_not_repeat": "Не исполнять повторно неизменные native/Ghidra сценарии. Текущего персонажа не отключать ради начального списка; следующий вход должен использовать готовый пакет.",
       "addresses": [
@@ -1663,7 +1663,7 @@
       "question": "Как активный сценарий задания выбирает группу диалога, строки, варианты ответа и допустимость пропуска на текущем SHA?",
       "known": "Восемь экспортов сверены с текущим EXE. 26 сценариев подтвердили прямой dialogGroupId и выбор ветки через fixtures. Граф именованных ресурсов, on_update и неизменный повтор проверены.",
       "unknown": "Открыты binding выбранной задачи к проигрывателю диалога, строковый classInfoId, смена активной реплики и серверное подтверждение ответа или пропуска.",
-      "next_action": "Разобрать ссылки 145566ad0 и 1455d2620 на переходники разборщиков и scalar reader 1445cd610. Затем связать активный шаг, допустимое действие и его результат.",
+      "next_action": "Переиспользовать готовые 145566ad0, 1455d2620 и 1445cd610. Одним missing-only пакетом разобрать общий dispatcher 1445d3a50, scalar reader 1415eb520 и callbacks 1455642a0 / 1455b5820. Затем связать активный task, допустимое действие и достоверный результат.",
       "decision_rule": "Каталог или найденная строка не являются полученной репликой. Нужны exact source bytes, native binding от активного сценария, порядок/варианты и flags; unsupported actions не отправлять. Данные ресурсов, bounded native fixtures и онлайн доказывать отдельно.",
       "do_not_repeat": "Не повторять готовые QuestSync/Tutorial native matrices и русский каталог. Не разрывать текущую игровую сессию; collect только missing roots.",
       "addresses": [
@@ -1680,6 +1680,32 @@
         "evidence/quests/HEADLESS-QUEST-DIALOGUE-CURRENT.md",
         "evidence/quests/QUEST-DIALOGUE-CURRENT-VALIDATION.json",
         "evidence/quests/QUEST-DIALOGUE-CURRENT-RESULT.json"
+      ]
+    },
+    {
+      "id": "quest-reply-current",
+      "status": "open",
+      "question": "Как текущий клиент читает 1811 и передаёт результат обработчику квестов?",
+      "known": "Проверены 936 сценариев чтения и 192 сценария текущего обработчика. Наблюдение 1811 подключено к schema 2 пакета следующего входа; on_update и неизменный повтор прошли. Наблюдение не подтверждает действие.",
+      "unknown": "Открыты provider выбранного шага текущего SHA, применённая модель задач, достоверная корреляция результата, активные диалоги и новый живой сценарий.",
+      "next_action": "Сохранить текущую сессию. Доказать общий provider выбранного шага и корреляцию ответа, затем проверить выполнение и продолжение на настоящем персонаже.",
+      "decision_rule": "Отдельно доказать чтение полного тела, привязку обработчика и границы state application. Успешный gate и совпавший ID сами по себе не дают подтверждения игрового действия.",
+      "do_not_repeat": "Переиспользовать исторические сценарии, текущие экспорты gate и готовую матрицу INPUT. Текущую сессию сохранять.",
+      "addresses": [
+        "0x145828f50",
+        "0x14582c0e0",
+        "0x1457a6b10",
+        "0x1467b5b80",
+        "0x145d84fe0",
+        "0x145d958e0"
+      ],
+      "evidence": [
+        "evidence/quests/HEADLESS-QUEST-REPLY-CURRENT.md",
+        "evidence/quests/QUEST-REPLY-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-REPLY-CURRENT-RESULT.json",
+        "evidence/quests/HEADLESS-QUEST-REPLY-OBSERVER-CURRENT.md",
+        "evidence/quests/QUEST-REPLY-OBSERVER-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-REPLY-OBSERVER-CURRENT-RESULT.json"
       ]
     }
   ]

@@ -913,3 +913,17 @@ bots/test_vampir_dialogue_resources_current.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-DIALOGUE-CURRENT.md text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-DIALOGUE-CURRENT-VALIDATION.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-DIALOGUE-CURRENT-RESULT.json text eol=lf
+bots/resource-tools/vampir/quest-reply-cases-v1.py text eol=lf
+bots/resource-tools/vampir/verify-quest-reply-current.py text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/quest-reply-current.json text eol=lf
+bots/test_vampir_quest_reply_current.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-REPLY-CURRENT.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-REPLY-CURRENT-VALIDATION.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-REPLY-CURRENT-RESULT.json text eol=lf
+
+bots/vampir-shared/vampir_core/quest_update_result.py text eol=lf
+bots/test_vampir_quest_reply_observer.py text eol=lf
+bots/test_vampir_quest_reply_profile.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-REPLY-OBSERVER-CURRENT.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-REPLY-OBSERVER-CURRENT-VALIDATION.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-REPLY-OBSERVER-CURRENT-RESULT.json text eol=lf

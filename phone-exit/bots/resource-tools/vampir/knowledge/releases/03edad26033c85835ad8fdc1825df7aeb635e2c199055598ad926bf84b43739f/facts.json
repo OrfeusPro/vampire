@@ -4466,6 +4466,100 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты binding выбранной задачи к проигрывателю диалога, строковый classInfoId, смена активной реплики и серверное подтверждение ответа или пропуска.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1457a6b10",
+        "0x145828f50",
+        "0x14582c0e0",
+        "0x145d84fe0",
+        "0x145d958e0",
+        "0x1467b5b80"
+      ],
+      "checks": [
+        {
+          "cache_key": "f78a02d8a71967fe15002365a5d862e92f516143e25adb186c769fab0f183c55",
+          "id": "quest-reply-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1a450c951ea6c84c6e973410bce3bf47fe968fd8333743934fb40d391dbd0f97\\manifest.json",
+          "sha256": "1a450c951ea6c84c6e973410bce3bf47fe968fd8333743934fb40d391dbd0f97",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий 1811 проверен в 936 сценариях чтения и 192 сценариях обработчика. Подтверждены 30-байтный формат, передача ключа и вложенного прогресса, выбор callback и отдельная ветвь 0x1197 с показом ошибки перед вызовом модели.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-REPLY-CURRENT-VALIDATION.json",
+          "sha256": "98299f2815ecade2ccb5565b1d48d198664dfa1cae73678a5a8fff519f68d4f5"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-REPLY-CURRENT.md",
+          "sha256": "ba5742e211bbd0ebf68696e8f3abd92addd72d9298ba53c3bf7c6ff93de89537"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "d4a29930154a748768d251bec090da275a5abe108b3ec6b212b27854b0ed239d",
+      "limits": [
+        "Native receive executes outer/nested construction and readers. Archive primitive reads are bounded fixtures.",
+        "Registration is a static byte window. Handler, result gate, wrapper and application dispatch execute.",
+        "Settings, model record lookup, projection, key construction, virtual application and error presentation use fixtures.",
+        "No real task mutation, server correlation, network use or runtime admission is established."
+      ],
+      "method": "bounded_native",
+      "next_check": "Подключить source-bound read-only наблюдение к следующему владельцу. Сохранить текущую сессию и отдельно доказать source-bound выполнение выбранного шага и корреляцию результата.",
+      "question": "quest-reply-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты наблюдение 1811 в пакете следующего входа, реальная модель задачи и серверная корреляция с конкретным шагом.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1457a6b10",
+        "0x145828f50",
+        "0x14582c0e0",
+        "0x145d84fe0",
+        "0x145d958e0",
+        "0x1467b5b80"
+      ],
+      "checks": [
+        {
+          "cache_key": "028a16d6bcce80e4d4972689d576d26a13ce6476e2dc48b8f9403339dac7b28d",
+          "id": "bounded-world-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\835e925f920c4360081fef822cb722f21b0d0710782203eaf56eba6e1c227637\\manifest.json",
+          "sha256": "835e925f920c4360081fef822cb722f21b0d0710782203eaf56eba6e1c227637",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8db08a101c163d2e0680ef73dca717e3c0e7abee8f7b636b57ebd1cd45ae2ebb",
+          "id": "quest-reply-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cb5df6b4785e736863e39d59af19e2c30733e8eba535f80355922e45656755dc\\manifest.json",
+          "sha256": "cb5df6b4785e736863e39d59af19e2c30733e8eba535f80355922e45656755dc",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущее read-only наблюдение 1811 подключено к schema 2 пакета следующего входа. Source proof закрепляет 936 сценариев чтения и 192 сценария обработчика; loader и runtime проверяют scope и изоляцию владельца. Обычное обновление и неизменный повтор прошли без новых процессов.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-REPLY-OBSERVER-CURRENT-VALIDATION.json",
+          "sha256": "2b91834cd024f43329c3c9f5e54236d32bc52e6a0733fabd149ab3249a91a03e"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-REPLY-OBSERVER-CURRENT.md",
+          "sha256": "d499b1b721c3b202cec376bdcf63d32c4827fb9f746cdd14306fe39467ed8e65"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "769d05bf6dbe89abc82e19db29c2e773d5a7172ab3b42d564fa338e09cef4521",
+      "limits": [
+        "Native reader/handler proof uses bounded archive, settings, lookup and model callback fixtures.",
+        "Runtime tests use local session fixtures; current owner retains its previous package.",
+        "Reply observation does not establish real task mutation, dialogue, selected-step provider or action confirmation."
+      ],
+      "method": "bounded_native",
+      "next_check": "Сохранить текущую сессию. Доказать общий provider выбранного шага и корреляцию ответа, затем проверить выполнение и продолжение на настоящем персонаже.",
+      "question": "quest-reply-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты provider выбранного шага текущего SHA, применённая модель задач, достоверная корреляция результата, активные диалоги и новый живой сценарий.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

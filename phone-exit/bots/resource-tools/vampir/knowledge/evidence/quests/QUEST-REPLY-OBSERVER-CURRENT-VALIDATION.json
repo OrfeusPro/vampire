@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "scope": "next_entry_reply_observation",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-reply-current-v1\\83ded4b98b53d2b7935ecd606e37a7165bd0f6c4ff8f7bcf55633c0addbbb1c5\\manifest.json",
+    "sha256": "83ded4b98b53d2b7935ecd606e37a7165bd0f6c4ff8f7bcf55633c0addbbb1c5"
+  },
+  "world_package": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\bounded-world-profiles\\e5c4c57460c1626486890bd273ca39326e83f715a71b277b83f40150fd72ce60\\manifest.json",
+    "sha256": "e5c4c57460c1626486890bd273ca39326e83f715a71b277b83f40150fd72ce60",
+    "selected_profile": "bounded-world:e5c4c57460c1626486890bd273ca39326e83f715a71b277b83f40150fd72ce60",
+    "inputs": 804
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\ebcf59bd51c72f595897e0c1b1e81daacb0a6f113e0e0ff0e3a0cd87b09b2693\\manifest.json",
+    "sha256": "ebcf59bd51c72f595897e0c1b1e81daacb0a6f113e0e0ff0e3a0cd87b09b2693"
+  },
+  "collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\24ca4a0b69a1454c04f3def635d8216ef2beafd6d7ba396d9631a9ec4271f0a0\\manifest.json",
+    "sha256": "24ca4a0b69a1454c04f3def635d8216ef2beafd6d7ba396d9631a9ec4271f0a0"
+  },
+  "collection_new_jvm": 0,
+  "source_checks": [
+    {
+      "id": "bounded-world-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\835e925f920c4360081fef822cb722f21b0d0710782203eaf56eba6e1c227637\\manifest.json",
+      "sha256": "835e925f920c4360081fef822cb722f21b0d0710782203eaf56eba6e1c227637",
+      "cache_key": "028a16d6bcce80e4d4972689d576d26a13ce6476e2dc48b8f9403339dac7b28d"
+    },
+    {
+      "id": "quest-reply-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cb5df6b4785e736863e39d59af19e2c30733e8eba535f80355922e45656755dc\\manifest.json",
+      "sha256": "cb5df6b4785e736863e39d59af19e2c30733e8eba535f80355922e45656755dc",
+      "cache_key": "8db08a101c163d2e0680ef73dca717e3c0e7abee8f7b636b57ebd1cd45ae2ebb"
+    }
+  ],
+  "component_tests": {
+    "native_receipt": 5,
+    "runtime_observer": 6,
+    "profile_validation": 3
+  },
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\1cd49da0dae638b473ae356116884710eab3e5a7bcc6c0c4fa9fa00e02e30687\\manifest.json",
+    "sha256": "1cd49da0dae638b473ae356116884710eab3e5a7bcc6c0c4fa9fa00e02e30687",
+    "groups": 68,
+    "tests": 2320,
+    "skips": 4,
+    "metrics": {
+      "executed_groups": 35,
+      "cached_groups": 33,
+      "executed_cases": 1336,
+      "cached_cases": 984,
+      "executed_discovered_cases": 1336,
+      "cached_discovered_cases": 984,
+      "executed_skips": 4,
+      "cached_skips": 0,
+      "incomplete_groups": 0,
+      "duration_seconds": 920.2804117000196
+    }
+  },
+  "ordinary_update_warm": {
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "checks": [
+      {
+        "id": "bounded-world-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\835e925f920c4360081fef822cb722f21b0d0710782203eaf56eba6e1c227637\\manifest.json",
+        "sha256": "835e925f920c4360081fef822cb722f21b0d0710782203eaf56eba6e1c227637",
+        "cache_key": "028a16d6bcce80e4d4972689d576d26a13ce6476e2dc48b8f9403339dac7b28d"
+      },
+      {
+        "id": "quest-reply-current",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cb5df6b4785e736863e39d59af19e2c30733e8eba535f80355922e45656755dc\\manifest.json",
+        "sha256": "cb5df6b4785e736863e39d59af19e2c30733e8eba535f80355922e45656755dc",
+        "cache_key": "8db08a101c163d2e0680ef73dca717e3c0e7abee8f7b636b57ebd1cd45ae2ebb"
+      }
+    ],
+    "warm_seconds": 100.83,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "tooling_update_warm": {
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "checks": [
+      {
+        "id": "automatic-update-tooling",
+        "state": "passed",
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\635b894f179efd7b1f4d64964a62f8b1c7e897baa8fbd57075174427c6f0d3df\\manifest.json",
+        "sha256": "635b894f179efd7b1f4d64964a62f8b1c7e897baa8fbd57075174427c6f0d3df",
+        "cache_key": "ba6f61dfdf77087aa821a5feef4567e0870aa78892867367ae6fd7cbe7ccf22d",
+        "source_scope": "tooling",
+        "proves_client_compatibility": false
+      }
+    ],
+    "warm_seconds": 48.269,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false,
+    "aggregate_report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\1cd49da0dae638b473ae356116884710eab3e5a7bcc6c0c4fa9fa00e02e30687\\manifest.json"
+  },
+  "next_entry_observation_admitted": true,
+  "action_admitted": false,
+  "action_confirmed": false,
+  "applied_to_local_task": false,
+  "new_entry_tested_online": false,
+  "online": {
+    "character": "Bipoberiho",
+    "state": "connected",
+    "same_session": true,
+    "session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+    "game_commands_sent": false,
+    "owner_replaced": false
+  },
+  "limits": [
+    "Native reader/handler proof uses bounded archive, settings, lookup and model callback fixtures.",
+    "Runtime tests use local session fixtures; current owner retains its previous package.",
+    "Reply observation does not establish real task mutation, dialogue, selected-step provider or action confirmation."
+  ]
+}
