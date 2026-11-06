@@ -12,7 +12,13 @@
 проекта либо командой `knowledge-index.py update --auto`. Наблюдатель
 включается отдельно по явной команде. Текущая сессия сохраняет закреплённый пакет.
 
-Текущий выпуск исследования — 1.13.22; целый игровой вход ещё не подтверждён.
+Текущий выпуск исследования — 1.13.22. Silvercrow прошёл SDK, лобби,
+игровой Version/Login и чтение пустого списка персонажей Canon 1 / 387
+через прямое соединение. Постоянная сессия и создание Viper требуют продолжения.
+[Результат и команды](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-BOUNDED-ENTRY-CURRENT.md).
+[Приёмка](../resource-tools/vampir/knowledge/evidence/updates/BOUNDED-ENTRY-CURRENT-ACCEPTANCE.json)
+закрепляет 52 группы / 2229 тестов, четыре пропуска и неизменный повтор
+без новых процессов и native-эмуляции. Три scoped completion проверены отдельно.
 Отдельный [SDK-only вход](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-ENTRY-11322.md)
 уже принят настоящим сервером: ограничения устройства / аккаунта и игровой мир
 остаются отдельными этапами. [Шаблоны и список полей](../vampir-headless/ENTRY-DIAGNOSTICS.md).
@@ -33,13 +39,16 @@ character / world flow. [VersionResult reader → handler → gate](../resource-
 проверены [следующим пакетом](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md).
 Офлайн-кандидат 1.13.22 собран из сохранённых проверок. Отдельно подтверждены
 ветка выделения и копирования CDO и внешние пакеты Create. Для живого запуска
-остаётся подключить текущий runtime scope и проверить серверный ответ.
+подключён bounded-entry runtime scope до списка персонажей.
 [LoginPrepare и native sender](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-LOGIN-PREPARE-CURRENT.md)
 уже связаны через перенос подготовленных полей между стендами. Восемь кадров
 совпали с codec. Полное тело
 [Create Result 104](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-CURRENT.md)
-исполнено с вложенной записью и INPUT. Его handler, producer и загруженный
-пресет Viper требуют продолжения.
+исполнено с вложенной записью, INPUT и handler. Producer и текущая привязка
+класса / пола Viper требуют продолжения. Явные candidates внешности F/M
+подготовлены отдельно с происхождением полей и ограничением loaded asset.
+Текущая Class CSV уже есть в готовом resource baseline нового pakchunk1;
+повторное извлечение архива не требуется.
 [Кандидат и проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md).
 [Приёмка и экспорт send wrapper](../resource-tools/vampir/knowledge/evidence/updates/GAME-CANDIDATE-CURRENT-ACCEPTANCE.json).
 [Проверка первого этапа](../resource-tools/vampir/knowledge/evidence/updates/AUTO-ENTRY-CURRENT-VALIDATION.json)

@@ -3679,6 +3679,311 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Фактические loaded preset values, engine callback effects, PostInitProperties и cooked asset loading.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1456dc190",
+        "0x14574eee0",
+        "0x14574f280",
+        "0x1467d1200",
+        "0x1467d2cf0"
+      ],
+      "checks": [
+        {
+          "cache_key": "d344a06d8ca3f117be8ba683abbef07d3bae0ccc96569313a885004b3ae08b86",
+          "id": "lobby-wire-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d282e4cfd2b13b4e87d44737fe6311336e2b3397da39890277aa95b45e8325f7\\manifest.json",
+          "sha256": "d282e4cfd2b13b4e87d44737fe6311336e2b3397da39890277aa95b45e8325f7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4ffc41f15ad0ecbb311c9d4e7f606906408c67e8defb2e5b10790aadcdb14046",
+          "id": "game-candidate-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8786a1fa589609df46ef7ce9a54102a634d4501db137b4e9ded535c062f177c5\\manifest.json",
+          "sha256": "8786a1fa589609df46ef7ce9a54102a634d4501db137b4e9ded535c062f177c5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "00fdb225ced807fc33c5a9acbc2fa177a52202c46c7ccfa2034e2ed49e50f516",
+          "id": "lobby-login-prepare-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\da6a4e8aedaa3782fc99c351f3aaa0027bf36796f48c771b0fd0cd0aee1baf9f\\manifest.json",
+          "sha256": "da6a4e8aedaa3782fc99c351f3aaa0027bf36796f48c771b0fd0cd0aee1baf9f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8fe16cb78ea32a53290470d90b36c8422467362cfbf4bbd92f497180862d3d9e",
+          "id": "lobby-sender-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f2d410311d061c932682a96bf73483d7708b3034b803ef7bcb420c39eb1bd52f\\manifest.json",
+          "sha256": "f2d410311d061c932682a96bf73483d7708b3034b803ef7bcb420c39eb1bd52f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f76d3b4b18caa5e124cac0b81afa87ef8c31ee7d928f61f00677eb548ed6e7a5",
+          "id": "lobby-results-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\34c50dae6cf1f06522f66568724f08cf27d46a4f31213f356961ab28a7a94069\\manifest.json",
+          "sha256": "34c50dae6cf1f06522f66568724f08cf27d46a4f31213f356961ab28a7a94069",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1753f6d80ffc7fa00215c2be0b73186ebfef0340b6e7e390cbe55631d97b63e8",
+          "id": "bounded-entry-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\77f127f9594a907c587ded60239c357aed1e40fdc3f1e26b02c48581881b064b\\manifest.json",
+          "sha256": "77f127f9594a907c587ded60239c357aed1e40fdc3f1e26b02c48581881b064b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Отдельный bounded-entry scope принят онлайн до пустого CharacterList Silvercrow на Canon 1 / 387. Текущий LoginResult удерживает дополнительные поля, lobby readers перенесены по целым функциям.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-BOUNDED-ENTRY-CURRENT.md",
+          "sha256": "eb65ae2b427ae7f8de7717d3fc288f96f0e185998b2d305408571603fd76ef31"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\SILVERCROW-BOUNDED-ENTRY-CURRENT.json",
+          "sha256": "fa6e690bb38b2ad9fee959f6e14f63d637de22780a92b43e9bad504bb66f369e"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "fb31521123a7fda2908401470754d83704b81e1f9062acef2de953833c3f394e",
+      "limits": [
+        "Только SDK, лобби и свежий CharacterList. Офлайн-профиль не заявляет онлайн-проверку. Создание, выбор и мир исключены."
+      ],
+      "method": "static",
+      "next_check": "Связать готовые producer exports с явным appearance candidate и отдельным Create scope.",
+      "question": "game-candidate-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Create producer, native class/gender mapping, creation admission и постоянный мир.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1456b7780",
+        "0x1467984c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "af35890b98fa724497c244c51b355edb565fa686fbfd564ae331bb50b5143322",
+          "id": "create-packets-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27\\manifest.json",
+          "sha256": "04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27",
+          "state": "passed"
+        },
+        {
+          "cache_key": "163659836a4b960829fd7d0c6fd0111d0eacd6a33bdb69143c794355721a6bec",
+          "id": "create-result-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d3ae6da1c8db4306f9900943e5febd7d041aba5f604600e2b5bdb76b5207b933\\manifest.json",
+          "sha256": "d3ae6da1c8db4306f9900943e5febd7d041aba5f604600e2b5bdb76b5207b933",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6c7c038d1672f238efe5b0026411a00d47233e8d2cb0ef3183bd83f5fb1d6ce5",
+          "id": "create-handler-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fc018dfb24ece80fde0931be8a000e5c0a1d1df843fe962f49ffbf8987318873\\manifest.json",
+          "sha256": "fc018dfb24ece80fde0931be8a000e5c0a1d1df843fe962f49ffbf8987318873",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Полный native INPUT/Create104/record/handler исполнен в одной памяти в шести случаях. Вставка записи и выбранный ключ подтверждены, ошибки передаются error consumer.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-HANDLER-CURRENT.md",
+          "sha256": "f09eede6dd264a7ef5e2ead052090b3785dc809ebb90fd22d9e6d68e4ea13997"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "4b53f31da384fe68fac6c553c9ad9ae66b51bd6458fb32432dba571736a775ee",
+      "limits": [
+        "34 whole roots, явные storage/UI/SDK fixtures. Нулевой UI вызывает ограниченный наблюдённый fault. Нет server Create и runtime admission."
+      ],
+      "method": "bounded_native",
+      "next_check": "Исполнить producer и текущий writer с явным appearance candidate.",
+      "question": "create-packets-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Producer, default selection и серверное создание остаются открыты.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1456dc190",
+        "0x14574eee0",
+        "0x14574f280",
+        "0x1467d1200",
+        "0x1467d2cf0"
+      ],
+      "checks": [
+        {
+          "cache_key": "d344a06d8ca3f117be8ba683abbef07d3bae0ccc96569313a885004b3ae08b86",
+          "id": "lobby-wire-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d282e4cfd2b13b4e87d44737fe6311336e2b3397da39890277aa95b45e8325f7\\manifest.json",
+          "sha256": "d282e4cfd2b13b4e87d44737fe6311336e2b3397da39890277aa95b45e8325f7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4ffc41f15ad0ecbb311c9d4e7f606906408c67e8defb2e5b10790aadcdb14046",
+          "id": "game-candidate-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8786a1fa589609df46ef7ce9a54102a634d4501db137b4e9ded535c062f177c5\\manifest.json",
+          "sha256": "8786a1fa589609df46ef7ce9a54102a634d4501db137b4e9ded535c062f177c5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "82c8929630822e348e825b40d20dd42554d8b78b08ee46dc25b5301489a296f6",
+          "id": "lobby-login-prepare-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e3bf38569b99b122439ae898e96b67761491c77b030f2b75bfcfcca0cb0657e0\\manifest.json",
+          "sha256": "e3bf38569b99b122439ae898e96b67761491c77b030f2b75bfcfcca0cb0657e0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "567e28d5e2180759f89e506e2655547ee53d016fc381280ae315e47b7749d1c7",
+          "id": "lobby-sender-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1edd3735e25b8fa640d6bef846412733bbe4dc250b58f61ee26acaf23e30b8de\\manifest.json",
+          "sha256": "1edd3735e25b8fa640d6bef846412733bbe4dc250b58f61ee26acaf23e30b8de",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0e523ac3296786190e879185a9e8de7ae5056327799b2a1c38b6d6857275f929",
+          "id": "lobby-results-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\be9b69d281d93fbbf239ca84fccd7de03c9623382dcf3fed03eb10ae83058158\\manifest.json",
+          "sha256": "be9b69d281d93fbbf239ca84fccd7de03c9623382dcf3fed03eb10ae83058158",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1d7e1d90d6a8117af6a03a38d957b32d2867b79d82130655da4f05a39bd3d813",
+          "id": "bounded-entry-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57f283265b2e5520b0ee903b21ba39a1fc269e7ff70528abfdacb49d1c266858\\manifest.json",
+          "sha256": "57f283265b2e5520b0ee903b21ba39a1fc269e7ff70528abfdacb49d1c266858",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Отдельный bounded-entry scope принят онлайн до пустого CharacterList Silvercrow на Canon 1 / 387. Текущий LoginResult удерживает дополнительные поля, lobby readers перенесены по целым функциям.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-BOUNDED-ENTRY-CURRENT.md",
+          "sha256": "eb65ae2b427ae7f8de7717d3fc288f96f0e185998b2d305408571603fd76ef31"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\SILVERCROW-BOUNDED-ENTRY-CURRENT.json",
+          "sha256": "fa6e690bb38b2ad9fee959f6e14f63d637de22780a92b43e9bad504bb66f369e"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "8c617c562a36cd554513b00754a86138011c0f9033309afa004c3da46ab7c4b1",
+      "limits": [
+        "Только SDK, лобби и свежий CharacterList. Офлайн-профиль не заявляет онлайн-проверку. Создание, выбор и мир исключены."
+      ],
+      "method": "static",
+      "next_check": "Связать готовые producer exports с явным appearance candidate и отдельным Create scope.",
+      "question": "game-candidate-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Create producer, native class/gender mapping, creation admission и постоянный мир.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1456b7780",
+        "0x1467984c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "af35890b98fa724497c244c51b355edb565fa686fbfd564ae331bb50b5143322",
+          "id": "create-packets-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27\\manifest.json",
+          "sha256": "04fd6c050b35826bb09622c87879521363ec5118cd2a3e8c5df482630bc1ff27",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e7f05de517d1f97a5547d7e461ec3ea4538a9bb09e49fee3c9158eb4ff11f2bd",
+          "id": "create-result-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\03bd631629f93945cbeee79b02d638ed2f8d31b63cc347f466da5a6764403011\\manifest.json",
+          "sha256": "03bd631629f93945cbeee79b02d638ed2f8d31b63cc347f466da5a6764403011",
+          "state": "passed"
+        },
+        {
+          "cache_key": "33ccb92d7180b845f84270c19c03597eaf70157140e3c531ca68b03c260e155c",
+          "id": "create-handler-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ad60d4e9070432879910769c6522cf49a0db2da33f472f3c61defdfb8347f937\\manifest.json",
+          "sha256": "ad60d4e9070432879910769c6522cf49a0db2da33f472f3c61defdfb8347f937",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Полный native INPUT/Create104/record/handler исполнен в одной памяти в шести случаях. Вставка записи и выбранный ключ подтверждены, ошибки передаются error consumer.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-HANDLER-CURRENT.md",
+          "sha256": "f09eede6dd264a7ef5e2ead052090b3785dc809ebb90fd22d9e6d68e4ea13997"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "e010e4463a140d34eac60c835f40e68a76cf2467f4169aac0502695c40b84b1a",
+      "limits": [
+        "34 whole roots, явные storage/UI/SDK fixtures. Нулевой UI вызывает ограниченный наблюдённый fault. Нет server Create и runtime admission."
+      ],
+      "method": "bounded_native",
+      "next_check": "Исполнить producer и текущий writer с явным appearance candidate.",
+      "question": "create-packets-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Producer, default selection и серверное создание остаются открыты.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1416a4980",
+        "0x1454d5020"
+      ],
+      "checks": [
+        {
+          "cache_key": "e79de875cc9675c3a15bd90217eca1d1e719b5c1d6f04abd7388f6df3773d19a",
+          "id": "preset-defaults-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09\\manifest.json",
+          "sha256": "e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f1e6cc7ea205e59c325a7128758e876720ac906b3241ac3810229a4645060f54",
+          "id": "viper-class-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\58a63097acefe9b577f16dd7724369b6eec6e9b46a47a7ebdbfcf4fc18a88075\\manifest.json",
+          "sha256": "58a63097acefe9b577f16dd7724369b6eec6e9b46a47a7ebdbfcf4fc18a88075",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3e145a20190114bf884f85fcd5b9fb025320a6645fa6d131dd5cc56a9e47f329",
+          "id": "viper-cdo-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1d550fa16c70a5c7e3e6c407a3f798482fa89049fce0b6482a49a28c10778a2b\\manifest.json",
+          "sha256": "1d550fa16c70a5c7e3e6c407a3f798482fa89049fce0b6482a49a28c10778a2b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9bf1f9b5074fbe156a652eefdd8d850e2a60505af69d1d58f3c66901ca440796",
+          "id": "viper-cold-cdo-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\566faf5bfc8ccdeaf16e8f7d3c96b6883ebae6d275a8afcf89e4d663799815c6\\manifest.json",
+          "sha256": "566faf5bfc8ccdeaf16e8f7d3c96b6883ebae6d275a8afcf89e4d663799815c6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "56668de172bf8c49f9a04046d212f343db8ec9a0805902c04cc2e8746ccf2ba0",
+          "id": "viper-appearance-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8387b1b3eab3af167b82dd62c881416a48510257f4d7deac2dedcb535936ebca\\manifest.json",
+          "sha256": "8387b1b3eab3af167b82dd62c881416a48510257f4d7deac2dedcb535936ebca",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Подготовлены полные явные F/M appearance candidates с происхождением полей. Готовый resource baseline подтверждает текущую Class CSV нового pakchunk1.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-VIPER-APPEARANCE-CURRENT.md",
+          "sha256": "48697bd38636362f545dfbb5f7224bc4e4a97476cf6732189cb44348c1b04a92"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c94d74617e22e4988b4723b9876da2e6de146913fe1212be88344745fc46aa05",
+      "limits": [
+        "model_only=true, verified_loaded_asset=false. Current descriptors и готовые bounded cold CDO proofs переиспользованы без нового native/JVM."
+      ],
+      "method": "static",
+      "next_check": "Связать готовую Class CSV, native mapping и producer с явным appearance candidate.",
+      "question": "viper-native-defaults-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Class tag/gender byte, producer, loaded engine effects и online Create.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

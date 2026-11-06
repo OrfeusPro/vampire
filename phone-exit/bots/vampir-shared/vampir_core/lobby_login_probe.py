@@ -20,7 +20,12 @@ class LobbyLoginProbeResult:
     version_response: object = field(default=None, repr=False)
 
 
-def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None, select_login=None, on_selected_login=None):
+def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None, select_login=None,
+                         on_selected_login=None, version_source_sha256=None):
+    if version_source_sha256 is not None:
+        from .bounded_entry_admission import permits
+        if not permits(version_source_sha256, 'lobby-current-layout-v1'):
+            raise ValueError('Current lobby layout requires its admitted entry scope')
     if not isinstance(version, LobbyVersionPayload) or not isinstance(login, LobbyLoginPayload):
         raise TypeError('Expected separate explicit lobby Version/Login')
     if server_list is not None and not isinstance(server_list, LobbyServerListPayload):
@@ -88,7 +93,11 @@ def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None, 
                 if len(ids) > 32: return result('packet_budget_exceeded')
                 if packet.packet_id == 2:
                     if stage != 'version' or pending: return result('unexpected_version_result')
-                    response = decode_lobby_version_result(packet.body)
+                    if version_source_sha256 is None:
+                        response = decode_lobby_version_result(packet.body)
+                    else:
+                        from .lobby_packets import decode_current_lobby_version_result
+                        response = decode_current_lobby_version_result(packet.body, source_sha256=version_source_sha256)
                     version_response = response
                     version_code = response.result_code
                     if version_code != 0: return result('version_rejected')

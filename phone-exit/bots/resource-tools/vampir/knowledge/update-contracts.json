@@ -740,7 +740,9 @@
         "lobby-wire-current",
         "game-candidate-current",
         "lobby-login-prepare-current",
-        "lobby-sender-current"
+        "lobby-sender-current",
+        "lobby-results-current",
+        "bounded-entry-current"
       ],
       "recipes": [
         {
@@ -1850,7 +1852,9 @@
         "viper-cdo-current",
         "create-packets-current",
         "create-result-current",
-        "viper-cold-cdo-current"
+        "viper-cold-cdo-current",
+        "create-handler-current",
+        "viper-appearance-current"
       ],
       "recipes": [
         {

@@ -3,10 +3,13 @@
 - Группа восьми Viper: первый SDK-профиль Silvercrow создан через штатные
   Fetch / два NO DATA / SignUp; последующий SignIn принят настоящим сервером.
   Дополнительных device/workplace forms сервер не запросил. SDK-пакет и кэш готовы;
-  следующий пакет — текущий игровой candidate и Viper factory. Остальные семь не запускать
+  текущий ограниченный вход до списка персонажей уже подтверждён онлайн.
+  Canon 1 / 387 вернул принятый пустой список. Следующий пакет — Viper factory.
+  Остальные семь не запускать
   до проверки полной цепочки на первом. Включён случайный ник; после создания
   назначать ключ / слот только из свежего списка и выводить подтверждённое имя.
   Игровой персонаж ещё не создан, мир не открыт.
+  [Текущий игровой вход и исправление ответа](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-BOUNDED-ENTRY-CURRENT.md).
   [Фактическая остановка и готовые материалы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-EIGHT-ACCOUNT-ENTRY-20261106.md).
   [Уточнённый серверный ответ и Fetch-only пакет](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-FETCH-READ-ONLINE.md).
   Для SDK готовы 30 общих exports плюс один отсутствовавший SignIn response,
@@ -17,9 +20,11 @@
 - Для текущего Viper подтверждены constructor / descriptor поля: 25 сценариев,
   integer defaults не устанавливаются конструктором. [ClassInfo consumers](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-CLASS-CONSUMERS-CURRENT.md)
   теперь проверены в 49 случаях. Свежая allocation / CDO ветвь и внешние
-  Create 103/104 проверены в ограниченных сценариях. Остаются загруженные
-  defaults Viper и producer. Полное тело Result 104 с вложенной записью
-  исполнено, остаётся его handler.
+  Create 103/104 проверены в ограниченных сценариях. Для создания нужны producer
+  и native class/gender mapping. Текущая Class CSV уже сохранена в автоматическом
+  resource baseline. Загруженные defaults остаются отдельной проверкой;
+  явные F/M candidates подготовлены. Полное тело Result 104 с вложенной записью
+  исполнено вместе с handler в шести дополнительных случаях.
   [Create Result](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-CURRENT.md).
   Холодный CDO owner проверен в трёх сценариях с явными engine fixtures.
   [Границы defaults](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-COLD-CDO-CURRENT.md).
@@ -77,8 +82,10 @@ SDK → Launcher composition прошла семь fixture сценариев. �
 Офлайн-кандидат текущей версии собран с отдельным source tag и базовым CDN.
 LoginPrepare исполнен, подготовленные поля переданы текущему native sender.
 Восемь кадров совпали с portable codec. Три writers лобби и ветви sender
-проверены отдельно. Дальше подключить текущий runtime scope и выполнить
-свежий вход Silvercrow до списка персонажей.
+проверены отдельно. Текущий bounded-entry scope подключён, новый игровой
+LoginResult удерживает дополнительные поля. Silvercrow прошёл свежий вход
+до принятого пустого списка персонажей. Далее Viper producer, Class/gender
+mapping и отдельный Create admission.
 [Подготовка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-LOGIN-PREPARE-CURRENT.md),
 [отправка и квитанция](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-SENDER-CURRENT.md).
 Создание и stats имеют отдельный допуск.

@@ -1502,9 +1502,9 @@
       "id": "viper-native-defaults-current",
       "status": "bounded_answer",
       "question": "Какие native defaults Viper и связанные ClassInfo/preset consumers подтверждены на текущем EXE?",
-      "known": "49 ClassInfo, 25 constructor и 24 allocation/CDO случаев переиспользованы. Добавлены 3 cold owner сценария через актуальные getter, allocator, initializer, constructors и completion. Повтор использует CDO без allocation. Engine callbacks и metadata явно заданы fixtures.",
-      "unknown": "Загрузка cooked F/M assets, полный фактический CDO после engine callbacks/PostInitProperties, последующие overrides и Create producer.",
-      "next_action": "Проверить загрузку пресета и engine callbacks в границах реально используемых полей, затем связать Create producer.",
+      "known": "49 ClassInfo, 25 constructor и 24 allocation/CDO случаев переиспользованы. Добавлены 3 cold owner сценария через актуальные getter, allocator, initializer, constructors и completion. Повтор использует CDO без allocation. Engine callbacks и metadata явно заданы fixtures. Подготовлены два полных явных F/M appearance candidates с source origins, model_only=true и verified_loaded_asset=false. Готовый resource baseline нового pakchunk1 и SHA blob подтверждают текущую Class CSV: DarkMage Id/Type/DefaultGender=1; повторное извлечение не требуется.",
+      "unknown": "Actual loaded asset/engine effects отдельно. Для Create нужны native current class/tag/gender mapping и producer. Текущая Class CSV есть в проверенном автоматическом resource baseline.",
+      "next_action": "Использовать готовую текущую Class CSV и экспорты, доказать native mapping класса/пола, затем связать producer с явным appearance candidate.",
       "decision_rule": "Точный SHA и native сценарии текущего конструктора обязательны. Старые zero-allocation fixtures не выдавать за текущий loaded asset.",
       "do_not_repeat": "Сохранённые F / M resources и прежние whole exports использовать после проверки полных SHA; не повторять неизменную полную creation матрицу.",
       "addresses": [
@@ -1519,7 +1519,8 @@
         "evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md",
         "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md",
         "evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md",
-        "evidence/characters/HEADLESS-VIPER-COLD-CDO-CURRENT.md"
+        "evidence/characters/HEADLESS-VIPER-COLD-CDO-CURRENT.md",
+        "evidence/characters/HEADLESS-VIPER-APPEARANCE-CURRENT.md"
       ]
     },
     {
@@ -1570,9 +1571,9 @@
       "id": "create-packets-current",
       "status": "open",
       "question": "Какие текущие Create 103 / Result 104 wire contracts можно подтвердить без повторения исторической creation матрицы?",
-      "known": "Предыдущие 18 ID103 / 18 writer failures / 12 outer104 случаев переиспользованы. Полное current тело ID104 исполнено с native INPUT и вложенным record/appearance/optional reader: 6 полных тел, 7 коротких, 3 отказа и хвост.",
-      "unknown": "Output string/scalar ID103 в стенде. Create producer 0x14644bc30, handler 0x1467984c0 и загруженные Viper defaults.",
-      "next_action": "Связать текущий Result104 reader с handler, затем producer с готовым writer и loaded preset proof.",
+      "known": "Предыдущие 18 ID103 / 18 writer failures / 12 outer104 случаев переиспользованы. Полное current тело ID104 исполнено с native INPUT и вложенным record/appearance/optional reader: 6 полных тел, 7 коротких, 3 отказа и хвост. Полный reader/handler исполнен в одной памяти: шесть случаев, callback вставки и выбранный ключ подтверждены. Producer 14644bc30 собран в run-0c1dd33076e2.",
+      "unknown": "Producer и отправка полного current Viper payload, current tag/gender mapping, создание и default selection онлайн.",
+      "next_action": "Исполнить готовый producer с явным appearance candidate, связать writer и отдельный Create admission.",
       "decision_rule": "Точный current source SHA, whole source ranges и явные fixture границы; class ID не заменяет current factory/CDO/producer доказательство.",
       "do_not_repeat": "Не повторять historical 98802d creation suite и готовые current 25 ctor / 49 ClassInfo / 1554 CharacterList случаи.",
       "addresses": [
@@ -1584,16 +1585,18 @@
       "evidence": [
         "evidence/characters/HEADLESS-VIPER-CLASS-CONSUMERS-CURRENT.md",
         "evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md",
-        "evidence/characters/HEADLESS-CREATE-RESULT-CURRENT.md"
+        "evidence/characters/HEADLESS-CREATE-RESULT-CURRENT.md",
+        "evidence/characters/HEADLESS-CREATE-HANDLER-CURRENT.md",
+        "evidence/characters/HEADLESS-VIPER-APPEARANCE-CURRENT.md"
       ]
     },
     {
       "id": "game-candidate-current",
       "status": "open",
       "question": "Как собрать текущий ограниченный игровой candidate из сохранённых source proofs без старого source SHA и повторного native разбора?",
-      "known": "Офлайн-кандидат собран. Восемь current LoginPrepare сценариев переданы отдельному native sender, кадры совпали с codec. Восемь сценариев sender исполняют три writers, OUTPUT/UTF8/CRC/XOR и direct/queued/suppressed ветви. Новые пакеты связаны с on_update и кэшем.",
-      "unknown": "Current runtime scope, свежий серверный ответ, CharacterSelect/world admission и онлайн. Viper creation имеет отдельные открытые границы.",
-      "next_action": "Подключить ограниченный current runtime scope и выполнить свежий Silvercrow login до списка персонажей с сохранением source guards.",
+      "known": "Bounded-entry scope подключён к обычным entrypoints. Перенесены 14 lobby4/104 roots, 10 таблиц и 71 связь. Текущий игровой LoginResult удерживает +140/+150/+154. Silvercrow онлайн прошёл SDK, лобби Canon1/387, game Version0/Login0 и принятый пустой CharacterList. Четыре новых пакета связаны с on_update.",
+      "unknown": "Текущие создание Viper и CharacterSelect/world session. Полный prepared world-session имеет отдельные обязательства.",
+      "next_action": "На принятом пустом списке подтвердить Create producer, current ClassInfo tag/gender mapping и фабрику явного кандидата внешности, затем создать Silvercrow Viper со случайным ником.",
       "decision_rule": "Последняя база каждой роли отдельно, фактический installed SHA и все retained inputs; не повышать partial contracts до полной world-session и creation.",
       "do_not_repeat": "Готовые native suites использовать после проверки целостности; не запускать Ghidra или сетевой вход ради повторного подтверждения тех же inputs.",
       "addresses": [
@@ -1605,7 +1608,9 @@
         "evidence/updates/HEADLESS-GAME-CANDIDATE-CURRENT.md",
         "evidence/updates/GAME-CANDIDATE-CURRENT-ACCEPTANCE.json",
         "evidence/updates/HEADLESS-LOBBY-LOGIN-PREPARE-CURRENT.md",
-        "evidence/updates/HEADLESS-LOBBY-SENDER-CURRENT.md"
+        "evidence/updates/HEADLESS-LOBBY-SENDER-CURRENT.md",
+        "evidence/updates/HEADLESS-BOUNDED-ENTRY-CURRENT.md",
+        "evidence/updates/SILVERCROW-BOUNDED-ENTRY-CURRENT.json"
       ]
     }
   ]

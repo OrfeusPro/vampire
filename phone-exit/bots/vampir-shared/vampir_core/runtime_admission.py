@@ -74,6 +74,9 @@ def permits(source_sha256,policy):
         from .sdk_launcher_admission import permits as sdk_permits
         if sdk_permits(source_sha256, policy):
             return True
+    from .bounded_entry_admission import permits as entry_permits
+    if entry_permits(source_sha256, policy):
+        return True
     active=_active.get()
     return (active is not None and policy in POLICIES and type(source_sha256) is str
         and source_sha256==active.source_sha256)
@@ -83,6 +86,9 @@ def permits(source_sha256,policy):
 def profile_scope(selected,*,root,workspace):
     if not is_prepared(selected):
         yield selected;return
+    from .bounded_entry_admission import _active as entry_scope
+    if entry_scope.get() is not None:
+        raise ValueError('Cannot mix bounded entry and a world bundle')
     active=_active.get()
     if active is not None:
         if selected not in ('prepared-next',active.selector):
@@ -104,6 +110,10 @@ def prepared_entrypoint(*,root,workspace,keyword='selected_profile'):
         @wraps(function)
         def call(*args,**kwargs):
             selected=kwargs.get(keyword)
+            from .bounded_entry_admission import selected as entry_selected, scope as entry_scope
+            if entry_selected(selected):
+                with entry_scope(selected, root=root, workspace=workspace) as pinned:
+                    return function(*args, **{**kwargs, keyword: pinned})
             from .sdk_launcher_admission import selected as sdk_selected, scope as sdk_scope
             if sdk_selected(selected):
                 with sdk_scope(selected, root=root, workspace=workspace):

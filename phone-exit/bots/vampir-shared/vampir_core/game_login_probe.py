@@ -139,6 +139,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     def result(status):
         detail = describe_game_login_error(flow.login_result_code) if flow and flow.login_result_code is not None else None
         value = dict(status=status, version_result_code=flow.version_result_code if flow else None,
+            response_failure=flow.response_failure if flow else None,
             login_result_received=flow is not None and flow.login_result_code is not None,
             login_result_code=flow.login_result_code if flow else None,
             login_result_key=detail[0] if detail else None,

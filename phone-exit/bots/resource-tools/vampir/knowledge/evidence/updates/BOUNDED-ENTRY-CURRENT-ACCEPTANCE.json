@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "checked_utc": "2026-11-06T11:03:47.998951+00:00",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source_checks": [
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\227f5c27fa5b0e4a10bc2e48d42ef9ff1052548d2f8efda1d33032a61fd3e3f6\\manifest.json",
+      "sha256": "227f5c27fa5b0e4a10bc2e48d42ef9ff1052548d2f8efda1d33032a61fd3e3f6",
+      "cache_key": "9c62e4f889ca70cfc55926d3d9247070722cbf8d75342fb50689e024c8236856",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    {
+      "id": "lobby-results-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\be9b69d281d93fbbf239ca84fccd7de03c9623382dcf3fed03eb10ae83058158\\manifest.json",
+      "sha256": "be9b69d281d93fbbf239ca84fccd7de03c9623382dcf3fed03eb10ae83058158",
+      "cache_key": "0e523ac3296786190e879185a9e8de7ae5056327799b2a1c38b6d6857275f929"
+    },
+    {
+      "id": "create-handler-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ad60d4e9070432879910769c6522cf49a0db2da33f472f3c61defdfb8347f937\\manifest.json",
+      "sha256": "ad60d4e9070432879910769c6522cf49a0db2da33f472f3c61defdfb8347f937",
+      "cache_key": "33ccb92d7180b845f84270c19c03597eaf70157140e3c531ca68b03c260e155c"
+    },
+    {
+      "id": "viper-appearance-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8387b1b3eab3af167b82dd62c881416a48510257f4d7deac2dedcb535936ebca\\manifest.json",
+      "sha256": "8387b1b3eab3af167b82dd62c881416a48510257f4d7deac2dedcb535936ebca",
+      "cache_key": "56668de172bf8c49f9a04046d212f343db8ec9a0805902c04cc2e8746ccf2ba0"
+    },
+    {
+      "id": "bounded-entry-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57f283265b2e5520b0ee903b21ba39a1fc269e7ff70528abfdacb49d1c266858\\manifest.json",
+      "sha256": "57f283265b2e5520b0ee903b21ba39a1fc269e7ff70528abfdacb49d1c266858",
+      "cache_key": "1d7e1d90d6a8117af6a03a38d957b32d2867b79d82130655da4f05a39bd3d813"
+    }
+  ],
+  "tooling": {
+    "aggregate": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\2ba23138c572899769eff762899fad03c7a4dcc5f14375936104cb48b97427dd\\manifest.json",
+      "sha256": "2ba23138c572899769eff762899fad03c7a4dcc5f14375936104cb48b97427dd"
+    },
+    "groups": 52,
+    "counts": {
+      "tests_run": 2229,
+      "skipped": 4,
+      "failures": 0,
+      "errors": 0
+    },
+    "proves_client_compatibility": false
+  },
+  "unchanged_repeat": {
+    "receipt": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\bounded-entry-current-no-execution-warm.json",
+      "sha256": "edf6af21b6c7ed0654854063184e8b3848f114b6e145104b26f32b4955b7ca17"
+    },
+    "seconds": 58.5185173000209,
+    "native_execution_forbidden": true,
+    "subprocess_creation_forbidden": true,
+    "attempted_execution": {
+      "native": 0,
+      "subprocess": 0
+    },
+    "same_check_receipts": true
+  },
+  "scoped_completions": [
+    {
+      "package": "runtime",
+      "fact_id": "8c617c562a36cd554513b00754a86138011c0f9033309afa004c3da46ab7c4b1",
+      "completion": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\af6b9aa4007d026c76cf9e8831aed2121fa0ee9b9e4a17989f098293541ea56b\\manifest.json",
+        "sha256": "af6b9aa4007d026c76cf9e8831aed2121fa0ee9b9e4a17989f098293541ea56b"
+      },
+      "new_jvm": 0
+    },
+    {
+      "package": "handler",
+      "fact_id": "e010e4463a140d34eac60c835f40e68a76cf2467f4169aac0502695c40b84b1a",
+      "completion": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\5d2d44e8507acc3d30d1ae42fdf8d678106e49b66d203c9f4ee31dc5fb5b0b71\\manifest.json",
+        "sha256": "5d2d44e8507acc3d30d1ae42fdf8d678106e49b66d203c9f4ee31dc5fb5b0b71"
+      },
+      "new_jvm": 0
+    },
+    {
+      "package": "appearance",
+      "fact_id": "c94d74617e22e4988b4723b9876da2e6de146913fe1212be88344745fc46aa05",
+      "completion": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-completions\\61c88fa0bc9013a69618f9526912f08edae3399ddf2e7bc9cd0a431ce07c0ec1\\manifest.json",
+        "sha256": "61c88fa0bc9013a69618f9526912f08edae3399ddf2e7bc9cd0a431ce07c0ec1"
+      },
+      "new_jvm": 0
+    }
+  ],
+  "online": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\SILVERCROW-BOUNDED-ENTRY-CURRENT.json",
+    "sha256": "fa6e690bb38b2ad9fee959f6e14f63d637de22780a92b43e9bad504bb66f369e"
+  },
+  "world_entered": false,
+  "character_created": false,
+  "limits": [
+    "Source-bound lobby/result transfer and bounded Create handler/candidate proofs retain their documented fixture boundaries.",
+    "Online evidence covers Silvercrow SDK/lobby/game Login and an accepted empty CharacterList only.",
+    "Create producer, class/gender binding, creation admission and persistent world session remain open."
+  ]
+}

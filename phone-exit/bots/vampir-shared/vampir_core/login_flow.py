@@ -4,9 +4,11 @@ Sources: HEADLESS-VERSION-RESULT-HANDLER / LOGIN-SEND-PATH /
 LOGIN-RESULT-READER. Does not generate identity, call SDK or load the world.
 """
 import math
+import struct
 
 from .login_packet import LoginPayload
 from .login_result import decode_login_result
+from .login_result_current import decode_current_login_result, SOURCE_SHA256 as CURRENT_RESULT_SOURCE
 from .version_result import decode_version_result
 
 
@@ -23,6 +25,7 @@ class LoginFlow:
         self._login = None
         self._last_time = None
         self.version_result_code = self.login_result_code = self.last_body_size = None
+        self.response_failure = None
 
     def __repr__(self): return f'LoginFlow(state={self.state}, data=<redacted>)'
 
@@ -60,9 +63,16 @@ class LoginFlow:
         expected = 'version_pending' if packet_id == 2 else 'login_pending'
         if self.state != expected: raise RuntimeError('Unexpected login response')
         if self.expire(now=now): return False
+        operation = 'decode_version' if packet_id == 2 else 'decode_login'
         try:
-            result = (decode_version_result(body) if packet_id == 2 else
-                      decode_login_result(body, max_payload_size=self._limit))
+            from .bounded_entry_admission import permits
+            if packet_id == 2:
+                result = decode_version_result(body)
+            elif permits(CURRENT_RESULT_SOURCE, 'game-login-current-layout-v1'):
+                result = decode_current_login_result(body, max_payload_size=self._limit,
+                                                    source_sha256=CURRENT_RESULT_SOURCE)
+            else:
+                result = decode_login_result(body, max_payload_size=self._limit)
             self.last_body_size = len(body)
             if packet_id == 2: self.version_result_code = result.result_code
             else: self.login_result_code = result.result_code
@@ -70,12 +80,16 @@ class LoginFlow:
                 self._fail('unsupported_result_code', result.result_code)
                 return True
             if packet_id == 2:
+                operation = 'queue_login'
                 self._outbound.queue_login(self._login, max_payload_size=self._limit)
                 self._login = None
                 self.state, self.deadline = 'login_pending', now + self._timeout
             else:
                 self.state, self.response, self.result_code, self.deadline = 'login_response', result, 0, None
-        except (ValueError, BufferError):
+        except (ValueError, BufferError) as error:
+            self.response_failure = dict(packet_id=packet_id, body_size=len(body), operation=operation,
+                error_type=type(error).__name__, result_prefix=struct.unpack_from('<I', body)[0] if len(body) >= 4 else None,
+                result_prefix_validated=False)
             self._fail('invalid_response_or_queue_refusal')
             raise ValueError('Login response processing failed') from None
         return True

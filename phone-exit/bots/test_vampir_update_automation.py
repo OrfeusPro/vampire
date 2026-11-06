@@ -5,6 +5,10 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_lobby_results_current',
+    'test_vampir_create_handler_current',
+    'test_vampir_viper_appearance_current',
+    'test_vampir_bounded_entry',
     'test_vampir_lobby_login_prepare_current',
     'test_vampir_lobby_sender_current',
     'test_vampir_create_result_current',

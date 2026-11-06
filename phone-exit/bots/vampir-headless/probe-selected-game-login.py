@@ -135,6 +135,16 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
          read_character_list, character_index, read_world_start, read_world_finish, observe_world_seconds, world_observer, tutorial_observer, ack_initial_tutorial, read_quest_list, quest_observer, quest_wire_observer, state, phase, server_list_observer, creation_factory=None, device_settings=None, session_control=None, verification=None):
     phase('source_validation')
     source = module('game_login_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
+    from vampir_core.bounded_entry_admission import selected as entry_selected, require_character_list_operation
+    if entry_selected(selected_profile):
+        require_character_list_operation(selected_profile, auth_flow=auth_flow,
+            read_character_list=read_character_list, character_index=character_index,
+            server_list_only=server_list_only, creation_factory=creation_factory,
+            read_world_start=read_world_start, read_world_finish=read_world_finish,
+            observe_world_seconds=observe_world_seconds, world_observer=world_observer,
+            tutorial_observer=tutorial_observer, ack_initial_tutorial=ack_initial_tutorial,
+            read_quest_list=read_quest_list, quest_observer=quest_observer,
+            quest_wire_observer=quest_wire_observer, session_control=session_control)
     if is_prepared(selected_profile):
         if (not permits(source.source_exe_sha256,'game-login-world-v1') or auth_flow!='launcher'
                 or creation_factory is not None or ack_initial_tutorial or read_quest_list

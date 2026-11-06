@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "checked_utc": "2026-11-06T10:19:47.517199+00:00",
+  "selected_profile": "bounded-entry:359dd1d7d17a0ec93729358f2d76a69d089dc2bc6dee411400c347db37943e60",
+  "account_alias": "Silvercrow",
+  "route": "direct",
+  "server_region": "EU",
+  "server_id": 387,
+  "sdk_launcher_accepted": true,
+  "lobby_version_result_code": 0,
+  "lobby_login_result_code": 0,
+  "server_list_result_code": 0,
+  "server_groups": 7,
+  "servers": 8,
+  "game_version_result_code": 0,
+  "game_login_result_code": 0,
+  "game_login_body_bytes": 170,
+  "character_list_result_code": 0,
+  "character_count": 0,
+  "probe_finished": true,
+  "world_entered": false,
+  "character_created": false,
+  "session_credentials_saved": false,
+  "correction": {
+    "previous_failure": "game_login_result_decode",
+    "body_bytes": 170,
+    "result_prefix": 0,
+    "cause": "Portable legacy LoginResult decoder omitted current +140 string and +150/+154 u32 extension",
+    "current_native_reader": "0x1456dc190",
+    "source_export": "run-4b16a82b156e"
+  }
+}

@@ -49,6 +49,7 @@ class BaseGameProfile:
     live_probe_only: bool = False
     bounded_world_probe: bool = False
     bundle_sha256: str = ''
+    sdk_profile_selector: str = ''
 
 
 def verify_file(path, expected):
@@ -69,6 +70,14 @@ def verify_compiled_tag(path, source_sha):
 
 
 def load_profile(*, selected_profile, root=ROOT):
+    from vampir_core.bounded_entry_admission import selected as entry_selected, current as entry_current
+    if entry_selected(selected_profile):
+        profile = entry_current(selected_profile)
+        game = profile['game_profile']
+        return BaseGameProfile(game['app_version'], game['config_prefix'], game['cdn_url'],
+            game['config_snapshot_sha256'], compiled_tag=game['compiled_tag'],
+            source_exe_sha256=profile['source_sha256'], live_probe_only=True,
+            sdk_profile_selector='sdk-launcher:' + profile['sdk_profile_sha256'])
     if selected_profile == 'prepared-next' or selected_profile.startswith('prepared:'):
         from vampir_core.release_bundle import validate
         from vampir_core.runtime_admission import current_bundle

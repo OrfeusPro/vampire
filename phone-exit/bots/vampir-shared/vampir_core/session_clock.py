@@ -5,7 +5,7 @@ This does not implement periodic scheduling or the full client clock lifecycle.
 """
 from dataclasses import dataclass
 
-from .lobby_packets import LobbyVersionResultBody
+from .lobby_packets import LobbyVersionResultBody, CurrentLobbyVersionResultBody
 from .ping import PingPayload
 from .runtime_admission import permits
 
@@ -28,7 +28,11 @@ class LobbyPingClock:
     def from_version_result(cls, response, *, source_sha256):
         if source_sha256 not in INITIAL_PING_SOURCES and not permits(source_sha256,'lobby-ping-clock-v1'):
             raise ValueError('Ping clock is not verified for this client source')
-        if not isinstance(response, LobbyVersionResultBody):
+        if isinstance(response, CurrentLobbyVersionResultBody):
+            from .bounded_entry_admission import permits as entry_permits
+            if not entry_permits(source_sha256, 'lobby-ping-clock-v1'):
+                raise ValueError('Current lobby clock requires its bounded entry scope')
+        elif not isinstance(response, LobbyVersionResultBody):
             raise TypeError('Expected current lobby VersionResult')
         if response.result_code != 0 or response.flag_14:
             raise ValueError('Successful supported lobby Version context required')

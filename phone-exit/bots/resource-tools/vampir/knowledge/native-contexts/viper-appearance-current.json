@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "recipe": "viper-appearance-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "resource_report": {
+    "path": "F:/PhoneExit Resources/Vampir/code-clues/release-creation-presets/51c6b5099131164882fc7cbb69b24cf5e0a7a64710954ee7bd7fa26f1c7f8c8f/manifest.json",
+    "sha256": "51c6b5099131164882fc7cbb69b24cf5e0a7a64710954ee7bd7fa26f1c7f8c8f"
+  },
+  "cold_cdo_report": {
+    "path": "F:/PhoneExit Resources/Vampir/code-clues/viper-cold-cdo-current-v1/08fd0f53cf79598a5b273d3e56ec22c71d82b5c05737e5737fdf83901316483d/manifest.json",
+    "sha256": "08fd0f53cf79598a5b273d3e56ec22c71d82b5c05737e5737fdf83901316483d"
+  },
+  "class_type": 1,
+  "preset_id": 1,
+  "model_only": true,
+  "verified_loaded_asset": false,
+  "runtime_admitted": false
+}

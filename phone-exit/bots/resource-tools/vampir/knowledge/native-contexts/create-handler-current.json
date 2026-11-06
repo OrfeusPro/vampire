@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "recipe": "create-handler-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "handler": "0x1467984c0",
+  "exports": {
+    "run-5ece46e2b059": "2c7d75f3d342206aa23243300fe66e200589a0b54243e0b516ea3a957d6491f8"
+  },
+  "create_result_proof": {
+    "path": "F:/PhoneExit Resources/Vampir/code-clues/create-result-current-v1/0efcd501467955de81810608a3661b51b7b3cbd6985c512d1f0f3314bd8f04ca/manifest.json",
+    "sha256": "0efcd501467955de81810608a3661b51b7b3cbd6985c512d1f0f3314bd8f04ca"
+  }
+}

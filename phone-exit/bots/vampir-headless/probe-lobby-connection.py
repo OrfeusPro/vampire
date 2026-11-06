@@ -42,6 +42,14 @@ def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=N
         'f93042b23066af7a5a6dfedaa554f12dc88302e4a9f260da4ced0538db7f5251':
             'https://red.gcdn.netmarble.com/red/config/window/real/1_13_18/config.json',
     }
+    from vampir_core.bounded_entry_admission import current as entry_current
+    try:
+        current_entry = entry_current()
+    except ValueError:
+        current_entry = None
+    if current_entry is not None:
+        game = current_entry['game_profile']
+        urls[game['config_snapshot_sha256']] = game['cdn_url']
     if manifest['profile']['config_snapshot_sha256'] not in urls:
         raise ValueError('Probe requires an explicit verified recovered profile')
     if manifest['profile']['url'] != urls[manifest['profile']['config_snapshot_sha256']]:
@@ -50,7 +58,8 @@ def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=N
     if body_path.stat().st_size > 2097152: raise ValueError('CDN body exceeds local budget')
     body = body_path.read_bytes()
     if hashlib.sha256(body).hexdigest() != manifest['body_sha256']: raise ValueError('CDN body hash differs')
-    if lobby_region is not None and manifest['profile']['config_snapshot_sha256'] != 'c67314cea3e6d3f28f98073a6f6346b1fa0233143feb6e18e7e0914a152f4c7d':
+    bounded_region = current_entry is not None and manifest['profile']['config_snapshot_sha256'] == current_entry['game_profile']['config_snapshot_sha256']
+    if lobby_region is not None and not bounded_region and manifest['profile']['config_snapshot_sha256'] != 'c67314cea3e6d3f28f98073a6f6346b1fa0233143feb6e18e7e0914a152f4c7d':
         raise ValueError('Regional lobby selection requires the verified current profile')
     selected = select_cdn_server(decode_cdn_config_document(body), lobby_region=lobby_region)
     port = selected.lobby_port

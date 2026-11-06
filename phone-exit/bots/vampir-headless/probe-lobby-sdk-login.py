@@ -50,7 +50,10 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     from vampir_core.bot_device_settings import validate, apply_system, metadata_values
     device_settings = validate(device_settings)
     source = module('lobby_sdk_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
-    sdk_profile_name = (selected_profile if is_prepared(selected_profile) else
+    from vampir_core.bounded_entry_admission import selected as entry_selected
+    if entry_selected(selected_profile) and (auth_flow != 'launcher' or not read_server_list):
+        raise ValueError('Bounded entry requires launcher authentication and a fresh server list')
+    sdk_profile_name = getattr(source, 'sdk_profile_selector', '') or (selected_profile if is_prepared(selected_profile) else
         'recovered-release' if getattr(source, 'live_probe_only', False) else selected_profile)
     if is_prepared(selected_profile) and auth_flow!='launcher':raise ValueError('Prepared SDK supports launcher sign-in only')
     route = SocksRoute(socks_port) if socks_port is not None else None
@@ -141,7 +144,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
             _use_session(completed)
         result = exchange_lobby_login(connection, version, login, timeout=15, server_list=request,
             select_login=selected_login if _select_server is not None else None,
-            on_selected_login=use_session if _use_session is not None else None)
+            on_selected_login=use_session if _use_session is not None else None,
+            **({'version_source_sha256': source.source_exe_sha256} if entry_selected(selected_profile) else {}))
         result.summary.update(context=context, sdk_response_accepted=True, sdk_auth_flow=auth_flow,
             joined_country_present=bool(country),metadata_bytes=len(metadata.encode('utf-8')))
         if _use_session is None and _consume_auth and result.response is not None and result.response.result_code == 0:

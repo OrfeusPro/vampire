@@ -35,6 +35,14 @@ def digest(data):
 
 
 def profile(selected_profile='recovered-base'):
+    from vampir_core.bounded_entry_admission import selected as entry_selected, current as entry_current
+    if entry_selected(selected_profile):
+        current = entry_current(selected_profile)
+        game = current['game_profile']
+        return dict(config_snapshot_sha256=game['config_snapshot_sha256'],
+            archive_sha256=game['archive_sha256'], ini_sha256=game['ini_sha256'],
+            source_values=[], raw_url=game['cdn_url'][8:], url=game['cdn_url'],
+            https_added_by_local_policy=True, active_profile_verified=False)
     if selected_profile in ('recovered-release', 'candidate-11316', 'candidate-11318'):
         path = HERE.parents[1] / 'vampir-headless/game-source-profile.py'
         spec = importlib.util.spec_from_file_location('cdn_release_source_profile', path)
@@ -86,7 +94,12 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def fetch(url, *, route=None):
-    if url not in (PUBLIC_URL, RELEASE_URL, CANDIDATE_URL, CANDIDATE_11318_URL):
+    from vampir_core.bounded_entry_admission import current as entry_current
+    try:
+        current_url = entry_current()['game_profile']['cdn_url']
+    except ValueError:
+        current_url = None
+    if url not in (PUBLIC_URL, RELEASE_URL, CANDIDATE_URL, CANDIDATE_11318_URL, current_url) or url is None:
         raise ValueError('Only the recovered public CDN URL is supported')
     if route is not None and not isinstance(route, SocksRoute): raise TypeError('Expected an explicit SOCKS route')
     context = ssl.create_default_context()
