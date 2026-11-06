@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "recipe": "first-sdk-continuation-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-9e904f43767e": "3293865aed8adb18291bddf8c441c29a49b759fdbce6bffe3b1730ca9f441f28"
+  },
+  "functions": {
+    "fetch_callback": "0x1456022f0",
+    "terms_callback": "0x145603740",
+    "success_bridge": "0x145609970",
+    "error_bridge": "0x145609830",
+    "success_closure": "0x145604530",
+    "error_closure": "0x145604ed0",
+    "channel_classifier": "0x144531480"
+  },
+  "leaves": {
+    "0x144531a40": "837904000f94c0c3",
+    "0x141a2d360": "8b410cc3",
+    "0x14180e890": "488b4128c3"
+  },
+  "fixtures": {
+    "log": "0x145613de0",
+    "sign_in": "0x14561a3c0",
+    "basic_terms": "0x145618f20",
+    "error_text": "0x145607e40",
+    "fstring": "0x141426b90",
+    "message": "0x145619fd0",
+    "service_holder": "0x1444b1590",
+    "service_acquire": "0x1416b0990",
+    "idp_count": "0x144478fa0",
+    "sign_up": "0x14561a660",
+    "tracked_lookup": "0x1445fa070",
+    "individual_terms": "0x145619a00"
+  },
+  "tables": {
+    "success": "0x14990dfc8",
+    "error": "0x14990e030"
+  },
+  "manager_global": "0x14b5e8d40"
+}

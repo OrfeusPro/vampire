@@ -1533,6 +1533,28 @@
         "evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md",
         "evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md"
       ]
+    },
+    {
+      "id": "sdk-first-profile-current",
+      "status": "open",
+      "question": "Как перенести штатную подготовку первого SDK-профиля на текущий SHA, сохранив точный Fetch gate и границы условий?",
+      "known": "Собраны 30 текущих whole exports. Fetch callback и continuation условий с двумя virtual bridges, closures, classifier и тремя result getters прошли 126 native случаев на SHA 03edad: 27 Fetch и 99 terms. Сетевые операции и UI состояния остаются fixtures; SDK-профиль не создан.",
+      "unknown": "Текущая HTTP/JSON композиция Fetch error -> Basic/Individual NO DATA -> continuation, payload/response SignUp и direct SignIn, immutable runtime scope первого профиля и живой Silvercrow.",
+      "next_action": "Использовать один готовый current export run-9e904f43767e для оставшихся request/response и constructor/key контрактов. Подготовить ограниченный первый SDK scope, затем одну живую попытку Silvercrow перед остальными семью.",
+      "decision_rule": "Только собственный свежий Fetch с доказанным challenge допускает проверку условий. Доступные условия требуют просмотра; raw state 2 и отказ launcher SignIn 1203 не являются согласием или разрешением SignUp. Новый SHA требует своего доказательства.",
+      "do_not_repeat": "Не повторять неизменные SDK/Launcher/Fetch proofs и 126 готовых continuation сценариев вручную. Все 30 exports готовы; следующий collect нужен только для конкретного недостающего тела.",
+      "addresses": [
+        "0x1456022f0",
+        "0x145603740",
+        "0x145604530",
+        "0x145604ed0",
+        "0x145609970",
+        "0x145609830",
+        "0x144531480"
+      ],
+      "evidence": [
+        "evidence/auth/HEADLESS-FIRST-SDK-CONTINUATION-CURRENT.md"
+      ]
     }
   ]
 }

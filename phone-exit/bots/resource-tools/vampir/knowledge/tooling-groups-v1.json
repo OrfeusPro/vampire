@@ -4746,6 +4746,23 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/test_vampir_preset_defaults_current.py"
       ]
+    },
+    {
+      "id": "first-sdk-continuation-current",
+      "test_modules": [
+        "test_vampir_first_sdk_continuation_current"
+      ],
+      "timeout_seconds": 90,
+      "dependencies": [
+        "phone-exit/bots/test_vampir_first_sdk_continuation_current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-first-sdk-continuation-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-continuation-11322.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
+      ]
     }
   ],
   "original_gate_id": "automatic-update-tooling",

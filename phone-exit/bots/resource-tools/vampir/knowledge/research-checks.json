@@ -12443,7 +12443,10 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/resource-tools/vampir/verify-preset-defaults-current.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/preset-defaults-11322.json",
-        "phone-exit/bots/test_vampir_preset_defaults_current.py"
+        "phone-exit/bots/test_vampir_preset_defaults_current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-continuation-11322.json",
+        "phone-exit/bots/resource-tools/vampir/verify-first-sdk-continuation-current.py",
+        "phone-exit/bots/test_vampir_first_sdk_continuation_current.py"
       ],
       "artifact_dependencies": []
     },
@@ -12845,6 +12848,36 @@
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-ddd300a85f1d/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ]
+    },
+    {
+      "id": "first-sdk-continuation-current",
+      "questions": [
+        "sdk-first-profile-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_first_sdk_continuation_current.py",
+      "timeout_seconds": 90,
+      "dependencies": [
+        "phone-exit/bots/test_vampir_first_sdk_continuation_current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-first-sdk-continuation-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-continuation-11322.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-9e904f43767e/details.json"
       ],
       "runtime_distributions": [
         "capstone",

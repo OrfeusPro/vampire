@@ -683,3 +683,7 @@ bots/vampir-headless/run-account-sdk-fetch.py text eol=lf
 bots/vampir-shared/vampir_core/sdk_fetch_admission.py text eol=lf
 
 bots/resource-tools/vampir/knowledge/evidence/auth/SDK-FETCH-CURRENT-VALIDATION.json text eol=lf
+bots/resource-tools/vampir/verify-first-sdk-continuation-current.py text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/first-sdk-continuation-11322.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-CONTINUATION-CURRENT.md text eol=lf
+bots/test_vampir_first_sdk_continuation_current.py text eol=lf
