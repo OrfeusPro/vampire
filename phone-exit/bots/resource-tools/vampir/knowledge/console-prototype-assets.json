@@ -10,5 +10,19 @@
     "file": "maps/nocturne-preview.jpg",
     "sha256": "ad0b11364574457ca8591201493ef64b86aadda2fffe566cdd36945264876950"
   },
+  "map_layers": {
+    "scene": {
+      "file": "maps/atlas/nocturne.json",
+      "sha256": "7ad6d62a02111d5c58e0b202b778f40a0723aa34ccc1b98f380ad82c52d91bc6"
+    },
+    "scene_manifest": {
+      "file": "maps/atlas/nocturne-manifest.json",
+      "sha256": "feaa0c486792176d90873b82321ddd4ab6f6730e954f06e918dd15bf6ecaa5a1"
+    },
+    "navigation_manifest": {
+      "file": "maps/atlas/navigation-overlay-manifest.json",
+      "sha256": "ce4c57eb24affdccc92505ee5fade1d603ddf2148e94682b599acf8545e5198d"
+    }
+  },
   "scope": "Saved prototype presentation and reference atlas. Current game telemetry has separate source admission."
 }

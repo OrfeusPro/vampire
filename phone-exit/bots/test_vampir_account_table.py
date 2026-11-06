@@ -5,6 +5,11 @@ import unittest
 
 
 class AccountTableTests(unittest.TestCase):
+    def test_shared_atlas_layers_preserve_visible_tiles_and_navigation_geometry(self):
+        source=Path(__file__).parent/'resource-tools/vampir/atlas-map-layers.test.cjs'
+        result=subprocess.run(['node',str(source.resolve())],capture_output=True,text=True,timeout=10)
+        self.assertEqual(result.returncode,0,result.stderr)
+
     def test_manual_netmarble_form_rejects_the_wrong_account(self):
         source = Path(__file__).parent / 'vampir-headless/windows/nid-sign-in.js'
         fixture = r'''
@@ -268,29 +273,61 @@ const poll=async()=>{const pending=[...timers].find(([,entry])=>entry.delay===20
         source = Path(__file__).parent / 'vampir/ui-prototype/group-map.js'
         fixture = r'''
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const events={},sent=[],drawn=[];
+const events={},sent=[],drawn=[],layerCalls=[];
+const pointData={schema:1,kind:'reference_atlas_points',runtime_visibility_verified:false,points:[]};
+const pointBytes=new TextEncoder().encode(JSON.stringify(pointData));
+const pointSha=require('node:crypto').createHash('sha256').update(pointBytes).digest('hex');
+const layerData={schema:1,kind:'reference_atlas_layers',navigation_ready:false,
+ projection:{map_ids:['10'],size:[10000,10000],center:[0,0],ground_distance:10000},background:{tiles:[]},
+ points:{file:'atlas-points.json',sha256:pointSha,counts:{Area:175}},navigation:{file:'unused.json'}};
 const ctx={setTransform(){},drawImage(){},beginPath(){},moveTo(){},lineTo(){},stroke(){},arc(){},fill(){},fillText:text=>drawn.push(text)};
 const canvas={getContext:()=>ctx,getBoundingClientRect:()=>({width:1000,height:1000,left:0,top:0}),addEventListener(){},setPointerCapture(){}};
-const label={},nodes={'group-canvas':canvas,'map-world':label,'map-fit':{},'map-in':{},'map-out':{}};
+const label={},nodes={'group-canvas':canvas,'map-world':label,'map-fit':{},'map-in':{},'map-out':{},'map-navigation':{},'map-layer-status':{}};
+for(const id of ['map-detail','map-characters','map-labels','map-npcs','layer-Area','layer-Waypoint','layer-GadgetSpawn','layer-WorldSpot','layer-QuestTask'])nodes[id]={checked:true};
+for(const id of ['map-npc-status','map-npc-count','layer-count-Area','layer-count-Waypoint','layer-count-GadgetSpawn','layer-count-WorldSpot','layer-count-QuestTask'])nodes[id]={};
+nodes['map-layers-toggle']={setAttribute(){},focus(){}};nodes['map-layers-panel']={hidden:true,contains:()=>false};
 const parent={postMessage:(message,origin)=>sent.push({message,origin})},origin='http://fixture.invalid';
 const context=vm.createContext({document:{getElementById:id=>nodes[id]},location:{origin},parent,devicePixelRatio:1,
  Image:class {naturalWidth=0;},addEventListener:(name,fn)=>events[name]=fn,
- VampirPrototypeLiveModel:{project:row=>({positionOrigin:row.position?'owner_projection':null})},
+ AbortController,setTimeout,clearTimeout,TextDecoder,crypto:require('node:crypto').webcrypto,
+ fetch:async file=>({ok:true,arrayBuffer:async()=>file==='atlas-points.json'?pointBytes.buffer:new TextEncoder().encode(JSON.stringify(layerData)).buffer}),
+ VampirAtlasLayers:{create:()=>({background(){return {};},navigation(){return 0;},points(...args){layerCalls.push(args.at(-1));return {visible:0,clusters:0};},dispose(){}})},
+ VampirPrototypeLiveModel:{project:row=>({positionOrigin:row?.position?'owner_projection':null,
+  person:row?.state==='connected'?row.character:null,entitiesKnown:row?.coverage?.entities==='received',entityRows:row?.entities??[]})},
  VampirLocalMapProjection:{valid:atlas=>atlas?.schema===1,project:()=>null}});
 vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
 const row=(name,x)=>({state:'connected',character:{name,world_id:'10010'},position:{inside:true,map_id:'10',pixel_x:x,pixel_y:5000}});
 let sessions={first:row('Первый',5000),second:row('Второй',5100)};
-function message(bot='first',extra={}){return {origin,source:parent,data:{source:'vampir-live-prototype',type:'state',bot_id:bot,payload:{sessions,atlas:{schema:1,size:[10000,10000]},follow:false}},...extra};}
+function message(bot='first',extra={}){return {origin,source:parent,data:{source:'vampir-live-prototype',type:'state',bot_id:bot,payload:{sessions,atlas:{schema:1,size:[10000,10000],center:[0,0],ground_distance:10000},follow:false}},...extra};}
 assert.equal(sent[0].message.type,'ready');assert.equal(sent[0].origin,origin);
 events.message(message('first',{origin:'https://foreign.invalid'}));assert.equal(drawn.length,0);
 events.message(message('first',{source:{}}));assert.equal(drawn.length,0);
 events.message(message());assert.ok(drawn.includes('Первый'));assert.ok(drawn.includes('Второй'));assert.match(label.textContent,/Карта 10/);
+assert.equal(nodes['map-npcs'].disabled,true);assert.equal(nodes['map-npc-count'].textContent,'—');
+nodes['map-layers-toggle'].onclick();assert.equal(nodes['map-layers-panel'].hidden,false);
+events.keydown({key:'Escape'});assert.equal(nodes['map-layers-panel'].hidden,true);
+drawn.length=0;nodes['map-characters'].checked=false;nodes['map-characters'].onchange();assert.equal(drawn.length,0);
+nodes['map-characters'].checked=true;nodes['map-characters'].onchange();assert.ok(drawn.includes('Первый'));
 drawn.length=0;events.message(message('second'));assert.ok(drawn.includes('Первый'));assert.ok(drawn.includes('Второй'));
 sessions={first:sessions.first,second:{...sessions.second,state:'disconnected'}};drawn.length=0;events.message(message('second'));
 assert.equal(drawn.length,0);assert.match(label.textContent,/Карта ещё не подключена/);
 sessions={first:{...sessions.first,position:null}};drawn.length=0;events.message(message('first'));
 assert.equal(drawn.length,0); // A prior projected position cannot survive an unavailable current position.
-process.stdout.write('passed');
+(async()=>{
+ await new Promise(resolve=>setImmediate(resolve));await new Promise(resolve=>setImmediate(resolve));
+ sessions={first:row('Первый',5000)};events.message(message());
+ assert.ok(layerCalls.length);assert.deepEqual([...layerCalls.at(-1).types],['Area','Waypoint','GadgetSpawn','WorldSpot','QuestTask']);
+ assert.equal(nodes['map-npcs'].disabled,true);assert.equal(nodes['layer-count-Area'].textContent,'175');
+ sessions.first.coverage={entities:'received'};sessions.first.entities=[
+  {kind:'npc',world_id:'10010',wire_id:42,position:{x:10,y:20,z:30},position_semantics:'server_sight_position'},
+  {kind:'npc',world_id:'10011',name:'Other world',position:{x:10,y:20,z:30},position_semantics:'server_sight_position'},
+  {kind:'npc',world_id:'10010',name:'Guessed',position:{x:10,y:20,z:30},position_semantics:'guessed'}];
+ drawn.length=0;events.message(message());assert.equal(nodes['map-npcs'].disabled,false);assert.equal(nodes['map-npc-count'].textContent,'1');
+ assert.ok(drawn.includes('NPC 42'));assert.equal(drawn.includes('Other world'),false);assert.equal(drawn.includes('Guessed'),false);
+ sessions.first.coverage={entities:'not_verified'};drawn.length=0;events.message(message());
+ assert.equal(nodes['map-npcs'].disabled,true);assert.equal(drawn.includes('NPC 42'),false);
+ process.stdout.write('passed');
+})().catch(error=>{process.stderr.write(error.stack);process.exitCode=1;});
 '''
         result = subprocess.run(['node', '-e', fixture, str(source.resolve())], capture_output=True, text=True, timeout=10)
         self.assertEqual(result.returncode, 0, result.stderr)

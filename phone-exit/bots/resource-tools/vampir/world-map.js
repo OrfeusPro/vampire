@@ -6,7 +6,8 @@ const layerNames = { Area: 'Области и названия', Waypoint: 'По
 const types = new Set(Object.keys(layerNames));
 let scene, visible = [], groups = [], selected = null, npcFilter = null, itemId = '', resultLimit = 60;
 let view = { x: 0, y: 0, s: .001 }, dimensions = { width: 900, height: 700 }, frame = 0, cardEpoch = 0;
-const preview = new Image(), tileCache = new Map(), iconCache = new Map(), worldCache = new Map();
+const preview = new Image(), iconCache = new Map(), worldCache = new Map();
+const atlasLayers=VampirAtlasLayers.create({requestDraw:schedule,resolveUrl:file=>'../../'+file});
 const worldById = new Map(), pointByKey = new Map();
 let monsterManifest = null, areaRewardsPending = null, areaFilter = null;
 let skillIndexPending=null, skillFilter=null, skillId='', skillEpoch=0;
@@ -188,22 +189,7 @@ function imageForIcon(id) {
   return image.complete && image.naturalWidth ? image : null;
 }
 function background() {
-  const b = scene.projection.world_bounds, [x, y] = pointScreen({ x: b[0], y: b[1] });
-  const extent = (b[2] - b[0]) * view.s;
-  if (preview.complete && preview.naturalWidth) ctx.drawImage(preview, x, y, extent, extent);
-  // At overview scale use the small image. Original tiles load only when their detail is needed.
-  if (extent / 5 * Math.min(devicePixelRatio, 2) < 390) return;
-  const needed = new Set();
-  for (const tile of scene.background.tiles) {
-    const { x: px, y: py, width, height } = model.tileRect(tile.atlas_rect);
-    const tx = x + px / 10240 * extent, ty = y + py / 10240 * extent, tw = width / 10240 * extent, th = height / 10240 * extent;
-    if (tx > dimensions.width || ty > dimensions.height || tx + tw < 0 || ty + th < 0) continue;
-    needed.add(tile.file);
-    let image = tileCache.get(tile.file);
-    if (!image) { image = new Image(); image.onload = schedule; image.src = '../../' + tile.file; tileCache.set(tile.file, image); }
-    if (image.complete && image.naturalWidth) ctx.drawImage(image, tx, ty, tw, th);
-  }
-  if (tileCache.size > 10) for (const [key] of tileCache) { if (!needed.has(key)) tileCache.delete(key); if (tileCache.size <= 10) break; }
+  atlasLayers.background(ctx,preview,scene.background,scene.projection,view,dimensions.width,dimensions.height,devicePixelRatio);
 }
 function drawPolygons() {
   for (const polygon of scene.polygons) {
@@ -216,19 +202,8 @@ function drawPolygons() {
 }
 function drawNavigation(){
   if(!navOverlay||!$('navLayer')?.checked)return;
-  const tiles=NavOverlayModel.visible(navOverlay.tiles,view,dimensions.width,dimensions.height);
-  ctx.save();ctx.strokeStyle='#bb9af0a6';ctx.fillStyle='#ad86ed24';ctx.lineWidth=.7;
-  for(const tile of tiles){
-    if(!NavOverlayModel.detailed(tile,view.s)){
-      const [x,y]=pointScreen({x:tile.bounds[0],y:tile.bounds[1]});
-      ctx.fillRect(x,y,(tile.bounds[2]-tile.bounds[0])*view.s,(tile.bounds[3]-tile.bounds[1])*view.s);
-      continue;
-    }
-    const vertices=tile.vertices.map(v=>pointScreen({x:v[0],y:v[1]}));
-    for(const face of tile.polygons){ctx.beginPath();face.forEach((id,i)=>{const [x,y]=vertices[id];i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.closePath();ctx.fill();ctx.stroke();}
-  }
-  ctx.restore();
-  $('navStatus').textContent=navOverlay.stats.tiles.toLocaleString('ru')+' ячеек · '+navOverlay.stats.surface_polygons.toLocaleString('ru')+' полигонов · в окне '+tiles.length.toLocaleString('ru')+' ячеек.';
+  const count=atlasLayers.navigation(ctx,navOverlay,view,dimensions.width,dimensions.height);
+  $('navStatus').textContent=navOverlay.stats.tiles.toLocaleString('ru')+' ячеек · '+navOverlay.stats.surface_polygons.toLocaleString('ru')+' полигонов · в окне '+count.toLocaleString('ru')+' ячеек.';
 }
 function drawSpecialNavigation(){
   if(!navOverlay||!$('navSpecialLayer')?.checked)return;

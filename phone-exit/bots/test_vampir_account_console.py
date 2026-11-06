@@ -26,6 +26,133 @@ class FixtureVault:
         raise AssertionError('UI / storage tests must not request a live credential')
 
 
+class AtlasAssetsTests(unittest.TestCase):
+    def fixture(self, root):
+        root=Path(root).resolve();folder=root/'maps/atlas';folder.mkdir(parents=True)
+        images=root/'archive-images';images.mkdir()
+        tiles=[]
+        for index in range(25):
+            data=('tile '+str(index)).encode();(images/(str(index)+'.png')).write_bytes(data)
+            x,y=index//5*2048,index%5*2048
+            tiles.append(dict(file='archive-images/'+str(index)+'.png',sha256=hashlib.sha256(data).hexdigest(),
+                width=2048,height=2048,atlas_rect=[x,y,x+2048,y+2048]))
+        body=json.dumps(dict(schema_version=1,coordinate_space='world_xy',navigation_ready=False,
+            tiles=[],stats=dict(tiles=0,surface_polygons=0))).encode()
+        (folder/'navigation-overlay.json').write_bytes(body)
+        nav=dict(file='navigation-overlay.json',sha256=hashlib.sha256(body).hexdigest(),
+                 stats=dict(tiles=0,surface_polygons=0),runtime_selection_verified=False)
+        scene=dict(schema_version=1,navigation_ready=False,projection=dict(map_ids=['10','11'],size=[10240,10240],
+            center=[0,0],ground_distance=615000,world_bounds=[-307500,-307500,307500,307500],navigation_ready=False),
+            background=dict(tiles=tiles,preview_sha256='a'*64),navigation_overlay=dict(nav),
+            points=[dict(type='NpcSpawn',key='NpcSpawn:1',id='1',npc_id='10',world_id='10010',label='Торговец',x=12,y=34),
+                    dict(type='NpcSpawn',key='NpcSpawn:2',id='2',npc_id='11',world_id='10011',label='Торговец',x=12,y=34),
+                    dict(type='WorldSpot',key='WorldSpot:3',id='3',world_id='10010',label='Место',x=2,y=3),
+                    *[dict(type=kind,key=kind+':'+str(index),id=str(index),world_id='10010',label=kind,x=index,y=index)
+                      for index,kind in enumerate(('Area','Waypoint','GadgetSpawn','QuestTask'),start=4)],
+                    dict(type='Unknown',key='Unknown:8',id='8',world_id='10010',label='Неизвестно',x=8,y=8)],
+            npcs={'10':dict(level='7'),'11':dict(level=12)})
+        return root,scene,nav
+
+    def retain(self, root, scene, nav):
+        folder=root/'maps/atlas'
+        def save(name,value):
+            data=json.dumps(value).encode();(folder/name).write_bytes(data)
+            return dict(file='maps/atlas/'+name,sha256=hashlib.sha256(data).hexdigest())
+        selected=dict(scene=save('nocturne.json',scene))
+        selected['scene_manifest']=save('nocturne-manifest.json',dict(file='nocturne.json',sha256=selected['scene']['sha256']))
+        selected['navigation_manifest']=save('navigation-overlay-manifest.json',nav)
+        return selected
+
+    def tool(self):
+        sys.path.insert(0,str(HERE/'vampir-headless'))
+        import atlas_assets
+        return atlas_assets
+
+    def test_reference_atlas_retains_all_cells_and_defers_large_payload_reads(self):
+        tool=self.tool()
+        with tempfile.TemporaryDirectory() as folder:
+            root,scene,nav=self.fixture(folder);selected=self.retain(root,scene,nav)
+            with patch.object(tool.AtlasAssets,'read_json',wraps=tool.AtlasAssets.read_json) as read:
+                result=tool.AtlasAssets(root,selected)
+            self.assertEqual(len(read.call_args_list),3)
+            self.assertNotIn(root/'maps/atlas/navigation-overlay.json',[call.args[0] for call in read.call_args_list])
+            manifest=json.loads(result.manifest)
+            self.assertEqual(len(result.files),26)
+            self.assertFalse(manifest['navigation_ready'])
+            self.assertFalse(manifest['navigation']['runtime_selection_verified'])
+            self.assertEqual(manifest['background']['preview_sha256'],'a'*64)
+            self.assertEqual(manifest['projection']['world_bounds'],scene['projection']['world_bounds'])
+            self.assertEqual(manifest['background']['tiles'][-1]['atlas_rect'],[8192,8192,10240,10240])
+            self.assertEqual(result.files['atlas-tiles/24.png']['path'],root/'archive-images/24.png')
+            self.assertEqual(result.files['atlas-navigation.json']['sha256'],nav['sha256'])
+            self.assertEqual(result.files['atlas-navigation.json']['budget'],16*2**20)
+            self.assertTrue(all('/../' not in name for name in result.files))
+            self.assertEqual(manifest['points']['count'],7)
+            self.assertEqual(manifest['points']['sha256'],hashlib.sha256(result.points).hexdigest())
+            self.assertEqual(manifest['points']['counts'],dict(Area=1,Waypoint=1,NpcSpawn=2,GadgetSpawn=1,WorldSpot=1,QuestTask=1))
+
+    def test_reference_atlas_rejects_changed_or_escaping_sources(self):
+        tool=self.tool()
+        with tempfile.TemporaryDirectory() as folder:
+            root,scene,nav=self.fixture(folder);selected=self.retain(root,scene,nav)
+            (root/'maps/atlas/nocturne.json').write_bytes(b'changed')
+            with self.assertRaisesRegex(ValueError,'источник'):
+                tool.AtlasAssets(root,selected)
+            selected['scene']['file']='../outside.json'
+            with self.assertRaisesRegex(ValueError,'каталога'):
+                tool.AtlasAssets(root,selected)
+
+    def test_reference_atlas_rejects_unknown_projection_incomplete_or_overlapping_grid(self):
+        tool=self.tool()
+        mutations=[lambda value:value['projection'].update(map_ids=['10','12']),
+            lambda value:value['projection'].update(world_bounds=[0,0,615000,615000]),
+            lambda value:value['background']['tiles'].pop(),
+            lambda value:value['background']['tiles'][1].update(atlas_rect=[0,0,2048,2048]),
+            lambda value:value['background']['tiles'][0].update(atlas_rect=[0,0,1024,2048]),
+            lambda value:value['background']['tiles'][0].update(file='archive-images/../outside.png')]
+        for mutate in mutations:
+            with self.subTest(mutation=mutations.index(mutate)),tempfile.TemporaryDirectory() as folder:
+                root,scene,nav=self.fixture(folder);mutate(scene)
+                with self.assertRaises(ValueError):
+                    tool.AtlasAssets(root,self.retain(root,scene,nav))
+
+    def test_reference_atlas_rejects_mixed_navigation_manifest_and_runtime_admission(self):
+        tool=self.tool()
+        with tempfile.TemporaryDirectory() as folder:
+            root,scene,nav=self.fixture(folder)
+            other=dict(nav,sha256='f'*64)
+            with self.assertRaisesRegex(ValueError,'сетки'):
+                tool.AtlasAssets(root,self.retain(root,scene,other))
+            nav['runtime_selection_verified']=True;scene['navigation_overlay']=dict(nav)
+            with self.assertRaisesRegex(ValueError,'сетки'):
+                tool.AtlasAssets(root,self.retain(root,scene,nav))
+
+    def test_reference_points_preserve_world_identity_and_labels_without_fabricated_coordinates(self):
+        tool=self.tool()
+        with tempfile.TemporaryDirectory() as folder:
+            root,scene,nav=self.fixture(folder)
+            scene['points'].append(dict(scene['points'][0],id='4',key='NpcSpawn:4',x=float('nan')))
+            scene['points'].append(dict(scene['points'][0],id='5',key='NpcSpawn:5',y=None))
+            result=tool.AtlasAssets(root,self.retain(root,scene,nav));points=json.loads(result.points)
+            self.assertFalse(points['runtime_visibility_verified'])
+            self.assertEqual([(p['world_id'],p['label'],p['level'],p['x'],p['y']) for p in points['points'] if p['type']=='NpcSpawn'],
+                             [('10010','Торговец','7',12,34),('10011','Торговец',12,12,34)])
+            self.assertEqual(points['stats'],dict(points=7,counts=dict(Area=1,Waypoint=1,NpcSpawn=2,GadgetSpawn=1,WorldSpot=1,QuestTask=1),
+                omitted_nonfinite_coordinates=2,omitted_invalid_records=0,omitted_unknown_types=1))
+
+    def test_reference_points_bound_count_and_require_consistent_preview_identity(self):
+        tool=self.tool()
+        with tempfile.TemporaryDirectory() as folder:
+            root,scene,nav=self.fixture(folder)
+            scene['background']['preview_sha256']='unknown'
+            with self.assertRaisesRegex(ValueError,'SHA'):
+                tool.AtlasAssets(root,self.retain(root,scene,nav))
+            scene['background']['preview_sha256']='a'*64
+            scene['points']=[scene['points'][0]]*32_001
+            with self.assertRaisesRegex(ValueError,'точек атласа'):
+                tool.AtlasAssets(root,self.retain(root,scene,nav))
+
+
 class AccountConsoleTests(unittest.TestCase):
     def test_prototype_assets_check_each_retained_file_and_bound_shared_cache(self):
         sys.path.insert(0,str(HERE / 'vampir-headless'))

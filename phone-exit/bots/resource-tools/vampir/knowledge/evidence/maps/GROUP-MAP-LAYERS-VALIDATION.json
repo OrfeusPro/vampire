@@ -1,0 +1,197 @@
+{
+  "schema": 1,
+  "source_scope": "presentation_reference_only",
+  "game_commands_sent": false,
+  "remaining_online": {
+    "bot_id": "5296c70c-80b3-4ea8-bfec-aba67a946607",
+    "session_id": "aeef7a6b85192dd6fd65a9726b83c3a4",
+    "name": "Bipoberiho",
+    "heartbeat": {
+      "sent": 1186,
+      "received": 1186
+    }
+  },
+  "disabled_other_owners": 7,
+  "payloads": [
+    {
+      "route": "atlas-tiles/0.png",
+      "sha256": "8da09167bf5bf8cb08f5c1a288b6559f2400d3d49be38338d93d4ca6e82225d8",
+      "size": 1564333
+    },
+    {
+      "route": "atlas-tiles/1.png",
+      "sha256": "8c92db2f296b4931a698a603f977fab14e0c5b0885ff39f9389d8cc59ff3b592",
+      "size": 2696730
+    },
+    {
+      "route": "atlas-tiles/2.png",
+      "sha256": "98b2b3002e74472015e28890e50a72dd6f7b7bac95bde568cfcc2d2f949b5547",
+      "size": 2864832
+    },
+    {
+      "route": "atlas-tiles/3.png",
+      "sha256": "a542722f59126119454f06e23d5a89d74d79680864ab7b10a55e971c69954efb",
+      "size": 2741456
+    },
+    {
+      "route": "atlas-tiles/4.png",
+      "sha256": "039b56860708228bb1e9aae6a4ef356e398e6f9408ee4e2f0b81e9b40934d656",
+      "size": 2104011
+    },
+    {
+      "route": "atlas-tiles/5.png",
+      "sha256": "1639b6286993264790284f78cb882e7246df8a2e0f44c7e7c17b65ad1a16a280",
+      "size": 2064180
+    },
+    {
+      "route": "atlas-tiles/6.png",
+      "sha256": "54cb7ac1df07916e90948820a50950d638c433f7d4194f367a730314978db7d9",
+      "size": 3680063
+    },
+    {
+      "route": "atlas-tiles/7.png",
+      "sha256": "a97ee7b2dc607f33544e608eb83027e52732f4b68ea1994f23eafa2f081e3eab",
+      "size": 4433537
+    },
+    {
+      "route": "atlas-tiles/8.png",
+      "sha256": "ae751b04613fd447097d60a3f42c8d536562f0d4504b67dbdaf5668576d91a20",
+      "size": 3002776
+    },
+    {
+      "route": "atlas-tiles/9.png",
+      "sha256": "b4b488c18528e1d36d6d4b303ff2ae0e934b7da094285115c122f5db824b651c",
+      "size": 2150356
+    },
+    {
+      "route": "atlas-tiles/10.png",
+      "sha256": "7071e627a65e0c7f36074814fca324e2e4461a83927fdb1ddbc6d1d35fedb1bd",
+      "size": 2413852
+    },
+    {
+      "route": "atlas-tiles/11.png",
+      "sha256": "693afcdc7627b933fb5984d5163887dca123070743f7f95e2984e2ce4551f0a9",
+      "size": 3624211
+    },
+    {
+      "route": "atlas-tiles/12.png",
+      "sha256": "debe7635d7ddf5c72d9e9439fe4f03980187a1de122acc734012e6818c7a872d",
+      "size": 3468411
+    },
+    {
+      "route": "atlas-tiles/13.png",
+      "sha256": "b01f430b2778f8f381f3f8588fb95dd85febfe1728a111f2de018f5e8c21d379",
+      "size": 4540412
+    },
+    {
+      "route": "atlas-tiles/14.png",
+      "sha256": "e1f0adcd13b71e7f958efae5fa5ff6b56549493e730a2d2b1480714f182021db",
+      "size": 2528689
+    },
+    {
+      "route": "atlas-tiles/15.png",
+      "sha256": "60b8d109abc30b53093257bea89d202d083ad6696339a05b387de0910daadabf",
+      "size": 2069641
+    },
+    {
+      "route": "atlas-tiles/16.png",
+      "sha256": "eab33363221437f201bc9311d850434eb53de4add794a7ac396d84e23fd1c73f",
+      "size": 3808570
+    },
+    {
+      "route": "atlas-tiles/17.png",
+      "sha256": "b1bbdaddff084cfdff1607983aa3377e465febcfd207739292d8f0f0915a8532",
+      "size": 2448328
+    },
+    {
+      "route": "atlas-tiles/18.png",
+      "sha256": "a3e20a393b0bfa013949a50aea30090f51da81e6dc298c246be93cf9aa321fe6",
+      "size": 4315220
+    },
+    {
+      "route": "atlas-tiles/19.png",
+      "sha256": "9177b80c1eca762515a17eb58423035a5540c349e3d8c262abc8c59c963f5715",
+      "size": 2612818
+    },
+    {
+      "route": "atlas-tiles/20.png",
+      "sha256": "ef600284d9be5c49c5ee9b7c9d8a6e7eeebde818587211b89393382bcf4f0753",
+      "size": 2248000
+    },
+    {
+      "route": "atlas-tiles/21.png",
+      "sha256": "9037bdc70d12608c4c1181942adb4055511e56a89d39da519f8c5e4b327737f0",
+      "size": 2766729
+    },
+    {
+      "route": "atlas-tiles/22.png",
+      "sha256": "7cd2410f635cb12aa84462f9066b6cd36cb3574020b462a66ba9ba1024aa2ba8",
+      "size": 2814792
+    },
+    {
+      "route": "atlas-tiles/23.png",
+      "sha256": "06fe2e847834c6dadbb3478de72b7dbaa21f84fb42ad93ee21fd32bb9cd09a35",
+      "size": 3271457
+    },
+    {
+      "route": "atlas-tiles/24.png",
+      "sha256": "e6518a42b1afac50318d1740930ffdeb4497c30e99828559e2bbb9c28c939b68",
+      "size": 2642306
+    },
+    {
+      "route": "atlas-navigation.json",
+      "sha256": "a1fafce6d8db708fec9694f20d45dd31e8960477641971f05c0252ec7bfb4f07",
+      "size": 12722543
+    },
+    {
+      "route": "atlas-points.json",
+      "sha256": "062af65401591818650e54a1483378b1076f94ae40c0d0d12440db42f7433d3b",
+      "size": 4198219
+    }
+  ],
+  "reference_counts": {
+    "Area": 175,
+    "Waypoint": 40,
+    "NpcSpawn": 17488,
+    "GadgetSpawn": 629,
+    "WorldSpot": 207,
+    "QuestTask": 5535
+  },
+  "static_npc_displayed": false,
+  "npc_live_coverage": "not_verified",
+  "navigation_ready": false,
+  "limits": [
+    "Reference atlas selection; no current navmesh compatibility or walkability admission.",
+    "Live NPC source transfer and shop/quest role lookup remain blocked; no static NPC fallback."
+  ],
+  "checked_utc": "2026-11-06T16:47:58.433057+00:00",
+  "layers_manifest_canonical_sha256": "bad44d645edfc86e6791a6d4b0af65ba3a01a5deab283ebdb5072b53aca9aea5",
+  "payload_check_receipt": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\group-map-layers-payload-check.json",
+    "sha256": "b6d61c3da4d3468f193ad392476fdff4d4a23ffec16a8ea2685633dc1b878f26"
+  },
+  "targeted_tests": {
+    "passed": 57,
+    "modules": [
+      "test_vampir_account_console",
+      "test_vampir_account_table",
+      "test_vampir_world_map"
+    ]
+  },
+  "browser": {
+    "gear_checked": true,
+    "visible_detailed_tiles_loaded": 6,
+    "visible_detailed_tiles_needed": 6,
+    "nav_cells_visible_at_zoom": 1541,
+    "nav_cells_total": 18430,
+    "polygons_total": 101090,
+    "static_npc_fallback": false,
+    "only_selected_world_points": true
+  },
+  "update": {
+    "check": "automatic-update-tooling",
+    "group": "account-verification",
+    "contract": "game-ui",
+    "source_admission_expanded": false
+  }
+}

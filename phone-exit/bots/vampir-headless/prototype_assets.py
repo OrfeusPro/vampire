@@ -6,10 +6,12 @@ import mimetypes
 from pathlib import Path
 from threading import RLock
 from urllib.parse import unquote
+from atlas_assets import AtlasAssets
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parent / 'vampir/ui-prototype'
 SELECTOR = HERE.parent / 'resource-tools/vampir/knowledge/console-prototype-assets.json'
+TOOLS = SELECTOR.parent.parent
 
 
 class PrototypeAssets:
@@ -19,7 +21,12 @@ class PrototypeAssets:
         self.root, self.token = Path(root).resolve(), token
         self.source = {path.name: path.read_bytes() for path in SOURCE.iterdir()
                        if path.suffix in ('.js', '.css', '.html') and '.test.' not in path.name}
+        self.source.update((name,(TOOLS/name).read_bytes()) for name in
+            ('world-map-model.js','nav-overlay-model.js','atlas-map-layers.js'))
         self.selected = json.loads(SELECTOR.read_bytes())
+        self.layers = AtlasAssets(self.root,self.selected['map_layers']) if self.selected.get('map_layers') else None
+        if self.layers and json.loads(self.layers.manifest)['background']['preview_sha256']!=self.selected['atlas']['sha256']:
+            raise ValueError('Обзорная карта не соответствует детальным слоям')
         self.snapshot = (self.root / self.selected['snapshot']).resolve()
         if not self.snapshot.is_relative_to(self.root / 'maps/ui-prototype/snapshots'):
             raise ValueError('Некорректный путь ресурсов прототипа')
@@ -63,9 +70,18 @@ class PrototypeAssets:
             if relative.suffix == '.html':
                 data = data.replace(b'<head>', b'<head><meta name="console-token" content="' + self.token.encode() + b'">', 1)
             return data, self.mime(name)
+        if name == 'atlas-layers.json' and self.layers:
+            return self.layers.manifest, self.mime(name)
+        if name == 'atlas-points.json' and self.layers:
+            return self.layers.points,self.mime(name)
         if name not in self.cache:
             reference = self.selected.get({'local-map-projection.json': 'projection', 'world-atlas.jpg': 'atlas'}.get(name))
-            if reference:
+            layer = self.layers.files.get(name) if self.layers else None
+            if layer:
+                data,digest = self.read(layer['path'],layer['budget'])
+                if digest != layer['sha256']:
+                    raise ValueError('Изменился детальный слой карты')
+            elif reference:
                 path = (self.root / reference['file']).resolve()
                 if not path.is_relative_to(self.root / 'maps'):
                     return None

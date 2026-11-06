@@ -6,6 +6,9 @@
  <link rel="stylesheet" href="prototype-live.css">
  <script src="local-map-projection.js" defer></script>
  <script src="prototype-live-model.js" defer></script>
+ <script src="world-map-model.js" defer></script>
+ <script src="nav-overlay-model.js" defer></script>
+ <script src="atlas-map-layers.js" defer></script>
  <script src="group-map.js" defer></script>
 </head>
 <body class="group-map">
@@ -14,6 +17,23 @@
   <button id="map-fit" type="button">Все на карте</button>
   <button id="map-in" type="button" aria-label="Увеличить">+</button>
   <button id="map-out" type="button" aria-label="Уменьшить">−</button>
+  <button id="map-layers-toggle" type="button" aria-label="Слои карты" aria-expanded="false" aria-controls="map-layers-panel">⚙</button>
+  <section id="map-layers-panel" class="group-map-layer-panel" role="dialog" aria-label="Слои карты" hidden>
+   <h3>Слои карты</h3>
+   <label><input id="map-detail" type="checkbox" checked> Детальная карта при увеличении</label>
+   <label><input id="map-characters" type="checkbox" checked> Персонажи онлайн</label>
+   <label><input id="map-labels" type="checkbox" checked> Подписи</label>
+   <hr>
+   <label><input id="layer-Area" type="checkbox" checked> Области и названия <small id="layer-count-Area">—</small></label>
+   <label><input id="layer-Waypoint" type="checkbox" checked> Порталы <small id="layer-count-Waypoint">—</small></label>
+   <label><input id="map-npcs" type="checkbox" checked disabled> NPC рядом <small id="map-npc-count">—</small></label>
+   <small id="map-npc-status">Живое окружение ещё не подключено</small>
+   <label><input id="layer-GadgetSpawn" type="checkbox" checked> Объекты <small id="layer-count-GadgetSpawn">—</small></label>
+   <label><input id="layer-WorldSpot" type="checkbox" checked> Мировые точки <small id="layer-count-WorldSpot">—</small></label>
+   <label title="Справочные точки заданий; доступность для выбранного персонажа ещё не проверена"><input id="layer-QuestTask" type="checkbox" checked> Цели квестов · атлас <small id="layer-count-QuestTask">—</small></label>
+   <label><input id="map-navigation" type="checkbox" disabled> Навигационная сетка · исследование</label>
+   <small id="map-layer-status" role="status">Загрузка слоёв карты…</small>
+  </section>
  </div>
 </body>
 </html>

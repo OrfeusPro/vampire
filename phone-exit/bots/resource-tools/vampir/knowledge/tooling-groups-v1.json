@@ -4776,7 +4776,15 @@
         "phone-exit/bots/vampir/ui-prototype/quest-names-ru.js",
         "phone-exit/bots/vampir/ui-prototype/skills.js",
         "phone-exit/bots/vampir/ui-prototype/widget-renderer.js",
-        "phone-exit/bots/resource-tools/vampir/entry-current-check-guard.py"
+        "phone-exit/bots/resource-tools/vampir/entry-current-check-guard.py",
+        "phone-exit/bots/vampir-headless/atlas_assets.py",
+        "phone-exit/bots/resource-tools/vampir/atlas-map-layers.js",
+        "phone-exit/bots/resource-tools/vampir/atlas-map-layers.test.cjs",
+        "phone-exit/bots/resource-tools/vampir/world-map-model.js",
+        "phone-exit/bots/resource-tools/vampir/nav-overlay-model.js",
+        "phone-exit/bots/resource-tools/vampir/world-map.js",
+        "phone-exit/bots/resource-tools/vampir/world-map.html",
+        "phone-exit/bots/resource-tools/vampir/build-world-map.py"
       ]
     },
     {
