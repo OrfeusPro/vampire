@@ -3144,6 +3144,179 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Текущий server/character/world candidate и Viper CDO/Create. Доступные Terms требуют просмотра; автоматическая обработка content-bearing Terms/UI и широкого native SDK вне subset.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1456dbc80",
+        "0x1467997c0",
+        "0x1467a0780"
+      ],
+      "checks": [
+        {
+          "cache_key": "69a25448e4681c1027819799ebadb66fd387ca28fa6c6b8615dd7f569f0d5a56",
+          "id": "character-list-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b7d62db59f4fec77877d9a6b5e77dd678de74735c4842aa95a82c25ec9db131b\\manifest.json",
+          "sha256": "b7d62db59f4fec77877d9a6b5e77dd678de74735c4842aa95a82c25ec9db131b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "На текущем SHA выполнены шесть source-bound компонентов WaitingEnd / CharacterList: 1547 обычных rows, две extension boundaries и пять multi-truncated guards, всего 1554. Полные roots, leaves, tables, registration и точные сохранённые contexts проверены; неизменный повтор использует frozen report без новых native/JVM.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-ENTRY-NATIVE-CURRENT.md",
+          "sha256": "8163771ee1c00e3a17fa03ea3e561ca58d5cbca3e175525c2762bea19c0c6300"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\ENTRY-NATIVE-CURRENT-VALIDATION.json",
+          "sha256": "39e16d9ea1696e5376691e3c9eca68ae8a5c1786505f8148fa05653f041f2dac"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "f415ebde166bb31103b5931240dc90f541f1a50c7f97d0f99b64a596b519c40b",
+      "limits": [
+        "Only current whole WaitingEnd, readers, nested collections and separate CharacterList handler scenarios executed.",
+        "Storage, allocation/rehash/shallow copy, services, SDK/controller/UI/flow and external state remain explicit fixtures.",
+        "The previously verified shared INPUT and result gate proof are reused; no old native matrix or Ghidra run is repeated.",
+        "No shared reader-to-handler integration, account, server acceptance, character creation, socket or runtime admission."
+      ],
+      "method": "bounded_native",
+      "next_check": "Собрать текущий bounded runtime candidate, сохранив fixture boundaries. Готовый CharacterList пакет переиспользовать.",
+      "question": "character-list-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Реальный сервер, shared reader-to-handler integration, создание персонажа, полная SDK/engine/world сессия и runtime admission этим пакетом не проверяются. Сохранённые input/gate доказательства остаются в прежних fixture границах.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1445d7e10",
+        "0x1456db460",
+        "0x14679f900",
+        "0x1467d2820"
+      ],
+      "checks": [
+        {
+          "cache_key": "8adef738c2bade98cfed7df690d57bb712019f261e46953d5cbd0376e90cdd98",
+          "id": "clock-world-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6be9c78b6043c01da1efded40815300f1ae21c6a079ac6cb054d1ff46c7e7833\\manifest.json",
+          "sha256": "6be9c78b6043c01da1efded40815300f1ae21c6a079ac6cb054d1ff46c7e7833",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий пакет исполнил 297 clock / Ping / bounded world и 12 short INPUT. Warm повтор не запускает native. Новый lobby handler исключён и проверяется отдельно.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-ENTRY-NATIVE-CURRENT.md",
+          "sha256": "8163771ee1c00e3a17fa03ea3e561ca58d5cbca3e175525c2762bea19c0c6300"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\ENTRY-NATIVE-CURRENT-VALIDATION.json",
+          "sha256": "39e16d9ea1696e5376691e3c9eca68ae8a5c1786505f8148fa05653f041f2dac"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "826febd2ccc32406efec176b8e218bb854987937e372d1a8733dc0dcedf56b29",
+      "limits": [
+        "Системные providers / строки / engine services сохраняют явные fixtures соответствующего пакета.",
+        "Нет socket/server/world admission; полный runtime и создание персонажа не выполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать готовые current proofs с codecs / binders, сохраняя отдельный runtime admission.",
+      "question": "clock-world-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Сборка bounded runtime candidate, недостающая композиция и отдельные Viper creation contracts.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x14142e750",
+        "0x145895b40",
+        "0x14642cf80",
+        "0x14644bfa0"
+      ],
+      "checks": [
+        {
+          "cache_key": "e79de875cc9675c3a15bd90217eca1d1e719b5c1d6f04abd7388f6df3773d19a",
+          "id": "preset-defaults-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09\\manifest.json",
+          "sha256": "e6dea516dc26b61d0f87ec182fe9814901f7d5a5901ac702b7ee15e32de42a09",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5d84cee96a8070325a27a022ff245c0017202616b5a4df70081d0c6f8829d173",
+          "id": "viper-class-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a516abdc5053b8ae52b81e2051f2ba001f8a64df464a8686bd404049ecae1737\\manifest.json",
+          "sha256": "a516abdc5053b8ae52b81e2051f2ba001f8a64df464a8686bd404049ecae1737",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые текущие ClassInfo lookup / iterator, consumers выбора класса / пола и чтения type прошли 49 native сценариев. Выбор пишет row ID из +8 и gender, а не class type как ID. Source ClassInfo singleton / interface / name / loader и preset descriptors связаны точными bytes; engine cache, loaded asset, CDO copy и Create остаются отдельно.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-VIPER-CLASS-CONSUMERS-CURRENT.md",
+          "sha256": "aafc7c97c0ceee73b66e24c16761e15016ecbbef38cd9c721b4a14bd2b6b339c"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\ENTRY-NATIVE-CURRENT-VALIDATION.json",
+          "sha256": "39e16d9ea1696e5376691e3c9eca68ae8a5c1786505f8148fa05653f041f2dac"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "80a282ebf6026dbf9541320297e1e6dcd828941b3b2e8192408d8d7d8269b393",
+      "limits": [
+        "Rows, occupation bits, class / player / tag / gender access и engine services — явные fixtures.",
+        "Нет предыдущего actor / preview / deselection; нет whole loader, allocation / completion / CDO copy, Create 103 / 104 или серверной приёмки."
+      ],
+      "method": "bounded_native",
+      "next_check": "По готовой навигации отдельно собрать current allocation / completion / CDO copy chain; не повторять готовые 25 constructor и 49 class consumer случаев без изменения их входов.",
+      "question": "viper-native-defaults-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Свежий CSV Class / DefaultGender, tag Viper mapping, current CDO / allocation / loaded preset integers и Create 103 / 104.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x145bc7b60",
+        "0x145bc9b00"
+      ],
+      "checks": [
+        {
+          "cache_key": "e6cd5d5f27934e1ce944f3e17ad17cca019692cfd5fdabbf440994abac5964a4",
+          "id": "lobby-version-layout-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\19479012f841028bd5cbd4e7f90fead0bc15b1b163e39df0e3c9ccccb5e5e172\\manifest.json",
+          "sha256": "19479012f841028bd5cbd4e7f90fead0bc15b1b163e39df0e3c9ccccb5e5e172",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9f6fa01186a1dfc8484871b0e8688ba16e87c01ed92dd49fbc4b7a1d127a469c",
+          "id": "lobby-metadata-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f3b30ff9f8491a2246503d412acef3c17c30eb6df326ac5baea3f160569a7ce9\\manifest.json",
+          "sha256": "f3b30ff9f8491a2246503d412acef3c17c30eb6df326ac5baea3f160569a7ce9",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole current metadata consumers после unwind проверки прошли 362 validation и 48 apply случая: signed offsets, time division и cache generation / reset.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-ENTRY-NATIVE-CURRENT.md",
+          "sha256": "8163771ee1c00e3a17fa03ea3e561ca58d5cbca3e175525c2762bea19c0c6300"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\ENTRY-NATIVE-CURRENT-VALIDATION.json",
+          "sha256": "39e16d9ea1696e5376691e3c9eca68ae8a5c1786505f8148fa05653f041f2dac"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "5be6cb7587feafcd3ad83b5823596c3f1852f026345fd999c18f8568daad475c",
+      "limits": [
+        "Системные providers / строки / engine services сохраняют явные fixtures соответствующего пакета.",
+        "Нет socket/server/world admission; полный runtime и создание персонажа не выполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать готовые current proofs с codecs / binders, сохраняя отдельный runtime admission.",
+      "question": "lobby-version-layout-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Сборка bounded runtime candidate, недостающая композиция и отдельные Viper creation contracts.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

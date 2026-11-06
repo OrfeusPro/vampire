@@ -41,6 +41,16 @@
         "sdk-gmc2",
         "sdk-fetch-read"
       ]
+    },
+    "character-create": {
+      "requires": [
+        "sdk-gmc2",
+        "launcher",
+        "game-version",
+        "game-login",
+        "character-list",
+        "character-create"
+      ]
     }
   },
   "contracts": [
@@ -725,7 +735,8 @@
         "native-login-result-body-handler-context",
         "native-login-post-state-context",
         "native-login-continuation-context",
-        "lobby-version-layout-current"
+        "lobby-version-layout-current",
+        "lobby-metadata-current"
       ],
       "recipes": [
         {
@@ -1348,7 +1359,8 @@
         "native-character-record-context",
         "native-character-extensions-context",
         "native-character-list-records-context",
-        "native-character-list-handler-context"
+        "native-character-list-handler-context",
+        "character-list-current"
       ],
       "recipes": [
         {
@@ -1531,7 +1543,8 @@
         "character-list"
       ],
       "checks": [
-        "release-character-selection-probe"
+        "release-character-selection-probe",
+        "character-list-current"
       ],
       "recipes": [],
       "bindings": {},
@@ -1550,7 +1563,8 @@
         "character-select"
       ],
       "checks": [
-        "release-world-completion-policy"
+        "release-world-completion-policy",
+        "clock-world-current"
       ],
       "recipes": [],
       "bindings": {},
@@ -1590,7 +1604,8 @@
       ],
       "checks": [
         "release-ping-producer",
-        "release-ping-result"
+        "release-ping-result",
+        "clock-world-current"
       ],
       "recipes": [
         {
@@ -1818,6 +1833,47 @@
         "Текущие HTTP/JSON ветки имеют явные fixtures; полный UI/SDK/world и автоматический перенос новых source contexts остаются за границами."
       ],
       "next_check": "Выполнить одну живую подготовку Silvercrow с этим профилем, обработать фактические device/workplace формы и после отдельного игрового допуска продолжить сервер/персонажа."
+    },
+    {
+      "id": "character-create",
+      "purpose": "Создание персонажа: class/preset consumers и отдельный factory admission",
+      "depends_on": [
+        "character-list"
+      ],
+      "checks": [
+        "preset-defaults-current",
+        "viper-class-current"
+      ],
+      "recipes": [
+        {
+          "key": "class-lookup",
+          "method": "reviewed"
+        },
+        {
+          "key": "class-selection",
+          "method": "reviewed"
+        },
+        {
+          "key": "selected-type",
+          "method": "reviewed"
+        }
+      ],
+      "bindings": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": {
+          "class-lookup": "0x145895b40",
+          "class-selection": "0x14642cf80",
+          "selected-type": "0x14644bfa0"
+        }
+      },
+      "targets": [],
+      "resources": [],
+      "coverage": "partial",
+      "builder": null,
+      "limits": [
+        "ClassInfo и constructor сценарии сохраняют fixtures; loaded cache и целый payload не подтверждены.",
+        "CDO/allocation/default copy, актуальные integer defaults, Viper tag и Create 103/104 не допущены."
+      ],
+      "next_check": "Перенести текущую allocation/CDO цепочку по сохранённым source candidates, затем подтвердить current Create writer/result и factory."
     }
   ]
 }

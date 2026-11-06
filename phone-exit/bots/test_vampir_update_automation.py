@@ -5,6 +5,11 @@ import unittest
 
 
 MODULES = (
+    'test_vampir_character_list_current',
+    'test_vampir_entry_current_guard',
+    'test_vampir_clock_world_current',
+    'test_vampir_viper_class_current',
+    'test_vampir_lobby_metadata_current',
     'test_vampir_first_sdk_auth_current',
     'test_vampir_first_sdk_terms_current',
     'test_vampir_sdk_first_profile',

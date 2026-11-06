@@ -4904,6 +4904,129 @@
         "phone-exit/bots/vampir-headless/windows/nid-google-bridge.cs",
         "phone-exit/bots/vampir-headless/windows/nid-page-status.js"
       ]
+    },
+    {
+      "id": "character-list-current",
+      "test_modules": [
+        "test_vampir_character_list_current",
+        "test_vampir_entry_current_guard"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/entry-current-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/generate-character-list-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/entry-native-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-extensions-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-list-envelope-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-list-handler-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-list-records-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-record-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/waiting-end-11318.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-extensions-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-list-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-list-envelope-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-list-handler-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-list-records-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-record-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-waiting-end-context.py",
+        "phone-exit/bots/test_vampir_character_list_current.py",
+        "phone-exit/bots/test_vampir_entry_current_guard.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/character-list-storage-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-flow-11322.json",
+        "phone-exit/bots/resource-tools/vampir/login-result-string-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/result-gate-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-archive-wire.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-contexts.py",
+        "phone-exit/bots/resource-tools/vampir/version-system-transfer-rules.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_list.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+      ],
+      "timeout_seconds": 180
+    },
+    {
+      "id": "clock-world-current",
+      "test_modules": [
+        "test_vampir_clock_world_current"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/entry-current-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/generate-clock-world-current.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/entry-native-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/clock-world-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/clock-world-native-input-current.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-clock-current.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-ping-current.py",
+        "phone-exit/bots/resource-tools/vampir/replay-ping-result-current.py",
+        "phone-exit/bots/resource-tools/vampir/replay-world-entry-current.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/run-clock-world-current.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-clock-replay-source-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-ping-world-source-current.py",
+        "phone-exit/bots/test_vampir_clock_world_current.py"
+      ],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "viper-class-current",
+      "test_modules": [
+        "test_vampir_viper_class_current"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/viper-class-11322.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/verify-viper-class-current.py",
+        "phone-exit/bots/test_vampir_viper_class_current.py",
+        "phone-exit/bots/resource-tools/vampir/entry-current-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/entry-native-current.json"
+      ],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "lobby-metadata-current",
+      "test_modules": [
+        "test_vampir_lobby_metadata_current"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/lobby-metadata-11322.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/verify-lobby-metadata-current.py",
+        "phone-exit/bots/test_vampir_lobby_metadata_current.py",
+        "phone-exit/bots/resource-tools/vampir/entry-current-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/entry-native-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
+      ],
+      "timeout_seconds": 90
     }
   ],
   "original_gate_id": "automatic-update-tooling",

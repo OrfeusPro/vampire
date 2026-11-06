@@ -155,6 +155,9 @@ def pin_checks(index, scope, checks):
         elif report.get('candidate_bridge_guard', {}).get('recipe') == 'candidate-proof-bridges-v1':
             runtime_inputs = index.extension('candidate-bridge-check-guard').runtime_inputs(
                 index, scope.root, report, outcome['id'])
+        elif report.get('entry_current_guard', {}).get('recipe') == 'entry-current-check-guard-v1':
+            runtime_inputs = index.extension('entry-current-check-guard').runtime_inputs(
+                index, scope.root, report, outcome['id'])
         for field in ('inputs', 'artifacts'):
             for path, expected in definition.get(field, {}).items():
                 kind = ('runtime' if path in runtime_inputs or Path(path).parent ==

@@ -15,10 +15,12 @@
   [Живой результат и отдельный first SDK scope](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-PROFILE-CURRENT.md).
 
 - Для текущего Viper подтверждены constructor / descriptor поля: 25 сценариев,
-  integer defaults не устанавливаются конструктором. Allocation / CDO / consumer
+  integer defaults не устанавливаются конструктором. [ClassInfo consumers](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-VIPER-CLASS-CONSUMERS-CURRENT.md)
+  теперь проверены в 49 случаях. Allocation / CDO / актуальные integer defaults
   и Create остаются отдельными блокерами. [Результат](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md).
 - Current lobby VersionResult получил отдельный decoder и native reader / handler
-  пакет. String/time primitives и metadata consumer остаются fixtures; весь
+  пакет. Metadata consumers теперь исполнены с bounded providers; string/time primitives
+  и системные timezone providers остаются fixtures; весь
   world-пакет не закрыт. [Границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md).
 
 - Общий вход будущего бота: встроить готовые device-registration / workplace
@@ -60,13 +62,14 @@ exports и проверки вручную не повторять. Счётчи
 переиспользовать. Для семи из 16 областей уже найдены текущие материалы;
 девять исходных пробелов сгруппированы в три пакета. VersionResult handler / gate
 закрыт в ограниченной композиции reader → handler → gate → captured Login.
-Остались два пакета: CharacterList / выбор и clock / Ping / ограниченный вход в мир.
+CharacterList и clock / Ping / ограниченный world теперь исполнены на текущем SHA.
 Семь готовых областей связаны source-proof мостом с завершёнными owner barriers;
 SDK → Launcher composition прошла семь fixture сценариев. Оба пакета подключены
 к on_update с SHA guard. Их runtime admission сохраняет отдельные границы.
-CharacterList 24 и clock / lobby / world 27 roots экспортированы. Дальше —
-текущие native сценарии и новый lobby VersionResult codec: прежние 23 байта
-не покрывают найденные добавленные поля. Затем собрать bounded runtime candidate.
+[Текущие native пакеты](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md)
+проверяют 1554 CharacterList, 297 clock / Ping / world + 12 short INPUT,
+а также 362 validation / 48 apply metadata случаев. Текущий lobby codec готов.
+Дальше собрать bounded runtime candidate с сохранением fixture границ.
 Создание и stats имеют отдельный допуск.
 [Матрица повторного использования и текущий Launcher](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-CONTRACT-CURRENT.md).
 [16 сценариев VersionResult, подключение к on_update и кэш](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-RESULT-FLOW-CURRENT.md).

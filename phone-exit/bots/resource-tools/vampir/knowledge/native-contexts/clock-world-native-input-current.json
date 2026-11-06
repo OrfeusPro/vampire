@@ -1,0 +1,142 @@
+{
+  "native_input": {
+    "buffer_construction": {
+      "base_table": "0x1496731e8",
+      "reading_endian": 0,
+      "reading_mode": 1
+    },
+    "call_sites": {
+      "0x14143bec7": {
+        "target": "0x14143ba00"
+      },
+      "0x14144670e": {
+        "target": "0x14143bd90"
+      },
+      "0x14144c521": {
+        "target": "0x14143ba00"
+      },
+      "0x144aac241": {
+        "target": "0x144aacf00"
+      },
+      "0x144aac359": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac377": {
+        "target": "0x1445e0540"
+      },
+      "0x144aac3a9": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac3c6": {
+        "target": "0x1445e0550"
+      },
+      "0x144aac4b2": {
+        "target": "qword ptr [rax + 0x68]"
+      },
+      "0x144aac4db": {
+        "target": "qword ptr [rax + 0x78]"
+      },
+      "0x144aac526": {
+        "target": "0x1421e7630"
+      },
+      "0x144aac571": {
+        "target": "qword ptr [rax + 0x50]"
+      },
+      "0x144aac5a9": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac5c7": {
+        "target": "0x1445e0580"
+      },
+      "0x144aac5fc": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac6eb": {
+        "target": "0x1487f8c99"
+      },
+      "0x144aac6f9": {
+        "target": "0x144aad290"
+      },
+      "0x144aacc46": {
+        "target": "0x144aac220"
+      },
+      "0x144aad109": {
+        "target": "qword ptr [rax + 0x30]"
+      },
+      "0x144aad162": {
+        "target": "0x14144c4a0"
+      },
+      "0x144aad19e": {
+        "target": "0x141436d20"
+      },
+      "0x144aad1c8": {
+        "target": "0x141446700"
+      },
+      "0x144aad1f1": {
+        "target": "0x141427810"
+      },
+      "0x144aad20b": {
+        "target": "0x1414830e0"
+      },
+      "0x144aad24e": {
+        "target": "qword ptr [rip + 0x3ef1dc4]"
+      },
+      "0x144aad255": {
+        "target": "0x141431fe0"
+      },
+      "0x144aad268": {
+        "target": "0x1487ebec0"
+      }
+    },
+    "cookie": "0x14b274600",
+    "exports": {
+      "run-7047b821ac37": "675242094e1f4a7356a5f6d5437d2056f0d018656950ac98f82e9db46e34f072",
+      "run-761b5bc2280d": "5cf4a5e10d092e31119fd4f0b9cff8d0ee6ab47b7bf2feefbeeb8ab8c32b174e"
+    },
+    "functions": {
+      "bool": "0x144aac5e0",
+      "buffer_constructor": "0x144aac220",
+      "constructor": "0x144aacc30",
+      "raw": "0x144aac6b0",
+      "std_string": "0x144aac480",
+      "string": "0x144aad0c0",
+      "time": "0x144aac560",
+      "u16": "0x144aac340",
+      "u32": "0x144aac390",
+      "u64": "0x144aac590",
+      "utf8_convert": "0x141446700",
+      "utf8_core": "0x14143bd90",
+      "utf8_length": "0x14144c4a0",
+      "utf8_scalar": "0x14143ba00"
+    },
+    "leaves": {
+      "0x144aac330": {
+        "bytes": "488b0141b80100000048ffa090000000",
+        "sha256": "f18be45431396ae7b48a88f58df8279b2ddf521f9671b9591d2182bd4946b1c7"
+      },
+      "0x144aacf00": {
+        "bytes": "488d051966bc04c741140100000048890133c048894108894110488bc1c6411801c3",
+        "sha256": "88d38e5a72b3258c918aaad197a45c91ec770838423c5b2ff656bad498ba5043"
+      },
+      "0x144aad290": {
+        "bytes": "895110c3",
+        "sha256": "3118e42787a6f4545e3111ffd4f059154e0a2d5899f7b46c609eb89fb299f2b4"
+      }
+    },
+    "portable_buffer_proof": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-result-proofs\\b6a987d21398ef6cbc28f5706427eac8ffae80ed7604c6944bb6fde53a138112\\manifest.json",
+      "sha256": "b6a987d21398ef6cbc28f5706427eac8ffae80ed7604c6944bb6fde53a138112"
+    },
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "string_fixtures": {
+      "assign": "0x141427810",
+      "cpp_free": "0x141431fe0",
+      "free": "0x1414830e0",
+      "growth": "0x1421e7630",
+      "security": "0x1487ebec0",
+      "utf16_allocate": "0x141436d20"
+    },
+    "table": "0x149673380",
+    "table_bytes": "80ccaa440100000020c7aa440100000090c7aa440100000020c6aa440100000060c5aa440100000060c5aa440100000080c4aa440100000030c4aa4401000000e0c3aa440100000090c5aa440100000090c5aa440100000090c3aa440100000090c3aa440100000040c3aa440100000040c3aa440100000030c3aa440100000030c3aa4401000000e0c5aa4401000000b0c6aa4401000000"
+  }
+}

@@ -1330,9 +1330,9 @@
       "id": "character-list-current",
       "status": "open",
       "question": "Как перенести общий WaitingEnd, CharacterList records и handler для прежнего ограниченного candidate на текущий SHA?",
-      "known": "24 явных roots собраны с точными SHA в run-acc24c5196b9. Первоначальный collect отказ устранён добавлением двух source-checked E9 tail targets. Прежние 18 готовых exports переиспользуются. Генератор contexts сохранён как незавершённый материал.",
-      "unknown": "Перенос всех leaves/tables/registration и dedicated bounded harness / runner для текущих шести native семейств. Создание персонажа требует отдельного допуска.",
-      "next_action": "Завершить сохранённый генератор с отдельным harness / runner и выполнить только текущие сценарии. Готовые input/gate proofs переиспользовать; exports повторно не собирать.",
+      "known": "Шесть current native компонентов проверены: 1554 сценария/границы. Immutable contexts, source scopes и cache guard сохраняют inputs; runtime candidate не активирован.",
+      "unknown": "Shared reader-to-handler integration, runtime candidate, реальный сервер и создание персонажа.",
+      "next_action": "Переиспользовать готовые native proofs и собрать bounded runtime candidate.",
       "decision_rule": "Сохранять latest baseline каждого семейства, полные SHA, все инструкции/зависимости и прежние fixture границы. Function navigation и export не доказывают семантику; настоящий вход и создание подтверждать отдельно.",
       "do_not_repeat": "Не повторять завершённый discovery, исторические native матрицы и неизменные общие input/gate сценарии.",
       "addresses": [
@@ -1363,16 +1363,17 @@
       ],
       "evidence": [
         "evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md",
-        "evidence/updates/AUTO-ENTRY-COLLECT-CURRENT.json"
+        "evidence/updates/AUTO-ENTRY-COLLECT-CURRENT.json",
+        "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md"
       ]
     },
     {
       "id": "clock-world-current",
       "status": "open",
       "question": "Как перенести clock/Ping и bounded world proof, учитывая изменённый lobby VersionResult текущего клиента?",
-      "known": "27 roots собраны с точными SHA в run-4496e2332dcf. Изменённый lobby VersionResult имеет новый constructor, reader и строковое поле с двумя u32. Конечная модель текущего peer tail прошла Python тест и фактический Ghidra collect.",
-      "unknown": "Новые source-bound сценарии lobby reader/handler, актуальный wire decoder и перенос clock/Ping/bounded-world сценариев. Полный engine/world-session остаётся отдельным контрактом.",
-      "next_action": "Использовать готовые 27 exports. Проверить новый lobby layout и обновить strict decoder, затем исполнить текущий clock/Ping/bounded-world пакет без повторения старых матриц.",
+      "known": "297 текущих clock/Ping/bounded-world и 12 short INPUT проверены; новый lobby handler отделён. Warm повтор не запускает native.",
+      "unknown": "OS/engine/providers fixtures, opaque nested reserve suffix, runtime candidate и фактический вход.",
+      "next_action": "Связать готовый пакет с текущими lobby/codecs и runtime candidate.",
       "decision_rule": "Изменённый handler и layout требуют нового доказательства. Новый layout не подменять старым strict23byte decoder. Проверять все read-failure gates и реальные native инструкции; engine/OS/network effects обозначать fixtures. Онлайн подтверждается отдельно.",
       "do_not_repeat": "Не повторять завершённый discovery и старые native матрицы. Текущие общие input/gate proofs использовать после проверки целостности.",
       "addresses": [
@@ -1406,7 +1407,8 @@
       ],
       "evidence": [
         "evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md",
-        "evidence/updates/AUTO-ENTRY-COLLECT-CURRENT.json"
+        "evidence/updates/AUTO-ENTRY-COLLECT-CURRENT.json",
+        "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md"
       ]
     },
     {
@@ -1500,9 +1502,9 @@
       "id": "viper-native-defaults-current",
       "status": "bounded_answer",
       "question": "Какие native defaults Viper и связанные ClassInfo/preset consumers подтверждены на текущем EXE?",
-      "known": "Три текущих whole constructors и 17 descriptor полей проверены. В 25 native сценариях семь float=.5 и voice=0, девять integer сохраняют poison. ClassInfo / selection exports собраны, consumer пока не исполнен.",
-      "unknown": "Текущие allocation / completion / CDO property-copy, ClassInfo/preset consumer и Create103/104 ещё нужны; integer defaults из одного конструктора не следуют.",
-      "next_action": "Использовать готовые current constructor proofs и ClassInfo exports; продолжить allocation/CDO и producer/consumer отдельным пакетом без повторного экспорта.",
+      "known": "Whole preset constructor / descriptors проверены ранее; ClassInfo lookup/iterator/selection/type добавили 49 current native случаев. Выбор сохраняет row ID и gender, не type как ID.",
+      "unknown": "Current allocation/completion/CDO copy, актуальные Class CSV/preset integer defaults, Viper tag mapping и Create103/104.",
+      "next_action": "Использовать шесть source-bound CDO candidates и собрать только отсутствующие whole roots; готовые 25 constructor/49 consumer cases не повторять.",
       "decision_rule": "Точный SHA и native сценарии текущего конструктора обязательны. Старые zero-allocation fixtures не выдавать за текущий loaded asset.",
       "do_not_repeat": "Сохранённые F / M resources и прежние whole exports использовать после проверки полных SHA; не повторять неизменную полную creation матрицу.",
       "addresses": [
@@ -1514,16 +1516,17 @@
       ],
       "evidence": [
         "evidence/characters/HEADLESS-CREATE-VIPER-RESOURCES.md",
-        "evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md"
+        "evidence/characters/HEADLESS-PRESET-DEFAULTS-CURRENT.md",
+        "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md"
       ]
     },
     {
       "id": "lobby-version-layout-current",
       "status": "bounded_answer",
       "question": "Как декодировать текущий ID 2 лобби с добавленными FString и двумя u32 без потери полей?",
-      "known": "Current whole constructor / reader / handler и clock setter исполнены с явными archive и metadata fixtures. Проверены восемь операций, 114 prefixes, 24 read failures и шесть handler ветвей. Новый отдельный portable тип сохраняет FString и два u32.",
-      "unknown": "Полные current wire string/time primitives, metadata validate/apply consumers и весь игровой candidate остаются открыты.",
-      "next_action": "Использовать текущий reader / decoder и готовый clock package; отдельно подтвердить metadata consumers и оставшиеся CharacterList / Ping / world scopes без повторения готовой матрицы.",
+      "known": "Current reader/decoder готов; whole metadata validate/apply consumers прошли 362+48 bounded случая после проверки unwind ranges. Schedule time zone identity, signed offsets и cache reset подтверждены с providers fixtures.",
+      "unknown": "Полные wire string/time primitives, системные timezone providers, reader→consumer композиция и runtime candidate.",
+      "next_action": "Собрать текущий binder/candidate с сохранением raw полей и fixture границ, не повторять готовые матрицы.",
       "decision_rule": "Точный SHA и отдельный current тип; old23byte binder не должен молча принимать новые поля.",
       "do_not_repeat": "Готовые SDK/clock/world матрицы без изменения входов не повторять.",
       "addresses": [
@@ -1533,7 +1536,8 @@
       ],
       "evidence": [
         "evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md",
-        "evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md"
+        "evidence/updates/HEADLESS-LOBBY-VERSION-LAYOUT-CURRENT.md",
+        "evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md"
       ]
     },
     {

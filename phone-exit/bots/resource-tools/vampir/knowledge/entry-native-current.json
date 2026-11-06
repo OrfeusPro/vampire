@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proofs": {
+    "character-list-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\character-list-current-bounded\\f2353d6d1b1ca7006f4f26f466aca617d80ff070e4ab0895452289f1b71d66a0\\manifest.json",
+      "sha256": "f2353d6d1b1ca7006f4f26f466aca617d80ff070e4ab0895452289f1b71d66a0"
+    },
+    "clock-world-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\clock-world-current-verified\\e727dd7005f0b2679414a2590e4af5f3688b727521e1c8262d381d47df576b10\\manifest.json",
+      "sha256": "e727dd7005f0b2679414a2590e4af5f3688b727521e1c8262d381d47df576b10"
+    },
+    "viper-class-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\viper-class-current-v1\\86ef0aa1f43fabf24cf2ad4ffcb6279315082391e52cf27ba99f7fcbd5b562fa\\manifest.json",
+      "sha256": "86ef0aa1f43fabf24cf2ad4ffcb6279315082391e52cf27ba99f7fcbd5b562fa"
+    },
+    "lobby-metadata-current": {
+      "sha256": "fc6fdddf4704d5bbfda8da5f5f654d1e489e10bd6e54763f7a70cb6b6c46d260",
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\lobby-metadata-current-v1\\fc6fdddf4704d5bbfda8da5f5f654d1e489e10bd6e54763f7a70cb6b6c46d260\\manifest.json"
+    }
+  }
+}

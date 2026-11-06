@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "recipe": "lobby-metadata-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "functions": {
+    "validate": "0x145bc9b00",
+    "apply": "0x145bc7b60"
+  },
+  "exports": {
+    "run-748a854efcce": "f5c2e53bd613e7368294a2bc28a26150eb09d3ab40046e75c5bb1c94530cbb2f"
+  },
+  "fixtures": {
+    "wide_to_narrow": "0x141c2ccd0",
+    "narrow_constructor": "0x1445f5900",
+    "service": "0x141483370",
+    "wide_constructor": "0x141426b90",
+    "provider": "0x141485af0",
+    "wide_allocate": "0x141436f30",
+    "copy": "0x1487f8c99",
+    "match": "0x141438a80",
+    "prepend": "0x14142b7c0",
+    "date": "0x141548620",
+    "format": "0x1414b83a0",
+    "format_text": "0x1414c41f0",
+    "find_error": "0x14142e080",
+    "offset": "0x145bc9630",
+    "free": "0x1414830e0",
+    "narrow_free": "0x141431fe0",
+    "cookie": "0x1487ebec0",
+    "narrow_assign": "0x1445e4330",
+    "compare": "0x1487f8cc9",
+    "intern": "0x145b9d100",
+    "pool_first": "0x141460cb0",
+    "pool_first_resize": "0x1414596e0",
+    "pool_resize": "0x141433e70",
+    "pool_first_cleanup": "0x145bc7860",
+    "pool_second": "0x14149bda0",
+    "pool_second_resize": "0x141437f40",
+    "pool_second_cleanup": "0x141d2c1a0",
+    "log": "0x1445e0d10",
+    "narrow_to_wide": "0x1415c0b50",
+    "now": "0x14156b000",
+    "seconds": "0x144559650"
+  },
+  "literals": [
+    {
+      "address": "0x14953a408",
+      "bytes": "65006e002d00550053000000",
+      "text": "en-US",
+      "encoding": "utf-16-le"
+    },
+    {
+      "address": "0x1489f4624",
+      "bytes": "2b000000",
+      "text": "+",
+      "encoding": "utf-16-le"
+    },
+    {
+      "address": "0x1489f4398",
+      "bytes": "2d000000",
+      "text": "-",
+      "encoding": "utf-16-le"
+    },
+    {
+      "address": "0x148a16ba8",
+      "bytes": "47004d0054000000",
+      "text": "GMT",
+      "encoding": "utf-16-le"
+    },
+    {
+      "address": "0x149a04f60",
+      "bytes": "560056000000",
+      "text": "VV",
+      "encoding": "utf-16-le"
+    },
+    {
+      "address": "0x148a01378",
+      "bytes": "4500740063002f0055006e006b006e006f0077006e000000",
+      "text": "Etc/Unknown",
+      "encoding": "utf-16-le"
+    },
+    {
+      "address": "0x149a04f08",
+      "bytes": "5363686564756c652074696d65207a6f6e6520636c65617265642e20536572766572207a6f6e6520697320757365642e00",
+      "text": "Schedule time zone cleared. Server zone is used.",
+      "encoding": "ascii"
+    },
+    {
+      "address": "0x149a04fe0",
+      "bytes": "4661696c656420746f20636f6e766572742077697468207363686564756c652074696d65207a6f6e652e20536572766572207a6f6e6520697320757365642061732066616c6c6261636b2e205b7a6f6e653a2025735d00",
+      "text": "Failed to convert with schedule time zone. Server zone is used as fallback. [zone: %s]",
+      "encoding": "ascii"
+    },
+    {
+      "address": "0x149a04f70",
+      "bytes": "5363686564756c652074696d65207a6f6e6520697320756e6b6e6f776e20746f20656e67696e65204943552028747a2064617461203230323161292e20536572766572207a6f6e6520697320757365642061732066616c6c6261636b2e205b7a6f6e653a2025735d00",
+      "text": "Schedule time zone is unknown to engine ICU (tz data 2021a). Server zone is used as fallback. [zone: %s]",
+      "encoding": "ascii"
+    },
+    {
+      "address": "0x149a04f40",
+      "bytes": "52645363686564756c6554696d655a6f6e653a3a5365745a6f6e654e616d6500",
+      "text": "RdScheduleTimeZone::SetZoneName",
+      "encoding": "ascii"
+    }
+  ],
+  "global_string": "0x14b1c8ef0",
+  "generation": "0x14b1c8f10",
+  "zone_pointer": "0x14b5f3458",
+  "intern_manager": "0x14b5f3448",
+  "pools": [
+    "0x14b1c8f20",
+    "0x14b1c8f70"
+  ]
+}

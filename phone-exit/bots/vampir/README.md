@@ -29,9 +29,11 @@ character / world flow. [VersionResult reader → handler → gate](../resource-
 [SDK Launcher composition и семь evidence bridges](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-PROOFS-CURRENT.md)
 также подключены к on_update с полной проверкой входов при попадании в кэш.
 [Экспорты CharacterList и clock / lobby / world](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-COLLECT-CURRENT.md)
-готовы. Остались их native сценарии, новый lobby decoder и сборка runtime candidate.
-[Проверка этого пакета](../resource-tools/vampir/knowledge/evidence/updates/AUTO-ENTRY-CURRENT-VALIDATION.json):
-27 tooling групп, 2059 случаев с четырьмя пропусками; 59 frozen inputs сохранены.
+готовы; их текущие native сценарии, новый lobby decoder и metadata consumers
+проверены [следующим пакетом](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-NATIVE-CURRENT.md).
+Осталась сборка runtime candidate; создание Viper имеет собственные незакрытые guards.
+[Проверка первого этапа](../resource-tools/vampir/knowledge/evidence/updates/AUTO-ENTRY-CURRENT-VALIDATION.json)
+сохраняется отдельно от [текущей общей приёмки](../resource-tools/vampir/knowledge/evidence/updates/ENTRY-NATIVE-TOOLING-VALIDATION.json).
 Свежие результаты работы скрипта читать из `update-watch status` и указанного
 run: версия в этом абзаце не заменяет проверку установленных файлов.
 

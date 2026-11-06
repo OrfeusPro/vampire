@@ -1,0 +1,257 @@
+{
+  "schema": 1,
+  "recipe": "viper-class-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "functions": {
+    "lookup": "0x145895b40",
+    "iterator": "0x14142e750",
+    "selection": "0x14642cf80",
+    "selected_type": "0x14644bfa0"
+  },
+  "exports": {
+    "run-ddd300a85f1d": "13f0a8487595a35f933bd36c9b68ec54a63e778bb9cdf5fa845c49291cfbcf4f",
+    "run-117e8a6a09e1": "38b97e915206a9d19e954f7660654817748f9aaf92fa65d47969c561a55afcfe",
+    "run-49796294d192": "4dfa63039a61442d4a64458e9aa356660924420fa8de3b3ca2cc5df9febbf5ce"
+  },
+  "static_roots": [
+    "0x1454ceec0",
+    "0x1458962b0",
+    "0x145896980",
+    "0x1458b6800",
+    "0x14642cf80",
+    "0x14644bfa0"
+  ],
+  "fixtures": {
+    "busy": "0x1422cbc60",
+    "ready": "0x14641bc70",
+    "actor_class": "0x145559430",
+    "player_class": "0x145c90290",
+    "player": "0x1445d3090",
+    "kind": "0x146433250",
+    "gender": "0x146433380",
+    "singleton": "0x1458962b0",
+    "old_selected": "0x1417fa420",
+    "store_selection": "0x1417f4470",
+    "after_selection": "0x14642eda0",
+    "find_by_id": "0x14588dfa0",
+    "row_pointer": "0x1414884f0"
+  },
+  "selection_global": "0x14b2f2fcb",
+  "source_anchors": [
+    {
+      "address": "0x14b1bdfd0",
+      "bytes": "f0839749010000002884974901000000",
+      "role": "ClassInfo singleton initial vptr/interface"
+    },
+    {
+      "address": "0x149978470",
+      "bytes": "806989450100000000688b4501000000",
+      "role": "ClassInfo interface name/loader slots"
+    },
+    {
+      "address": "0x1499783e0",
+      "bytes": "436c617373496e666f00",
+      "role": "ClassInfo ASCII name"
+    },
+    {
+      "address": "0x1496731e0",
+      "bytes": "00000000",
+      "role": "Missing-class sentinel zero"
+    },
+    {
+      "address": "0x14997b2d0",
+      "bytes": "44656661756c7447656e64657200",
+      "role": "DefaultGender column literal"
+    },
+    {
+      "address": "0x148a37a08",
+      "bytes": "5479706500",
+      "role": "Type column literal"
+    },
+    {
+      "address": "0x1498b6b20",
+      "bytes": "08668b490100000040668b490100000078668b490100000088678b4901000000c0678b4901000000f8678b490100000030688b490100000068688b4901000000a0688b4901000000d8688b490100000030698b490100000068698b4901000000a0698b4901000000f8698b4901000000306a8b4901000000686a8b4901000000a06a8b4901000000e06a8b4901000000",
+      "role": "Preset descriptor pointer array"
+    },
+    {
+      "address": "0x1498b6608",
+      "bytes": "d86f8b4901000000000000000000000015000000000010000300000045000000000000000000000000000000000000000100300000000000",
+      "role": "Preset descriptor HairIndex"
+    },
+    {
+      "address": "0x1498b6fd8",
+      "bytes": "48616972496e64657800",
+      "role": "Preset field ASCII HairIndex"
+    },
+    {
+      "address": "0x1498b6640",
+      "bytes": "e86f8b4901000000000000000000000015000000000010000300000045000000000000000000000000000000000000000100340000000000",
+      "role": "Preset descriptor HeadIndex"
+    },
+    {
+      "address": "0x1498b6fe8",
+      "bytes": "48656164496e64657800",
+      "role": "Preset field ASCII HeadIndex"
+    },
+    {
+      "address": "0x1498b6678",
+      "bytes": "f86f8b4901000000000000000000000015000000000010000300000045000000000000000000000000000000000000000100380000000000",
+      "role": "Preset descriptor HairColorIndex"
+    },
+    {
+      "address": "0x1498b6ff8",
+      "bytes": "48616972436f6c6f72496e64657800",
+      "role": "Preset field ASCII HairColorIndex"
+    },
+    {
+      "address": "0x1498b6788",
+      "bytes": "08708b49010000000000000000000000150000000000100003000000450000000000000000000000000000000000000001003c0000000000",
+      "role": "Preset descriptor SkinColorIndex"
+    },
+    {
+      "address": "0x1498b7008",
+      "bytes": "536b696e436f6c6f72496e64657800",
+      "role": "Preset field ASCII SkinColorIndex"
+    },
+    {
+      "address": "0x1498b67c0",
+      "bytes": "18708b4901000000000000000000000015000000000010000300000045000000000000000000000000000000000000000100400000000000",
+      "role": "Preset descriptor DecalIndex"
+    },
+    {
+      "address": "0x1498b7018",
+      "bytes": "446563616c496e64657800",
+      "role": "Preset field ASCII DecalIndex"
+    },
+    {
+      "address": "0x1498b67f8",
+      "bytes": "28708b4901000000000000000000000015000000000010000300000045000000000000000000000000000000000000000100440000000000",
+      "role": "Preset descriptor DecalColorIndex"
+    },
+    {
+      "address": "0x1498b7028",
+      "bytes": "446563616c436f6c6f72496e64657800",
+      "role": "Preset field ASCII DecalColorIndex"
+    },
+    {
+      "address": "0x1498b6830",
+      "bytes": "38708b4901000000000000000000000015000000000010000300000045000000000000000000000000000000000000000100480000000000",
+      "role": "Preset descriptor EyeColorLeftIndex"
+    },
+    {
+      "address": "0x1498b7038",
+      "bytes": "457965436f6c6f724c656674496e64657800",
+      "role": "Preset field ASCII EyeColorLeftIndex"
+    },
+    {
+      "address": "0x1498b6868",
+      "bytes": "50708b49010000000000000000000000150000000000100003000000450000000000000000000000000000000000000001004c0000000000",
+      "role": "Preset descriptor EyeColorRightIndex"
+    },
+    {
+      "address": "0x1498b7050",
+      "bytes": "457965436f6c6f725269676874496e64657800",
+      "role": "Preset field ASCII EyeColorRightIndex"
+    },
+    {
+      "address": "0x1498b68a0",
+      "bytes": "68708b4901000000000000000000000015000000000010000300000045000000000000000000000000000000000000000100500000000000",
+      "role": "Preset descriptor EyeTexIndex"
+    },
+    {
+      "address": "0x1498b7068",
+      "bytes": "457965546578496e64657800",
+      "role": "Preset field ASCII EyeTexIndex"
+    },
+    {
+      "address": "0x1498b68d8",
+      "bytes": "28281a4901000000000000000000000015000000000010000a00000045000000000000000000000000000000000000000100540000000000",
+      "role": "Preset descriptor Shape"
+    },
+    {
+      "address": "0x1491a2828",
+      "bytes": "536861706500",
+      "role": "Preset field ASCII Shape"
+    },
+    {
+      "address": "0x1498b6930",
+      "bytes": "74708b4901000000000000000000000015000000000010000a00000045000000000000000000000000000000000000000100580000000000",
+      "role": "Preset descriptor Cheat"
+    },
+    {
+      "address": "0x1498b7074",
+      "bytes": "436865617400",
+      "role": "Preset field ASCII Cheat"
+    },
+    {
+      "address": "0x1498b6968",
+      "bytes": "6ce3ea4801000000000000000000000015000000000010000a000000450000000000000000000000000000000000000001005c0000000000",
+      "role": "Preset descriptor Height"
+    },
+    {
+      "address": "0x148eae36c",
+      "bytes": "48656967687400",
+      "role": "Preset field ASCII Height"
+    },
+    {
+      "address": "0x1498b69a0",
+      "bytes": "7c708b4901000000000000000000000015000000000010000a00000045000000000000000000000000000000000000000100600000000000",
+      "role": "Preset descriptor Pelvis"
+    },
+    {
+      "address": "0x1498b707c",
+      "bytes": "50656c76697300",
+      "role": "Preset field ASCII Pelvis"
+    },
+    {
+      "address": "0x1498b69f8",
+      "bytes": "84708b4901000000000000000000000015000000000010000a00000045000000000000000000000000000000000000000100640000000000",
+      "role": "Preset descriptor Waist"
+    },
+    {
+      "address": "0x1498b7084",
+      "bytes": "576169737400",
+      "role": "Preset field ASCII Waist"
+    },
+    {
+      "address": "0x1498b6a30",
+      "bytes": "8c708b4901000000000000000000000015000000000010000a00000045000000000000000000000000000000000000000100680000000000",
+      "role": "Preset descriptor Thigh"
+    },
+    {
+      "address": "0x1498b708c",
+      "bytes": "546869676800",
+      "role": "Preset field ASCII Thigh"
+    },
+    {
+      "address": "0x1498b6a68",
+      "bytes": "94708b4901000000000000000000000015000000000010000a000000450000000000000000000000000000000000000001006c0000000000",
+      "role": "Preset descriptor Head"
+    },
+    {
+      "address": "0x1498b7094",
+      "bytes": "4865616400",
+      "role": "Preset field ASCII Head"
+    },
+    {
+      "address": "0x1498b6aa0",
+      "bytes": "883ba34801000000000000000000000000000000000000000000000045000000000000000000000000000000000000000100000000000000",
+      "role": "Preset descriptor UnderlyingType"
+    },
+    {
+      "address": "0x148a33b88",
+      "bytes": "556e6465726c79696e675479706500",
+      "role": "Preset field ASCII UnderlyingType"
+    },
+    {
+      "address": "0x1498b6ae0",
+      "bytes": "8009874901000000000000000000000015000000000010001e00000045000000000000000000000000000000000000000100700000000000",
+      "role": "Preset descriptor VoiceType"
+    },
+    {
+      "address": "0x149870980",
+      "bytes": "566f6963655479706500",
+      "role": "Preset field ASCII VoiceType"
+    }
+  ]
+}
