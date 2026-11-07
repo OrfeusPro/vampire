@@ -13,6 +13,10 @@ HERE=Path(__file__).resolve().parent
 ROOT=Path('F:/PhoneExit Resources/Vampir')
 CONTEXT=HERE/'knowledge/native-contexts/dialogue-resources-current.json'
 RECIPE='dialogue-resources-current-v1'
+CHILDREN=(
+    ('dialogue_lifecycle','verify-quest-dialogue-lifecycle-current',True),
+    ('dialogue_move','verify-dialogue-move-current',False),
+)
 TABLES={
     'tasks':'ProjectRED/Content/RED/Data/CSV/QuestTask.csv',
     'lines':'ProjectRED/Content/RED/Data/CSV/Dialog.csv',
@@ -22,7 +26,7 @@ TABLES={
 }
 SHA=re.compile('[a-f0-9]{64}')
 LIMITS=[
-    'Native execution covers parameter selection, task adapters, dispatcher and numeric projection with explicit providers.',
+    'Native execution covers parameter selection, task adapters, dispatcher, numeric projection and bounded Dialog completion callbacks with explicit providers.',
     'Structural task parameter binding does not establish the selected live quest task or dialogue player.',
     'Resource membership, field masks and skip flags are data; display order, playback, selection and skip effects are unverified.',
     'Class strings remain raw; group selection uses null shared controls, while scalar cleanup executes bounded non-null controls.',
@@ -168,6 +172,20 @@ def validate(report,definition):
     require(child['source_sha256']==definition['source_sha256']
         and all(definition['inputs'].get(name)==expected for name,expected in child['definition']['inputs'].items()),
         'parameter binding inputs differ')
+    for field,module,native_execution in CHILDREN:
+        child=report.get(field,{})
+        require(child.get('recipe')==load(module).RECIPE
+            and child.get('source_sha256')==definition['source_sha256']
+            and child.get('native_execution') is native_execution
+            and child.get('runtime_admitted') is False and child.get('network_used') is False
+            and child.get('live_step_verified') is False
+            and child.get('dialogue_playback_verified',False) is False
+            and child.get('ui_lifecycle_verified',False) is False
+            and report.get(field+'_proof')==definition.get('dialogue_children',{}).get(field)
+            and bool(child.get('definition',{}).get('inputs'))
+            and all(definition['inputs'].get(name)==expected
+                for name,expected in child['definition']['inputs'].items()),
+            'dialogue child binding scope or inputs differ')
 
 
 def checked_receipt(labels,owner,pointer,recipe):
@@ -208,19 +226,28 @@ def verify(*,root=ROOT,context_path=CONTEXT):
         binding_pointer=dict(path=binding_pointer['report'],sha256=binding_pointer['sha256'])
         binding=checked_receipt(labels,owner,binding_pointer,parameter_tool.RECIPE)
         for name,expected in binding['definition']['inputs'].items():owner.expect(name,expected)
+        children={};child_pointers={}
+        for field,module,_ in CHILDREN:
+            tool=load(module);result=tool.verify(root=root)
+            child_pointer=dict(path=result['report'],sha256=result['sha256'])
+            child=checked_receipt(labels,owner,child_pointer,tool.RECIPE)
+            for name,expected in child['definition']['inputs'].items():owner.expect(name,expected)
+            children[field]=child;child_pointers[field]=child_pointer
         for file in (Path(__file__),HERE/'dialogue-parameter-cases-v1.py',HERE/'quest-tutorial-state-harness-v1.py',
                 HERE/'update-bindings.py',HERE/'login-input-transfer-rules.py',HERE/'build-native-entry-code.py',
                 HERE/'extract-native-enums.py',HERE/'audit-client-release.py',HERE/'research-workflow.py'):
             owner.digest(file.resolve())
         definition=dict(source_sha256=context['source_sha256'],inputs={str(p):sha for p,sha in owner.files.items()},
             source=parent['inputs']['source'],runtime_inputs=label_definition['runtime_inputs'],
-            tables=tables,context_sha256=hashlib.sha256(context_raw).hexdigest())
+            tables=tables,context_sha256=hashlib.sha256(context_raw).hexdigest(),dialogue_children=child_pointers)
         workflow=index.extension('research-workflow');key=hashlib.sha256(workflow.canonical(definition)).hexdigest()
         cache=Path(root)/'knowledge'/(RECIPE+'-cache')/(key+'.json')
         if cache.is_file():
             pointer=json.loads(cache.read_bytes());report=checked_receipt(labels,owner,pointer,RECIPE);validate(report,definition)
             require(report['parameter_binding']==binding and report['parameter_binding_proof']==binding_pointer,
                 'parameter binding child differs')
+            require(all(report[field]==child and report[field+'_proof']==child_pointers[field]
+                for field,child in children.items()),'dialogue child proof differs')
             parameter=checked_receipt(labels,owner,report['native_parameter_proof'],'dialogue-parameter-native-v1')
             require(parameter.get('schema')==1 and parameter.get('recipe')=='dialogue-parameter-native-v1'
                 and parameter.get('result')==report['native_parameter']
@@ -259,6 +286,8 @@ def verify(*,root=ROOT,context_path=CONTEXT):
                 choices=sum(map(len,value['choice_groups'].values())),unresolved=len(value['unresolved'])),
             runtime_admitted=False,active_task_verified=False,skip_behavior_verified=False,
             received_prompts_verified=False,network_used=False,limits=LIMITS)
+        report.update(children)
+        report.update({field+'_proof':pointer for field,pointer in child_pointers.items()})
         validate(report,definition);owner.finish()
         if parameter_cache is not None:
             workflow.atomic(Path(parameter_cache['path']),workflow.canonical(parameter_cache['pointer']))

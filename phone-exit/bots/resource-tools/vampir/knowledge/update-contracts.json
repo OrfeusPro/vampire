@@ -1714,7 +1714,8 @@
         "quest-start-current",
         "quest-time-current",
         "own-position-current",
-        "quest-time-server-position-probe-current"
+        "quest-time-server-position-probe-current",
+        "quest-dialogue-current"
       ],
       "recipes": [],
       "bindings": {},
@@ -1722,6 +1723,10 @@
         {
           "archive": "*.pak",
           "path": "*Quest*"
+        },
+        {
+          "archive": "*.pak",
+          "path": "*Dialog*"
         }
       ],
       "builder": null,

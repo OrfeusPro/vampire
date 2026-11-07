@@ -1661,9 +1661,9 @@
       "id": "quest-dialogue-current",
       "status": "open",
       "question": "Как активный сценарий задания выбирает группу диалога, строки, варианты ответа и допустимость пропуска на текущем SHA?",
-      "known": "Именованные русские ресурсы и 26 сценариев выбора группы сохранены. 126 новых сценариев подтвердили передачу параметров, 436 — числовой доступ и cleanup. On_update и неизменный повтор прошли; активный шаг и строковый provider не допускаются.",
-      "unknown": "Открыты конкретный строковый TryGetNumber, выбор активного task и current provider действия с индексом, TargetId, readiness, позицией и подтверждённым переходом. Проигрыватель диалога, выбор ответа, пропуск и работа онлайн не подтверждены.",
-      "next_action": "Переиспользовать current 1810/1811 и 324 matching-state сценария. Собрать общий пакет projection 145de7870 и factory/model candidates 1455b8fe0 / 1455b4d30; из closure установить текущую task lookup. Затем доказать ordered task/progress, provider и отдельный current action admission. Сессию сохранять.",
+      "known": "Готовые параметры и граф ресурсов переиспользованы. 13 native-сценариев проверили completion, delayed и event callbacks Dialog, 14 ABI и 101 fixture ABI. Статический child связал семь whole exports, формат PktDialogMove 1852/1853 и NPC-сценарий Чумы с текущими EXE/CSV. Новые proofs включены в quest-dialogue-current, кэш и контракт quests; повтор не запускает JVM/native. Bipoberiho остаётся в прежней сессии на подтверждённом индексе 2.",
+      "unknown": "Очередь и проигрывание активной группы, строковый ClassInfo provider, Type 5 execution, текущие NPC instance/caller keys, clock input и установка действия у владельца. Текущий процесс допускает только завершённую Time chain 0/1 и не имеет API загрузки нового обработчика. Переход 2→3 онлайн не выполнен.",
+      "next_action": "Сохранять сессию. Переиспользовать callbacks и 1852/1853 field proof. Исследовать queued-dialog consumer 145589b00 и Type 5 execution с текущими NPC/caller bindings. Не повторять Time/QuestSync/Tutorial matrices. Отдельно решить доступность нового действия у закреплённого владельца без неявной замены профиля.",
       "decision_rule": "Каталог или найденная строка не являются полученной репликой. Нужны exact source bytes, native binding от активного сценария, порядок/варианты и flags; unsupported actions не отправлять. Данные ресурсов, bounded native fixtures и онлайн доказывать отдельно.",
       "do_not_repeat": "Не повторять готовые QuestSync/Tutorial native matrices и русский каталог. Не разрывать текущую игровую сессию; collect только missing roots.",
       "addresses": [
@@ -1674,7 +1674,16 @@
         "0x14593e7e0",
         "0x14593ef30",
         "0x145b04330",
-        "0x145b165e0"
+        "0x145b165e0",
+        "0x145599660",
+        "0x1455d4290",
+        "0x1455d2dc0",
+        "0x1455b1190",
+        "0x145d04450",
+        "0x145836220",
+        "0x14582ab90",
+        "0x14566c1f0",
+        "0x145589410"
       ],
       "evidence": [
         "evidence/quests/HEADLESS-QUEST-DIALOGUE-CURRENT.md",
@@ -1682,7 +1691,11 @@
         "evidence/quests/QUEST-DIALOGUE-CURRENT-RESULT.json",
         "evidence/quests/HEADLESS-QUEST-PARAMETERS-CURRENT.md",
         "evidence/quests/QUEST-PARAMETERS-CURRENT-VALIDATION.json",
-        "evidence/quests/QUEST-PARAMETERS-CURRENT-RESULT.json"
+        "evidence/quests/QUEST-PARAMETERS-CURRENT-RESULT.json",
+        "evidence/quests/HEADLESS-QUEST-DIALOGUE-LIFECYCLE-CURRENT.md",
+        "evidence/quests/QUEST-DIALOGUE-LIFECYCLE-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-DIALOGUE-LIFECYCLE-CURRENT-RESULT.json",
+        "evidence/quests/QUEST-DIALOGUE-LIVE-BLOCKER.json"
       ]
     },
     {

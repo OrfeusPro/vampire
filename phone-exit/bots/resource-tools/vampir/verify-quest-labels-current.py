@@ -53,6 +53,32 @@ def checked(owner,pointer):
     return json.loads(raw)
 
 
+def current_observation(owner,context):
+    # The pinned report is lineage. A derived report also binds runtime files,
+    # which can change without changing its retained native packet scenarios.
+    # Ask the existing verifier for a new checked derivation instead of either
+    # trusting stale runtime hashes or running those native scenarios again.
+    lineage=checked(owner,context['observation_proof'])
+    verifier=load('verify-quest-observation-current')
+    selected=verifier.verify(root=owner.root)
+    pointer=dict(path=selected['report'],sha256=selected['sha256'])
+    require(Path(pointer['path']).resolve()==owner.root/'code-clues'/verifier.RECIPE/
+        pointer['sha256']/'manifest.json','observation receipt location differs')
+    observation=checked(owner,pointer)
+    for report in (lineage,observation):
+        require(report.get('recipe')=='quest-observation-current-v1'
+            and report.get('source_sha256')==context['source_sha256']
+            and report.get('observation_projection_verified') is True
+            and report.get('packet_compatibility',{}).get('1854') is True
+            and report.get('native_proofs_reused') is True
+            and report.get('native_execution') is False
+            and report.get('runtime_admitted') is False
+            and bool(report.get('parents')),'packet key observation is unqualified')
+    require(observation['parents']==lineage['parents'],'observation native lineage differs')
+    retain(owner,observation['definition']['inputs'])
+    return observation,pointer
+
+
 def inputs(root,context_path):
     index=load('knowledge-index')
     # Loads the retained decoder environment; does not construct a PE image.
@@ -92,12 +118,7 @@ def inputs(root,context_path):
                 and all(reference[0].get(key)==value for key,value in selected.items())
                 and table['sha256']==context['expected_table_sha256'][name], 'named table baseline differs')
             bodies[name]=named.payload(selected);tables[name]=selected
-        observation=checked(owner,context['observation_proof'])
-        require(observation.get('recipe')=='quest-observation-current-v1'
-            and observation.get('source_sha256')==context['source_sha256']
-            and observation.get('observation_projection_verified') is True
-            and observation.get('packet_compatibility',{}).get('1854') is True,'packet key observation is unqualified')
-        retain(owner,observation['definition']['inputs'])
+        observation,observation_pointer=current_observation(owner,context)
         dispatch=checked(owner,context['dispatch_proof'])
         require(dispatch.get('source_sha256')==context['source_sha256']
             and dispatch.get('whole_instruction_shape_verified') is True
@@ -122,7 +143,8 @@ def inputs(root,context_path):
             scope='incoming_key_shared_lookup_prefix',active_task_verified=False)
         selected=dict(recipe=RECIPE,source_sha256=context['source_sha256'],
             inputs={str(p):sha for p,sha in owner.files.items()},runtime_inputs=runtime,
-            context_sha256=digest(path),tables=tables,source=source,key_binding=binding,limits=context['limits'])
+            context_sha256=digest(path),tables=tables,source=source,key_binding=binding,limits=context['limits'],
+            observation_proof=observation_pointer)
         return owner,directory,context,parent,exports,bodies,selected
     except BaseException:
         owner.abort();raise

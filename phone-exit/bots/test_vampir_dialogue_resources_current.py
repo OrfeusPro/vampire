@@ -45,11 +45,18 @@ class DialogueResourcesCurrentTests(unittest.TestCase):
         self.assertEqual(len(child['results']['binding']['cases']),126)
         self.assertEqual(len(child['results']['scalar']['cases']),436)
         self.assertFalse(child['active_task_verified']);self.assertFalse(child['class_string_conversion_verified'])
+        lifecycle=r['dialogue_lifecycle']
+        self.assertEqual(len(lifecycle['result']['cases']),13)
+        self.assertFalse(lifecycle['live_step_verified']);self.assertFalse(lifecycle['dialogue_playback_verified'])
+        move=r['dialogue_move']
+        self.assertFalse(move['native_execution']);self.assertFalse(move['current_actor_keys_verified'])
+        self.assertFalse(move['live_step_verified']);self.assertFalse(move['ui_lifecycle_verified'])
         self.assertEqual(len(self.graph['groups']['11012002']),6)
         self.assertFalse(self.graph['order_admitted']);self.assertFalse(self.graph['active'])
 
     def test_warm_cache_does_not_replay_graph_native_or_processes(self):
         with patch.object(self.tool,'graph',side_effect=AssertionError('graph replay')), \
+                patch('unicorn.Uc.emu_start',side_effect=AssertionError('native replay')), \
                 patch('subprocess.Popen',side_effect=AssertionError('new process')):
             self.assertEqual(self.tool.verify(),dict(self.pointer,reused=True))
 
@@ -92,6 +99,11 @@ class DialogueResourcesCurrentTests(unittest.TestCase):
         forged=copy.deepcopy(self.report);forged['parameter_binding']['results']['binding']['cases']=[]
         with self.assertRaisesRegex(ValueError,'binding proof scope or matrix differs'):
             self.tool.validate(forged,self.report['definition'])
+        for field in ('dialogue_lifecycle','dialogue_move'):
+            for key in ('runtime_admitted','live_step_verified','network_used'):
+                forged=copy.deepcopy(self.report);forged[field][key]=True
+                with self.subTest(child=field,key=key), self.assertRaisesRegex(ValueError,'child binding scope'):
+                    self.tool.validate(forged,self.report['definition'])
 
     def test_native_parameter_cache_excludes_resource_text_changes(self):
         labels=self.tool.load('verify-quest-labels-current')

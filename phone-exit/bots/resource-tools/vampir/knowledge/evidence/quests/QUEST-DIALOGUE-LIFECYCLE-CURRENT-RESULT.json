@@ -1,0 +1,39 @@
+{
+  "question": "quest-dialogue-current",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "addresses": [
+    "0x145599660",
+    "0x1455d4290",
+    "0x1455d2dc0",
+    "0x1455b1190",
+    "0x145d04450",
+    "0x145836220",
+    "0x14582ab90",
+    "0x14566c1f0",
+    "0x145589410",
+    "0x1455ca1f0",
+    "0x1455ca000",
+    "0x144aad370",
+    "0x144aad030"
+  ],
+  "method": "bounded_native",
+  "conclusion": "Проверены 13 native-сценариев Dialog completion/event callbacks и статическая привязка PktDialogMove к текущему NPC-сценарию. Оба child proof подключены к quest-dialogue-current, контракту quests и кэшу. Derived observation автоматически обновляется при сохранении native parents без повторной эмуляции. Bipoberiho остаётся в прежней сессии на индексе 2; онлайн-переход 2→3 не выполнен.",
+  "limits": [
+    "Engine, model, delegates and timer dispatch remain fixtures or boundaries.",
+    "Static movement source does not establish current NPC instance or caller key.",
+    "Historical capture source version is unknown; it is outside automatic check inputs.",
+    "The pinned live owner cannot install the new handler through its existing API."
+  ],
+  "unknown": "Открыты playback/очередь, ClassInfo string provider, Type 5 execution, текущие NPC/caller/clock inputs и установка нового действия в закреплённого владельца.",
+  "next_check": "Сохранять сессию. Исследовать queued-dialog consumer 145589b00 и Type 5 execution; переиспользовать готовые callbacks и wire proof. Не подменять профиль действующей сессии.",
+  "evidence": [
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-DIALOGUE-LIFECYCLE-CURRENT-VALIDATION.json",
+      "sha256": "5ea62e3a98c02e4c2a4cff32883d96bb595cb48c03bdd3155e2f3058a4da6a9f"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-DIALOGUE-LIFECYCLE-CURRENT.md",
+      "sha256": "ffee1ba2287d8842bab48231a2e4946316ad2fe869c1d11d54056fd39b06506c"
+    }
+  ]
+}

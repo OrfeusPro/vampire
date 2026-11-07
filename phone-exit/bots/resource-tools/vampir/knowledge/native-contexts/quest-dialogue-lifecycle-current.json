@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "recipe": "quest-dialogue-lifecycle-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-b7fadfbd0ad7": "7fcfc4907b1494072e679c70730783315b5b8080279b9d894c919fb86bce2bb7",
+    "run-a448cc509c12": "d22494aef1b47503b58d9f148e6aa7f05f0968cd2baf1e3d533c8dd8de8e00f6"
+  },
+  "roles": {
+    "completion_schedule": "0x1455d4290",
+    "delayed_callback": "0x1455b1190",
+    "event_callback": "0x1455d2dc0",
+    "completion": "0x1455ca1f0",
+    "enqueue": "0x1455ca000"
+  },
+  "leaves": {
+    "0x1455b5830": "e95bb9ffff",
+    "0x1455e7500": "488b41304885c07503b0ffc30fb64029c3"
+  },
+  "delayed_tail": "0x1455b5830",
+  "vtable": "0x149907e00",
+  "model_global": "0x14b5e7be0"
+}

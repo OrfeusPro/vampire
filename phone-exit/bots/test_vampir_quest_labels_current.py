@@ -78,4 +78,48 @@ process.stdout.write('current and legacy names, unknown source, shared model, im
         self.assertIn('shared model',result.stdout)
 
 
+    def test_observation_refresh_reuses_native_scenarios_without_processes(self):
+        observation=self.tool.load('verify-quest-observation-current')
+        original=Path.is_file
+        def cold(path):
+            if 'quest-observation-current-v1-cache' in path.parts:return False
+            return original(path)
+        with patch('unicorn.Uc.emu_start',side_effect=AssertionError('native replay')), \
+                patch('subprocess.Popen',side_effect=AssertionError('new process')):
+            with patch.object(Path,'is_file',cold):first=observation.verify()
+            self.assertFalse(first['reused'])
+            with patch.object(observation,'packet_bindings',side_effect=AssertionError('PE replay')), \
+                    patch.object(observation,'projection',side_effect=AssertionError('portable replay')):
+                second=observation.verify()
+            self.assertTrue(second['reused']);self.assertEqual(first['sha256'],second['sha256'])
+        current=json.loads(Path(first['report']).read_bytes())
+        self.assertFalse(current['native_execution']);self.assertTrue(current['native_proofs_reused'])
+        self.assertEqual(current['inherited_native_cases'],1178)
+        self.assertEqual(self.report['definition']['observation_proof'],
+            dict(path=first['report'],sha256=first['sha256']))
+
+    def test_observation_refresh_keeps_source_lineage_and_current_inputs(self):
+        from types import SimpleNamespace
+        context=json.loads(self.tool.CONTEXT.read_bytes())
+        lineage=json.loads(Path(context['observation_proof']['path']).read_bytes())
+        pointer=self.report['definition']['observation_proof']
+        fresh=json.loads(Path(pointer['path']).read_bytes())
+        retained={}
+        owner=SimpleNamespace(root=self.tool.ROOT.resolve(),expect=lambda name,sha:retained.update({name:sha}))
+        verifier=SimpleNamespace(RECIPE='quest-observation-current-v1',
+            verify=lambda **_:dict(report=pointer['path'],sha256=pointer['sha256']))
+        with patch.object(self.tool,'load',return_value=verifier), \
+                patch.object(self.tool,'checked',side_effect=[lineage,fresh]):
+            result,selected=self.tool.current_observation(owner,context)
+        self.assertEqual(selected,pointer);self.assertEqual(result,fresh)
+        self.assertEqual(retained,fresh['definition']['inputs'])
+        for field,reason in [('source_sha256','unqualified'),('parents','lineage differs')]:
+            forged=copy.deepcopy(fresh)
+            if field=='source_sha256':forged[field]='0'*64
+            else:forged[field]['1854']['sha256']='0'*64
+            with patch.object(self.tool,'load',return_value=verifier), \
+                    patch.object(self.tool,'checked',side_effect=[lineage,forged]), \
+                    self.assertRaisesRegex(ValueError,reason):
+                self.tool.current_observation(owner,context)
+
 if __name__=='__main__':unittest.main()

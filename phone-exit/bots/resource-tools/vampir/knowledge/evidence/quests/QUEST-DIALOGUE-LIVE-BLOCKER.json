@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "method": "live_owner_observation",
+  "observed_at": "2026-11-07T11:55:38.036478+00:00",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "session_fingerprint": "ef34dbdc9b485d4b85f1f808a89d2a917bb9373014a2dc3505454ec75d9bfc68",
+  "profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\bounded-world-profiles\\d4303ecaf871bca726a871b4d484729bb4aea0f7b92070a8d3c04cf4e3f57ddd\\manifest.json",
+    "sha256": "d4303ecaf871bca726a871b4d484729bb4aea0f7b92070a8d3c04cf4e3f57ddd"
+  },
+  "character": {
+    "name": "Bipoberiho",
+    "level": 1,
+    "hp": 2700,
+    "max_hp": 2700,
+    "mp": 2000,
+    "max_mp": 2000,
+    "world_id": 10010
+  },
+  "online": true,
+  "connection_kept_open": true,
+  "reentry_attempts": 0,
+  "heartbeat": {
+    "sent": 653,
+    "received": 653
+  },
+  "latest_quest_reply": {
+    "packet_id": 1811,
+    "result_code": 0,
+    "quest_id": "110110",
+    "state": 2,
+    "progress": {
+      "raw08": 2,
+      "raw10": "0",
+      "raw18": "0"
+    },
+    "correlation": "same_scope_time_probe_after_socket_acceptance"
+  },
+  "interaction": {
+    "actions_ready": false,
+    "messages_known": false,
+    "action_count": 0,
+    "message_count": 0
+  },
+  "probe_state": "advanced",
+  "confirmed_transition_2_to_3": false,
+  "blockers": [
+    "Pinned owner admits only the completed Time index 0/1 chain.",
+    "HTTP actions consume owner-published offers; no dialogue action provider is installed.",
+    "This owner has no reviewed mechanism to install a new handler while retaining its socket.",
+    "Current NPC instance key, script producer caller key and dialogue playback closure remain unqualified."
+  ],
+  "packet_counts": {
+    "1811": 2,
+    "1854": 1,
+    "1853": 0,
+    "324": 2
+  }
+}

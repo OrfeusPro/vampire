@@ -10,6 +10,11 @@ Bipoberiho сервер принял первый `1810` с точкой тек�
 При отдельном входе для проверки индекса `1` свежий `1854` показал индекс `0`.
 Затем живой профиль подтвердил оба перехода `0 → 1 → 2` в одном соединении.
 Bipoberiho оставлен онлайн перед диалогом с Чумой.
+Для диалога теперь проверены 13 native-сценариев завершения и отдельная
+статическая привязка движения Чумы к `PktDialogMove`. Текущий владелец
+не загружает новые обработчики через API; переход `2 → 3` онлайн пока
+заблокирован. Соединение сохранено.
+[Диалог, движение NPC и точные границы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-DIALOGUE-LIFECYCLE-CURRENT.md).
 [Запуск, доказательства и оставшееся](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-START-CURRENT.md).
 [Проверка Time и границы отправки](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-CURRENT.md).
 [Живая проверка `1810` с серверной точкой входа](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-PROBE-CURRENT.md).

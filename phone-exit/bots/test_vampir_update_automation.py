@@ -9,6 +9,8 @@ MODULES = (
     'test_vampir_quest_reply_observer',
     'test_vampir_quest_reply_current',
     'test_vampir_dialogue_resources_current',
+    'test_vampir_quest_dialogue_lifecycle_current',
+    'test_vampir_dialogue_move_current',
     'test_vampir_quest_parameters_current',
     'test_vampir_quest_model_current',
     'test_vampir_quest_task_replacement_current',

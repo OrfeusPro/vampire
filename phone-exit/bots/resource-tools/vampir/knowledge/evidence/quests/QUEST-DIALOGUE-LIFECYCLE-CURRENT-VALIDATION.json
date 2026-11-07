@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "scope": "dialog_completion_callbacks_and_static_npc_movement",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\dialogue-resources-current-v1\\c72862a5d72b8e001bb80bc255c42c9c69e760d95a8fe744f3bb854c880ccaa8\\manifest.json",
+    "sha256": "c72862a5d72b8e001bb80bc255c42c9c69e760d95a8fe744f3bb854c880ccaa8"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\ae9bcb506e7342aac5c7384c51a44052eb4dfa7b52b8bbd2911d1d0fbfb3c1a9\\manifest.json",
+    "sha256": "ae9bcb506e7342aac5c7384c51a44052eb4dfa7b52b8bbd2911d1d0fbfb3c1a9"
+  },
+  "collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\3aa3135e6c131183f88b85edb03ca3da0a1730751d24ac0d39de5c35438545a9\\manifest.json",
+    "sha256": "3aa3135e6c131183f88b85edb03ca3da0a1730751d24ac0d39de5c35438545a9"
+  },
+  "collected_new_roots": 9,
+  "selected_ready_roots": 13,
+  "repeat_collection_new_jvm": 0,
+  "repeat_collection_state": "reused",
+  "source_check": {
+    "id": "quest-dialogue-current",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5e3a7917fd4fd19ace69f3d2cd47a0610d2d69e15687e756457013f3f55ed4d9\\manifest.json",
+    "sha256": "5e3a7917fd4fd19ace69f3d2cd47a0610d2d69e15687e756457013f3f55ed4d9",
+    "cache_key": "afe35d972963c2056344b856d1ecce962548912c719d86f4329b61559c9e5362"
+  },
+  "lifecycle": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-dialogue-lifecycle-current-v1\\513da88a27e28bafef626e96be553461d59889c6b254741862536ededbcc6d49\\manifest.json",
+    "sha256": "513da88a27e28bafef626e96be553461d59889c6b254741862536ededbcc6d49"
+  },
+  "lifecycle_cases": 13,
+  "lifecycle_whole_functions": 5,
+  "native_abi_checks": 14,
+  "fixture_abi_checks": 101,
+  "dialogue_move": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\dialogue-move-current-v1\\ae91de6c9674ad8fb5652464b145607762cca75d7afcae1af4f025a2b8b345cc\\manifest.json",
+    "sha256": "ae91de6c9674ad8fb5652464b145607762cca75d7afcae1af4f025a2b8b345cc"
+  },
+  "move_whole_exports": 7,
+  "move_native_execution": false,
+  "tests": {
+    "dialogue_parent": 7,
+    "dialogue_move": 6,
+    "dialogue_lifecycle_contract": 4,
+    "quest_labels": 7,
+    "passed": 24
+  },
+  "cache_assertions": [
+    "Parent warm proof rejects graph/native replay and new processes.",
+    "Labels refresh cold and warm reuse the 1178 native cases with emulation and process creation forbidden.",
+    "Move warm proof rejects whole-export and resource replay; decoder runtime identity is part of its cache key."
+  ],
+  "live_observation": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-DIALOGUE-LIVE-BLOCKER.json",
+    "sha256": "3928e9fd25c2afaa208ce6cf3f7a255d267adf7b8c472514084fcfc9107f84ce"
+  },
+  "runtime_admitted": false,
+  "online_transition_2_to_3_verified": false,
+  "connection_kept_open": true,
+  "limits": [
+    "Engine, model, delegates and timer dispatch remain fixtures or boundaries.",
+    "Static movement source does not establish current NPC instance or caller key.",
+    "Historical capture source version is unknown; it is outside automatic check inputs.",
+    "The pinned live owner cannot install the new handler through its existing API."
+  ]
+}

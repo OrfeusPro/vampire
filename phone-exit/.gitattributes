@@ -1008,3 +1008,14 @@ bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-PROBE-C
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-TIME-PROBE-CURRENT-ONLINE.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-TIME-PROBE-INDEX1-ONLINE.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-TIME-PROBE-CHAIN-ONLINE.json text eol=lf
+bots/resource-tools/vampir/replay-quest-dialogue-lifecycle-current-v1.py text eol=lf
+bots/resource-tools/vampir/verify-quest-dialogue-lifecycle-current.py text eol=lf
+bots/resource-tools/vampir/verify-dialogue-move-current.py text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/quest-dialogue-lifecycle-current.json text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/dialogue-move-current.json text eol=lf
+bots/test_vampir_quest_dialogue_lifecycle_current.py text eol=lf
+bots/test_vampir_dialogue_move_current.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-DIALOGUE-LIFECYCLE-CURRENT.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-DIALOGUE-LIFECYCLE-CURRENT-VALIDATION.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-DIALOGUE-LIFECYCLE-CURRENT-RESULT.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-DIALOGUE-LIVE-BLOCKER.json text eol=lf
