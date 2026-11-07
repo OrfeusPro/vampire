@@ -4833,6 +4833,75 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты native загрузка обеих service таблиц, смешанный каталог задач после фильтрации, активный RegionType, выбранный task, lifecycle и provider игрового действия.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x14142e750",
+        "0x141436d70",
+        "0x141437580",
+        "0x1416169f0",
+        "0x1445f1650",
+        "0x1445f5fc0",
+        "0x1445f6680",
+        "0x145a4d700",
+        "0x145b48c70",
+        "0x145b48f60",
+        "0x145b4a830",
+        "0x145b4afa0",
+        "0x145b4b110",
+        "0x145b4c130",
+        "0x145b4c280",
+        "0x145b5f680",
+        "0x145b73280",
+        "0x145b736a0",
+        "0x145bfefd0",
+        "0x145bff6a0",
+        "0x145bff820",
+        "0x145c03670",
+        "0x145de7870"
+      ],
+      "checks": [
+        {
+          "cache_key": "86a7f2ac55e401fb45e61d35c80281fb3b46e10bde8e9b020b4d642e9c76b410",
+          "id": "quest-mixed-loader-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b8d99341b2618389b4efbdf6ccffa9a9df48f42e0b82b67d42c71f1140adf5e1\\manifest.json",
+          "sha256": "b8d99341b2618389b4efbdf6ccffa9a9df48f42e0b82b67d42c71f1140adf5e1",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целый текущий QuestTask loader с policy проверен в 16 совместных сценариях на 12 исходных строках двух квестов. Пройдены 156 проекций и 172 ABI-вызова, индексы внутри групп, отсутствие исключённых записей и неизменность данных. Штатный on_update и кэш проверены. Реальный перевход отдельно получил 110110 и 15 Tutorial-записей.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-MIXED-CURRENT-VALIDATION.json",
+          "sha256": "cd2bfcc2c1bc5dae0d6c5d6ea691e0bb760663e1b36c571d9dbcc8d6c4298277"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-MIXED-CURRENT.md",
+          "sha256": "770c3a7411cb59dd1c26b1010de0e31474d376e4571c692030bc1b4418ff1a01"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-LIVE-REENTRY-CURRENT.md",
+          "sha256": "321fa9cdfee8e6945ce0fc91037226b16e3256b2c6980ef8ca90b83bfc60c335"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-LIVE-REENTRY-CURRENT.json",
+          "sha256": "1380e63b28ddb8590c66e12a9aa4cf98801bd3ed89e8069e5678be3e41cd2619"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "3e024d0e6734d00ea3ae0760695c0c00347ca74ba54e23de21f63398d7554227",
+      "limits": [
+        "Whole current QuestTask loader, service policy and progress projection execute together over twelve source rows and explicit regions.",
+        "Native loader constructs the primary records and per-quest arrays. Service maps and initialized TLS are seeded from current CSV rows through bounded fixtures.",
+        "File, header, strings, allocation and no-Russian override providers are fixtures. The original secondary vtable and exact dispatch are verified before using the bounded clone.",
+        "This composition proves retained/filtered records and group-local ordering under explicit inputs, while active region, runtime task lifecycle and gameplay admission remain open."
+      ],
+      "method": "bounded_native",
+      "next_check": "Сохранить новую сессию. Приоритет первого игрового действия — 110110 со state=1: проверить текущую цепочку начала/выбора задачи и 1803/1804, затем подключить provider и current action admission. Каталожные матрицы переиспользовать.",
+      "question": "quest-mixed-loader-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты активный регион, source значение state=1 для полученного 110110, путь начала/выбора задачи, исполнитель и production provider исходящего действия.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

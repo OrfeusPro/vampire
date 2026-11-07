@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "method": "live_protocol_observation",
+  "profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\bounded-world-profiles\\288ccd432e9168a3d85cdf5ae72241764cbca57281554143743c522083911c6a\\manifest.json",
+    "sha256": "288ccd432e9168a3d85cdf5ae72241764cbca57281554143743c522083911c6a"
+  },
+  "proofs": {
+    "quest-observation-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-observation-current-v1\\496131426fd59ec4e30b36a04ab7c3b2bbadd45df34fb92e0a484f118dc599d2\\manifest.json",
+      "sha256": "496131426fd59ec4e30b36a04ab7c3b2bbadd45df34fb92e0a484f118dc599d2"
+    },
+    "quest-reply-current": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-reply-current-v1\\83ded4b98b53d2b7935ecd606e37a7165bd0f6c4ff8f7bcf55633c0addbbb1c5\\manifest.json",
+      "sha256": "83ded4b98b53d2b7935ecd606e37a7165bd0f6c4ff8f7bcf55633c0addbbb1c5"
+    }
+  },
+  "online_observed": true,
+  "session_fingerprint": "6ca3d0ee3e78336c29398ba520afd4d55e4f9e52febc516cc1cd23d6f2f02b07",
+  "previous_session_fingerprint": "2eec3c3696436d18f083b02550eb1873843e0f6297ce9904d813f7bb08406e41",
+  "explicit_reentry_count": 1,
+  "character": {
+    "name": "Bipoberiho",
+    "level": 1,
+    "hp": 2700,
+    "max_hp": 2700,
+    "mp": 2000,
+    "max_mp": 2000,
+    "world_id": 10010
+  },
+  "quests": [
+    {
+      "id": "110110",
+      "title": null,
+      "group": 0,
+      "group_index": 0,
+      "record_index": 0,
+      "state": 1,
+      "progress": {
+        "raw08": 0,
+        "raw10": "0",
+        "raw18": "0"
+      },
+      "raw38": false,
+      "raw3c": 0,
+      "raw40": 0,
+      "raw44": 0
+    }
+  ],
+  "quest_scope": {
+    "semantics": "last_received_message",
+    "applied_to_local_task": false
+  },
+  "tutorial": {
+    "semantics": "last_received_message",
+    "applied_to_local_task": false,
+    "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+    "flag": false,
+    "records": [
+      {
+        "raw08": 3001,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 3002,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 3007,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 3008,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 3009,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 3011,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 3012,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 3014,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 3015,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 3024,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 4017,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 4018,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 4019,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 4020,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      },
+      {
+        "raw08": 4021,
+        "raw0c": 0,
+        "raw10": 0,
+        "state": 0
+      }
+    ],
+    "world_id": 10010,
+    "received_at_ms": 1794014679085
+  },
+  "decode_errors": {
+    "quest_decode_errors": 0,
+    "tutorial_decode_errors": 0,
+    "quest_result_decode_errors": 0
+  },
+  "heartbeat": {
+    "sent": 4,
+    "received": 4
+  },
+  "runtime_execution_quest_admitted": false,
+  "active_region_verified": false,
+  "quest_commands_sent": 0,
+  "ui": {
+    "url": "http://127.0.0.1:17949/prototype/index.html?mode=group",
+    "character_marker_seen": true,
+    "vitals_and_level_seen": true,
+    "quest_id_seen": "110110",
+    "russian_title_seen": false,
+    "reason": "running_panel_retains_older_index_without_current_quest_labels"
+  },
+  "next_action_blocker": "Source meaning and admission of state1, current start path1803/1804 or selected lifecycle before a Time1810 provider"
+}

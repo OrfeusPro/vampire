@@ -32,6 +32,7 @@ PACKAGES = {
     'quest-task-replacement-current': 'verify-quest-task-replacement-current',
     'quest-loader-current': 'verify-quest-loader-current',
     'quest-service-policy-current': 'verify-quest-service-current',
+    'quest-mixed-loader-current': 'verify-quest-mixed-current',
 }
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 PROFILE_SCOPES = {
@@ -109,7 +110,7 @@ def runtime_inputs(index, root, report, identifier):
     runtime.update(path.resolve() for path in index.extension('native-publication-v2').runtime_files())
     if identifier in ('quest-observation-current', 'quest-labels-current', 'quest-dialogue-current',
                       'quest-reply-current', 'quest-model-current', 'quest-task-replacement-current', 'quest-loader-current',
-                      'quest-service-policy-current', 'bounded-world-current'):
+                      'quest-service-policy-current', 'quest-mixed-loader-current', 'bounded-world-current'):
         proof=index.read_json(pointer['path'])
         if identifier == 'bounded-world-current':
             observed=proof['proofs']['quest-observation-current']
@@ -124,7 +125,7 @@ def runtime_inputs(index, root, report, identifier):
             raise ValueError('Quest observation inherited runtime differs')
         runtime.update(Path(name).resolve() for name in inherited)
         if identifier in ('quest-labels-current', 'quest-dialogue-current', 'quest-loader-current',
-                          'quest-service-policy-current'):
+                          'quest-service-policy-current', 'quest-mixed-loader-current'):
             archive=Path(proof['definition']['source']['path']).resolve()
             expected_archive=(Path(index.INSTALL).resolve().parents[2]/
                 'Saved/PersistentDownloadDir/Patch/Install/pakchunk1-Windows.pak')

@@ -1689,9 +1689,9 @@
       "id": "quest-reply-current",
       "status": "open",
       "question": "Как текущий клиент читает 1811 и передаёт результат обработчику квестов?",
-      "known": "Приём 1811, observer, current lookup/projection/model сохранены. Whole kind-6 creation/replacement и primary failure fallback проверены в 48 сценариях с native refcounts и явными providers. Новый on_update и неизменный повтор прошли; active task/action admission не подтверждены.",
-      "unknown": "Открыты актуальная загрузка, фильтрация и порядок QuestTask, RU override и service policy, реальные task-data/lifecycle/owner providers. Активная задача, TargetId, readiness, актуальная позиция, action provider, подтверждённый переход и current action admission не установлены.",
-      "next_action": "Переиспользовать принятые lookup/model/replacement proofs. Следующий общий missing-only пакет loader/order: manager 145b54bb0, main 145b5f680, RU override 145b6a0b0; source candidates ещё требуют whole exports и семантики. Расширение по точной closure: growth 145b736a0 / 145b73280, record 145b48c70 / copy 145b4c130, tokenizer 1445f6680, boolean 1445f5fc0, localization 14585e470, service 145a4d700. Именованные CSV уже готовы; сессию сохранять.",
+      "known": "Приём 1811, observer, current lookup/projection/model сохранены. Whole kind-6 creation/replacement и primary failure fallback проверены в 48 сценариях с native refcounts и явными providers. Новый on_update и неизменный повтор прошли; active task/action admission не подтверждены. Согласованный перевход с новым observer получил квест 110110 со state=1 и 15 Tutorial-записей, ошибок чтения нет.",
+      "unknown": "Для полученного state=1 требуется current start/selected lifecycle, затем production provider и допуск действия. Реальный Time callback и источник actor vector для 1810 открыты. Активный регион и прочие lifecycle также требуют проверки.",
+      "next_action": "Приоритет текущего квеста 110110: source-bound state=1 → начало/выбор задачи, при необходимости текущие 1803/1804. Не применять provider state=2 к state=1. Сохранить новую сессию и использовать полученные данные.",
       "decision_rule": "Отдельно доказать чтение полного тела, привязку обработчика и границы state application. Успешный gate и совпавший ID сами по себе не дают подтверждения игрового действия.",
       "do_not_repeat": "Переиспользовать исторические сценарии, текущие экспорты gate и готовую матрицу INPUT. Текущую сессию сохранять.",
       "addresses": [
@@ -1714,7 +1714,9 @@
         "evidence/quests/QUEST-MODEL-CURRENT-RESULT.json",
         "evidence/quests/HEADLESS-QUEST-TASK-REPLACEMENT-CURRENT.md",
         "evidence/quests/QUEST-TASK-REPLACEMENT-CURRENT-VALIDATION.json",
-        "evidence/quests/QUEST-TASK-REPLACEMENT-CURRENT-RESULT.json"
+        "evidence/quests/QUEST-TASK-REPLACEMENT-CURRENT-RESULT.json",
+        "evidence/quests/HEADLESS-QUEST-LIVE-REENTRY-CURRENT.md",
+        "evidence/quests/QUEST-LIVE-REENTRY-CURRENT.json"
       ]
     },
     {
@@ -1777,6 +1779,28 @@
         "evidence/quests/HEADLESS-QUEST-LOADER-CURRENT.md",
         "evidence/quests/QUEST-LOADER-CURRENT-VALIDATION.json",
         "evidence/quests/QUEST-LOADER-CURRENT-RESULT.json"
+      ]
+    },
+    {
+      "id": "quest-mixed-loader-current",
+      "status": "open",
+      "question": "Как фильтр текущей группы сервиса влияет на записи и порядок массивов при совместной загрузке двух квестов?",
+      "known": "Целый текущий QuestTask loader с policy проверен в 16 совместных сценариях на 12 исходных строках двух квестов. Пройдены 156 проекций и 172 ABI-вызова, индексы внутри групп, отсутствие исключённых записей и неизменность данных. Штатный on_update и кэш проверены. Реальный перевход отдельно получил 110110 и 15 Tutorial-записей.",
+      "unknown": "Открыты активный регион, source значение state=1 для полученного 110110, путь начала/выбора задачи, исполнитель и production provider исходящего действия.",
+      "next_action": "Сохранить новую сессию. Приоритет первого игрового действия — 110110 со state=1: проверить текущую цепочку начала/выбора задачи и 1803/1804, затем подключить provider и current action admission. Каталожные матрицы переиспользовать.",
+      "decision_rule": "Считать индекс внутри фактически созданного массива конкретного QuestInfoId. Проверять отсутствие исключённых записей и группы. Фикстуры service maps, file/storage и no-RU override выделять в границах доказательства.",
+      "do_not_repeat": "Использовать готовые экспорты, принятые проверки policy и RU-пакет. Не повторять их матрицы, сохранять текущую игровую сессию.",
+      "addresses": [
+        "0x145b5f680",
+        "0x145a4d700",
+        "0x145c03670",
+        "0x145b4c280",
+        "0x145de7870"
+      ],
+      "evidence": [
+        "evidence/quests/HEADLESS-QUEST-MIXED-CURRENT.md",
+        "evidence/quests/QUEST-MIXED-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-MIXED-CURRENT-RESULT.json"
       ]
     }
   ]

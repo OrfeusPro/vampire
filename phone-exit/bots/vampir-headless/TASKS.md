@@ -1,7 +1,9 @@
 # Vampir — открытые пакеты
 
-- Квесты: owner-переключатель и остановка при смерти реализованы; подготовлено
-  source-bound наблюдение 1854 / 9905 для следующего входа. Русские названия
+- Квесты: owner-переключатель и остановка при смерти реализованы. Реальный
+  перевход подтвердил чтение 1854 / 9905 без ошибок, квест 110110 и 15 записей
+  обучения. Следующий приоритет — current путь для полученного state=1,
+  начало задания или lifecycle и provider первого действия. Русские названия
   текущего SHA подключены к общей модели: [каталог и границы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-LABELS-CURRENT.md).
   Для диалогов готовы именованные ресурсы, выбор группы и структурная передача
   параметров через task adapter / dispatcher. Числовой accessor проверен отдельно;
@@ -11,23 +13,25 @@
   выполнить живой сценарий. Текущую сессию сохранять.
   [Параметры и конкретные пробелы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-PARAMETERS-CURRENT.md).
   Текущий ответ 1811 проверен от чтения тела до аргументов модели. Наблюдение
-  включено в пакет следующего входа. Доказать provider текущего шага и корреляцию
+  включено в новую сессию. Доказать provider текущего шага и корреляцию
   ответа с отправленным действием. [Наблюдатель и границы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-REPLY-OBSERVER-CURRENT.md).
   Текущие lookup / проекция и wrapper существующей модели проверены отдельно.
   Создание / замена типа 6 и primary failure fallback проверены с явными providers.
   Для шести исходных задач 110120 проверены текущие загрузчики, русский override
   и проекция в созданном массиве. Фильтр непустой группы проверен на текущих CSV
-  для заданных региона, сервера и фазы. Продолжить со смешанной загрузкой после
-  фильтрации и проекциями сохранённых записей, активным регионом и callbacks.
+  для заданных региона, сервера и фазы. Смешанная загрузка после фильтрации
+  и проекции сохранённых записей проверены. Продолжить с активным регионом и callbacks.
   Для игрового действия требуется определить активный шаг из текущей сессии.
   [Модель и следующие блокеры](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-MODEL-CURRENT.md).
   [Создание и границы lifecycle](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TASK-REPLACEMENT-CURRENT.md).
   [Загрузка и открытая политика групп](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-LOADER-CURRENT.md).
   [Проверка непустой группы и границы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-SERVICE-CURRENT.md).
-  После перезапуска Codex визуально проверены HP/MP, уровень, маркер и журнал;
-  та же игровая сессия сохранилась. Данные квестов в прежнем owner недоступны,
-  поэтому клик и выполнение на текущем сервере остаются непроверенными.
-  [Визуальная проверка](../resource-tools/vampir/knowledge/evidence/quests/QUEST-AUTOMATION-VISUAL-CHECK.json).
+  [Совместная загрузка и допуск](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-MIXED-CURRENT.md).
+  На карте новой сессии проверены HP/MP, уровень, маркер и строка квеста.
+  Запущенная панель удерживает прежний index и показывает ID вместо русского
+  названия. Подключение актуального представления панели остаётся открытым.
+  Клик с исполнением шага на сервере требует current action provider.
+  [Живое наблюдение](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-LIVE-REENTRY-CURRENT.md).
   Готовые неизменные тестовые группы повторно не исполнять.
 
 - Для проверки квестов оставлен один Bipoberiho; остальные семь владельцев
