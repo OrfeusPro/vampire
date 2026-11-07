@@ -8,6 +8,8 @@
 источник скорректированных координат.
 [Запуск, доказательства и оставшееся](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-START-CURRENT.md).
 [Проверка Time и границы отправки](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-CURRENT.md).
+[Однократная проверка `1810` с серверной точкой входа](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-PROBE-CURRENT.md)
+доступна в отдельном профиле для следующего явного запуска. Живой результат ожидается.
 
 Расчёт высоты персонажа проверен в 23 native-сценариях и подключён к общим
 контрактам квестов и карты. Для живого XYZ остаются выбранная поверхность,

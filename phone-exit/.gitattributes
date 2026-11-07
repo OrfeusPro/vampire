@@ -1001,3 +1001,7 @@ bots/test_vampir_own_position_current.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-OWN-POSITION-CURRENT.md text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/characters/OWN-POSITION-CURRENT-VALIDATION.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/characters/OWN-POSITION-CURRENT-RESULT.json text eol=lf
+bots/vampir-shared/vampir_core/quest_update.py text eol=lf
+bots/vampir-shared/vampir_core/quest_time_probe.py text eol=lf
+bots/test_vampir_quest_time_probe.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-PROBE-CURRENT.md text eol=lf

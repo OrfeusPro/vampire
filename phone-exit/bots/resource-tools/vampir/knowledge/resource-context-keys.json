@@ -3,7 +3,7 @@
   "recipe": "partial-resource-context-keys-v1",
   "contracts": {
     "map-data": "1be3b7edad84840cbeca39b0634fcd9799c41492ab3ec8da25ad826149cb7334",
-    "quests": "67c9e5fa30f14197b6e809c7ec3ba49e5b9a080d05df12b99e940f0ed17d6096",
+    "quests": "61b96a798c68d974d353384b3f7cb295ac49e27f24b487f939c6dfaddbdd7473",
     "game-ui": "99c3a7e49a77b63b3564f20d16dffac7cdfffca26cfd0629f4fc59150fbc3595"
   }
 }

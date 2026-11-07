@@ -11,6 +11,10 @@
   поверхности, размер и Z-scale капсулы выбранного класса, их runtime изменения
   и доступность исполнения шага в закреплённом пакете владельца.
   [Коррекция и следующие источники](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-OWN-POSITION-CURRENT.md).
+  Отдельный профиль однократной проверки `1810` с точкой текущего `206`
+  готовится для явного запуска. Живой переход по `1811` предстоит проверить
+  после согласованной смены владельца.
+  [Границы и запуск пробы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-PROBE-CURRENT.md).
   [Проверка Time и границы отправки](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-CURRENT.md).
   [Начало и границы допуска](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-START-CURRENT.md).
   Русские названия

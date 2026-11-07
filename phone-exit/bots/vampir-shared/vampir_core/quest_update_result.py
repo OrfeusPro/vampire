@@ -17,7 +17,7 @@ def quest_reply_observation_permitted(source_sha256):
         profile = current()
     except ValueError:
         return False
-    if (not isinstance(profile, dict) or profile.get('schema') not in (2, 3) or profile.get('source_sha256') != SOURCE
+    if (not isinstance(profile, dict) or profile.get('schema') not in (2, 3, 4) or profile.get('source_sha256') != SOURCE
             or profile.get('world_admitted') is not True or not isinstance(profile.get('policies'), (list, tuple))
             or 'quest-reply-observation-v1' not in profile['policies']
             or not isinstance(profile.get('proofs'), dict) or not isinstance(profile.get('inputs'), dict)):

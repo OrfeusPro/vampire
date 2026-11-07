@@ -1713,7 +1713,8 @@
         "release-quest-update",
         "quest-start-current",
         "quest-time-current",
-        "own-position-current"
+        "own-position-current",
+        "quest-time-server-position-probe-current"
       ],
       "recipes": [],
       "bindings": {},

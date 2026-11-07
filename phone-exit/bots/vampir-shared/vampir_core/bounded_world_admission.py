@@ -8,6 +8,7 @@ import re
 
 PREFIX = 'bounded-world:'
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+TIME_PROBE_POLICY = 'quest-time-server-position-probe-v1'
 POLICIES = frozenset(('game-login-world-v1', 'world-selection-move-v1', 'periodic-ping-v1', 'initial-character-stats-v1', 'character-stat-notifications-v1', 'quest-observation-v1'))
 _active = ContextVar('vampir_bounded_world', default=None)
 
@@ -26,7 +27,7 @@ def current(selector=None):
 def permits(source_sha256, policy):
     active = _active.get()
     return (active is not None and source_sha256 == SOURCE == active['source_sha256']
-            and policy in (POLICIES | {'quest-start-manual-v1'}) and policy in active['policies'])
+            and policy in (POLICIES | {'quest-start-manual-v1', TIME_PROBE_POLICY}) and policy in active['policies'])
 
 
 def _load(selector_sha, root, workspace):

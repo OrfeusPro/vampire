@@ -4,6 +4,7 @@ import math
 import struct
 
 from .world_move_start import SOURCE_SHA256,CURRENT_PROBE_SOURCE
+from .bounded_world_admission import TIME_PROBE_POLICY, permits
 
 _WIRE = struct.Struct('<fffQQB')
 
@@ -20,7 +21,7 @@ class QuestUpdate:
 
 
 def encode_quest_update(value, *, source_sha256):
-    if source_sha256 not in (SOURCE_SHA256,CURRENT_PROBE_SOURCE):
+    if source_sha256 not in (SOURCE_SHA256,CURRENT_PROBE_SOURCE) and not permits(source_sha256, TIME_PROBE_POLICY):
         raise ValueError('Unsupported quest update source')
     if not isinstance(value, QuestUpdate):
         raise TypeError('Expected QuestUpdate')

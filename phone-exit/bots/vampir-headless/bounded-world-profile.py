@@ -16,6 +16,12 @@ POLICIES = ['game-login-world-v1', 'world-selection-move-v1', 'periodic-ping-v1'
 OPERATIONS = ['character-select', 'world-entry', 'keep-online']
 PROOFS = {'clock-world-current', 'world-results-current', 'initial-stats-current', 'stat-notifications-current', 'quest-observation-current'}
 REPLY_POLICY = 'quest-reply-observation-v1'
+TIME_PROBE_POLICY = 'quest-time-server-position-probe-v1'
+TIME_PROBE_WIRE = 'e0f5884542c5d456bbe6f030b056e6079c07315e385f1f1e5fc9eb380b1bd885'
+TIME_PROBE_CONSUMERS = (
+    'vampir-shared/vampir_core/quest_time_probe.py',
+    'vampir-shared/vampir_core/quest_update.py',
+)
 SHA = re.compile('[0-9a-f]{64}')
 CONSUMERS = (
     'vampir-headless/bounded-world-profile.py',
@@ -199,14 +205,18 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
         raise ValueError('Bounded world requires a full manifest SHA')
     path = root / 'bounded-world-profiles' / selector_sha / 'manifest.json'
     profile = _json(path, selector_sha)
-    reply_enabled = profile.get('schema') in (2, 3)
+    time_probe = profile.get('schema') == 4
+    reply_enabled = profile.get('schema') in (2, 3, 4)
     start_enabled = profile.get('schema') == 3
     expected_policies = POLICIES + [REPLY_POLICY] if reply_enabled else POLICIES
     expected_proofs = PROOFS | {'quest-reply-current'} if reply_enabled else PROOFS
     if start_enabled:
         expected_policies = expected_policies + ['quest-start-manual-v1']
         expected_proofs = expected_proofs | {'quest-start-current'}
-    if (profile.get('schema') not in (1, 2, 3) or type(profile.get('schema')) is not int or profile.get('recipe') != RECIPE
+    if time_probe:
+        expected_policies = expected_policies + [TIME_PROBE_POLICY]
+        expected_proofs = expected_proofs | {'quest-time-current', 'quest-update-wire-current'}
+    if (profile.get('schema') not in (1, 2, 3, 4) or type(profile.get('schema')) is not int or profile.get('recipe') != RECIPE
             or profile.get('source_sha256') != SOURCE or profile.get('operations') != OPERATIONS
             or profile.get('policies') != expected_policies or profile.get('world_admitted') is not True
             or profile.get('creation_admitted') is not False or profile.get('online_verified') is not False
@@ -216,7 +226,7 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     inputs = profile.get('inputs')
     if not isinstance(inputs, dict) or not 1 <= len(inputs) <= 2048:
         raise ValueError('Bounded world dependency set differs')
-    for relative in CONSUMERS:
+    for relative in CONSUMERS + (TIME_PROBE_CONSUMERS if time_probe else ()):
         consumer = workspace / 'phone-exit/bots' / relative
         if inputs.get(str(consumer)) != digest(consumer, 32 * 1024 * 1024):
             raise ValueError('Bounded world lost a runtime consumer')
@@ -234,12 +244,28 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     quests = _pointer(profile['proofs']['quest-observation-current'],root/'code-clues/quest-observation-current-v1',inputs)
     quest_runtime=quests.get('definition',{}).get('runtime_inputs',{})
     _retained(inputs,quest_runtime)
+    time_table = None
+    if time_probe:
+        time_proof = _pointer(profile['proofs']['quest-time-current'], root/'code-clues/quest-time-current-v1', inputs)
+        wire = _pointer(profile['proofs']['quest-update-wire-current'], root/'knowledge/quest-wire-native-checks-v1', inputs)
+        _time_probe_proofs(time_proof, wire, profile['proofs']['quest-update-wire-current'], inputs, installed)
+        quest_runtime = quest_runtime | time_proof['definition']['runtime_inputs'] | wire['inputs']['runtime']['files']
+        table = time_proof['definition']['table']
+        time_table = root / 'knowledge/resource-csv-blobs-v3' / (table['sha256'] + '.csv')
+        if not SHA.fullmatch(table['sha256']) or Path(table['path']).resolve() != time_table:
+            raise ValueError('Time probe table is outside its named resource store')
+        _retained(inputs, {str(time_table): table['sha256']})
+    time_archive = installed.parents[2] / 'Saved/PersistentDownloadDir/Patch/Install/pakchunk1-Windows.pak'
     for name, expected in inputs.items():
         dependency = Path(name).resolve()
         if not Path(name).is_absolute() or not SHA.fullmatch(str(expected)):
             raise ValueError('Bounded world dependency descriptor differs')
         if name in quest_runtime and dependency.is_relative_to(Path(sys.base_prefix).resolve()) and dependency.suffix.lower() in ('.py','.pyd','.dll','.exe'):
             budget=64*1024*1024
+        elif time_probe and dependency == time_archive:
+            budget = 1024 * 1024 * 1024
+        elif dependency == time_table:
+            budget = 8 * 1024 * 1024
         else:
             budget = 2 * 1024 * 1024 if dependency == entry_path else loader.input_budget(dependency, root, workspace, installed)
         if digest(dependency, budget) != expected:
@@ -295,3 +321,28 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
             raise ValueError('Manual QuestStart proof scope differs')
         _retained(inputs, start.get('definition', {}).get('inputs'))
     return dict(profile, selected_profile='bounded-world:' + selector_sha, manifest_sha256=selector_sha)
+
+
+def _time_probe_proofs(time_proof, wire, wire_pointer, inputs, installed):
+    definition = time_proof.get('definition', {})
+    first_row = time_proof.get('result', {}).get('source_rows', [])[:1]
+    archive = installed.parents[2] / 'Saved/PersistentDownloadDir/Patch/Install/pakchunk1-Windows.pak'
+    if (time_proof.get('recipe') != 'quest-time-current-v1' or time_proof.get('source_sha256') != SOURCE
+            or time_proof.get('native_execution') is not True
+            or any(time_proof.get(key) is not False for key in ('runtime_admitted', 'network_used', 'live_step_verified'))
+            or first_row != [dict(task_id=110110010, index=0, seconds=.1)]
+            or len(time_proof['result'].get('cases', [])) != 68
+            or Path(definition.get('source', {}).get('path', '')).resolve() != archive
+            or inputs.get(str(archive)) != definition['source']['sha256']):
+        raise ValueError('First Time step proof scope differs')
+    _retained(inputs, definition.get('inputs'))
+    _retained(inputs, definition.get('runtime_inputs'))
+    if (wire_pointer['sha256'] != TIME_PROBE_WIRE or wire.get('source_sha256') != SOURCE
+            or wire.get('family') != 'quest-update-wire' or wire.get('packet_id') != 1810
+            or wire.get('method') != 'bounded_native' or wire.get('network_used') is not False
+            or wire.get('whole_io', {}).get('native_execution') is not True
+            or wire['whole_io'].get('target_exports_verified') is not True):
+        raise ValueError('Time probe wire proof scope differs')
+    _retained(inputs, wire['inputs']['files'])
+    _retained(inputs, wire['inputs']['runtime']['files'])
+    _retained(inputs, {item['path']: item['sha256'] for item in wire['exports']})

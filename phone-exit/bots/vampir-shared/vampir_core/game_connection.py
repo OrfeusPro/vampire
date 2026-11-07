@@ -197,6 +197,16 @@ class GameConnection:
             raise RuntimeError('Quest update requires accepted world completion')
         if source_sha256!=world.source_sha256:
             raise ValueError('Quest update source differs from this world connection')
+        from .bounded_world_admission import SOURCE, TIME_PROBE_POLICY, permits
+        if source_sha256 == SOURCE:
+            from .quest_time_probe import POSITION_SOURCE, QUEST_ID, TASK_INDEX, WORLD_ID
+            from .quest_update import QuestUpdate
+            position = world.target_position
+            if (not permits(SOURCE, TIME_PROBE_POLICY) or type(payload) is not QuestUpdate
+                    or position is None or position.source != POSITION_SOURCE or position.world_id != WORLD_ID
+                    or (payload.raw28, payload.raw30, payload.raw38) != (0, QUEST_ID, TASK_INDEX)
+                    or payload.vector != tuple(position.vector.finite_values())):
+                raise ValueError('Current quest update requires the admitted first Time server position')
         return self._outbound.queue_quest_update(payload,source_sha256=source_sha256)
 
     def queue_tracked_quest_update(self,payload,*,source_sha256):

@@ -22,9 +22,10 @@ def digest(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def publish(*, root=ROOT, manual_quest_start=False):
-    if type(manual_quest_start) is not bool:
-        raise ValueError('Explicit manual start admission flag required')
+def publish(*, root=ROOT, manual_quest_start=False, quest_time_probe=False):
+    if (type(manual_quest_start) is not bool or type(quest_time_probe) is not bool
+            or (manual_quest_start and quest_time_probe)):
+        raise ValueError('Select one explicit quest admission')
     root = Path(root).resolve()
     nested = load('verify-world-results-current').verify(root=root)
     nested_path = Path(nested['report']).resolve()
@@ -78,7 +79,8 @@ def publish(*, root=ROOT, manual_quest_start=False):
     files = entry_tool.consumers() | {Path(__file__).resolve(), loader_path,
         HERE / 'verify-world-results-current.py',
         WORKSPACE / 'phone-exit/bots/vampir-headless/run-bounded-world.py'}
-    files |= {WORKSPACE / 'phone-exit/bots' / name for name in loader.CONSUMERS}
+    consumers = loader.CONSUMERS + (loader.TIME_PROBE_CONSUMERS if quest_time_probe else ())
+    files |= {WORKSPACE / 'phone-exit/bots' / name for name in consumers}
     for path in files:
         inputs[str(path.resolve())] = digest(path)
     if any(digest(name) != expected for name, expected in inputs.items()):
@@ -111,6 +113,26 @@ def publish(*, root=ROOT, manual_quest_start=False):
         profile['limits'][-1] = 'One explicitly selected manual QuestStart1803 attempt is admitted; no task updates, movement, completion or retry.'
         if any(digest(name) != expected for name, expected in inputs.items()):
             raise ValueError('Manual QuestStart profile input changed')
+    if quest_time_probe:
+        time = load('verify-quest-time-current').verify(root=root)
+        time_proof = json.loads(Path(time['report']).read_bytes())
+        wire_path = root / 'knowledge/quest-wire-native-checks-v1' / loader.TIME_PROBE_WIRE / 'manifest.json'
+        if digest(wire_path) != loader.TIME_PROBE_WIRE:
+            raise ValueError('Retained Time probe wire proof changed')
+        wire = json.loads(wire_path.read_bytes())
+        merge(time_proof['definition']['inputs'])
+        merge(wire['inputs']['files'])
+        merge(wire['inputs']['runtime']['files'])
+        merge({item['path']: item['sha256'] for item in wire['exports']})
+        merge({time['report']: time['sha256'], str(wire_path): loader.TIME_PROBE_WIRE})
+        profile['schema'] = 4
+        profile['proofs'].update({'quest-time-current': dict(path=time['report'], sha256=time['sha256']),
+            'quest-update-wire-current': dict(path=str(wire_path), sha256=loader.TIME_PROBE_WIRE)})
+        profile['policies'].append(loader.TIME_PROBE_POLICY)
+        profile['limits'][-1] = ('One explicitly enabled probe sends 1810 for quest 110110 index 0 '
+            'using fresh ID206 server target in world 10010. The probe does not establish actor placement or full quest execution.')
+        if any(digest(name) != expected for name, expected in inputs.items()):
+            raise ValueError('Time probe profile input changed')
     path = load('audit-client-release').save_snapshot(root / 'bounded-world-profiles', profile)
     sha = digest(path)
     loader.load_manifest(sha, root=root, workspace=WORKSPACE)
@@ -120,6 +142,9 @@ def publish(*, root=ROOT, manual_quest_start=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=ROOT)
-    parser.add_argument('--manual-quest-start', action='store_true')
+    quest = parser.add_mutually_exclusive_group()
+    quest.add_argument('--manual-quest-start', action='store_true')
+    quest.add_argument('--quest-time-probe', action='store_true')
     args = parser.parse_args()
-    print(json.dumps(publish(root=args.root, manual_quest_start=args.manual_quest_start)))
+    print(json.dumps(publish(root=args.root, manual_quest_start=args.manual_quest_start,
+                             quest_time_probe=args.quest_time_probe)))

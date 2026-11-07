@@ -16,7 +16,7 @@ ROOT = Path('F:/PhoneExit Resources/Vampir')
 STORE = HERE / '.local/console.sqlite3'
 sys.path.insert(0, str(HERE.parent / 'vampir-shared'))
 from vampir_core.account_store import AccountStore
-from vampir_core.bounded_world_admission import scope, current
+from vampir_core.bounded_world_admission import TIME_PROBE_POLICY, scope, current
 from vampir_core.live_session import LiveSession, LiveSessions
 from vampir_core.live_session_server import LiveSessionServer
 
@@ -66,7 +66,8 @@ def existing_owner(identifiers, port):
     return dict(status='existing_owner', port=port, sessions=rows)
 
 
-def run(identifiers, selector, *, port=17947, store_path=STORE, ready_callback=lambda value: None, manual_start_quest=None):
+def run(identifiers, selector, *, port=17947, store_path=STORE, ready_callback=lambda value: None,
+        manual_start_quest=None, quest_time_probe=False):
     if type(port) is not int or not 1024 <= port <= 65535:
         raise ValueError('Explicit loopback port required')
     store = AccountStore(store_path)
@@ -77,9 +78,12 @@ def run(identifiers, selector, *, port=17947, store_path=STORE, ready_callback=l
             or type(manual_start_quest) is not int or not 0 < manual_start_quest < 2**64
             or 'quest-start-manual-v1' not in profile['policies']):
         raise ValueError('Manual start requires one account and its admitted profile')
+    if type(quest_time_probe) is not bool or quest_time_probe and (
+            len(identifiers) != 1 or manual_start_quest is not None or TIME_PROBE_POLICY not in profile['policies']):
+        raise ValueError('Time probe requires one account and its admitted profile')
     registry = LiveSessions(capacity=len(identifiers))
     sessions = {identifier: LiveSession(bot_id=identifier, keep_online=True,
-        manual_start_quest=manual_start_quest) for identifier in identifiers}
+        manual_start_quest=manual_start_quest, quest_time_probe=quest_time_probe) for identifier in identifiers}
     for session in sessions.values():
         registry.attach(session)
     sign_in_slots = BoundedSemaphore(2)
@@ -141,7 +145,9 @@ def main():
     parser.add_argument('--port', type=int, default=17947)
     parser.add_argument('--store', type=Path, default=STORE)
     parser.add_argument('--output', type=Path)
-    parser.add_argument('--manual-start-quest', type=int)
+    quest = parser.add_mutually_exclusive_group()
+    quest.add_argument('--manual-start-quest', type=int)
+    quest.add_argument('--quest-time-probe', action='store_true')
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--detached', action='store_true')
     mode.add_argument('--detached-worker', action='store_true', help=argparse.SUPPRESS)
@@ -152,7 +158,8 @@ def main():
             from vampir_core.detached_worker import ready_channel, receive_handoff
             readiness = ready_channel()
             options = receive_handoff(sys.stdin.buffer)
-            if not isinstance(options, dict) or set(options) != {'accounts', 'profile', 'port', 'output', 'store', 'manual_start_quest'}:
+            required = {'accounts', 'profile', 'port', 'output', 'store', 'manual_start_quest'}
+            if not isinstance(options, dict) or set(options) not in (required, required | {'quest_time_probe'}):
                 raise ValueError('Invalid current world owner handoff')
         else:
             if args.account is None or args.profile is None:
@@ -162,11 +169,13 @@ def main():
                 raise ValueError('Expected the saved console database')
             options = dict(accounts=args.account, profile=args.profile, port=args.port, store=str(store),
                            output=str(args.output.resolve()) if args.output else None,
-                           manual_start_quest=args.manual_start_quest)
+                           manual_start_quest=args.manual_start_quest, quest_time_probe=args.quest_time_probe)
             with scope(args.profile, root=ROOT, workspace=HERE.parents[2]):
                 validate_accounts(args.account, AccountStore(store))
             existing = existing_owner(args.account, args.port)
             if existing is not None:
+                if args.quest_time_probe:
+                    raise ValueError('Time probe needs a new explicitly started owner')
                 print(json.dumps(existing, ensure_ascii=False), flush=True)
                 return
             if args.detached:
@@ -188,7 +197,7 @@ def main():
                 raise ValueError('Expected a new result file in an existing directory')
         result = run(options['accounts'], options['profile'], port=options['port'],
                      store_path=options['store'], ready_callback=ready,
-                     manual_start_quest=options['manual_start_quest'])
+                     manual_start_quest=options['manual_start_quest'], quest_time_probe=options.get('quest_time_probe', False))
         if options['output'] is not None:
             path = Path(options['output'])
             with path.open('x', encoding='utf-8') as stream:
