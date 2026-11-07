@@ -4957,6 +4957,56 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Полная UI eligibility и автоматический старт не восстановлены. Реальные task callbacks, 1810, диалоги и завершение 110110 этим пакетом не подтверждены.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x14549a7d0",
+        "0x1455b0040",
+        "0x1455c3ea0",
+        "0x1455ca000",
+        "0x1455ca1f0",
+        "0x1455cd9d0",
+        "0x1455d2620",
+        "0x145d72d80"
+      ],
+      "checks": [
+        {
+          "cache_key": "4bac977083def8cb5057ae76ac5bad4876d9dd5871cc70a1affc1ff306296f1f",
+          "id": "quest-time-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25f5d94e587a938d7c7dfb0e0fb7df7de6ee9ff059b3c7dbc198a46624b7ca79\\manifest.json",
+          "sha256": "25f5d94e587a938d7c7dfb0e0fb7df7de6ee9ff059b3c7dbc198a46624b7ca79",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Четыре строки Time квеста 110110 прошли 68 сценариев на текущем EXE. Таймер завершает шаг на следующем тике после порога. Completion ставит selector 1 с QuestInfoId и QuestTaskIndex. Проверка очереди исключает вторую ожидающую запись для того же квеста. В исторической записи шаг 0 с TargetId 0 дал 1811 code 0 / state 2 / index 1.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-TIME-CURRENT-VALIDATION.json",
+          "sha256": "72259fa00b6f263f34e26a33225afe6264a3534cd2810bde9a3a8e09e65ab35b"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-TIME-CURRENT.md",
+          "sha256": "2878b4d5db6e896c323c7e4afa50c467a0f7e0bdb5e74a4f49db6d0e6bf5b300"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "3d70d043ae5915a97643b821534e6ec7400942100bca0128bd9acc9e7c73d032",
+      "limits": [
+        "Source CSV order supplies fixture indexes for the four Time rows; no live task object is read.",
+        "Current native Time lifecycle is executed with explicit model, JSON and engine providers.",
+        "The replay checks the local completion and pending request boundaries. It does not produce an actual actor transform.",
+        "The 1810 action, 1811 confirmation and live quest progression are outside this proof.",
+        "Whole Time callback/start/tick/timer/completion and selector-1 enqueue execute; init registration is source-checked.",
+        "Named JSON fields, weak lookup, phase/gates, event callbacks, allocation, bag storage and pending manager use explicit fixtures.",
+        "Selector-1 enqueues QuestInfoId and QuestTaskIndex; wire producer, actor vector and result application are outside this replay.",
+        "A fixture state change demonstrates suppression of another completion; real server transition and runtime admission remain open."
+      ],
+      "method": "bounded_native",
+      "next_check": "Сохранить сессию Bipoberiho. Найти подтверждённый источник скорректированной позиции и подготовить одно действие 1810 для состояния 2 / индекса 0. Подтверждение искать в коррелированном 1811 и свежем состоянии задания. Таймер, wire и список повторно не проверять при прежних входах.",
+      "question": "quest-time-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Нужны свежие координаты компонента текущего персонажа для 1810, проверенная доступность шага в живой модели и допуск рабочего владельца. Историческая координата отличается по Z от точки входа на +54,8066; перенос этой поправки на текущую сессию не подтверждён.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

@@ -1809,7 +1809,7 @@
       "question": "Как raw state=1 текущего квеста 110110 связывается с началом задания и полным запросом 1803 / ответом 1804?",
       "known": "Текущая цепочка enqueue / producer с selector 0, состояния модели 1/3 и полный request 1803 проверены. Внешний reader 1804 использует подтверждённый nested QuestData от 1854. 137 native сценариев / 233 ABI, отдельный manual admission и owner provider. После перезапуска ПК одна команда 110110 получила 1804 с code 0 / state 2 / index 0; Bipoberiho онлайн.",
       "unknown": "Полная UI eligibility и автоматический старт не восстановлены. Реальные task callbacks, 1810, диалоги и завершение 110110 этим пакетом не подтверждены.",
-      "next_action": "Сохранить новую сессию. Перенести Time callback / start / tick / completion и provider 1810 для первого 110110010; явно проверить source actor vector либо source fallback. Старые gate / catalog / reader матрицы повторно не исполнять.",
+      "next_action": "Сохранить сессию. Проверка Time и очереди завершена в quest-time-current. Следующий блокер — текущие координаты компонента персонажа, допуск 1810 и подтверждённый переход индекса.",
       "decision_rule": "Raw state и selector события различать. Нужны проверенные байты полного SHA, границы функций, источник QuestInfoId, writer / reader и подтверждённый результат. Native fixtures не подтверждают онлайн-действие. Текущий владелец сохраняет свой пакет; новый provider не внедрять в память процесса.",
       "do_not_repeat": "Переиспользовать готовые QuestSync, каталог, mixed loader, matching state и producer exports. Не перезапускать игровую сессию, не угадывать ID / payload / позицию.",
       "addresses": [
@@ -1829,6 +1829,31 @@
         "evidence/quests/QUEST-START-CURRENT-ONLINE.json",
         "evidence/quests/QUEST-START-CURRENT-VALIDATION.json",
         "evidence/quests/QUEST-START-CURRENT-RESULT.json"
+      ]
+    },
+    {
+      "id": "quest-time-current",
+      "status": "open",
+      "question": "Как исполнить первый текущий Time-шаг 110110010 и получить подтверждённый переход по 1810 / 1811 без повторных команд?",
+      "known": "Четыре строки Time квеста 110110 прошли 68 сценариев на текущем EXE. Таймер завершает шаг на следующем тике после порога. Completion ставит selector 1 с QuestInfoId и QuestTaskIndex. Проверка очереди исключает вторую ожидающую запись для того же квеста. В исторической записи шаг 0 с TargetId 0 дал 1811 code 0 / state 2 / index 1.",
+      "unknown": "Нужны свежие координаты компонента текущего персонажа для 1810, проверенная доступность шага в живой модели и допуск рабочего владельца. Историческая координата отличается по Z от точки входа на +54,8066; перенос этой поправки на текущую сессию не подтверждён.",
+      "next_action": "Сохранить сессию Bipoberiho. Найти подтверждённый источник скорректированной позиции и подготовить одно действие 1810 для состояния 2 / индекса 0. Подтверждение искать в коррелированном 1811 и свежем состоянии задания. Таймер, wire и список повторно не проверять при прежних входах.",
+      "decision_rule": "Не применять смещение адреса вместо проверки whole unwind / instructions / callees / data. Только реальное source Time callback / timer completion обосновывает запрос. Source actor vector и fallback различать, CSV ActionPos не выдавать за actor position. Новый пакет не внедрять в работающий процесс; runtime и online отделять от fixtures.",
+      "do_not_repeat": "Не повторять принятые QuestStart, QuestSync, Tutorial, nested INPUT, native wire и каталожные матрицы. Переиспользовать source-bound proofs и exports с SHA-барьером. Не переподключать персонажа.",
+      "addresses": [
+        "0x1455b0040",
+        "0x1455c3ea0",
+        "0x1455cd9d0",
+        "0x14549a7d0",
+        "0x1455ca1f0",
+        "0x1455d2620",
+        "0x1455ca000",
+        "0x145d72d80"
+      ],
+      "evidence": [
+        "evidence/quests/HEADLESS-QUEST-TIME-CURRENT.md",
+        "evidence/quests/QUEST-TIME-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-TIME-CURRENT-RESULT.json"
       ]
     }
   ]

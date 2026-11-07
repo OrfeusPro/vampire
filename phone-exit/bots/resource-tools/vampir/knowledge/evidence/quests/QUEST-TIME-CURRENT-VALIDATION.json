@@ -1,0 +1,229 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-time-current-v1\\ff27e507e899dbac48d50c5850c80db8b0b9cb7da62501ab99a78c17cf42e310\\manifest.json",
+    "sha256": "ff27e507e899dbac48d50c5850c80db8b0b9cb7da62501ab99a78c17cf42e310"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\f07b611ce451a36e6d7ba298a9236c918ba8d7d566846b7d5d448eeaceee4f55\\manifest.json",
+    "sha256": "f07b611ce451a36e6d7ba298a9236c918ba8d7d566846b7d5d448eeaceee4f55"
+  },
+  "initial_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\41d4158f17d9289256ca054e92e12c4ef8b7b3a6597bcb91c1fd84b4e69bb3b4\\manifest.json",
+    "sha256": "41d4158f17d9289256ca054e92e12c4ef8b7b3a6597bcb91c1fd84b4e69bb3b4"
+  },
+  "final_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\fd19fbcab2b52c49190d1a6a7ffa34428a502f787f4342dc7af1af9473dc1e51\\manifest.json",
+    "sha256": "fd19fbcab2b52c49190d1a6a7ffa34428a502f787f4342dc7af1af9473dc1e51"
+  },
+  "final_collection_new_jvm": 0,
+  "task_rows": [
+    {
+      "index": 0,
+      "seconds": 0.1,
+      "task_id": 110110010
+    },
+    {
+      "index": 1,
+      "seconds": 0.1,
+      "task_id": 110110020
+    },
+    {
+      "index": 3,
+      "seconds": 0.1,
+      "task_id": 110110035
+    },
+    {
+      "index": 9,
+      "seconds": 0.1,
+      "task_id": 110110100
+    }
+  ],
+  "source_cases": 68,
+  "abi_checks": 476,
+  "fixture_abi_checks": 3432,
+  "native_entries": {
+    "0x14549a7d0": 152,
+    "0x1455b0040": 68,
+    "0x1455c3ea0": 68,
+    "0x1455ca000": 52,
+    "0x1455ca1f0": 60,
+    "0x1455cd9d0": 340
+  },
+  "checks": [
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\761344fa112c2ab6a7d061392ae03b880b931279c26f4117313e565a9cd9a95d\\manifest.json",
+      "sha256": "761344fa112c2ab6a7d061392ae03b880b931279c26f4117313e565a9cd9a95d",
+      "cache_key": "5f30190f2d35a3107a9f14d589ed53919f384d7fd4669b5af231ddd43ac8326d",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    {
+      "id": "quest-time-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25f5d94e587a938d7c7dfb0e0fb7df7de6ee9ff059b3c7dbc198a46624b7ca79\\manifest.json",
+      "sha256": "25f5d94e587a938d7c7dfb0e0fb7df7de6ee9ff059b3c7dbc198a46624b7ca79",
+      "cache_key": "4bac977083def8cb5057ae76ac5bad4876d9dd5871cc70a1affc1ff306296f1f"
+    }
+  ],
+  "unchanged_repeat": {
+    "seconds": 22.399,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\7b17ed5aba82768796d2c07a35996fa817c6262bf5f16cc7cfa47ea8a4be6b2f\\manifest.json",
+    "sha256": "7b17ed5aba82768796d2c07a35996fa817c6262bf5f16cc7cfa47ea8a4be6b2f",
+    "groups": 76,
+    "tests": 2391,
+    "skips": 4
+  },
+  "capability": "quests",
+  "contract": "quests",
+  "live_step_verified": false,
+  "actor_vector_verified": false,
+  "runtime_admitted": false,
+  "blockers": [
+    "live_actor_component_position_unavailable",
+    "pinned_owner_has_no_time_step_admission"
+  ],
+  "current_observation": {
+    "connected": true,
+    "same_session": true,
+    "quest_state": 2,
+    "task_index": 0,
+    "position_semantics": "server_target_before_engine_correction",
+    "game_commands_sent": false
+  },
+  "limits": [
+    "Source CSV order supplies fixture indexes for the four Time rows; no live task object is read.",
+    "Current native Time lifecycle is executed with explicit model, JSON and engine providers.",
+    "The replay checks the local completion and pending request boundaries. It does not produce an actual actor transform.",
+    "The 1810 action, 1811 confirmation and live quest progression are outside this proof.",
+    "Whole Time callback/start/tick/timer/completion and selector-1 enqueue execute; init registration is source-checked.",
+    "Named JSON fields, weak lookup, phase/gates, event callbacks, allocation, bag storage and pending manager use explicit fixtures.",
+    "Selector-1 enqueues QuestInfoId and QuestTaskIndex; wire producer, actor vector and result application are outside this replay.",
+    "A fixture state change demonstrates suppression of another completion; real server transition and runtime admission remain open."
+  ],
+  "historical_reference": {
+    "capture_sha256": "52c83db62caa7f1ae6cf50a798c44f44f0776735482a1b195baf9e60553f748f",
+    "flow": 124,
+    "reference_client_sha256": null,
+    "checked_saved_world_id": 10010,
+    "reference_204_206_xyz_equal": true,
+    "saved_headless_target_equals_reference_target": true,
+    "reference_305_1810_xyz_equal": true,
+    "delta_1810_vs_206": [
+      0.0,
+      0.0,
+      54.807
+    ],
+    "counts": {
+      "c2s": {
+        "204": 0,
+        "206": 0,
+        "305": 95,
+        "306": 0,
+        "307": 0,
+        "1810": 10,
+        "1811": 0
+      },
+      "s2c": {
+        "204": 3,
+        "206": 3,
+        "305": 0,
+        "306": 0,
+        "307": 0,
+        "1810": 0,
+        "1811": 10
+      }
+    },
+    "request_reply_pairs": [
+      {
+        "quest_id": 110110,
+        "target_id": 0,
+        "sent_index": 0,
+        "result": 0,
+        "reply_state": 2,
+        "reply_index": 1
+      },
+      {
+        "quest_id": 110110,
+        "target_id": 0,
+        "sent_index": 1,
+        "result": 0,
+        "reply_state": 2,
+        "reply_index": 2
+      },
+      {
+        "quest_id": 110110,
+        "target_id": 0,
+        "sent_index": 2,
+        "result": 0,
+        "reply_state": 2,
+        "reply_index": 3
+      },
+      {
+        "quest_id": 110110,
+        "target_id": 0,
+        "sent_index": 3,
+        "result": 0,
+        "reply_state": 2,
+        "reply_index": 4
+      },
+      {
+        "quest_id": 110110,
+        "target_id": 0,
+        "sent_index": 5,
+        "result": 0,
+        "reply_state": 2,
+        "reply_index": 6
+      },
+      {
+        "quest_id": 110110,
+        "target_id": 0,
+        "sent_index": 6,
+        "result": 0,
+        "reply_state": 2,
+        "reply_index": 7
+      },
+      {
+        "quest_id": 110110,
+        "target_id": 0,
+        "sent_index": 7,
+        "result": 0,
+        "reply_state": 2,
+        "reply_index": 8
+      },
+      {
+        "quest_id": 110110,
+        "target_id": 0,
+        "sent_index": 8,
+        "result": 0,
+        "reply_state": 2,
+        "reply_index": 9
+      },
+      {
+        "quest_id": 110110,
+        "target_id": 0,
+        "sent_index": 9,
+        "result": 0,
+        "reply_state": 4,
+        "reply_index": 9
+      },
+      {
+        "quest_id": 110120,
+        "target_id": 0,
+        "sent_index": 0,
+        "result": 0,
+        "reply_state": 2,
+        "reply_index": 1
+      }
+    ],
+    "scope": "comparison_only_not_live_vector_or_server_admission"
+  }
+}

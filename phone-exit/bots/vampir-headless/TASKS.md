@@ -4,8 +4,10 @@
   перевход подтвердил чтение 1854 / 9905 без ошибок, квест 110110 и 15 записей
   обучения. Ручной `1803` теперь реально принят: `1804` code `0`, state `2`,
   индекс `0`. После перезапуска ПК подключён новый независимый владелец;
-  сохранить эту сессию. Следующий приоритет — current Time callback / readiness,
-  provider первого `1810`, его вектор и подтверждённый переход индекса.
+  сохранить эту сессию. Time callback, таймер и очередь проверены для четырёх
+  строк текущего квеста. Следующий приоритет — источник координат компонента
+  персонажа для первого `1810` и проверка перехода индекса по `1811`.
+  [Проверка Time и границы отправки](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-CURRENT.md).
   [Начало и границы допуска](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-START-CURRENT.md).
   Русские названия
   текущего SHA подключены к общей модели: [каталог и границы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-LABELS-CURRENT.md).

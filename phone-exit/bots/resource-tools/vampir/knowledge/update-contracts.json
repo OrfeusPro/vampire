@@ -1710,7 +1710,8 @@
       "checks": [
         "release-quest-list",
         "release-quest-update",
-        "quest-start-current"
+        "quest-start-current",
+        "quest-time-current"
       ],
       "recipes": [],
       "bindings": {},

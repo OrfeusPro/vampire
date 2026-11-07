@@ -8695,6 +8695,30 @@
         "phone-exit/bots/vampir-shared/vampir_core/version_result.py"
       ],
       "timeout_seconds": 240
+    },
+    {
+      "id": "quest-time-current",
+      "test_modules": [
+        "test_vampir_quest_time_current"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/entry-package-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/quest-mixed-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/quest-time-current.json",
+        "phone-exit/bots/resource-tools/vampir/native-publication-v2.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/replay-quest-time-current-v1.py",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/verify-quest-loader-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-quest-time-current.py",
+        "phone-exit/bots/test_vampir_quest_time_current.py"
+      ],
+      "timeout_seconds": 240
     }
   ],
   "original_gate_id": "automatic-update-tooling",

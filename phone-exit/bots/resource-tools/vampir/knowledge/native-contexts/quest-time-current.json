@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "recipe": "quest-time-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-b23ba4ebb230": "ef9e1e3d3af1f9970b25deacd4b96ebfd223adaafd03c81613d021965af249b0",
+    "run-618f50000dc0": "524affdab92e8be19a0408b9d157d99093411cd4246509d6c4ed7faceba121c8",
+    "run-a448cc509c12": "d22494aef1b47503b58d9f148e6aa7f05f0968cd2baf1e3d533c8dd8de8e00f6"
+  },
+  "roles": {
+    "callback": "0x1455b0040",
+    "init": "0x1455d2620",
+    "start": "0x1455c3ea0",
+    "tick": "0x1455cd9d0",
+    "timer": "0x14549a7d0",
+    "completion": "0x1455ca1f0",
+    "enqueue": "0x1455ca000"
+  },
+  "leaves": {
+    "0x1455b5820": "e91ba8ffff",
+    "0x1455e7500": "488b41304885c07503b0ffc30fb64029c3"
+  },
+  "vtable": "0x149907e00",
+  "model_global": "0x14b5e7be0",
+  "callback_binding": {
+    "site": "0x1455d2662",
+    "bytes": "488d05b731feff",
+    "tail": "0x1455b5820",
+    "parser_call": "0x1455d2681",
+    "parser_bytes": "e8ca1300ff",
+    "parser": "0x1445d3a50"
+  }
+}

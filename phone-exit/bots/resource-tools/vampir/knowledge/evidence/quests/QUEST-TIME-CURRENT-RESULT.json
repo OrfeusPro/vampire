@@ -1,0 +1,38 @@
+{
+  "question": "quest-time-current",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "addresses": [
+    "0x1455b0040",
+    "0x1455d2620",
+    "0x1455c3ea0",
+    "0x1455cd9d0",
+    "0x14549a7d0",
+    "0x1455ca1f0",
+    "0x1455ca000",
+    "0x145d72d80"
+  ],
+  "method": "bounded_native",
+  "conclusion": "Четыре строки Time квеста 110110 прошли 68 сценариев на текущем EXE. Таймер завершает шаг на следующем тике после порога. Completion ставит selector 1 с QuestInfoId и QuestTaskIndex. Проверка очереди исключает вторую ожидающую запись для того же квеста. В исторической записи шаг 0 с TargetId 0 дал 1811 code 0 / state 2 / index 1.",
+  "limits": [
+    "Source CSV order supplies fixture indexes for the four Time rows; no live task object is read.",
+    "Current native Time lifecycle is executed with explicit model, JSON and engine providers.",
+    "The replay checks the local completion and pending request boundaries. It does not produce an actual actor transform.",
+    "The 1810 action, 1811 confirmation and live quest progression are outside this proof.",
+    "Whole Time callback/start/tick/timer/completion and selector-1 enqueue execute; init registration is source-checked.",
+    "Named JSON fields, weak lookup, phase/gates, event callbacks, allocation, bag storage and pending manager use explicit fixtures.",
+    "Selector-1 enqueues QuestInfoId and QuestTaskIndex; wire producer, actor vector and result application are outside this replay.",
+    "A fixture state change demonstrates suppression of another completion; real server transition and runtime admission remain open."
+  ],
+  "unknown": "Нужны свежие координаты компонента текущего персонажа для 1810, проверенная доступность шага в живой модели и допуск рабочего владельца. Историческая координата отличается по Z от точки входа на +54,8066; перенос этой поправки на текущую сессию не подтверждён.",
+  "next_check": "Сохранить сессию Bipoberiho. Найти подтверждённый источник скорректированной позиции и подготовить одно действие 1810 для состояния 2 / индекса 0. Подтверждение искать в коррелированном 1811 и свежем состоянии задания. Таймер, wire и список повторно не проверять при прежних входах.",
+  "evidence": [
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-TIME-CURRENT-VALIDATION.json",
+      "sha256": "72259fa00b6f263f34e26a33225afe6264a3534cd2810bde9a3a8e09e65ab35b"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-TIME-CURRENT.md",
+      "sha256": "2878b4d5db6e896c323c7e4afa50c467a0f7e0bdb5e74a4f49db6d0e6bf5b300"
+    }
+  ]
+}
