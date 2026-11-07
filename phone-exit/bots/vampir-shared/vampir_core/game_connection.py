@@ -75,6 +75,7 @@ class GameConnection:
         self._creation = None
         self._quest_send_lock = Lock()
         self._quest_sends = {}
+        self._time_probe_queued = 0
         try:
             sock.setblocking(False)
         except Exception:
@@ -197,18 +198,23 @@ class GameConnection:
             raise RuntimeError('Quest update requires accepted world completion')
         if source_sha256!=world.source_sha256:
             raise ValueError('Quest update source differs from this world connection')
-        from .bounded_world_admission import SOURCE, time_probe_index
-        if source_sha256 == SOURCE:
-            from .quest_time_probe import POSITION_SOURCE, QUEST_ID, WORLD_ID
-            from .quest_update import QuestUpdate
-            position = world.target_position
-            index = time_probe_index(source_sha256)
-            if (type(payload) is not QuestUpdate
-                    or position is None or position.source != POSITION_SOURCE or position.world_id != WORLD_ID
-                    or (payload.raw28, payload.raw30, payload.raw38) != (0, QUEST_ID, index)
-                    or payload.vector != tuple(position.vector.finite_values())):
-                raise ValueError('Current quest update requires the admitted Time step and server position')
-        return self._outbound.queue_quest_update(payload,source_sha256=source_sha256)
+        from .bounded_world_admission import SOURCE, time_probe_chain, time_probe_index
+        if source_sha256 != SOURCE:
+            return self._outbound.queue_quest_update(payload, source_sha256=source_sha256)
+        from .quest_time_probe import POSITION_SOURCE, QUEST_ID, WORLD_ID
+        from .quest_update import QuestUpdate
+        position = world.target_position
+        chain = time_probe_chain(source_sha256)
+        index = self._time_probe_queued if chain else time_probe_index(source_sha256)
+        if (index not in (0, 1) or type(payload) is not QuestUpdate
+                or position is None or position.source != POSITION_SOURCE or position.world_id != WORLD_ID
+                or (payload.raw28, payload.raw30, payload.raw38) != (0, QUEST_ID, index)
+                or payload.vector != tuple(position.vector.finite_values())):
+            raise ValueError('Current quest update requires the admitted Time step and server position')
+        frame = self._outbound.queue_quest_update(payload, source_sha256=source_sha256)
+        if chain:
+            self._time_probe_queued += 1
+        return frame
 
     def queue_tracked_quest_update(self,payload,*,source_sha256):
         """Opaque bounded transport receipt, not a server action receipt."""

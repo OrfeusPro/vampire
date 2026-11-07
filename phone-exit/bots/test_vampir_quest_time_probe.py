@@ -192,6 +192,49 @@ class QuestTimeProbeTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 loader._time_probe_predecessor(pointer, {str(evidence): sha}, loader.WORKSPACE)
 
+    def test_chain_waits_for_confirmed_first_reply_and_stops_at_dialogue(self):
+        token = _active.set(dict(source_sha256=SOURCE, policies=[TIME_PROBE_POLICY], time_probe_chain=True))
+        self.addCleanup(_active.reset, token)
+        data = snapshot()
+        probe, connection = self.begin(data)
+        first = QuestUpdateResult(0, 110110, 2, QuestProgress(1, 0, 0))
+        self.assertFalse(probe.receive(first, character_key=123, world_id=10010, now=.2))
+        probe.tick(data, connection, now=.25)
+        self.assertEqual(len(connection.bodies), 1)
+        connection.status = 'socket_accepted'
+        self.assertTrue(probe.receive(first, character_key=123, world_id=10010, now=.3))
+        self.assertEqual(probe.state, 'waiting_next_step')
+        self.assertFalse(probe.receive(first, character_key=123, world_id=10010, now=.35))
+        probe.tick(data, connection, now=.39)
+        self.assertEqual(len(connection.bodies), 1)
+        connection.status = 'queued'
+        probe.tick(data, connection, now=.41)
+        self.assertEqual(connection.bodies, [struct.pack('<fffQQB', *POSITION, 0, 110110, index)
+                                             for index in (0, 1)])
+        connection.status = 'socket_accepted'
+        second = QuestUpdateResult(0, 110110, 2, QuestProgress(2, 0, 0))
+        self.assertTrue(probe.receive(second, character_key=123, world_id=10010, now=.5))
+        probe.tick(data, connection, now=1.)
+        result = probe.snapshot()
+        self.assertEqual((result['state'], result['first_reply']['task_index'], result['result']['task_index']),
+                         ('advanced', 1, 2))
+        self.assertEqual(len(connection.bodies), 2)
+
+    def test_chain_respects_replacement_quest_sync(self):
+        token = _active.set(dict(source_sha256=SOURCE, policies=[TIME_PROBE_POLICY], time_probe_chain=True))
+        self.addCleanup(_active.reset, token)
+        for replacement_index in (0, 1, 2):
+            with self.subTest(replacement_index=replacement_index):
+                probe, connection = self.begin()
+                connection.status = 'socket_accepted'
+                reply = QuestUpdateResult(0, 110110, 2, QuestProgress(1, 0, 0))
+                self.assertTrue(probe.receive(reply, character_key=123, world_id=10010, now=.2))
+                data = snapshot()
+                data['quests'][0]['progress']['raw08'] = replacement_index
+                probe.tick(data, connection, now=.31)
+                self.assertEqual(len(connection.bodies), 2 if replacement_index == 1 else 1)
+                self.assertEqual(probe.state, 'queued' if replacement_index == 1 else 'ineligible_step')
+
 
 if __name__ == '__main__':
     unittest.main()

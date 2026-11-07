@@ -39,6 +39,14 @@ def time_probe_index(source_sha256):
     return index
 
 
+def time_probe_chain(source_sha256):
+    index = time_probe_index(source_sha256)
+    chain = _active.get().get('time_probe_chain', False)
+    if type(chain) is not bool or chain and index != 0:
+        raise ValueError('Unsupported Time probe chain')
+    return chain
+
+
 def _load(selector_sha, root, workspace):
     path = Path(workspace) / 'phone-exit/bots/vampir-headless/bounded-world-profile.py'
     spec = importlib.util.spec_from_file_location('bounded_world_profile_loader', path)

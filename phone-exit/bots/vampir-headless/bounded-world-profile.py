@@ -208,7 +208,10 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     profile = _json(path, selector_sha)
     time_probe = profile.get('schema') == 4
     time_index = profile.get('time_probe_index', 0)
-    if type(time_index) is not int or time_index not in (0, 1) or not time_probe and 'time_probe_index' in profile:
+    time_chain = profile.get('time_probe_chain', False)
+    if (type(time_index) is not int or time_index not in (0, 1) or type(time_chain) is not bool
+            or (time_chain and time_index != 0)
+            or (not time_probe and {'time_probe_index', 'time_probe_chain'} & profile.keys())):
         raise ValueError('Bounded world Time probe index differs')
     reply_enabled = profile.get('schema') in (2, 3, 4)
     start_enabled = profile.get('schema') == 3
@@ -220,7 +223,7 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     if time_probe:
         expected_policies = expected_policies + [TIME_PROBE_POLICY]
         expected_proofs = expected_proofs | {'quest-time-current', 'quest-update-wire-current'}
-        if time_index == 1:
+        if time_index == 1 or time_chain:
             expected_proofs = expected_proofs | {'quest-time-first-online'}
     if (profile.get('schema') not in (1, 2, 3, 4) or type(profile.get('schema')) is not int or profile.get('recipe') != RECIPE
             or profile.get('source_sha256') != SOURCE or profile.get('operations') != OPERATIONS
@@ -254,8 +257,9 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     if time_probe:
         time_proof = _pointer(profile['proofs']['quest-time-current'], root/'code-clues/quest-time-current-v1', inputs)
         wire = _pointer(profile['proofs']['quest-update-wire-current'], root/'knowledge/quest-wire-native-checks-v1', inputs)
-        _time_probe_proofs(time_proof, wire, profile['proofs']['quest-update-wire-current'], inputs, installed, time_index)
-        if time_index == 1:
+        time_indices = (0, 1) if time_chain else (time_index,)
+        _time_probe_proofs(time_proof, wire, profile['proofs']['quest-update-wire-current'], inputs, installed, time_indices)
+        if time_index == 1 or time_chain:
             _time_probe_predecessor(profile['proofs']['quest-time-first-online'], inputs, workspace)
         quest_runtime = quest_runtime | time_proof['definition']['runtime_inputs'] | wire['inputs']['runtime']['files']
         table = time_proof['definition']['table']
@@ -331,14 +335,16 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     return dict(profile, selected_profile='bounded-world:' + selector_sha, manifest_sha256=selector_sha)
 
 
-def _time_probe_proofs(time_proof, wire, wire_pointer, inputs, installed, time_index):
+def _time_probe_proofs(time_proof, wire, wire_pointer, inputs, installed, time_indices):
     definition = time_proof.get('definition', {})
-    row = time_proof.get('result', {}).get('source_rows', [])[time_index:time_index + 1]
+    rows = time_proof.get('result', {}).get('source_rows', [])
+    selected = [rows[index:index + 1] for index in time_indices]
+    expected = [[dict(task_id=(110110010, 110110020)[index], index=index, seconds=.1)] for index in time_indices]
     archive = installed.parents[2] / 'Saved/PersistentDownloadDir/Patch/Install/pakchunk1-Windows.pak'
     if (time_proof.get('recipe') != 'quest-time-current-v1' or time_proof.get('source_sha256') != SOURCE
             or time_proof.get('native_execution') is not True
             or any(time_proof.get(key) is not False for key in ('runtime_admitted', 'network_used', 'live_step_verified'))
-            or row != [dict(task_id=(110110010, 110110020)[time_index], index=time_index, seconds=.1)]
+            or selected != expected
             or len(time_proof['result'].get('cases', [])) != 68
             or Path(definition.get('source', {}).get('path', '')).resolve() != archive
             or inputs.get(str(archive)) != definition['source']['sha256']):

@@ -1,7 +1,7 @@
 """One explicitly admitted server test for a Time step of quest 110110."""
 import time
 
-from .bounded_world_admission import SOURCE, time_probe_index
+from .bounded_world_admission import SOURCE, time_probe_chain, time_probe_index
 from .quest_update import QuestUpdate
 
 QUEST_ID = 110110
@@ -14,18 +14,24 @@ PENDING = ('queued', 'socket_accepted')
 class QuestTimeProbe:
     def __init__(self, *, source_sha256):
         self._task_index = time_probe_index(source_sha256)
+        self._chain = time_probe_chain(source_sha256)
+        self._first_reply = None
+        self._first_quest_context = None
         self.state = 'waiting_snapshot'
         self.result = None
         self._connection = self._ticket = self._scope = None
         self._ready_at = self._deadline = None
 
     def snapshot(self):
-        return dict(quest_id=str(QUEST_ID), task_index=self._task_index, state=self.state,
-                    position_source=POSITION_SOURCE, actor_vector_verified=False,
-                    quest_completed=False, result=self.result.copy() if self.result else None)
+        result = dict(quest_id=str(QUEST_ID), task_index=self._task_index, state=self.state,
+                      position_source=POSITION_SOURCE, actor_vector_verified=False,
+                      quest_completed=False, result=self.result.copy() if self.result else None)
+        if self._chain:
+            result['first_reply'] = self._first_reply.copy() if self._first_reply else None
+        return result
 
     def tick(self, snapshot, connection, *, now):
-        if self.state not in ('waiting_snapshot', *PENDING):
+        if self.state not in ('waiting_snapshot', 'waiting_next_step', *PENDING):
             return
         person = snapshot.get('character') or {}
         scope = person.get('key'), person.get('world_id')
@@ -64,7 +70,12 @@ class QuestTimeProbe:
         rows = [row for row in snapshot.get('quests', ()) if row.get('id') == str(QUEST_ID)]
         if len(rows) != 1:
             return
-        if rows[0]['state'] != 2 or rows[0]['progress']['raw08'] != self._task_index:
+        index = rows[0]['progress']['raw08']
+        # The retained first QuestSync is expected to lag its own 1811. A
+        # replacement QuestSync must agree with the next step before sending.
+        previous_snapshot = (self.state == 'waiting_next_step' and index == 0
+                             and context is self._first_quest_context)
+        if rows[0]['state'] != 2 or (index != self._task_index and not previous_snapshot):
             self.state = 'ineligible_step'
             return
         if (now - self._ready_at < TIME_SECONDS
@@ -76,6 +87,8 @@ class QuestTimeProbe:
         except (ValueError, RuntimeError, BufferError):
             self.state = 'not_queued'
             return
+        if self._chain and self._task_index == 0:
+            self._first_quest_context = context
         self.state, self._deadline = 'queued', now + 15
 
     def _transport_state(self):
@@ -101,10 +114,16 @@ class QuestTimeProbe:
                            task_index=index, advanced=advanced)
         self.state = 'advanced' if advanced else 'rejected' if result.result_code else 'accepted_without_advance'
         self._connection.release_quest_send(self._ticket)
+        self._ticket = None
+        if self._chain and self._task_index == 0 and advanced:
+            self._first_reply, self.result = self.result, None
+            self._task_index = 1
+            self._ready_at = now
+            self.state = 'waiting_next_step'
         return True
 
     def close(self):
         if self.state in PENDING:
             self.state = 'outcome_unknown'
-        elif self.state == 'waiting_snapshot':
+        elif self.state in ('waiting_snapshot', 'waiting_next_step'):
             self.state = 'cancelled'
