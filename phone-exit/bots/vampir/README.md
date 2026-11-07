@@ -8,7 +8,8 @@
 Bipoberiho сервер принял первый `1810` с точкой текущего `206`. Связанный
 `1811` подтвердил переход с индекса `0` на `1`. Персонаж остался онлайн.
 При отдельном входе для проверки индекса `1` свежий `1854` показал индекс `0`.
-Профиль завершил проверку до отправки, соединение сохранено.
+Затем живой профиль подтвердил оба перехода `0 → 1 → 2` в одном соединении.
+Bipoberiho оставлен онлайн перед диалогом с Чумой.
 [Запуск, доказательства и оставшееся](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-START-CURRENT.md).
 [Проверка Time и границы отправки](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-CURRENT.md).
 [Живая проверка `1810` с серверной точкой входа](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-PROBE-CURRENT.md).

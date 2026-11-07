@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "method": "live_protocol_observation",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "observed_at": "2026-11-07T11:01:43.584862+00:00",
+  "profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\bounded-world-profiles\\d4303ecaf871bca726a871b4d484729bb4aea0f7b92070a8d3c04cf4e3f57ddd\\manifest.json",
+    "sha256": "d4303ecaf871bca726a871b4d484729bb4aea0f7b92070a8d3c04cf4e3f57ddd"
+  },
+  "previous_session_fingerprint": "e96365b514425502b6828709cd3195f1c9f30a87ca9287face24f1fddcc59fe4",
+  "session_fingerprint": "ef34dbdc9b485d4b85f1f808a89d2a917bb9373014a2dc3505454ec75d9bfc68",
+  "reentry_attempts": 1,
+  "character": {
+    "name": "Bipoberiho",
+    "world_id": 10010,
+    "level": 1,
+    "hp": 2700,
+    "max_hp": 2700,
+    "mp": 2000,
+    "max_mp": 2000
+  },
+  "input_quest_sync": {
+    "packet_id": 1854,
+    "quest_id": "110110",
+    "state": 2,
+    "task_index": 0
+  },
+  "probe": {
+    "quest_id": "110110",
+    "task_index": 1,
+    "state": "advanced",
+    "position_source": "world_move_finish_result",
+    "actor_vector_verified": false,
+    "quest_completed": false,
+    "result": {
+      "packet_id": 1811,
+      "result_code": 0,
+      "state": 2,
+      "task_index": 2,
+      "advanced": true
+    },
+    "first_reply": {
+      "packet_id": 1811,
+      "result_code": 0,
+      "state": 2,
+      "task_index": 1,
+      "advanced": true
+    }
+  },
+  "second_correlated_reply": {
+    "packet_id": 1811,
+    "result_code": 0,
+    "quest_id": "110110",
+    "state": 2,
+    "progress": {
+      "raw08": 2,
+      "raw10": "0",
+      "raw18": "0"
+    },
+    "correlation": "same_scope_time_probe_after_socket_acceptance"
+  },
+  "action_journal": [
+    {
+      "seq": 116,
+      "kind": "quest_time_probe",
+      "state": "queued"
+    },
+    {
+      "seq": 117,
+      "kind": "quest_time_probe",
+      "state": "socket_accepted"
+    },
+    {
+      "seq": 123,
+      "kind": "quest_update_result_received",
+      "packet_id": 1811,
+      "result_code": 0,
+      "quest_id": "110110",
+      "state": 2,
+      "task_index": 1
+    },
+    {
+      "seq": 127,
+      "kind": "quest_time_probe",
+      "state": "queued"
+    },
+    {
+      "seq": 128,
+      "kind": "quest_time_probe",
+      "state": "socket_accepted"
+    },
+    {
+      "seq": 131,
+      "kind": "quest_update_result_received",
+      "packet_id": 1811,
+      "result_code": 0,
+      "quest_id": "110110",
+      "state": 2,
+      "task_index": 2
+    }
+  ],
+  "request_1810_queue_count": 2,
+  "confirmed_step_indices": [
+    1,
+    2
+  ],
+  "stop_before_dialogue_task_id": "110110030",
+  "packet_counts": {
+    "1811": 2,
+    "1854": 1
+  },
+  "decode_errors": {
+    "quests": 0,
+    "reply": 0
+  },
+  "online": true,
+  "connection_kept_open": true,
+  "heartbeat": {
+    "sent": 10,
+    "received": 10
+  }
+}
