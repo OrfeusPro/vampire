@@ -1,11 +1,10 @@
-"""One explicitly selected server test for the first Time step of quest 110110."""
+"""One explicitly admitted server test for a Time step of quest 110110."""
 import time
 
-from .bounded_world_admission import SOURCE, TIME_PROBE_POLICY, permits
+from .bounded_world_admission import SOURCE, time_probe_index
 from .quest_update import QuestUpdate
 
 QUEST_ID = 110110
-TASK_INDEX = 0
 WORLD_ID = 10010
 TIME_SECONDS = .1
 POSITION_SOURCE = 'world_move_finish_result'
@@ -14,15 +13,14 @@ PENDING = ('queued', 'socket_accepted')
 
 class QuestTimeProbe:
     def __init__(self, *, source_sha256):
-        if not permits(source_sha256, TIME_PROBE_POLICY):
-            raise ValueError('Time probe requires its immutable admission')
+        self._task_index = time_probe_index(source_sha256)
         self.state = 'waiting_snapshot'
         self.result = None
         self._connection = self._ticket = self._scope = None
         self._ready_at = self._deadline = None
 
     def snapshot(self):
-        return dict(quest_id=str(QUEST_ID), task_index=TASK_INDEX, state=self.state,
+        return dict(quest_id=str(QUEST_ID), task_index=self._task_index, state=self.state,
                     position_source=POSITION_SOURCE, actor_vector_verified=False,
                     quest_completed=False, result=self.result.copy() if self.result else None)
 
@@ -66,14 +64,14 @@ class QuestTimeProbe:
         rows = [row for row in snapshot.get('quests', ()) if row.get('id') == str(QUEST_ID)]
         if len(rows) != 1:
             return
-        if rows[0]['state'] != 2 or rows[0]['progress']['raw08'] != TASK_INDEX:
+        if rows[0]['state'] != 2 or rows[0]['progress']['raw08'] != self._task_index:
             self.state = 'ineligible_step'
             return
         if (now - self._ready_at < TIME_SECONDS
                 or not 0 <= time.time_ns() // 1000000 - context['received_at_ms'] <= 30000):
             return
         try:
-            payload = QuestUpdate(position.vector.finite_values(), 0, QUEST_ID, TASK_INDEX)
+            payload = QuestUpdate(position.vector.finite_values(), 0, QUEST_ID, self._task_index)
             self._ticket = connection.queue_tracked_quest_update(payload, source_sha256=SOURCE)
         except (ValueError, RuntimeError, BufferError):
             self.state = 'not_queued'
@@ -98,7 +96,7 @@ class QuestTimeProbe:
         if result.quest_id != QUEST_ID:
             return False
         index = result.progress.raw08
-        advanced = result.result_code == 0 and result.state == 2 and index == TASK_INDEX + 1
+        advanced = result.result_code == 0 and result.state == 2 and index == self._task_index + 1
         self.result = dict(packet_id=1811, result_code=result.result_code, state=result.state,
                            task_index=index, advanced=advanced)
         self.state = 'advanced' if advanced else 'rejected' if result.result_code else 'accepted_without_advance'

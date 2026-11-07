@@ -8767,7 +8767,9 @@
         "test_vampir_quest_time_probe"
       ],
       "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-TIME-PROBE-CURRENT-ONLINE.json",
         "phone-exit/bots/test_vampir_quest_time_probe.py",
+        "phone-exit/bots/vampir-headless/bounded-world-profile.py",
         "phone-exit/bots/vampir-shared/vampir_core/action_queue.py",
         "phone-exit/bots/vampir-shared/vampir_core/block_decode.py",
         "phone-exit/bots/vampir-shared/vampir_core/bounded_creation_admission.py",

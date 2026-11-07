@@ -30,6 +30,15 @@ def permits(source_sha256, policy):
             and policy in (POLICIES | {'quest-start-manual-v1', TIME_PROBE_POLICY}) and policy in active['policies'])
 
 
+def time_probe_index(source_sha256):
+    if not permits(source_sha256, TIME_PROBE_POLICY):
+        raise ValueError('Time probe requires its immutable admission')
+    index = _active.get().get('time_probe_index', 0)
+    if type(index) is not int or index not in (0, 1):
+        raise ValueError('Unsupported Time probe step')
+    return index
+
+
 def _load(selector_sha, root, workspace):
     path = Path(workspace) / 'phone-exit/bots/vampir-headless/bounded-world-profile.py'
     spec = importlib.util.spec_from_file_location('bounded_world_profile_loader', path)

@@ -18,6 +18,7 @@ PROOFS = {'clock-world-current', 'world-results-current', 'initial-stats-current
 REPLY_POLICY = 'quest-reply-observation-v1'
 TIME_PROBE_POLICY = 'quest-time-server-position-probe-v1'
 TIME_PROBE_WIRE = 'e0f5884542c5d456bbe6f030b056e6079c07315e385f1f1e5fc9eb380b1bd885'
+TIME_PROBE_FIRST_ONLINE = 'phone-exit/bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-TIME-PROBE-CURRENT-ONLINE.json'
 TIME_PROBE_CONSUMERS = (
     'vampir-shared/vampir_core/quest_time_probe.py',
     'vampir-shared/vampir_core/quest_update.py',
@@ -206,6 +207,9 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     path = root / 'bounded-world-profiles' / selector_sha / 'manifest.json'
     profile = _json(path, selector_sha)
     time_probe = profile.get('schema') == 4
+    time_index = profile.get('time_probe_index', 0)
+    if type(time_index) is not int or time_index not in (0, 1) or not time_probe and 'time_probe_index' in profile:
+        raise ValueError('Bounded world Time probe index differs')
     reply_enabled = profile.get('schema') in (2, 3, 4)
     start_enabled = profile.get('schema') == 3
     expected_policies = POLICIES + [REPLY_POLICY] if reply_enabled else POLICIES
@@ -216,6 +220,8 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     if time_probe:
         expected_policies = expected_policies + [TIME_PROBE_POLICY]
         expected_proofs = expected_proofs | {'quest-time-current', 'quest-update-wire-current'}
+        if time_index == 1:
+            expected_proofs = expected_proofs | {'quest-time-first-online'}
     if (profile.get('schema') not in (1, 2, 3, 4) or type(profile.get('schema')) is not int or profile.get('recipe') != RECIPE
             or profile.get('source_sha256') != SOURCE or profile.get('operations') != OPERATIONS
             or profile.get('policies') != expected_policies or profile.get('world_admitted') is not True
@@ -248,7 +254,9 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     if time_probe:
         time_proof = _pointer(profile['proofs']['quest-time-current'], root/'code-clues/quest-time-current-v1', inputs)
         wire = _pointer(profile['proofs']['quest-update-wire-current'], root/'knowledge/quest-wire-native-checks-v1', inputs)
-        _time_probe_proofs(time_proof, wire, profile['proofs']['quest-update-wire-current'], inputs, installed)
+        _time_probe_proofs(time_proof, wire, profile['proofs']['quest-update-wire-current'], inputs, installed, time_index)
+        if time_index == 1:
+            _time_probe_predecessor(profile['proofs']['quest-time-first-online'], inputs, workspace)
         quest_runtime = quest_runtime | time_proof['definition']['runtime_inputs'] | wire['inputs']['runtime']['files']
         table = time_proof['definition']['table']
         time_table = root / 'knowledge/resource-csv-blobs-v3' / (table['sha256'] + '.csv')
@@ -323,18 +331,18 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     return dict(profile, selected_profile='bounded-world:' + selector_sha, manifest_sha256=selector_sha)
 
 
-def _time_probe_proofs(time_proof, wire, wire_pointer, inputs, installed):
+def _time_probe_proofs(time_proof, wire, wire_pointer, inputs, installed, time_index):
     definition = time_proof.get('definition', {})
-    first_row = time_proof.get('result', {}).get('source_rows', [])[:1]
+    row = time_proof.get('result', {}).get('source_rows', [])[time_index:time_index + 1]
     archive = installed.parents[2] / 'Saved/PersistentDownloadDir/Patch/Install/pakchunk1-Windows.pak'
     if (time_proof.get('recipe') != 'quest-time-current-v1' or time_proof.get('source_sha256') != SOURCE
             or time_proof.get('native_execution') is not True
             or any(time_proof.get(key) is not False for key in ('runtime_admitted', 'network_used', 'live_step_verified'))
-            or first_row != [dict(task_id=110110010, index=0, seconds=.1)]
+            or row != [dict(task_id=(110110010, 110110020)[time_index], index=time_index, seconds=.1)]
             or len(time_proof['result'].get('cases', [])) != 68
             or Path(definition.get('source', {}).get('path', '')).resolve() != archive
             or inputs.get(str(archive)) != definition['source']['sha256']):
-        raise ValueError('First Time step proof scope differs')
+        raise ValueError('Selected Time step proof scope differs')
     _retained(inputs, definition.get('inputs'))
     _retained(inputs, definition.get('runtime_inputs'))
     if (wire_pointer['sha256'] != TIME_PROBE_WIRE or wire.get('source_sha256') != SOURCE
@@ -346,3 +354,19 @@ def _time_probe_proofs(time_proof, wire, wire_pointer, inputs, installed):
     _retained(inputs, wire['inputs']['files'])
     _retained(inputs, wire['inputs']['runtime']['files'])
     _retained(inputs, {item['path']: item['sha256'] for item in wire['exports']})
+
+
+def _time_probe_predecessor(pointer, inputs, workspace):
+    path = (workspace / TIME_PROBE_FIRST_ONLINE).resolve()
+    if pointer != {'path': str(path), 'sha256': inputs.get(str(path))}:
+        raise ValueError('Time probe must retain the first online transition')
+    proof = _json(path, pointer['sha256'])
+    result = proof.get('probe', {}).get('result')
+    reply = proof.get('correlated_reply', {})
+    if (proof.get('method') != 'live_protocol_observation' or proof.get('source_sha256') != SOURCE
+            or proof.get('online') is not True or proof.get('character', {}).get('world_id') != 10010
+            or proof.get('input_quest_sync') != dict(packet_id=1854, quest_id='110110', state=2, task_index=0)
+            or result != dict(packet_id=1811, result_code=0, state=2, task_index=1, advanced=True)
+            or reply.get('quest_id') != '110110'
+            or reply.get('correlation') != 'same_scope_time_probe_after_socket_acceptance'):
+        raise ValueError('First online Time transition differs')

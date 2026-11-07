@@ -1,4 +1,6 @@
-"""First Time step with a current owner and deterministic transport fixtures."""
+"""Admitted Time steps with a current owner and deterministic transport fixtures."""
+import hashlib
+import importlib.util
 from pathlib import Path
 import socket
 import struct
@@ -158,6 +160,37 @@ class QuestTimeProbeTests(unittest.TestCase):
         self.assertEqual(observed['quest_time_probe']['state'], 'advanced')
         self.assertEqual(observed['quests'][0]['progress']['raw08'], 0)
         self.assertEqual(observed['quest_update_result']['progress']['raw08'], 1)
+
+    def test_second_probe_requires_fresh_step_one_and_advances_to_two(self):
+        token = _active.set(dict(source_sha256=SOURCE, policies=[TIME_PROBE_POLICY], time_probe_index=1))
+        self.addCleanup(_active.reset, token)
+        first, connection = self.begin()
+        self.assertEqual((first.state, connection.bodies), ('ineligible_step', []))
+        data = snapshot()
+        data['quests'][0]['progress']['raw08'] = 1
+        probe, connection = self.begin(data)
+        self.assertEqual(connection.bodies, [struct.pack('<fffQQB', *POSITION, 0, 110110, 1)])
+        connection.status = 'socket_accepted'
+        reply = QuestUpdateResult(0, 110110, 2, QuestProgress(2, 0, 0))
+        self.assertTrue(probe.receive(reply, character_key=123, world_id=10010, now=.2))
+        self.assertEqual(probe.snapshot()['task_index'], 1)
+        self.assertEqual(probe.snapshot()['result']['task_index'], 2)
+        self.assertEqual(probe.state, 'advanced')
+
+    def test_second_profile_rejects_missing_or_changed_first_transition(self):
+        loader_path = Path(__file__).resolve().parent / 'vampir-headless/bounded-world-profile.py'
+        spec = importlib.util.spec_from_file_location('time_probe_world_profile', loader_path)
+        loader = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(loader)
+        evidence = loader.WORKSPACE / loader.TIME_PROBE_FIRST_ONLINE
+        sha = hashlib.sha256(evidence.read_bytes()).hexdigest()
+        pointer = dict(path=str(evidence), sha256=sha)
+        loader._time_probe_predecessor(pointer, {str(evidence): sha}, loader.WORKSPACE)
+        with self.assertRaises(ValueError):
+            loader._time_probe_predecessor(pointer, {}, loader.WORKSPACE)
+        with patch.object(loader, '_json', return_value=dict(method='live_protocol_observation')):
+            with self.assertRaises(ValueError):
+                loader._time_probe_predecessor(pointer, {str(evidence): sha}, loader.WORKSPACE)
 
 
 if __name__ == '__main__':

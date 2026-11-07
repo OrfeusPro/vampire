@@ -22,10 +22,12 @@ def digest(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def publish(*, root=ROOT, manual_quest_start=False, quest_time_probe=False):
+def publish(*, root=ROOT, manual_quest_start=False, quest_time_probe=False, time_probe_index=0):
     if (type(manual_quest_start) is not bool or type(quest_time_probe) is not bool
             or (manual_quest_start and quest_time_probe)):
         raise ValueError('Select one explicit quest admission')
+    if type(time_probe_index) is not int or time_probe_index not in (0, 1) or time_probe_index and not quest_time_probe:
+        raise ValueError('Select an admitted Time probe index with quest_time_probe')
     root = Path(root).resolve()
     nested = load('verify-world-results-current').verify(root=root)
     nested_path = Path(nested['report']).resolve()
@@ -126,10 +128,16 @@ def publish(*, root=ROOT, manual_quest_start=False, quest_time_probe=False):
         merge({item['path']: item['sha256'] for item in wire['exports']})
         merge({time['report']: time['sha256'], str(wire_path): loader.TIME_PROBE_WIRE})
         profile['schema'] = 4
+        if time_probe_index == 1:
+            predecessor = (WORKSPACE / loader.TIME_PROBE_FIRST_ONLINE).resolve()
+            predecessor_sha = digest(predecessor)
+            merge({str(predecessor): predecessor_sha})
+            profile['time_probe_index'] = time_probe_index
+            profile['proofs']['quest-time-first-online'] = dict(path=str(predecessor), sha256=predecessor_sha)
         profile['proofs'].update({'quest-time-current': dict(path=time['report'], sha256=time['sha256']),
             'quest-update-wire-current': dict(path=str(wire_path), sha256=loader.TIME_PROBE_WIRE)})
         profile['policies'].append(loader.TIME_PROBE_POLICY)
-        profile['limits'][-1] = ('One explicitly enabled probe sends 1810 for quest 110110 index 0 '
+        profile['limits'][-1] = (f'One explicitly enabled probe sends 1810 for quest 110110 index {time_probe_index} '
             'using fresh ID206 server target in world 10010. The probe does not establish actor placement or full quest execution.')
         if any(digest(name) != expected for name, expected in inputs.items()):
             raise ValueError('Time probe profile input changed')
@@ -145,6 +153,7 @@ if __name__ == '__main__':
     quest = parser.add_mutually_exclusive_group()
     quest.add_argument('--manual-quest-start', action='store_true')
     quest.add_argument('--quest-time-probe', action='store_true')
+    parser.add_argument('--time-probe-index', type=int, choices=(0, 1), default=0)
     args = parser.parse_args()
     print(json.dumps(publish(root=args.root, manual_quest_start=args.manual_quest_start,
-                             quest_time_probe=args.quest_time_probe)))
+                             quest_time_probe=args.quest_time_probe, time_probe_index=args.time_probe_index)))

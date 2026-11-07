@@ -11972,6 +11972,7 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/contract-projections.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/entry-extensions-current.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/entry-native-current.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-TIME-PROBE-CURRENT-ONLINE.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/game-candidate-current-inputs.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/google-verification-web-current.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-check-adapters.json",
@@ -18019,7 +18020,9 @@
       "test_pattern": "test_vampir_quest_time_probe.py",
       "timeout_seconds": 120,
       "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-TIME-PROBE-CURRENT-ONLINE.json",
         "phone-exit/bots/test_vampir_quest_time_probe.py",
+        "phone-exit/bots/vampir-headless/bounded-world-profile.py",
         "phone-exit/bots/vampir-shared/vampir_core/action_queue.py",
         "phone-exit/bots/vampir-shared/vampir_core/block_decode.py",
         "phone-exit/bots/vampir-shared/vampir_core/bounded_creation_admission.py",
