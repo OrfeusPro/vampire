@@ -98,6 +98,12 @@ class OutboundFrames:
         return self._append(encode_quest_update_frame_b(payload,
             self._sequence,self._key_bits,source_sha256=source_sha256))
 
+    def queue_quest_start(self, quest_id, *, source_sha256):
+        from .quest_start import encode_quest_start
+        from .send_frame import _encode
+        return self._append(_encode(1803, encode_quest_start(quest_id,
+            source_sha256=source_sha256), self._sequence, self._key_bits))
+
     def close(self) -> None:
         """Invalidate the connection queue, including every unsent partial tail."""
         self._closed = True

@@ -23,7 +23,7 @@ STAT_FIELDS={3:'level',4:'hp',5:'max_hp',9:'mp',10:'max_mp'}
 
 class LiveSession:
     """The socket thread publishes; HTTP readers never operate the connection."""
-    def __init__(self, *, bot_id, session_id=None, projection=None, keep_online=False):
+    def __init__(self, *, bot_id, session_id=None, projection=None, keep_online=False, manual_start_quest=None):
         if type(keep_online) is not bool:raise ValueError('Explicit keep-online policy required')
         self._keep_online=keep_online
         if not isinstance(bot_id,str) or not re.fullmatch('[a-zA-Z0-9_-]{1,48}',bot_id):
@@ -52,6 +52,10 @@ class LiveSession:
         self._auto_quest_started=False
         self._quest_observation=False
         self._quest_reply_observation=False
+        if manual_start_quest is not None and (type(manual_start_quest) is not int or not 0 < manual_start_quest < 2**64):
+            raise ValueError('Explicit manual start quest required')
+        self._manual_start_quest = manual_start_quest
+        self._manual_quest_start = None
         self._source=None
         self._stats={}
         self._stats_key=None
@@ -90,6 +94,9 @@ class LiveSession:
             if self._source is None:self._diagnostics.event('source_bound',source_sha256=source_sha256)
             self._source=source_sha256
             from .bounded_world_admission import permits
+            if self._manual_start_quest is not None and self._manual_quest_start is None:
+                from .quest_start_flow import ManualQuestStart
+                self._manual_quest_start = ManualQuestStart(self._manual_start_quest, source_sha256=source_sha256)
             self._quest_observation=source_sha256==CURRENT_PROBE_SOURCE or permits(source_sha256,'quest-observation-v1')
             self._quest_reply_observation=source_sha256==CURRENT_PROBE_SOURCE or quest_reply_observation_permitted(source_sha256)
             if self._quest_observation and self._snapshot['coverage']['tutorial']=='not_verified':
@@ -139,6 +146,11 @@ class LiveSession:
             counts=self._snapshot['packets']
             key=str(packet_id)
             if key in counts or len(counts)<256:counts[key]=min(counts.get(key,0)+1,2**53-1)
+            if packet_id == 1804 and self._manual_quest_start is not None:
+                matched = self._manual_quest_start.receive(body, character_key=character_key, world_id=world_id)
+                result = self._manual_quest_start.result
+                if matched and result is not None and result['server_accepted']:
+                    self._receive_quests(body[12:], character_key, world_id, packet_id=1804)
             if packet_id==1811 and self._quest_reply_observation:
                 self._receive_quest_result(body,character_key,world_id)
             if packet_id==1854 and self._quest_observation:
@@ -254,7 +266,7 @@ class LiveSession:
         self._diagnostics.event('quest_update_result_received',packet_id=1811,result_code=result.result_code,
             quest_id=str(result.quest_id),state=result.state,task_index=result.progress.raw08)
 
-    def _receive_quests(self,body,character_key,world_id):
+    def _receive_quests(self,body,character_key,world_id,*,packet_id=1854):
         # Called under the owner lock. Keep only a complete bounded message;
         # neither record state nor raw08 is interpreted as an active task.
         character=self._snapshot['character']
@@ -295,7 +307,7 @@ class LiveSession:
                 self._diagnostics.event('quest_progress_candidate',request_id=receipt['request_id'],
                     matches=len(matches),changed=observed['changed'])
         self._snapshot['coverage']['quests']='last_received_message'
-        self._diagnostics.event('quests_received',packet_id=1854,records=len(rows),groups=len(message.groups))
+        self._diagnostics.event('quests_received',packet_id=packet_id,records=len(rows),groups=len(message.groups))
 
     def _apply_environment(self):
         if self._environment_applied==self._environment.revision:return
@@ -361,11 +373,18 @@ class LiveSession:
                 heartbeat=dict(sent=heartbeat.queued_count if heartbeat else 0,
                     received=heartbeat.response_count if heartbeat else 0))
             self._apply_stats()
+            if self._manual_quest_start is not None and not self._stop.is_set():
+                previous = self._manual_quest_start.state
+                self._manual_quest_start.tick(self._snapshot, owner, now=time.monotonic())
+                if previous != self._manual_quest_start.state:
+                    self._diagnostics.event('manual_quest_start', quest_id=str(self._manual_start_quest),
+                        state=self._manual_quest_start.state)
 
     def close(self, error=None):
         if error is not None and (not isinstance(error,str) or not re.fullmatch('[a-zA-Z0-9_]{1,96}',error)):
             error='session_failed'
         with self._lock:
+            if self._manual_quest_start is not None:self._manual_quest_start.close()
             if self._actions:self._actions.close(self._action_owner)
             if self._quest_transport is not None:
                 # Session close does not assert whether its connection sent bytes.
@@ -459,6 +478,8 @@ class LiveSession:
             automation=self._update_automation(queue,interaction)
             value=copy.deepcopy(self._snapshot)
             value['source_sha256']=self._source
+            if self._manual_quest_start is not None:
+                value['manual_quest_start'] = self._manual_quest_start.snapshot()
             value['action_policy']=self._policy.copy()
             if interaction is not None:
                 interaction['automation']=automation

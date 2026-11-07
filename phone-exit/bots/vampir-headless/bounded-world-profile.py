@@ -46,6 +46,8 @@ CONSUMERS = (
     'vampir-shared/vampir_core/quest_sync.py',
     'vampir-shared/vampir_core/quest_record.py',
     'vampir-shared/vampir_core/quest_update_result.py',
+    'vampir-shared/vampir_core/quest_start.py',
+    'vampir-shared/vampir_core/quest_start_flow.py',
     'vampir-shared/vampir_core/tutorial_update.py',
     'vampir-shared/vampir_core/quest_automation.py',
     'vampir-shared/vampir_core/action_queue.py',
@@ -197,10 +199,14 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
         raise ValueError('Bounded world requires a full manifest SHA')
     path = root / 'bounded-world-profiles' / selector_sha / 'manifest.json'
     profile = _json(path, selector_sha)
-    reply_enabled = profile.get('schema') == 2
+    reply_enabled = profile.get('schema') in (2, 3)
+    start_enabled = profile.get('schema') == 3
     expected_policies = POLICIES + [REPLY_POLICY] if reply_enabled else POLICIES
     expected_proofs = PROOFS | {'quest-reply-current'} if reply_enabled else PROOFS
-    if (profile.get('schema') not in (1, 2) or type(profile.get('schema')) is not int or profile.get('recipe') != RECIPE
+    if start_enabled:
+        expected_policies = expected_policies + ['quest-start-manual-v1']
+        expected_proofs = expected_proofs | {'quest-start-current'}
+    if (profile.get('schema') not in (1, 2, 3) or type(profile.get('schema')) is not int or profile.get('recipe') != RECIPE
             or profile.get('source_sha256') != SOURCE or profile.get('operations') != OPERATIONS
             or profile.get('policies') != expected_policies or profile.get('world_admitted') is not True
             or profile.get('creation_admitted') is not False or profile.get('online_verified') is not False
@@ -279,4 +285,13 @@ def load_manifest(selector_sha, *, root=ROOT, workspace=WORKSPACE, installed=INS
     if reply_enabled:
         reply = _pointer(profile['proofs']['quest-reply-current'], root/'code-clues/quest-reply-current-v1', inputs)
         _quest_reply(reply, inputs)
+    if start_enabled:
+        start = _pointer(profile['proofs']['quest-start-current'], root/'code-clues/quest-start-current-v1', inputs)
+        if (start.get('schema') != 1 or start.get('source_sha256') != SOURCE
+                or start.get('recipe') != 'quest-start-current-v1'
+                or start.get('manual_start_wire_verified') is not True
+                or start.get('native_execution') is not True
+                or any(start.get(key) is not False for key in ('runtime_admitted', 'network_used', 'quest_completed'))):
+            raise ValueError('Manual QuestStart proof scope differs')
+        _retained(inputs, start.get('definition', {}).get('inputs'))
     return dict(profile, selected_profile='bounded-world:' + selector_sha, manifest_sha256=selector_sha)

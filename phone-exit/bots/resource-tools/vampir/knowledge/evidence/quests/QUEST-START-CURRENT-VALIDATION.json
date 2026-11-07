@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-start-current-v1\\63c71870668013d0d6f1e05313793fd0b73a96fd6f40577e97884338ab673bda\\manifest.json",
+    "sha256": "63c71870668013d0d6f1e05313793fd0b73a96fd6f40577e97884338ab673bda"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\7252b0c9fa5b4c00ee34898c943d682727da5cb3d0dfb6bf58afc8e0e9f95db4\\manifest.json",
+    "sha256": "7252b0c9fa5b4c00ee34898c943d682727da5cb3d0dfb6bf58afc8e0e9f95db4"
+  },
+  "final_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\3a5471b6243ce351f1d9b3a97e9e5aaf6fe271aebad6cfed158c1a48bbce4703\\manifest.json",
+    "sha256": "3a5471b6243ce351f1d9b3a97e9e5aaf6fe271aebad6cfed158c1a48bbce4703"
+  },
+  "final_collection_new_jvm": 0,
+  "source_cases": 137,
+  "abi_calls": 233,
+  "component_tests": 20,
+  "checks": [
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\22691447906e000cf8dad5ddcb4457250fb35380ff414856186f8fbb058da439\\manifest.json",
+      "sha256": "22691447906e000cf8dad5ddcb4457250fb35380ff414856186f8fbb058da439",
+      "cache_key": "ca8e9f900cd853162e806fb0b15985af88d2bca2220defe99ab43ca8eebcb8b8",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    {
+      "id": "quest-start-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\31032fc674b3b798588ada4bb4125f92083e7c2a8d0f3f1ecb42dbb3c8dcc025\\manifest.json",
+      "sha256": "31032fc674b3b798588ada4bb4125f92083e7c2a8d0f3f1ecb42dbb3c8dcc025",
+      "cache_key": "8b1ee7ae0e8cd294b71f766fd0e10ef8773b8a591b6c32ffd7730aa0986fb2a4"
+    }
+  ],
+  "unchanged_repeat": {
+    "seconds": 22.07,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\96810e55dd3580b762e81e64f455420ffdf74c51e786150ae36133e97533db78\\manifest.json",
+    "sha256": "96810e55dd3580b762e81e64f455420ffdf74c51e786150ae36133e97533db78",
+    "groups": 75,
+    "tests": 2387,
+    "skips": 4
+  },
+  "capability": "quests",
+  "contract": "quests",
+  "runtime_policy": "quest-start-manual-v1",
+  "native_scope": [
+    "Whole current request constructor/writer/reader, outer result INPUT, selector0 producer and eligibility execute with explicit providers.",
+    "Nested QuestData INPUT reuses the retained current1854 proof; the new outer-reader replay uses an explicit nested provider.",
+    "Quest row, numeric named fields, pending requests, level, predecessor, conditions, model lookup and send are fixtures.",
+    "Enqueue/UI and result handler linkage are source-checked whole exports/static windows; their engine effects are not executed here.",
+    "This proof supports an explicit manual start attempt only; automatic task execution, corrected actor position and completion are separate.",
+    "No network operation, runtime activation or online success is established by this offline proof."
+  ],
+  "online_evidence": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-START-CURRENT-ONLINE.json",
+    "sha256": "317ba78a206817ab553b0813e5c877a32bf59a3986b26298246b1010d05c2104"
+  },
+  "runtime_profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\bounded-world-profiles\\a2a118585524f0e3867efc95521dc84b11a4e8370a17014f3772fd81fd5d5da3\\manifest.json",
+    "sha256": "a2a118585524f0e3867efc95521dc84b11a4e8370a17014f3772fd81fd5d5da3"
+  },
+  "quest_started": true,
+  "quest_completed": false,
+  "connection_kept_open": true,
+  "context_next_sha_transfer_verified": false
+}

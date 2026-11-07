@@ -207,6 +207,21 @@ class GameConnection:
             ticket=object();self._quest_sends[ticket]=dict(frame=frame,state='queued')
             return ticket
 
+    def queue_tracked_quest_start(self, quest_id, *, source_sha256):
+        from .bounded_world_admission import permits
+        world = self._world_entry
+        if (not permits(source_sha256, 'quest-start-manual-v1') or not self.active
+                or world is None or not world.complete_world or world.state != 'finish_response'
+                or world.finish_result_code != 0 or world.source_sha256 != source_sha256):
+            raise RuntimeError('QuestStart requires admitted successful world completion')
+        with self._quest_send_lock:
+            if len(self._quest_sends) >= 16:
+                raise BufferError('Quest transport receipt limit reached')
+            frame = self._outbound.queue_quest_start(quest_id, source_sha256=source_sha256)
+            ticket = object()
+            self._quest_sends[ticket] = dict(frame=frame, state='queued')
+            return ticket
+
     def quest_send_status(self,ticket):
         with self._quest_send_lock:
             if ticket not in self._quest_sends:raise ValueError('Unknown connection transport receipt')

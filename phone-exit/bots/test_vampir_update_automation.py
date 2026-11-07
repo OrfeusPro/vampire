@@ -13,6 +13,7 @@ MODULES = (
     'test_vampir_quest_model_current',
     'test_vampir_quest_task_replacement_current',
     'test_vampir_quest_loader_current',
+    'test_vampir_quest_start_current',
     'test_vampir_quest_mixed_current',
     'test_vampir_quest_service_current',
     'test_vampir_quest_labels_current',

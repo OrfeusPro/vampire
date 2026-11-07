@@ -975,3 +975,15 @@ bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-MIXED-CURRENT-VALIDAT
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-MIXED-CURRENT-RESULT.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-LIVE-REENTRY-CURRENT.md text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-LIVE-REENTRY-CURRENT.json text eol=lf
+bots/resource-tools/vampir/quest-start-cases-v1.py text eol=lf
+bots/resource-tools/vampir/verify-quest-start-current.py text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/quest-start-current.json text eol=lf
+bots/vampir-shared/vampir_core/quest_start.py text eol=lf
+bots/vampir-shared/vampir_core/quest_start_flow.py text eol=lf
+bots/test_vampir_quest_start_current.py text eol=lf
+bots/vampir-shared/vampir_core/game_connection.py text eol=lf
+bots/vampir-shared/vampir_core/outbound.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-START-CURRENT.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-START-CURRENT-ONLINE.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-START-CURRENT-VALIDATION.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-START-CURRENT-RESULT.json text eol=lf

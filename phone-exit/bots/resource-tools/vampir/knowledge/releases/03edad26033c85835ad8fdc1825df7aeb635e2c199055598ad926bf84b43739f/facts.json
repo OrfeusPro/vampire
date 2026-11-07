@@ -4902,6 +4902,61 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты активный регион, source значение state=1 для полученного 110110, путь начала/выбора задачи, исполнитель и production provider исходящего действия.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1455c9dc0",
+        "0x1456f03d0",
+        "0x1456fe550",
+        "0x145828de0",
+        "0x14582bd30",
+        "0x145d72d80",
+        "0x145d887c0",
+        "0x145d92400",
+        "0x145d95990",
+        "0x145df9910",
+        "0x14678d980"
+      ],
+      "checks": [
+        {
+          "cache_key": "8b1ee7ae0e8cd294b71f766fd0e10ef8773b8a591b6c32ffd7730aa0986fb2a4",
+          "id": "quest-start-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\31032fc674b3b798588ada4bb4125f92083e7c2a8d0f3f1ecb42dbb3c8dcc025\\manifest.json",
+          "sha256": "31032fc674b3b798588ada4bb4125f92083e7c2a8d0f3f1ecb42dbb3c8dcc025",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущая цепочка enqueue / producer с selector 0, состояния модели 1/3 и полный request 1803 проверены. Внешний reader 1804 использует подтверждённый nested QuestData от 1854. 137 native сценариев / 233 ABI, отдельный manual admission и owner provider. После перезапуска ПК одна команда 110110 получила 1804 с code 0 / state 2 / index 0; Bipoberiho онлайн.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-START-CURRENT.md",
+          "sha256": "8542a48e12e093cad3ef57dd8eb3c643821b3892ca9b2fbf10d0c425351d6137"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-START-CURRENT-VALIDATION.json",
+          "sha256": "be9f4406a46ffd57fb323c11266f8ea626558fecf87290b69918f8fba90a0a96"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-START-CURRENT-ONLINE.json",
+          "sha256": "317ba78a206817ab553b0813e5c877a32bf59a3986b26298246b1010d05c2104"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "12eb1d19fd8fb17458ea5c17ac26c5d3c3648b10f49fdec0781c5406ed954938",
+      "limits": [
+        "Whole current request constructor/writer/reader, outer result INPUT, selector0 producer and eligibility execute with explicit providers.",
+        "Nested QuestData INPUT reuses the retained current1854 proof; the new outer-reader replay uses an explicit nested provider.",
+        "Quest row, numeric named fields, pending requests, level, predecessor, conditions, model lookup and send are fixtures.",
+        "Enqueue/UI and result handler linkage are source-checked whole exports/static windows; their engine effects are not executed here.",
+        "This proof supports an explicit manual start attempt only; automatic task execution, corrected actor position and completion are separate.",
+        "No network operation, runtime activation or online success is established by this offline proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "Сохранить новую сессию. Перенести Time callback / start / tick / completion и provider 1810 для первого 110110010; явно проверить source actor vector либо source fallback. Старые gate / catalog / reader матрицы повторно не исполнять.",
+      "question": "quest-start-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Полная UI eligibility и автоматический старт не восстановлены. Реальные task callbacks, 1810, диалоги и завершение 110110 этим пакетом не подтверждены.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

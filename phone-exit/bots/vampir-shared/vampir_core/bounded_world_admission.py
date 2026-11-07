@@ -26,7 +26,7 @@ def current(selector=None):
 def permits(source_sha256, policy):
     active = _active.get()
     return (active is not None and source_sha256 == SOURCE == active['source_sha256']
-            and policy in POLICIES and policy in active['policies'])
+            and policy in (POLICIES | {'quest-start-manual-v1'}) and policy in active['policies'])
 
 
 def _load(selector_sha, root, workspace):

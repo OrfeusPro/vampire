@@ -22,7 +22,9 @@ def digest(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def publish(*, root=ROOT):
+def publish(*, root=ROOT, manual_quest_start=False):
+    if type(manual_quest_start) is not bool:
+        raise ValueError('Explicit manual start admission flag required')
     root = Path(root).resolve()
     nested = load('verify-world-results-current').verify(root=root)
     nested_path = Path(nested['report']).resolve()
@@ -98,6 +100,17 @@ def publish(*, root=ROOT):
                 'QuestSync1854 and Tutorial9905 are bounded last received messages, not applied client task state.',
                 'QuestUpdateResult1811 is observed for the matching owner; action confirmation requires separate evidence.',
                 'No creation, movement, quest actions, dialogue or tutorial advance admission; explicit Stop or connection failure closes the owner.'])
+    if manual_quest_start:
+        start = load('verify-quest-start-current').verify(root=root)
+        start_report = json.loads(Path(start['report']).read_bytes())
+        merge(start_report['definition']['inputs'])
+        merge({start['report']: start['sha256']})
+        profile['schema'] = 3
+        profile['proofs']['quest-start-current'] = dict(path=start['report'], sha256=start['sha256'])
+        profile['policies'] = profile['policies'] + ['quest-start-manual-v1']
+        profile['limits'][-1] = 'One explicitly selected manual QuestStart1803 attempt is admitted; no task updates, movement, completion or retry.'
+        if any(digest(name) != expected for name, expected in inputs.items()):
+            raise ValueError('Manual QuestStart profile input changed')
     path = load('audit-client-release').save_snapshot(root / 'bounded-world-profiles', profile)
     sha = digest(path)
     loader.load_manifest(sha, root=root, workspace=WORKSPACE)
@@ -107,5 +120,6 @@ def publish(*, root=ROOT):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=ROOT)
+    parser.add_argument('--manual-quest-start', action='store_true')
     args = parser.parse_args()
-    print(json.dumps(publish(root=args.root)))
+    print(json.dumps(publish(root=args.root, manual_quest_start=args.manual_quest_start)))

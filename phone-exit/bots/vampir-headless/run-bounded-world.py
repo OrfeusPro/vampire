@@ -66,15 +66,20 @@ def existing_owner(identifiers, port):
     return dict(status='existing_owner', port=port, sessions=rows)
 
 
-def run(identifiers, selector, *, port=17947, store_path=STORE, ready_callback=lambda value: None):
+def run(identifiers, selector, *, port=17947, store_path=STORE, ready_callback=lambda value: None, manual_start_quest=None):
     if type(port) is not int or not 1024 <= port <= 65535:
         raise ValueError('Explicit loopback port required')
     store = AccountStore(store_path)
     validate_accounts(identifiers, store)
     with scope(selector, root=ROOT, workspace=HERE.parents[2]):
         profile = current(selector)
+    if manual_start_quest is not None and (len(identifiers) != 1
+            or type(manual_start_quest) is not int or not 0 < manual_start_quest < 2**64
+            or 'quest-start-manual-v1' not in profile['policies']):
+        raise ValueError('Manual start requires one account and its admitted profile')
     registry = LiveSessions(capacity=len(identifiers))
-    sessions = {identifier: LiveSession(bot_id=identifier, keep_online=True) for identifier in identifiers}
+    sessions = {identifier: LiveSession(bot_id=identifier, keep_online=True,
+        manual_start_quest=manual_start_quest) for identifier in identifiers}
     for session in sessions.values():
         registry.attach(session)
     sign_in_slots = BoundedSemaphore(2)
@@ -136,6 +141,7 @@ def main():
     parser.add_argument('--port', type=int, default=17947)
     parser.add_argument('--store', type=Path, default=STORE)
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--manual-start-quest', type=int)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--detached', action='store_true')
     mode.add_argument('--detached-worker', action='store_true', help=argparse.SUPPRESS)
@@ -146,7 +152,7 @@ def main():
             from vampir_core.detached_worker import ready_channel, receive_handoff
             readiness = ready_channel()
             options = receive_handoff(sys.stdin.buffer)
-            if not isinstance(options, dict) or set(options) != {'accounts', 'profile', 'port', 'output', 'store'}:
+            if not isinstance(options, dict) or set(options) != {'accounts', 'profile', 'port', 'output', 'store', 'manual_start_quest'}:
                 raise ValueError('Invalid current world owner handoff')
         else:
             if args.account is None or args.profile is None:
@@ -155,7 +161,8 @@ def main():
             if not store.is_file():
                 raise ValueError('Expected the saved console database')
             options = dict(accounts=args.account, profile=args.profile, port=args.port, store=str(store),
-                           output=str(args.output.resolve()) if args.output else None)
+                           output=str(args.output.resolve()) if args.output else None,
+                           manual_start_quest=args.manual_start_quest)
             with scope(args.profile, root=ROOT, workspace=HERE.parents[2]):
                 validate_accounts(args.account, AccountStore(store))
             existing = existing_owner(args.account, args.port)
@@ -180,7 +187,8 @@ def main():
             if path.exists() or not path.parent.is_dir():
                 raise ValueError('Expected a new result file in an existing directory')
         result = run(options['accounts'], options['profile'], port=options['port'],
-                     store_path=options['store'], ready_callback=ready)
+                     store_path=options['store'], ready_callback=ready,
+                     manual_start_quest=options['manual_start_quest'])
         if options['output'] is not None:
             path = Path(options['output'])
             with path.open('x', encoding='utf-8') as stream:

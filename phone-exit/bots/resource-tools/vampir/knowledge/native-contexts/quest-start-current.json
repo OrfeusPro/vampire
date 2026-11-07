@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "recipe": "quest-start-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-71f4986b651a": "0a4ffc7be90fe494c24ee59656c7d0f5ad4487b17892603ae00fc41bcfb95f56",
+    "run-04ddd1d4fb83": "87cb8bd5c0af6602e188ea5e5983c8f2a531b83b93227285e32362e4c58affd2",
+    "run-1cfc2fd949df": "c8933f681d27d4ed43cf9d5d913efdabd294db865c1174a1005c522e524e7dd2"
+  },
+  "roles": {
+    "writer": "0x1456fe550",
+    "reader": "0x1456f03d0",
+    "result_constructor": "0x145828de0",
+    "result_reader": "0x14582bd30",
+    "producer": "0x145d72d80",
+    "eligibility": "0x145df9910",
+    "enqueue": "0x1455c9dc0",
+    "auto_caller": "0x145d92400",
+    "ui_caller": "0x14678d980",
+    "application": "0x145d95990"
+  },
+  "leaves": {
+    "0x145828d70": "488d0579f11304488901488b0248894110488bc1c6410a01c3",
+    "0x145828d90": "488d0559f1130448c7411000000000488901488bc1c6410a01c3",
+    "0x1457a2e30": "488d05f9881a0448890133c0488941084889411048894118488bc1c3",
+    "0x145834810": "b80b070000c3",
+    "0x145834830": "b80c070000c3"
+  },
+  "constructor": "0x145828d70",
+  "default_constructor": "0x145828d90",
+  "request_table": "0x149967ef0",
+  "nested_table": "0x14994b730",
+  "nested_dispatch": "0x144aad280",
+  "bindings": [
+    [
+      "0x149967ef0",
+      16,
+      "0x1456fe550"
+    ],
+    [
+      "0x149967ef0",
+      32,
+      "0x1456f03d0"
+    ],
+    [
+      "0x149967ef0",
+      40,
+      "0x145834810"
+    ],
+    [
+      "0x149967f90",
+      32,
+      "0x14582bd30"
+    ],
+    [
+      "0x149967f90",
+      40,
+      "0x145834830"
+    ],
+    [
+      "0x14994b730",
+      32,
+      "0x1457a6a70"
+    ],
+    [
+      "0x149dcbe38",
+      16,
+      "0x1467b5aa0"
+    ]
+  ],
+  "windows": [
+    {
+      "address": "0x1467b5aa0",
+      "bytes": "40534883ec4033c0498bc889442420498bd848894424284889442430498b00ff50288b4b104c8d4424200fbfd04533c9e8dbb1010084c07427e8c289e0fe488bd3488bc8e877f35cff488b4b18e85e51f7ff488b4b184883c4405be9b0bcf7ff4883c4405bc3"
+    },
+    {
+      "address": "0x145d84e60",
+      "bytes": "4883c2204533c0e9240b0100"
+    },
+    {
+      "address": "0x1467bd364",
+      "bytes": "488d05cdea6003488907eb03488bfbb940000000e893ea14004885c0740a488bc8e856ba06ffeb03488bc34c8bc7488bd0488bcee823180100"
+    },
+    {
+      "address": "0x1455c9e27",
+      "bytes": "c644245000"
+    },
+    {
+      "address": "0x145df99bf",
+      "bytes": "4885c0740a0fb64028fec8a8fd750d"
+    }
+  ],
+  "nested_proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-packet-native-checks-v1\\90eb396d3744175bf1af9a360e9fad479a89801f417ae35e245df9c20b69bd80\\manifest.json",
+    "sha256": "90eb396d3744175bf1af9a360e9fad479a89801f417ae35e245df9c20b69bd80"
+  }
+}
