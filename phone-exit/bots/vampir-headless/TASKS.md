@@ -15,10 +15,13 @@
   ответа с отправленным действием. [Наблюдатель и границы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-REPLY-OBSERVER-CURRENT.md).
   Текущие lookup / проекция и wrapper существующей модели проверены отдельно.
   Создание / замена типа 6 и primary failure fallback проверены с явными providers.
-  Продолжить загрузку и порядок актуального каталога и реальные callbacks;
-  не считать синтетический массив активной задачей.
+  Для шести исходных задач 110120 проверены текущие загрузчики, русский override
+  и проекция в созданном массиве. Продолжить с фильтрацией непустых service group,
+  активными настройками и реальными callbacks. Для игрового действия требуется
+  определить активный шаг из текущей сессии.
   [Модель и следующие блокеры](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-MODEL-CURRENT.md).
   [Создание и границы lifecycle](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TASK-REPLACEMENT-CURRENT.md).
+  [Загрузка и открытая политика групп](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-LOADER-CURRENT.md).
   После перезапуска Codex визуально проверены HP/MP, уровень, маркер и журнал;
   та же игровая сессия сохранилась. Данные квестов в прежнем owner недоступны,
   поэтому клик и выполнение на текущем сервере остаются непроверенными.

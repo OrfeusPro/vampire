@@ -1,0 +1,48 @@
+{
+  "question": "quest-loader-current",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "addresses": [
+    "0x145b736a0",
+    "0x145b73280",
+    "0x1416169f0",
+    "0x141437580",
+    "0x141436d70",
+    "0x14142e750",
+    "0x145b4afa0",
+    "0x145b4b110",
+    "0x145b4a830",
+    "0x145b48f60",
+    "0x145b48c70",
+    "0x145b4c130",
+    "0x145b5f680",
+    "0x1445f6680",
+    "0x145a4d700",
+    "0x1445f5fc0",
+    "0x1445f1650",
+    "0x145b6a0b0",
+    "0x14585e470",
+    "0x145de7870",
+    "0x145b4c280"
+  ],
+  "method": "bounded_native",
+  "conclusion": "Для 110120 текущие whole main/RU loader создали шесть исходных записей. Прошли 36 проекций по прямому и обратному порядку и 38 ABI-вызовов. Ветка пустой service group исполнена, смещения настроек RU изменились на +1ec/+1ed. On_update и неизменный повтор кэша проверены.",
+  "limits": [
+    "Whole current main/Russian loaders create six source records and their group arrays in bounded fixture-backed storage.",
+    "Thirty-six native projections read those same loaded records in forward/reverse input order; no Python-seeded task array is used.",
+    "File/header/string/storage/hash/settings providers remain fixtures; only the six selected empty service groups are executed.",
+    "The complete catalogue, nonempty service policy, active locale/settings and selected task lifecycle are not verified.",
+    "No runtime order admission, active task, corrected actor position, outgoing action or live quest mutation is established."
+  ],
+  "unknown": "Открыты непустые service groups, полный каталог, реальные значения настроек локали, активная задача, её lifecycle, provider действия и подтверждение перехода онлайн.",
+  "next_check": "Для общей группы 10000 переиспользовать готовые ServerGroup.csv / ServerServiceGroup.csv и sealed tail 145c03670. Следующие source candidates 145bff820 / 145bff6a0 / 145bfefd0, загрузчики таблиц 145c07f00 / 145c06500. Проверить ветвление по фазе и RegionType с явными входами, затем подтвердить активный RegionType и влияние фильтра на порядок каталога.",
+  "evidence": [
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-LOADER-CURRENT-VALIDATION.json",
+      "sha256": "3caf8d12396f96e8d1634527262ae38de2c908ed9c83e99a8896297134d99cbc"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-LOADER-CURRENT.md",
+      "sha256": "aa32879931daf413bc8886dcc75a385c2e2a2f37bd3e62d934375e85fe0fb1d8"
+    }
+  ]
+}

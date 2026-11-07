@@ -1716,6 +1716,44 @@
         "evidence/quests/QUEST-TASK-REPLACEMENT-CURRENT-VALIDATION.json",
         "evidence/quests/QUEST-TASK-REPLACEMENT-CURRENT-RESULT.json"
       ]
+    },
+    {
+      "id": "quest-loader-current",
+      "status": "open",
+      "question": "Как текущий клиент загружает QuestTask и русский override и задаёт порядок задач?",
+      "known": "Для 110120 текущие whole main/RU loader создали шесть исходных записей. Прошли 36 проекций по прямому и обратному порядку и 38 ABI-вызовов. Ветка пустой service group исполнена, смещения настроек RU изменились на +1ec/+1ed. On_update и неизменный повтор кэша проверены.",
+      "unknown": "Открыты непустые service groups, полный каталог, реальные значения настроек локали, активная задача, её lifecycle, provider действия и подтверждение перехода онлайн.",
+      "next_action": "Для общей группы 10000 переиспользовать готовые ServerGroup.csv / ServerServiceGroup.csv и sealed tail 145c03670. Следующие source candidates 145bff820 / 145bff6a0 / 145bfefd0, загрузчики таблиц 145c07f00 / 145c06500. Проверить ветвление по фазе и RegionType с явными входами, затем подтвердить активный RegionType и влияние фильтра на порядок каталога.",
+      "decision_rule": "Порядок выводить из созданного native loader массива. Совпадение адресов и синтетический массив не доказывают установленный каталог или активный шаг.",
+      "do_not_repeat": "Не запускать прежние SHA-матрицы, не распаковывать готовые CSV повторно; сохранять текущую сессию.",
+      "addresses": [
+        "0x145b736a0",
+        "0x145b73280",
+        "0x1416169f0",
+        "0x141437580",
+        "0x141436d70",
+        "0x14142e750",
+        "0x145b4afa0",
+        "0x145b4b110",
+        "0x145b4a830",
+        "0x145b48f60",
+        "0x145b48c70",
+        "0x145b4c130",
+        "0x145b5f680",
+        "0x1445f6680",
+        "0x145a4d700",
+        "0x1445f5fc0",
+        "0x1445f1650",
+        "0x145b6a0b0",
+        "0x14585e470",
+        "0x145de7870",
+        "0x145b4c280"
+      ],
+      "evidence": [
+        "evidence/quests/HEADLESS-QUEST-LOADER-CURRENT.md",
+        "evidence/quests/QUEST-LOADER-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-LOADER-CURRENT-RESULT.json"
+      ]
     }
   ]
 }

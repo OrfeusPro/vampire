@@ -30,6 +30,7 @@ PACKAGES = {
     'quest-reply-current': 'verify-quest-reply-current',
     'quest-model-current': 'verify-quest-model-current',
     'quest-task-replacement-current': 'verify-quest-task-replacement-current',
+    'quest-loader-current': 'verify-quest-loader-current',
 }
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 PROFILE_SCOPES = {
@@ -106,7 +107,7 @@ def runtime_inputs(index, root, report, identifier):
                         ('Saved/PersistentDownloadDir/Patch/Install/pakchunk' + number + '-Windows.pak'))
     runtime.update(path.resolve() for path in index.extension('native-publication-v2').runtime_files())
     if identifier in ('quest-observation-current', 'quest-labels-current', 'quest-dialogue-current',
-                      'quest-reply-current', 'quest-model-current', 'quest-task-replacement-current',
+                      'quest-reply-current', 'quest-model-current', 'quest-task-replacement-current', 'quest-loader-current',
                       'bounded-world-current'):
         proof=index.read_json(pointer['path'])
         if identifier == 'bounded-world-current':
@@ -121,12 +122,12 @@ def runtime_inputs(index, root, report, identifier):
                     and Path(name).resolve().parent!=Path('C:/Windows/System32') for name in inherited)):
             raise ValueError('Quest observation inherited runtime differs')
         runtime.update(Path(name).resolve() for name in inherited)
-        if identifier in ('quest-labels-current', 'quest-dialogue-current'):
+        if identifier in ('quest-labels-current', 'quest-dialogue-current', 'quest-loader-current'):
             archive=Path(proof['definition']['source']['path']).resolve()
             expected_archive=(Path(index.INSTALL).resolve().parents[2]/
                 'Saved/PersistentDownloadDir/Patch/Install/pakchunk1-Windows.pak')
             if archive!=expected_archive or retained.get(str(archive))!=proof['definition']['source']['sha256']:
-                raise ValueError('Quest label archive identity differs')
+                raise ValueError('Quest resource archive identity differs')
             runtime.add(archive)
     return {name: expected for name, expected in retained.items() if Path(name).resolve() in runtime}
 
