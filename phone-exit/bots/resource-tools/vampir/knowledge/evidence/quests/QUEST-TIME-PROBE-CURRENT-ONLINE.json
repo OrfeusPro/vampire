@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "method": "live_protocol_observation",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "observed_at": "2026-11-07T10:31:08.947626+00:00",
+  "profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\bounded-world-profiles\\e9191a6f95f1986a6e7d1d9d6a0ef8f92de089ad8275874a999d16740713cf3b\\manifest.json",
+    "sha256": "e9191a6f95f1986a6e7d1d9d6a0ef8f92de089ad8275874a999d16740713cf3b"
+  },
+  "previous_session_fingerprint": "b3cd90ee0aef6fa65b59a1174ea23e9f5560de2ec0c3279763d27eddb1c1d536",
+  "session_fingerprint": "78067ee26e6ac903f68fdda221fa688d1f230f7b2c47824d5aa46dddb4d54997",
+  "reentry_attempts": 1,
+  "character": {
+    "name": "Bipoberiho",
+    "world_id": 10010,
+    "level": 1,
+    "hp": 2700,
+    "max_hp": 2700,
+    "mp": 2000,
+    "max_mp": 2000
+  },
+  "input_quest_sync": {
+    "packet_id": 1854,
+    "quest_id": "110110",
+    "state": 2,
+    "task_index": 0
+  },
+  "probe": {
+    "quest_id": "110110",
+    "task_index": 0,
+    "state": "advanced",
+    "position_source": "world_move_finish_result",
+    "actor_vector_verified": false,
+    "quest_completed": false,
+    "result": {
+      "packet_id": 1811,
+      "result_code": 0,
+      "state": 2,
+      "task_index": 1,
+      "advanced": true
+    }
+  },
+  "correlated_reply": {
+    "packet_id": 1811,
+    "result_code": 0,
+    "quest_id": "110110",
+    "state": 2,
+    "progress": {
+      "raw08": 1,
+      "raw10": "0",
+      "raw18": "0"
+    },
+    "correlation": "same_scope_time_probe_after_socket_acceptance"
+  },
+  "packet_counts": {
+    "1811": 1,
+    "1854": 1
+  },
+  "decode_errors": {
+    "quests": 0,
+    "reply": 0
+  },
+  "online": true,
+  "connection_kept_open": true,
+  "heartbeat": {
+    "sent": 9,
+    "received": 9
+  },
+  "quest_completed": false
+}
