@@ -1678,7 +1678,8 @@
       "purpose": "Проекция и геометрия карты",
       "depends_on": [],
       "checks": [
-        "release-map-projection"
+        "release-map-projection",
+        "own-position-current"
       ],
       "recipes": [],
       "bindings": {},
@@ -1711,7 +1712,8 @@
         "release-quest-list",
         "release-quest-update",
         "quest-start-current",
-        "quest-time-current"
+        "quest-time-current",
+        "own-position-current"
       ],
       "recipes": [],
       "bindings": {},

@@ -1855,6 +1855,33 @@
         "evidence/quests/QUEST-TIME-CURRENT-VALIDATION.json",
         "evidence/quests/QUEST-TIME-CURRENT-RESULT.json"
       ]
+    },
+    {
+      "id": "own-position-current",
+      "status": "open",
+      "question": "Как текущий клиент получает скорректированный XYZ собственного актёра после ID 206 для первого 1810?",
+      "known": "Целая 1456a5290 исполнена в 23 native-сценариях с 59 ABI-проверками явно заданных engine providers. Подтверждены выбор двух поверхностей, порог 1000, сохранение Z и float32 округления масштабированной половины высоты капсулы. Статические инструкции девяти функций цепочки 206 / spawn / 1810 / 305 сверены с текущим EXE. Именованный getter связывает scale+0x220 и CapsuleHalfHeight+0x508. Текущий cooked BP_PC содержит кандидаты 95 / 15, связанные с дескрипторами капсулы.",
+      "unknown": "Нужны фактическая капсула выбранного actor, её scale / изменения размера и активные nav / collision результаты. Полная inherited schema и применение transform остаются открытыми. Закреплённый owner допускает только ручной QuestStart, provider Time / 1810 в нём отсутствует.",
+      "next_action": "Переиспользовать девять текущих экспортов и проверку own-position-current. Связать выбранный DarkMage / Viper с BP_PC capsule defaults и runtime scale / size writers; установить активный выбор навигационной и collision поверхности. Затем подготовить отдельный допуск первого 1810 и коррелированного 1811. Текущую сессию сохранить.",
+      "decision_rule": "Полный exact-SHA код и входы подтверждают только свои границы. Engine fixtures не подтверждают живую высоту. Числовую поправку из старого capture и слой navmesh не переносить без доказанного выбора.",
+      "do_not_repeat": "Не повторять QuestStart, Time, QuestSync, Tutorial или wire1810. Использовать готовые экспорты. Не переподключать персонажа и не отправлять движение с предположенными координатами.",
+      "addresses": [
+        "0x1467cd950",
+        "0x145dafdd0",
+        "0x14567d560",
+        "0x1456a5290",
+        "0x14568dee0",
+        "0x14568fbf0",
+        "0x1456a6d10",
+        "0x145d72d80",
+        "0x145d8c8c0"
+      ],
+      "evidence": [
+        "evidence/quests/HEADLESS-QUEST-TIME-CURRENT.md",
+        "evidence/characters/HEADLESS-OWN-POSITION-CURRENT.md",
+        "evidence/characters/OWN-POSITION-CURRENT-VALIDATION.json",
+        "evidence/characters/OWN-POSITION-CURRENT-RESULT.json"
+      ]
     }
   ]
 }

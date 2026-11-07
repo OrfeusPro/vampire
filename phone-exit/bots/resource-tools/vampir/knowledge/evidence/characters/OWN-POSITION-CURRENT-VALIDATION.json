@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\own-position-current-v1\\8038d28138f0157c1ce74e0054ae4d1ba73328c3155c0dffdfdc68605aa5c9b8\\manifest.json",
+    "sha256": "8038d28138f0157c1ce74e0054ae4d1ba73328c3155c0dffdfdc68605aa5c9b8"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\b54bb99e6cbb32c9c6371bdc9995cbae4287be574fc9f2356d431ee3f53bd3ec\\manifest.json",
+    "sha256": "b54bb99e6cbb32c9c6371bdc9995cbae4287be574fc9f2356d431ee3f53bd3ec"
+  },
+  "initial_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\db20cb4423dafb5338eb3960e13f6a96b8e4234b044008357041fbaf1736c8a9\\manifest.json",
+    "sha256": "db20cb4423dafb5338eb3960e13f6a96b8e4234b044008357041fbaf1736c8a9"
+  },
+  "final_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\03931095b889a19e033eab90d07baadd71944e979c3c4dee7cb1f6b6fa5fe6de\\manifest.json",
+    "sha256": "03931095b889a19e033eab90d07baadd71944e979c3c4dee7cb1f6b6fa5fe6de"
+  },
+  "initial_new_jvm": 1,
+  "final_collection_new_jvm": 0,
+  "native_cases": 23,
+  "abi_checks": 23,
+  "fixture_abi_checks": 59,
+  "source_functions": {
+    "collision": "0x1456a6d10",
+    "move_producer": "0x145d8c8c0",
+    "navigation": "0x14568fbf0",
+    "quest_producer": "0x145d72d80",
+    "retain_z_predicate": "0x14568dee0",
+    "spawn": "0x14567d560",
+    "world_dispatch": "0x1467cd950",
+    "world_receiver": "0x145dafdd0"
+  },
+  "native_entries": {
+    "0x1456a5290": 23
+  },
+  "named_bindings": {
+    "scaled_capsule_getter": "0x143a71c40",
+    "scaled_capsule_getter_bytes": "4883ec28488b42204533c94885c0410f95c14c03c84c894a200f108120020000f20f5ac0f30f598108050000f3410f11004883c428c3",
+    "scaled_capsule_name": "0x1492501f0",
+    "scaled_capsule_name_slot": "0x1492582f0"
+  },
+  "checks": [
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\ce98d19d6718a8baba34dc1fb33ff305156d75122bfeb7de2c0efaabceef5a22\\manifest.json",
+      "sha256": "ce98d19d6718a8baba34dc1fb33ff305156d75122bfeb7de2c0efaabceef5a22",
+      "cache_key": "0973f3a1b947027dcfeca0baba8ff643ffdf70aba37f4c662ab979fe3b348ea1",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    {
+      "id": "own-position-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a4b9ac7611161ee86c1b447b959704b179289042fd7877e91f076b713737bc11\\manifest.json",
+      "sha256": "a4b9ac7611161ee86c1b447b959704b179289042fd7877e91f076b713737bc11",
+      "cache_key": "9776bb3064d503faef54b08cd8417fa6b7573d93f0372eb2202b1561443b7ad7"
+    }
+  ],
+  "unchanged_repeat": {
+    "seconds": 23.682,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\8bae46bd0b7c56ae7c0167962d50944293f6e9f043dbb8393e2a686419871d1b\\manifest.json",
+    "sha256": "8bae46bd0b7c56ae7c0167962d50944293f6e9f043dbb8393e2a686419871d1b",
+    "groups": 77,
+    "tests": 2395,
+    "skips": 4
+  },
+  "contracts": [
+    "quests",
+    "map-data"
+  ],
+  "candidate_resources": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\own-position-resource-candidates-v1\\3f23269cd017ec2d8eaca2452e58c5d562a462751ce79989ea9608a1ddf6d201\\manifest.json",
+    "sha256": "3f23269cd017ec2d8eaca2452e58c5d562a462751ce79989ea9608a1ddf6d201"
+  },
+  "candidate_resources_scope": "static_cooked_and_descriptor_candidates_not_live_capsule_or_geometry",
+  "runtime_admitted": false,
+  "actor_vector_verified": false,
+  "live_step_verified": false,
+  "blockers": [
+    "current_actor_capsule_scale_unbound",
+    "active_navigation_collision_surface_unbound",
+    "pinned_owner_has_no_time_step_admission"
+  ],
+  "current_observation": {
+    "observed_at": "2026-11-07T09:58:11.698766+00:00",
+    "connected": true,
+    "same_session": true,
+    "quest_state": 2,
+    "task_index": 0,
+    "heartbeat": {
+      "sent": 2235,
+      "received": 2235
+    },
+    "position_semantics": "server_target_before_engine_correction",
+    "game_commands_sent": false
+  },
+  "limits": [
+    "The whole actor position corrector executes with explicit predicate, navigation and collision providers.",
+    "The exact current world dispatch, receiver, spawn and packet producers are retained as static source boundaries.",
+    "Capsule dimensions, scale, surface selection and writable globals are fixture inputs with separate provenance.",
+    "The actual current own actor transform, active collision resources and first live 1810 remain open.",
+    "The whole actor-position selector executes; actor predicate, navigation and collision results are explicit fixtures.",
+    "Actor flags, root transform, capsule scale and half-height are synthetic objects, not live actor data.",
+    "Writable bias and fallback globals are seeded with their file values only; their live values are unknown.",
+    "The special-predicate-fixture covers arithmetic with independent synthetic predicate/flag inputs; live reachability is unproved.",
+    "Surface selection, active geometry, actual actor transform, runtime admission and a real 1810 result remain open."
+  ]
+}

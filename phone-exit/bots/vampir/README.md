@@ -9,6 +9,11 @@
 [Запуск, доказательства и оставшееся](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-START-CURRENT.md).
 [Проверка Time и границы отправки](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-CURRENT.md).
 
+Расчёт высоты персонажа проверен в 23 native-сценариях и подключён к общим
+контрактам квестов и карты. Для живого XYZ остаются выбранная поверхность,
+размер и масштаб капсулы текущего актёра.
+[Коррекция координат и оставшиеся входы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-OWN-POSITION-CURRENT.md).
+
 Квесты получили owner-переключатель: первый клик выбирает автозадание,
 повторный останавливает; подтверждённая смерть выключает автоматизацию.
 После согласованного перевхода текущий QuestSync передал квест 110110,

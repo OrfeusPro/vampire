@@ -12004,6 +12004,7 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-send-handoff-11322.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-state-flow-11322.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-strings-buffer-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/own-position-current.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/preset-defaults-11322.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/quest-labels-current.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/quest-loader-current.json",
@@ -12225,6 +12226,7 @@
         "phone-exit/bots/resource-tools/vampir/replay-nid-context-11318.py",
         "phone-exit/bots/resource-tools/vampir/replay-nid-primitives-11318.py",
         "phone-exit/bots/resource-tools/vampir/replay-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-own-position-current-v1.py",
         "phone-exit/bots/resource-tools/vampir/replay-ping-result-11318.py",
         "phone-exit/bots/resource-tools/vampir/replay-ping-result-current.py",
         "phone-exit/bots/resource-tools/vampir/replay-quest-loader-current-v1.py",
@@ -12369,6 +12371,7 @@
         "phone-exit/bots/resource-tools/vampir/verify-login-send-handoff-harness.py",
         "phone-exit/bots/resource-tools/vampir/verify-login-state-flow-context.py",
         "phone-exit/bots/resource-tools/vampir/verify-login-state-flow-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-own-position-current.py",
         "phone-exit/bots/resource-tools/vampir/verify-packet-writer-context.py",
         "phone-exit/bots/resource-tools/vampir/verify-ping-world-source-11318.py",
         "phone-exit/bots/resource-tools/vampir/verify-ping-world-source-current.py",
@@ -12540,6 +12543,7 @@
         "phone-exit/bots/test_vampir_native_version_prepare_adapter.py",
         "phone-exit/bots/test_vampir_native_version_result_adapter.py",
         "phone-exit/bots/test_vampir_nid_mail_code.py",
+        "phone-exit/bots/test_vampir_own_position_current.py",
         "phone-exit/bots/test_vampir_post_state_case_contracts.py",
         "phone-exit/bots/test_vampir_post_state_transfer_rules.py",
         "phone-exit/bots/test_vampir_prepared_bundle.py",
@@ -17932,6 +17936,51 @@
       ],
       "entry_current_contexts": {
         "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "native-contexts/quest-time-current.json"
+      }
+    },
+    {
+      "id": "own-position-current",
+      "questions": [
+        "own-position-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_own_position_current.py",
+      "timeout_seconds": 240,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/entry-package-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/own-position-current.json",
+        "phone-exit/bots/resource-tools/vampir/native-publication-v2.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/replay-own-position-current-v1.py",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/verify-own-position-current.py",
+        "phone-exit/bots/resource-tools/vampir/verify-quest-loader-current.py",
+        "phone-exit/bots/test_vampir_own_position_current.py"
+      ],
+      "artifact_dependencies": [
+        "client-code-snapshots/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/ProjectRED-Win64-Shipping.exe",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-1cfc2fd949df/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-500843aafd7f/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "bounded_entry_sources": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "entry_current_contexts": {
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": "native-contexts/own-position-current.json"
       }
     }
   ]

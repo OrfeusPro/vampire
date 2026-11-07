@@ -5007,6 +5007,58 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Нужны свежие координаты компонента текущего персонажа для 1810, проверенная доступность шага в живой модели и допуск рабочего владельца. Историческая координата отличается по Z от точки входа на +54,8066; перенос этой поправки на текущую сессию не подтверждён.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x14567d560",
+        "0x14568dee0",
+        "0x14568fbf0",
+        "0x1456a5290",
+        "0x1456a6d10",
+        "0x145d72d80",
+        "0x145d8c8c0",
+        "0x145dafdd0",
+        "0x1467cd950"
+      ],
+      "checks": [
+        {
+          "cache_key": "9776bb3064d503faef54b08cd8417fa6b7573d93f0372eb2202b1561443b7ad7",
+          "id": "own-position-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a4b9ac7611161ee86c1b447b959704b179289042fd7877e91f076b713737bc11\\manifest.json",
+          "sha256": "a4b9ac7611161ee86c1b447b959704b179289042fd7877e91f076b713737bc11",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целая 1456a5290 исполнена в 23 native-сценариях с 59 ABI-проверками явно заданных engine providers. Подтверждены выбор двух поверхностей, порог 1000, сохранение Z и float32 округления масштабированной половины высоты капсулы. Статические инструкции девяти функций цепочки 206 / spawn / 1810 / 305 сверены с текущим EXE. Именованный getter связывает scale+0x220 и CapsuleHalfHeight+0x508. Текущий cooked BP_PC содержит кандидаты 95 / 15, связанные с дескрипторами капсулы.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\OWN-POSITION-CURRENT-VALIDATION.json",
+          "sha256": "5550a4959d3b00fba0acbbea5eef9feac546edd69a79450a615fa0f55682f056"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-OWN-POSITION-CURRENT.md",
+          "sha256": "920a2e7886cb0a4411cbdafe2eed1553e47342d7322bb82fb9507c73446e8663"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "0028b67bc1a77ba85e4bd4997c5f2c6b49b766fd1bb4d838810f5901085ded53",
+      "limits": [
+        "The whole actor position corrector executes with explicit predicate, navigation and collision providers.",
+        "The exact current world dispatch, receiver, spawn and packet producers are retained as static source boundaries.",
+        "Capsule dimensions, scale, surface selection and writable globals are fixture inputs with separate provenance.",
+        "The actual current own actor transform, active collision resources and first live 1810 remain open.",
+        "The whole actor-position selector executes; actor predicate, navigation and collision results are explicit fixtures.",
+        "Actor flags, root transform, capsule scale and half-height are synthetic objects, not live actor data.",
+        "Writable bias and fallback globals are seeded with their file values only; their live values are unknown.",
+        "The special-predicate-fixture covers arithmetic with independent synthetic predicate/flag inputs; live reachability is unproved.",
+        "Surface selection, active geometry, actual actor transform, runtime admission and a real 1810 result remain open."
+      ],
+      "method": "bounded_native",
+      "next_check": "Переиспользовать девять текущих экспортов и проверку own-position-current. Связать выбранный DarkMage / Viper с BP_PC capsule defaults и runtime scale / size writers; установить активный выбор навигационной и collision поверхности. Затем подготовить отдельный допуск первого 1810 и коррелированного 1811. Текущую сессию сохранить.",
+      "question": "own-position-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Нужны фактическая капсула выбранного actor, её scale / изменения размера и активные nav / collision результаты. Полная inherited schema и применение transform остаются открытыми. Закреплённый owner допускает только ручной QuestStart, provider Time / 1810 в нём отсутствует.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

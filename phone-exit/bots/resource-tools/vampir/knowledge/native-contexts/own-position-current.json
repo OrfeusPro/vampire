@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "recipe": "own-position-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-500843aafd7f": "6dab7ec4739a03f93871e3370905ba75878dda7d50661d311c85ef58819e15c9",
+    "run-1cfc2fd949df": "c8933f681d27d4ed43cf9d5d913efdabd294db865c1174a1005c522e524e7dd2"
+  },
+  "roles": {
+    "corrector": "0x1456a5290"
+  },
+  "source_roles": {
+    "world_dispatch": "0x1467cd950",
+    "world_receiver": "0x145dafdd0",
+    "spawn": "0x14567d560",
+    "retain_z_predicate": "0x14568dee0",
+    "navigation": "0x14568fbf0",
+    "collision": "0x1456a6d10",
+    "quest_producer": "0x145d72d80",
+    "move_producer": "0x145d8c8c0"
+  },
+  "constants": {
+    "capsule_bias": "0x14b1bc4c0",
+    "z_threshold": "0x1489fa038",
+    "fallback_vector": "0x14b0c3298"
+  }
+}

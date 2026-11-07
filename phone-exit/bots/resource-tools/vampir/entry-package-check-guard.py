@@ -35,6 +35,7 @@ PACKAGES = {
     'quest-mixed-loader-current': 'verify-quest-mixed-current',
     'quest-start-current': 'verify-quest-start-current',
     'quest-time-current': 'verify-quest-time-current',
+    'own-position-current': 'verify-own-position-current',
 }
 SOURCE = '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
 PROFILE_SCOPES = {
@@ -113,7 +114,7 @@ def runtime_inputs(index, root, report, identifier):
     if identifier in ('quest-observation-current', 'quest-labels-current', 'quest-dialogue-current',
                       'quest-reply-current', 'quest-model-current', 'quest-task-replacement-current', 'quest-loader-current',
                       'quest-service-policy-current', 'quest-mixed-loader-current', 'quest-start-current',
-                      'quest-time-current', 'bounded-world-current'):
+                      'quest-time-current', 'own-position-current', 'bounded-world-current'):
         proof=index.read_json(pointer['path'])
         if identifier == 'bounded-world-current':
             observed=proof['proofs']['quest-observation-current']

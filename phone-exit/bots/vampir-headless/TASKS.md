@@ -7,6 +7,10 @@
   сохранить эту сессию. Time callback, таймер и очередь проверены для четырёх
   строк текущего квеста. Следующий приоритет — источник координат компонента
   персонажа для первого `1810` и проверка перехода индекса по `1811`.
+  Целый расчёт коррекции XYZ проверен в 23 сценариях. Открыты входы
+  поверхности, размер и Z-scale капсулы выбранного класса, их runtime изменения
+  и доступность исполнения шага в закреплённом пакете владельца.
+  [Коррекция и следующие источники](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-OWN-POSITION-CURRENT.md).
   [Проверка Time и границы отправки](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-CURRENT.md).
   [Начало и границы допуска](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-START-CURRENT.md).
   Русские названия

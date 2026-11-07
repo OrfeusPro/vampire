@@ -2,8 +2,8 @@
   "schema": 1,
   "recipe": "partial-resource-context-keys-v1",
   "contracts": {
-    "map-data": "b30074fcfbe901462a6739ea58056d665f19390c6bae700c08040d62700fd412",
-    "quests": "820e6342e247ec2d0a466b3fbc60b044037dc2fe8c31c2ab3cbc1275a1ebfda2",
+    "map-data": "1be3b7edad84840cbeca39b0634fcd9799c41492ab3ec8da25ad826149cb7334",
+    "quests": "67c9e5fa30f14197b6e809c7ec3ba49e5b9a080d05df12b99e940f0ed17d6096",
     "game-ui": "99c3a7e49a77b63b3564f20d16dffac7cdfffca26cfd0629f4fc59150fbc3595"
   }
 }
