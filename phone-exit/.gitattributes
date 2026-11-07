@@ -1006,3 +1006,4 @@ bots/vampir-shared/vampir_core/quest_time_probe.py text eol=lf
 bots/test_vampir_quest_time_probe.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TIME-PROBE-CURRENT.md text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-TIME-PROBE-CURRENT-ONLINE.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/quests/QUEST-TIME-PROBE-INDEX1-ONLINE.json text eol=lf
