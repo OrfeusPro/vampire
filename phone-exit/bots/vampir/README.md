@@ -24,11 +24,14 @@
 проверены отдельным пакетом. Для типа 6 дополнительно исполнены создание,
 замена и fallback при отказе primary allocation с явными lifecycle providers.
 В текущей сборке проверена загрузка шести задач квеста 110120 с русскими
-названиями и проекция по порядку созданного массива. Полный порядок каталога,
-реальные callbacks и игровой provider остаются открытыми.
+названиями и проекция по порядку созданного массива. Фильтр непустой группы
+проверен на записях текущих CSV для заданных региона, сервера и фазы.
+Совместная загрузка после фильтрации, активный регион, реальные callbacks
+и игровой provider остаются открытыми.
 [Модель, границы и автоматическое обновление](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-MODEL-CURRENT.md).
 [Создание и замена типа 6](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-TASK-REPLACEMENT-CURRENT.md).
 [Загрузка и порядок задач 110120](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-LOADER-CURRENT.md).
+[Фильтр непустой группы](../resource-tools/vampir/knowledge/evidence/quests/HEADLESS-QUEST-SERVICE-CURRENT.md).
 
 Панель управляет независимыми сессиями через «В игру» / «Выйти» и показывает
 онлайн / уровень. Общая карта продолжает существующий `ui-prototype`: выбор

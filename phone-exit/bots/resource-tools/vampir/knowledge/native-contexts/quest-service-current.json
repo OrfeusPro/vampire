@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "recipe": "quest-service-current-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "exports": {
+    "run-079ec5f04abe": "9f61a40b555ea97935efecf88c844e8580f302594a99a9a4fd33c5ab30f7ba7b",
+    "run-5f685c27f028": "52d2feb38b047b9c886ed9824313f523a57f6ad4b03dc8ebea25c0c2d577ec51",
+    "run-0efa0d9f7808": "79ed99b87a327730783c7d66649a9ab8ea779576a72f786e0158b0b2c66e7ab8",
+    "run-5e8cd5e1c895": "d6a1e9ddb1f58c18a8e36af1432146bfd0dee32fbf579180811b1369e8e82e6d"
+  },
+  "functions": [
+    "0x145a4d700",
+    "0x145bff820",
+    "0x145c03670",
+    "0x145bff6a0",
+    "0x145bfefd0"
+  ],
+  "leaves": {
+    "0x1445f6010": "8b41204c8bc1ffc83bd0760333c0c38bca48c1e10549034828e902b6ffff",
+    "0x1445f1630": "488379180f7603488b0948ff25b7d53a04"
+  },
+  "tables": {
+    "quest_task": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\e4aeb8e81bc7700b39b86237ffd9ab0f2af523d22be5a76d5404397fdb4b9ea0.csv",
+      "sha256": "e4aeb8e81bc7700b39b86237ffd9ab0f2af523d22be5a76d5404397fdb4b9ea0"
+    },
+    "server_group": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\baa637971f7d22ec808e3d53f1612fbee272780b6db4f1804575a60c9573ad00.csv",
+      "sha256": "baa637971f7d22ec808e3d53f1612fbee272780b6db4f1804575a60c9573ad00"
+    },
+    "server_service_group": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\827dc99f4bd32b2aad60fb8e28ea105faf4ef5c15d59f93f993f6b3e5847badc.csv",
+      "sha256": "827dc99f4bd32b2aad60fb8e28ea105faf4ef5c15d59f93f993f6b3e5847badc"
+    }
+  },
+  "csv_baseline": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-named-baselines-v1\\43204e85a3d2c4f5bb11581264688ca7f1b1502206f59d36f70fd1145a55cc2d\\manifest.json",
+    "sha256": "43204e85a3d2c4f5bb11581264688ca7f1b1502206f59d36f70fd1145a55cc2d"
+  },
+  "archive_sha256": "2f2517ff83865ac13021f96d9babd8407e4fbee512ff29806106844e5d7d7ed3",
+  "limits": [
+    "Whole current gate, service and server table getters, policy and numeric phase lookup execute in a bounded emulator.",
+    "Source CSV rows seed fixture maps. The region and server ID are explicit inputs; the TLS fixture represents already initialized managers.",
+    "Engine string conversion, splitting, allocation and cleanup are bounded providers; numeric conversion uses the pinned Windows CRT.",
+    "Exact QuestTask loader branch bytes bind the gate to the row skip decision. Mixed catalogue loading and array order require a separate replay.",
+    "Active server settings, task state, runtime admission and gameplay remain outside this proof."
+  ]
+}

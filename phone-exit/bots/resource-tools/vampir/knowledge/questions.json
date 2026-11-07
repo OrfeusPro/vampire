@@ -1718,6 +1718,30 @@
       ]
     },
     {
+      "id": "quest-service-policy-current",
+      "status": "open",
+      "question": "Как текущий фильтр QuestTask применяет непустую группу сервиса для заданных сервера, региона и фазы?",
+      "known": "Текущие gate/getters/policy/phase lookup проверены в 24 native сценариях на CSV-derived maps. Для Canon 1 фаза 10000 сохраняет группу 10000 в регионах 0–4 и исключает в 5–7. Реальные списки 7000/8000 проверены отдельно, source CALL/TEST/JNZ связан с skip до создания записи. On_update и неизменный кэш проверены.",
+      "unknown": "Открыты native загрузка обеих service таблиц, смешанный каталог задач после фильтрации, активный RegionType, выбранный task, lifecycle и provider игрового действия.",
+      "next_action": "Собрать совместный сценарий загрузки QuestTask с группами 110120/200110 и проверить наличие записей/массивов и индексы после retain/skip. Использовать этот policy и готовые CSV без повторения матрицы. Затем привязать активный RegionType через setter 145c23520 и текущую цепочку конфигурации.",
+      "decision_rule": "Сверять ветку native фильтра и фазу по текущим таблицам. Явно заданный регион и карты из CSV не подтверждают активные настройки, полный порядок каталога или игровой шаг.",
+      "do_not_repeat": "Переиспользовать полный фильтр, policy, текущие CSV и проверку пустой группы. Сохранить действующую игровую сессию.",
+      "addresses": [
+        "0x145a4d700",
+        "0x145c03670",
+        "0x145bff820",
+        "0x145bff6a0",
+        "0x145bfefd0",
+        "0x145c07f00",
+        "0x145c06500"
+      ],
+      "evidence": [
+        "evidence/quests/HEADLESS-QUEST-SERVICE-CURRENT.md",
+        "evidence/quests/QUEST-SERVICE-CURRENT-VALIDATION.json",
+        "evidence/quests/QUEST-SERVICE-CURRENT-RESULT.json"
+      ]
+    },
+    {
       "id": "quest-loader-current",
       "status": "open",
       "question": "Как текущий клиент загружает QuestTask и русский override и задаёт порядок задач?",

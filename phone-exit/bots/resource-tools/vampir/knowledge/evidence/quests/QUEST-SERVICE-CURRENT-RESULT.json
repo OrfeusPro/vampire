@@ -1,0 +1,34 @@
+{
+  "question": "quest-service-policy-current",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "addresses": [
+    "0x145a4d700",
+    "0x145bff820",
+    "0x145c03670",
+    "0x145bff6a0",
+    "0x145bfefd0",
+    "0x145c07f00",
+    "0x145c06500"
+  ],
+  "method": "bounded_native",
+  "conclusion": "Текущие gate/getters/policy/phase lookup проверены в 24 native сценариях на CSV-derived maps. Для Canon 1 фаза 10000 сохраняет группу 10000 в регионах 0–4 и исключает в 5–7. Реальные списки 7000/8000 проверены отдельно, source CALL/TEST/JNZ связан с skip до создания записи. On_update и неизменный кэш проверены.",
+  "limits": [
+    "Whole current gate, service and server table getters, policy and numeric phase lookup execute in a bounded emulator.",
+    "Source CSV rows seed fixture maps. The region and server ID are explicit inputs; the TLS fixture represents already initialized managers.",
+    "Engine string conversion, splitting, allocation and cleanup are bounded providers; numeric conversion uses the pinned Windows CRT.",
+    "Exact QuestTask loader branch bytes bind the gate to the row skip decision. Mixed catalogue loading and array order require a separate replay.",
+    "Active server settings, task state, runtime admission and gameplay remain outside this proof."
+  ],
+  "unknown": "Открыты native загрузка обеих service таблиц, смешанный каталог задач после фильтрации, активный RegionType, выбранный task, lifecycle и provider игрового действия.",
+  "next_check": "Собрать совместный сценарий загрузки QuestTask с группами 110120/200110 и проверить наличие записей/массивов и индексы после retain/skip. Использовать этот policy и готовые CSV без повторения матрицы. Затем привязать активный RegionType через setter 145c23520 и текущую цепочку конфигурации.",
+  "evidence": [
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\QUEST-SERVICE-CURRENT-VALIDATION.json",
+      "sha256": "09eecb3618c984536be9466f04a7e26701f90027986df62412e369574a9cc6a8"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\quests\\HEADLESS-QUEST-SERVICE-CURRENT.md",
+      "sha256": "98d0ccabc377290da4cd178efec5126d546fe7e0569a78b016dead710c4cc26c"
+    }
+  ]
+}

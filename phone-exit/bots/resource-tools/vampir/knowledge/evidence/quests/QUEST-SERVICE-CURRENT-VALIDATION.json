@@ -1,0 +1,420 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\quest-service-current-v1\\e880641f64fd4c72a3a378ac45e2d3b34651fa20d430c85d739c63a05aed65bf\\manifest.json",
+    "sha256": "e880641f64fd4c72a3a378ac45e2d3b34651fa20d430c85d739c63a05aed65bf"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\c18cd4c02d0612f8827104e2fcb1fea61d21713599e25eb23e831f2b2556436c\\manifest.json",
+    "sha256": "c18cd4c02d0612f8827104e2fcb1fea61d21713599e25eb23e831f2b2556436c"
+  },
+  "initial_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\6fc910622a6d18c524447db1d8d4a4b7790d931d3de5bad115260a32f0d9abba\\manifest.json",
+    "sha256": "6fc910622a6d18c524447db1d8d4a4b7790d931d3de5bad115260a32f0d9abba"
+  },
+  "layout_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\dce97c284aa7d00d755c6cd06f99f26f95612b93bac9e2b00ce0ab314493bd3b\\manifest.json",
+    "sha256": "dce97c284aa7d00d755c6cd06f99f26f95612b93bac9e2b00ce0ab314493bd3b"
+  },
+  "final_collection": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\540d5208d37b97a7abd874d20d66cfbd312ecd452a5545afcadba786e78bd28b\\manifest.json",
+    "sha256": "540d5208d37b97a7abd874d20d66cfbd312ecd452a5545afcadba786e78bd28b"
+  },
+  "newly_exported_roots": [
+    "0x145bff820",
+    "0x145bff6a0",
+    "0x145bfefd0",
+    "0x145c07f00",
+    "0x145c06500"
+  ],
+  "final_collection_new_jvm": 0,
+  "cases": 24,
+  "abi_calls": 24,
+  "native_entry_counts": {
+    "0x141404b20": 46,
+    "0x141429f90": 24,
+    "0x141432370": 46,
+    "0x141436f30": 88,
+    "0x14145f240": 88,
+    "0x1414830e0": 120,
+    "0x1445f1630": 24,
+    "0x1445f6010": 24,
+    "0x145a4d700": 24,
+    "0x145bfefd0": 20,
+    "0x145bff6a0": 20,
+    "0x145bff820": 24,
+    "0x145c03670": 24,
+    "0x1487f8c99": 88,
+    "0x28007000": 24
+  },
+  "dataset": {
+    "empty_quest_tasks": 4317,
+    "maps_built_by": "bounded_fixture_from_source_csv",
+    "nonempty_groups": [
+      10000
+    ],
+    "nonempty_quest_tasks": 1627,
+    "server_rows": [
+      {
+        "csv_record": 152,
+        "row": {
+          "GroupId": "362",
+          "Id": "391",
+          "OrderInServerGroup": "1",
+          "ServerGroupType": "106",
+          "ServerTransferGroup": "",
+          "ServicePhase": "10000"
+        }
+      },
+      {
+        "csv_record": 148,
+        "row": {
+          "GroupId": "360",
+          "Id": "387",
+          "OrderInServerGroup": "1",
+          "ServerGroupType": "106",
+          "ServerTransferGroup": "",
+          "ServicePhase": "10000"
+        }
+      },
+      {
+        "csv_record": 13,
+        "row": {
+          "GroupId": "106",
+          "Id": "140",
+          "OrderInServerGroup": "2",
+          "ServerGroupType": "100",
+          "ServerTransferGroup": "100000",
+          "ServicePhase": "10000"
+        }
+      }
+    ],
+    "service_rows": [
+      {
+        "csv_record": 50,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "7000",
+          "IncludeServerId": "107,108,109,110,111,112,113,114,115,140,141,142",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "1"
+        }
+      },
+      {
+        "csv_record": 51,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "7000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "3"
+        }
+      },
+      {
+        "csv_record": 52,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "7000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "2"
+        }
+      },
+      {
+        "csv_record": 53,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "7000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "4"
+        }
+      },
+      {
+        "csv_record": 54,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "7000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "5"
+        }
+      },
+      {
+        "csv_record": 55,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "7000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "6"
+        }
+      },
+      {
+        "csv_record": 56,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "7000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "7"
+        }
+      },
+      {
+        "csv_record": 57,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "7000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "0"
+        }
+      },
+      {
+        "csv_record": 58,
+        "row": {
+          "ExcludeServerId": "107,108,109,110,111,112,113,114,115,140,141,142",
+          "GroupId": "8000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "19999",
+          "MinServicePhase": "10000",
+          "RegionType": "1"
+        }
+      },
+      {
+        "csv_record": 59,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "8000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "3"
+        }
+      },
+      {
+        "csv_record": 60,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "8000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "2"
+        }
+      },
+      {
+        "csv_record": 61,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "8000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "4"
+        }
+      },
+      {
+        "csv_record": 62,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "8000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "5"
+        }
+      },
+      {
+        "csv_record": 63,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "8000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "6"
+        }
+      },
+      {
+        "csv_record": 64,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "8000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "7"
+        }
+      },
+      {
+        "csv_record": 65,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "8000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "19999",
+          "MinServicePhase": "10000",
+          "RegionType": "0"
+        }
+      },
+      {
+        "csv_record": 74,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "10000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "19999",
+          "MinServicePhase": "10000",
+          "RegionType": "1"
+        }
+      },
+      {
+        "csv_record": 75,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "10000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "19999",
+          "MinServicePhase": "10000",
+          "RegionType": "3"
+        }
+      },
+      {
+        "csv_record": 76,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "10000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "19999",
+          "MinServicePhase": "10000",
+          "RegionType": "2"
+        }
+      },
+      {
+        "csv_record": 77,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "10000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "19999",
+          "MinServicePhase": "10000",
+          "RegionType": "4"
+        }
+      },
+      {
+        "csv_record": 78,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "10000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "5"
+        }
+      },
+      {
+        "csv_record": 79,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "10000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "6"
+        }
+      },
+      {
+        "csv_record": 80,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "10000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "9999",
+          "MinServicePhase": "1",
+          "RegionType": "7"
+        }
+      },
+      {
+        "csv_record": 81,
+        "row": {
+          "ExcludeServerId": "",
+          "GroupId": "10000",
+          "IncludeServerId": "",
+          "MaxServicePhase": "19999",
+          "MinServicePhase": "10000",
+          "RegionType": "0"
+        }
+      }
+    ],
+    "source_quest_cell": {
+      "task_id": "200110010",
+      "value": "10000"
+    },
+    "table_rows": {
+      "quest_task": 5944,
+      "server_group": 425,
+      "server_service_group": 128
+    }
+  },
+  "component_tests": 10,
+  "checks": [
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-check-results-v1\\e1bcdda965436fc272d31c91d8aaef46003a1342c4ac117dbfc0bde2f378fd40\\manifest.json",
+      "sha256": "e1bcdda965436fc272d31c91d8aaef46003a1342c4ac117dbfc0bde2f378fd40",
+      "cache_key": "6fd956fbbabd59ed9aec9f8a159ce3c7d4ce39a6754b2e5f76be09693a60527c",
+      "source_scope": "tooling",
+      "proves_client_compatibility": false
+    },
+    {
+      "id": "quest-service-policy-current",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\18629594fe55d667653aa5524eba9f930d2f4403aeb24305189444bb26b45183\\manifest.json",
+      "sha256": "18629594fe55d667653aa5524eba9f930d2f4403aeb24305189444bb26b45183",
+      "cache_key": "b138c3bd40f7291f163698b6c9b1eb0eb27b2d559682297d88a778d0ca43cc63"
+    }
+  ],
+  "unchanged_repeat": {
+    "seconds": 29.142,
+    "new_processes": 0,
+    "new_jvm": 0,
+    "new_native_execution": false
+  },
+  "tooling": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tooling-groups-v1\\aggregate-results\\511a7ca11af4d6625726fcc44107933c58f66ae16774c896c1a6bac3b460ae10\\manifest.json",
+    "sha256": "511a7ca11af4d6625726fcc44107933c58f66ae16774c896c1a6bac3b460ae10",
+    "groups": 73,
+    "tests": 2357,
+    "skips": 4
+  },
+  "runtime_admitted": false,
+  "ordered_catalog_verified": false,
+  "active_task_verified": false,
+  "active_region_verified": false,
+  "action_admitted": false,
+  "online": {
+    "character": "Bipoberiho",
+    "state": "connected",
+    "same_session": true,
+    "game_commands_sent": false,
+    "owner_replaced": false
+  },
+  "limits": [
+    "Whole current gate, service and server table getters, policy and numeric phase lookup execute in a bounded emulator.",
+    "Source CSV rows seed fixture maps. The region and server ID are explicit inputs; the TLS fixture represents already initialized managers.",
+    "Engine string conversion, splitting, allocation and cleanup are bounded providers; numeric conversion uses the pinned Windows CRT.",
+    "Exact QuestTask loader branch bytes bind the gate to the row skip decision. Mixed catalogue loading and array order require a separate replay.",
+    "Active server settings, task state, runtime admission and gameplay remain outside this proof."
+  ]
+}
